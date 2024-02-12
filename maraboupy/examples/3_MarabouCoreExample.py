@@ -14,6 +14,9 @@ All rights reserved. See the file COPYING in the top-level source
 directory for licensing information.
 '''
 
+import sys
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
 from maraboupy import MarabouCore
 from maraboupy.Marabou import createOptions
 
