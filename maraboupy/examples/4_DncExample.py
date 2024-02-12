@@ -18,14 +18,17 @@ import numpy as np
 
 # Append to path if needed
 #sys.path.append(</Path/To/Marabou/>)
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
 
 from maraboupy import Marabou
 
 # %%
 # Load an example network and place an output constraint
-nnet_file_name = "../../src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
+# nnet_file_name = "../../src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
+nnet_file_name = "/Users/wen-chungcheng/Marabou_with_mods/src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
 net = Marabou.read_nnet(nnet_file_name)
-net.setLowerBound(net.outputVars[0][0], .5)
+# net.setLowerBound(net.outputVars[0][0], .5)
+net.setLowerBound(net.outputVars[0][0][0], .5)
 
 # %%
 # Solve the query with DNC mode turned on, which should return satisfying variable values

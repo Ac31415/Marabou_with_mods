@@ -19,6 +19,8 @@ import numpy as np
 # Path to Marabou folder if you did not export it
 
 # sys.path.append('/home/USER/git/Marabou')
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
 from maraboupy import Marabou
 from maraboupy import MarabouUtils
 from maraboupy import MarabouCore
@@ -55,7 +57,8 @@ for var in net1.inputVars[0][0]:
 
 # %%
 # Solve Marabou query
-exitCode1, vals1, stats1 = net1.solve()
+# exitCode1, vals1, stats1 = net1.solve()
+exitCode1, vals1, stats1 = net1.solve("Marbou_Example_5_DisjunctionConstraintExample.log")
 
 # %%
 # Example statistics
