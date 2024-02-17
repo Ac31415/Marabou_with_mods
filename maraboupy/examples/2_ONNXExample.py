@@ -30,7 +30,8 @@ options = Marabou.createOptions(verbosity = 0)
 # This network has inputs x0, x1, and was trained to create outputs that approximate
 # y0 = abs(x0) + abs(x1), y1 = x0^2 + x1^2
 print("Fully Connected Network Example")
-filename = "../../resources/onnx/fc1.onnx"
+# filename = "../../resources/onnx/fc1.onnx"
+filename = "/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/fc1.onnx"
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -68,7 +69,8 @@ exitCode, vals, stats = network.solve(options = options)
 #
 # Network maps 8x16 grayscale images two values
 print("\nConvolutional Network Example")
-filename = '../../resources/onnx/KJ_TinyTaxiNet.onnx'
+# filename = '../../resources/onnx/KJ_TinyTaxiNet.onnx'
+filename = '/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/KJ_TinyTaxiNet.onnx'
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -111,7 +113,8 @@ assert len(vals) == 0
 # Convolutional network with max-pool example
 # -------------------------------------------
 print("\nConvolutional Network with Max Pool Example")
-filename = '../../resources/onnx/conv_mp1.onnx'
+# filename = '../../resources/onnx/conv_mp1.onnx'
+filename = '/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/conv_mp1.onnx'
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -133,4 +136,5 @@ print("\nONNX Evaluation:")
 print(onnxEval)
 print("\nDifference:")
 print(onnxEval - marabouEval)
-assert max(abs(onnxEval - marabouEval)) < 1e-6
+# assert max(abs(onnxEval - marabouEval)) < 1e-6
+assert max(abs(onnxEval - marabouEval)[0]) < 1e-6
