@@ -28,7 +28,7 @@ except ImportError:
 try:
     from maraboupy.MarabouNetworkONNX import *
 except ImportError:
-    warnings.warn("ONNX parser is unavailable because onnx or onnxruntime or torch packages are not installed")
+    warnings.warn("ONNX parser is unavailable because onnx or onnxruntime packages are not installed")
 
 def read_nnet(filename, normalize=False):
     """Constructs a MarabouNetworkNnet object from a .nnet file
@@ -61,7 +61,7 @@ def read_tf(filename, inputNames=None, outputNames=None, modelType="frozen", sav
     """
     return MarabouNetworkTF(filename, inputNames, outputNames, modelType, savedModelTags)
 
-def read_onnx(filename, inputNames=None, outputNames=None, reindexOutputVars=True):
+def read_onnx(filename, inputNames=None, outputNames=None, reindexOutputVars=False):
     """Constructs a MarabouNetworkONNX object from an ONNX file
 
     Args:

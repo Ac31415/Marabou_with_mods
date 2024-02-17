@@ -18,16 +18,15 @@
 
 #include "DivideStrategy.h"
 #include "LPSolverType.h"
+#include "MILPSolverBoundTighteningType.h"
 #include "MString.h"
 #include "Map.h"
-#include "MILPSolverBoundTighteningType.h"
 #include "OptionParser.h"
 #include "SnCDivideStrategy.h"
 #include "SoIInitializationStrategy.h"
 #include "SoISearchStrategy.h"
 #include "SoftmaxBoundType.h"
 #include "SymbolicBoundTighteningType.h"
-
 #include "boost/program_options.hpp"
 
 /*
@@ -69,14 +68,21 @@ public:
         // any of the thread finishes.
         PARALLEL_DEEPSOI,
 
-        // Export SAT assignment into a file, use EXPORT_ASSIGNMENT_FILE to specify the file (default: assignment.txt)
+        // Export SAT assignment into a file, use EXPORT_ASSIGNMENT_FILE to specify the file
+        // (default: assignment.txt)
         EXPORT_ASSIGNMENT,
 
-        // Import assignment for debugging purposes, use IMPORT_ASSIGNMENT_FILE to specify the file (default: assignment.txt)
+        // Import assignment for debugging purposes, use IMPORT_ASSIGNMENT_FILE to specify the file
+        // (default: assignment.txt)
         DEBUG_ASSIGNMENT,
 
         // Produce proofs of unsatisfiability and check them
-        PRODUCE_PROOFS
+        PRODUCE_PROOFS,
+
+        // If the flag is false, the preprocessor will try to merge two
+        // logically-consecutive weighted sum layers into a single
+        // weighted sum layer, to reduce the number of variables
+        DO_NOT_MERGE_CONSECUTIVE_WEIGHTED_SUM_LAYERS,
     };
 
     enum IntOptions {
@@ -108,7 +114,7 @@ public:
         NUM_BLAS_THREADS,
     };
 
-    enum FloatOptions{
+    enum FloatOptions {
         // DNC options
         TIMEOUT_FACTOR,
 
