@@ -1,2 +1,3 @@
 # Used to stop Git from trying to display diffs of ONNX files.
 *.onnx binary
+* !text !filter !merge !diff
