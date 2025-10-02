@@ -1,3 +1,4 @@
 # Used to stop Git from trying to display diffs of ONNX files.
 *.onnx binary
+new_build/** filter=lfs diff=lfs merge=lfs -text
 * !text !filter !merge !diff
