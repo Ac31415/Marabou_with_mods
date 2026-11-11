@@ -13,13 +13,21 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InputQuery.h"
 #include "SignConstraint.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class SignTestSuite : public CxxTest::TestSuite
 {
 public:
@@ -243,7 +251,11 @@ public:
         // x3 = 0*x1 = 0
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
         //equations of 2nd layer
+=======
+        // equations of 2nd layer
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation4;
         equation4.addAddend( 1, 1 );
         equation4.addAddend( 2, 2 );
@@ -272,8 +284,13 @@ public:
         // x6 = 1*x1 + 2*x2 +3*x3
         inputQuery.addEquation( equation6 );
 
+<<<<<<< HEAD
         //equations of 3rd layer (sign activation layer)
         // x7 = sign (x4)
+=======
+        // equations of 3rd layer (sign activation layer)
+        //  x7 = sign (x4)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         SignConstraint *sign1 = new SignConstraint( 4, 7 );
 
         // x8 = sign (x5)
@@ -286,7 +303,11 @@ public:
         inputQuery.addPiecewiseLinearConstraint( sign2 );
         inputQuery.addPiecewiseLinearConstraint( sign3 );
 
+<<<<<<< HEAD
         //equation of 4th layer (output)
+=======
+        // equation of 4th layer (output)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation7;
         equation7.addAddend( 1, 7 );
         equation7.addAddend( 1, 8 );
@@ -341,7 +362,11 @@ public:
         // x3 = 0*x1 = 0
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
         //equations of 2nd layer
+=======
+        // equations of 2nd layer
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation4;
         equation4.addAddend( 1, 1 );
         equation4.addAddend( 2, 2 );
@@ -384,7 +409,11 @@ public:
         inputQuery.addPiecewiseLinearConstraint( sign2 );
         inputQuery.addPiecewiseLinearConstraint( sign3 );
 
+<<<<<<< HEAD
         //equation of 4th layer (output)
+=======
+        // equation of 4th layer (output)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation7;
         equation7.addAddend( 1, 7 );
         equation7.addAddend( 1, 8 );
@@ -438,7 +467,11 @@ public:
         // x3 = 0*x1 = 0
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
         //equations of 2nd layer
+=======
+        // equations of 2nd layer
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation4;
         equation4.addAddend( 1, 1 );
         equation4.addAddend( 2, 2 );
@@ -467,8 +500,13 @@ public:
         // x6 = 1*x1 + 2*x2 +3*x3
         inputQuery.addEquation( equation6 );
 
+<<<<<<< HEAD
         //equations of 3rd layer (sign activation layer)
         // x7 = sign (x4)
+=======
+        // equations of 3rd layer (sign activation layer)
+        //  x7 = sign (x4)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         SignConstraint *sign1 = new SignConstraint( 4, 7 );
 
         // x8 = sign (x5)
@@ -481,7 +519,11 @@ public:
         inputQuery.addPiecewiseLinearConstraint( sign2 );
         inputQuery.addPiecewiseLinearConstraint( sign3 );
 
+<<<<<<< HEAD
         //equation of 4th layer (output)
+=======
+        // equation of 4th layer (output)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation7;
         equation7.addAddend( 1, 7 );
         equation7.addAddend( 1, 8 );
@@ -535,19 +577,31 @@ public:
 
         // check 2nd layer variables
         // we want x4 = 1*x1 + 2*x2 + 3*x3
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x4, value_x1 + 2*value_x2 + 3*value_x3 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x4, value_x1 + 2 * value_x2 + 3 * value_x3 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }
 
         // we want x5 = 2*x2
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x5, 2*value_x2 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x5, 2 * value_x2 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }
 
         // we want x6 = 1*x1 + 2*x2 + 3*x3
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x6, value_x1 + 2*value_x2 + 3*value_x3 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x6, value_x1 + 2 * value_x2 + 3 * value_x3 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }
@@ -657,7 +711,11 @@ public:
         // x3 = 0*x1 = 0
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
         //equations of 2nd layer
+=======
+        // equations of 2nd layer
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation4;
         equation4.addAddend( 1, 1 );
         equation4.addAddend( 2, 2 );
@@ -700,7 +758,11 @@ public:
         inputQuery.addPiecewiseLinearConstraint( sign2 );
         inputQuery.addPiecewiseLinearConstraint( sign3 );
 
+<<<<<<< HEAD
         //equation of 4th layer (output)
+=======
+        // equation of 4th layer (output)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation7;
         equation7.addAddend( 1, 7 );
         equation7.addAddend( 1, 8 );
@@ -754,19 +816,31 @@ public:
 
         // check 2nd layer variables
         // want x4 = 1*x1 + 2*x2 + 3*x3
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x4, value_x1 + 2*value_x2 + 3*value_x3 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x4, value_x1 + 2 * value_x2 + 3 * value_x3 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }
 
         // want x5 = 2*x2
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x5, 2*value_x2 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x5, 2 * value_x2 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }
 
         // want x6 = 1*x1 + 2*x2 + 3*x3
+<<<<<<< HEAD
         if ( !FloatUtils::areEqual( value_x6, value_x1 + 2*value_x2 + 3*value_x3 ) )
+=======
+        if ( !FloatUtils::areEqual( value_x6, value_x1 + 2 * value_x2 + 3 * value_x3 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             correctSolution = false;
         }

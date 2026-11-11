@@ -13,11 +13,17 @@
 
 **/
 
+<<<<<<< HEAD
+=======
+#include "MpsParser.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "File.h"
 #include "FloatUtils.h"
 #include "InputParserError.h"
 #include "InputQuery.h"
 #include "MStringf.h"
+<<<<<<< HEAD
 #include "MpsParser.h"
 #include <cstdio>
 
@@ -34,6 +40,24 @@ void MpsParser::parse( const String &path )
     if ( !File::exists( path ) )
         throw InputParserError( InputParserError::FILE_DOESNT_EXIST, path.ascii() );
 
+=======
+
+#include <cstdio>
+
+MpsParser::MpsParser( const String &path )
+    : _numRows( 0 )
+    , _numVars( 0 )
+{
+    parse( path );
+}
+
+void MpsParser::parse( const String &path )
+{
+    // Load file and check if it exists
+    if ( !File::exists( path ) )
+        throw InputParserError( InputParserError::FILE_DOESNT_EXIST, path.ascii() );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     File file( path );
     file.open( IFile::MODE_READ );
 
@@ -45,6 +69,7 @@ void MpsParser::parse( const String &path )
     String line;
 
     while ( true )
+<<<<<<< HEAD
 	{
         line = file.readLine();
 
@@ -203,6 +228,168 @@ void MpsParser::parseRhs( const String &line )
             throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
 
 
+=======
+    {
+        line = file.readLine();
+
+        if ( line.contains( "COLUMNS" ) )
+            break;
+
+        parseRow( line );
+    }
+
+    MPS_LOG( Stringf( "Number of rows parsed: %u", _numRows ).ascii() );
+
+    // Finished parsing rows, proceed to columns
+    while ( true )
+    {
+        line = file.readLine();
+
+        if ( line.contains( "RHS" ) )
+            break;
+
+        parseColumn( line );
+    }
+
+    MPS_LOG( Stringf( "Number of variables detected: %u\n", _numVars ).ascii() );
+
+    // Finished parsing columns, proceed to rhs
+    while ( true )
+    {
+        line = file.readLine();
+
+        if ( line.contains( "BOUNDS" ) || line.contains( "ENDATA" ) )
+            break;
+
+        parseRhs( line );
+    }
+
+    // The bounds section is optional, process it if it exists
+    if ( line.contains( "BOUNDS" ) )
+    {
+        while ( true )
+        {
+            line = file.readLine();
+
+            if ( line.contains( "ENDATA" ) )
+                break;
+
+            parseBounds( line );
+        }
+    }
+
+    setRemainingBounds();
+}
+
+void MpsParser::parseRow( const String &line )
+{
+    List<String> tokens = line.tokenize( "\t\n " );
+
+    if ( tokens.size() != 2 )
+        throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+    auto it = tokens.begin();
+    String type = *it;
+    ++it;
+    String name = *it;
+
+    // Handle the row type
+    switch ( type.ascii()[0] )
+    {
+    case 'E':
+        _equationIndexToRowType[_numRows] = RowType::EQ;
+        break;
+
+    case 'L':
+        _equationIndexToRowType[_numRows] = RowType::LE;
+        break;
+
+    case 'G':
+        _equationIndexToRowType[_numRows] = RowType::GE;
+        break;
+
+    default:
+        return;
+    }
+
+    // Store equation by name and index
+    _equationNameToIndex[name] = _numRows;
+    _equationIndexToName[_numRows] = name;
+    ++_numRows;
+}
+
+void MpsParser::parseColumn( const String &line )
+{
+    List<String> tokens = line.tokenize( "\t\n " );
+
+    // Need an odd number of tokens: row name + pairs
+    if ( tokens.size() % 2 == 0 )
+        throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+    // Variable name and index
+    auto it = tokens.begin();
+    String name = *it;
+    ++it;
+    if ( !_variableNameToIndex.exists( name ) )
+    {
+        _variableNameToIndex[name] = _numVars;
+        _variableIndexToName[_numVars] = name;
+        ++_numVars;
+    }
+
+    unsigned varIndex = _variableNameToIndex[name];
+
+    // Parse the remaining token pairs
+    while ( it != tokens.end() )
+    {
+        String equationName = *it;
+        ++it;
+        double coefficient = atof( it->ascii() );
+        ++it;
+
+        if ( _equationNameToIndex.exists( equationName ) )
+        {
+            // The pair describes a coefficient in a known equation
+            unsigned equationIndex = _equationNameToIndex[equationName];
+            _equationIndexToCoefficients[equationIndex][varIndex] = coefficient;
+        }
+        else
+        {
+            // The pair describes a coefficient in an unknown equation (the objective function?)
+            if ( coefficient != 0 )
+                throw InputParserError(
+                    InputParserError::UNEXPECTED_INPUT,
+                    Stringf( "Problematic pair: %s, %.2lf", equationName.ascii(), coefficient )
+                        .ascii() );
+        }
+    }
+}
+
+void MpsParser::parseRhs( const String &line )
+{
+    List<String> tokens = line.tokenize( "\t\n " );
+
+    // Need an odd number of tokens: RHS + pairs
+    if ( tokens.size() % 2 == 0 )
+        throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+    auto it = tokens.begin();
+    String name = *it;
+    ++it;
+
+    // Parse the remaining token pairs
+    while ( it != tokens.end() )
+    {
+        String equationName = *it;
+        ++it;
+        double scalar = atof( it->ascii() );
+        ++it;
+
+        if ( !_equationNameToIndex.exists( equationName ) )
+            throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         unsigned equationIndex = _equationNameToIndex[equationName];
         _equationIndexToRhs[equationIndex] = scalar;
     }
@@ -213,6 +400,7 @@ void MpsParser::parseBounds( const String &line )
     List<String> tokens = line.tokenize( "\t\n " );
 
     if ( tokens.size() != 4 )
+<<<<<<< HEAD
 	    throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
 
     auto it = tokens.begin();
@@ -235,6 +423,45 @@ void MpsParser::parseBounds( const String &line )
         // Upper bound
         if ( !_varToUpperBounds.exists( varIndex ) || ( _varToUpperBounds[varIndex] > scalar ) )
             _varToUpperBounds[varIndex] = scalar;
+=======
+        throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+    auto it = tokens.begin();
+    String type = *it;
+    ++it;
+
+    String dontCareName = *it;
+    ++it;
+    String varName = *it;
+    ++it;
+    double scalar = atof( it->ascii() );
+
+    if ( !_variableNameToIndex.exists( varName ) )
+        throw InputParserError( InputParserError::UNEXPECTED_INPUT, line.ascii() );
+
+    unsigned varIndex = _variableNameToIndex[varName];
+
+    if ( type == "UP" )
+    {
+        // Upper bound
+        if ( !_varToUpperBounds.exists( varIndex ) || ( _varToUpperBounds[varIndex] > scalar ) )
+            _varToUpperBounds[varIndex] = scalar;
+    }
+    else if ( type == "LO" )
+    {
+        // Lower bound
+        if ( !_varToLowerBounds.exists( varIndex ) || ( _varToLowerBounds[varIndex] < scalar ) )
+            _varToLowerBounds[varIndex] = scalar;
+    }
+    else if ( type == "FX" )
+    {
+        // Upper and lower bound
+        if ( !_varToUpperBounds.exists( varIndex ) || ( _varToUpperBounds[varIndex] > scalar ) )
+            _varToUpperBounds[varIndex] = scalar;
+
+        if ( !_varToLowerBounds.exists( varIndex ) || ( _varToLowerBounds[varIndex] < scalar ) )
+            _varToLowerBounds[varIndex] = scalar;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     else if ( type == "LO" )
     {
@@ -264,7 +491,11 @@ void MpsParser::setRemainingBounds()
     {
         if ( !_varToLowerBounds.exists( i ) &&
              ( !_varToUpperBounds.exists( i ) || _varToUpperBounds[i] >= 0 ) )
+<<<<<<< HEAD
 	    _varToLowerBounds[i] = 0;
+=======
+            _varToLowerBounds[i] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -272,6 +503,7 @@ unsigned MpsParser::getNumVars() const
 {
     return _numVars;
 }
+<<<<<<< HEAD
 
 unsigned MpsParser::getNumEquations() const
 {
@@ -308,6 +540,44 @@ void MpsParser::generateQuery( InputQuery &inputQuery ) const
 
 void MpsParser::populateBounds( InputQuery &inputQuery ) const
 {
+=======
+
+unsigned MpsParser::getNumEquations() const
+{
+    return _numRows;
+}
+
+String MpsParser::getVarName( unsigned index ) const
+{
+    return _variableIndexToName[index];
+}
+
+String MpsParser::getEquationName( unsigned index ) const
+{
+    return _equationIndexToName[index];
+}
+
+double MpsParser::getUpperBound( unsigned index ) const
+{
+    return _varToUpperBounds.exists( index ) ? _varToUpperBounds[index] : DBL_MAX;
+}
+
+double MpsParser::getLowerBound( unsigned index ) const
+{
+    return _varToLowerBounds.exists( index ) ? _varToLowerBounds[index] : -DBL_MAX;
+}
+
+void MpsParser::generateQuery( InputQuery &inputQuery ) const
+{
+    inputQuery.setNumberOfVariables( _numVars );
+
+    populateBounds( inputQuery );
+    populateEquations( inputQuery );
+}
+
+void MpsParser::populateBounds( InputQuery &inputQuery ) const
+{
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for ( const auto &it : _varToUpperBounds )
         inputQuery.setUpperBound( it.first, it.second );
 
@@ -330,7 +600,11 @@ void MpsParser::populateEquation( Equation &equation, unsigned index ) const
     const Map<unsigned, double> &coeffs( _equationIndexToCoefficients[index] );
 
     for ( const auto &pair : coeffs )
+<<<<<<< HEAD
 		equation.addAddend( pair.second, pair.first );
+=======
+        equation.addAddend( pair.second, pair.first );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     switch ( _equationIndexToRowType[index] )
     {

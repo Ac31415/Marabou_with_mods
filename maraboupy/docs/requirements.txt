@@ -5,4 +5,8 @@ sphinx-rtd-theme==0.5.0
 sphinx-gallery==0.7.0
 recommonmark==0.6.0
 Pygments==2.7.4
+<<<<<<< HEAD
 Pillow==8.3.2
+=======
+Pillow==10.2.0
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

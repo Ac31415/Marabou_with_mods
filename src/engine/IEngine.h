@@ -18,11 +18,19 @@
 
 #include "BoundExplainer.h"
 #include "DivideStrategy.h"
+<<<<<<< HEAD
 #include "SnCDivideStrategy.h"
 #include "TableauStateStorageLevel.h"
 #include "List.h"
 #include "context/context.h"
 #include "Vector.h"
+=======
+#include "List.h"
+#include "SnCDivideStrategy.h"
+#include "TableauStateStorageLevel.h"
+#include "Vector.h"
+#include "context/context.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #ifdef _WIN32
 #undef ERROR
@@ -39,7 +47,18 @@ class UnsatCertificateNode;
 class IEngine
 {
 public:
-    virtual ~IEngine() {};
+    virtual ~IEngine(){};
+
+    enum ExitCode {
+        UNSAT = 0,
+        SAT = 1,
+        ERROR = 2,
+        UNKNOWN = 3,
+        TIMEOUT = 4,
+        QUIT_REQUESTED = 5,
+
+        NOT_DONE = 999,
+    };
 
     enum ExitCode {
         UNSAT = 0,
@@ -107,12 +126,17 @@ public:
     /*
       Pick the piecewise linear constraint for internal splitting
     */
+<<<<<<< HEAD
     virtual PiecewiseLinearConstraint *pickSplitPLConstraint( DivideStrategy
                                                               strategy ) = 0;
+=======
+    virtual PiecewiseLinearConstraint *pickSplitPLConstraint( DivideStrategy strategy ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Pick the piecewise linear constraint for SnC splitting
     */
+<<<<<<< HEAD
     virtual PiecewiseLinearConstraint *pickSplitPLConstraintSnC( SnCDivideStrategy
                                                                  strategy ) = 0;
     /*
@@ -125,6 +149,20 @@ public:
 	 */
 	virtual void updateGroundUpperBound( unsigned var, double value ) = 0;
 	virtual void updateGroundLowerBound( unsigned var, double value ) = 0;
+=======
+    virtual PiecewiseLinearConstraint *pickSplitPLConstraintSnC( SnCDivideStrategy strategy ) = 0;
+    /*
+      Return the value of a variable bound, as expressed by the bounds explainer and the initial
+      bounds
+    */
+    virtual double explainBound( unsigned var, bool isUpper ) const = 0;
+
+    /*
+     * Update the ground bounds
+     */
+    virtual void updateGroundUpperBound( unsigned var, double value ) = 0;
+    virtual void updateGroundLowerBound( unsigned var, double value ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     virtual void applyAllBoundTightenings() = 0;
 

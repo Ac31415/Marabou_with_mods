@@ -16,6 +16,7 @@
 
 #include "File.h"
 
+<<<<<<< HEAD
 namespace T
 {
 	IFile *createFile( const String &path )
@@ -28,6 +29,19 @@ namespace T
 		delete file;
 	}
 }
+=======
+namespace T {
+IFile *createFile( const String &path )
+{
+    return new File( path );
+}
+
+void discardFile( IFile *file )
+{
+    delete file;
+}
+} // namespace T
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 //
 // Local Variables:

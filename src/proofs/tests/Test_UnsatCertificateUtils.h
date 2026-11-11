@@ -13,8 +13,13 @@
  **/
 
 #include "CSRMatrix.h"
+<<<<<<< HEAD
 #include "cxxtest/TestSuite.h"
 #include "UnsatCertificateUtils.h"
+=======
+#include "UnsatCertificateUtils.h"
+#include "cxxtest/TestSuite.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class UnsatCertificateUtilsTestSuite : public CxxTest::TestSuite
 {
@@ -22,6 +27,7 @@ public:
     void test_bound_computation()
     {
         unsigned m = 3, n = 6;
+<<<<<<< HEAD
         double A[] = {1, 0, -1, 1, 0, 0, 0, -1, 2, 0, 1, 0, 0.5, 0, -1, 0, 0, 1 };
         auto initialTableau = CSRMatrix( A, m, n );
 
@@ -37,6 +43,24 @@ public:
         unsigned var = 0;
 
         UNSATCertificateUtils::getExplanationRowCombination( var, explanation, rowCombination, &initialTableau, n );
+=======
+        double A[] = { 1, 0, -1, 1, 0, 0, 0, -1, 2, 0, 1, 0, 0.5, 0, -1, 0, 0, 1 };
+        auto initialTableau = CSRMatrix( A, m, n );
+
+        Vector<double> groundUpperBounds = { 1, 1, 1, 1, 1, 1 };
+        Vector<double> groundLowerBounds = { 0, 0, 0, 0, 0, 0 };
+        Vector<double> rowCombination;
+        const double expl[3] = { 1, 1, 0 };
+        SparseUnsortedList explanation = SparseUnsortedList();
+        explanation.initialize( expl, 3 );
+        // Linear combination is x0 = 2x0 - x1 + x2 + x3 + x4, thus explanation combination is only
+        // lhs Checks computation method only, since no actual bound will be explained this way
+
+        unsigned var = 0;
+
+        UNSATCertificateUtils::getExplanationRowCombination(
+            var, explanation, rowCombination, &initialTableau, n );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         auto it = rowCombination.begin();
         TS_ASSERT_EQUALS( *it, 2 );
@@ -53,7 +77,17 @@ public:
         ++it;
         TS_ASSERT_EQUALS( it, rowCombination.end() );
 
+<<<<<<< HEAD
         double explainedBound = UNSATCertificateUtils::computeBound( var, true, explanation, &initialTableau, groundUpperBounds.data(), groundLowerBounds.data(), groundUpperBounds.size() );
+=======
+        double explainedBound = UNSATCertificateUtils::computeBound( var,
+                                                                     true,
+                                                                     explanation,
+                                                                     &initialTableau,
+                                                                     groundUpperBounds.data(),
+                                                                     groundLowerBounds.data(),
+                                                                     groundUpperBounds.size() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_EQUALS( explainedBound, 5 );
     }

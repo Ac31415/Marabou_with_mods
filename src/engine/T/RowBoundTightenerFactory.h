@@ -22,6 +22,7 @@ class IRowBoundTightener;
 class ITableau;
 
 
+<<<<<<< HEAD
 namespace T
 {
 	IRowBoundTightener *createRowBoundTightener( const ITableau &tableau );
@@ -34,12 +35,25 @@ CXXTEST_SUPPLY( createRowBoundTightener,
 				( const ITableau &tableau ),
 				T::createRowBoundTightener,
 				( tableau ) );
+=======
+namespace T {
+IRowBoundTightener *createRowBoundTightener( const ITableau &tableau );
+void discardRowBoundTightener( IRowBoundTightener *rowBoundTightener );
+} // namespace T
+
+CXXTEST_SUPPLY( createRowBoundTightener,
+                IRowBoundTightener *,
+                createRowBoundTightener,
+                ( const ITableau &tableau ),
+                T::createRowBoundTightener,
+                ( tableau ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 CXXTEST_SUPPLY_VOID( discardRowBoundTightener,
-					 discardRowBoundTightener,
-					 ( IRowBoundTightener *rowBoundTightener ),
-					 T::discardRowBoundTightener,
-					 ( rowBoundTightener ) );
+                     discardRowBoundTightener,
+                     ( IRowBoundTightener * rowBoundTightener ),
+                     T::discardRowBoundTightener,
+                     ( rowBoundTightener ) );
 
 #endif // __T__RowBoundTightenerFactory_h__
 

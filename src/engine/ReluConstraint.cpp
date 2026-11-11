@@ -14,22 +14,38 @@
 
 #include "ReluConstraint.h"
 
+<<<<<<< HEAD
 #include "PiecewiseLinearConstraint.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Debug.h"
 #include "DivideStrategy.h"
 #include "FloatUtils.h"
 #include "GlobalConfiguration.h"
+<<<<<<< HEAD
 #include "InfeasibleQueryException.h"
 #include "InputQuery.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "ITableau.h"
+#include "InfeasibleQueryException.h"
+#include "InputQuery.h"
 #include "MStringf.h"
 #include "MarabouError.h"
 #include "PiecewiseLinearCaseSplit.h"
+<<<<<<< HEAD
+=======
+#include "PiecewiseLinearConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Statistics.h"
 #include "TableauRow.h"
 
 #ifdef _WIN32
+<<<<<<< HEAD
 #define __attribute__(x)
+=======
+#define __attribute__( x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #endif
 
 ReluConstraint::ReluConstraint( unsigned b, unsigned f )
@@ -40,6 +56,7 @@ ReluConstraint::ReluConstraint( unsigned b, unsigned f )
     , _direction( PHASE_NOT_FIXED )
     , _haveEliminatedVariables( false )
     , _tighteningRow( NULL )
+<<<<<<< HEAD
 {
 }
 
@@ -80,6 +97,48 @@ ReluConstraint::ReluConstraint( const String &serializedRelu )
 
 PiecewiseLinearFunctionType ReluConstraint::getType() const
 {
+=======
+{
+}
+
+ReluConstraint::ReluConstraint( const String &serializedRelu )
+    : _haveEliminatedVariables( false )
+    , _tighteningRow( NULL )
+{
+    String constraintType = serializedRelu.substring( 0, 4 );
+    ASSERT( constraintType == String( "relu" ) );
+
+    // Remove the constraint type in serialized form
+    String serializedValues = serializedRelu.substring( 5, serializedRelu.length() - 5 );
+    List<String> values = serializedValues.tokenize( "," );
+
+    ASSERT( values.size() >= 2 && values.size() <= 3 );
+
+    if ( values.size() == 2 )
+    {
+        auto var = values.begin();
+        _f = atoi( var->ascii() );
+        ++var;
+        _b = atoi( var->ascii() );
+
+        _auxVarInUse = false;
+    }
+    else
+    {
+        auto var = values.begin();
+        _f = atoi( var->ascii() );
+        ++var;
+        _b = atoi( var->ascii() );
+        ++var;
+        _aux = atoi( var->ascii() );
+
+        _auxVarInUse = true;
+    }
+}
+
+PiecewiseLinearFunctionType ReluConstraint::getType() const
+{
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     return PiecewiseLinearFunctionType::RELU;
 }
 
@@ -124,6 +183,7 @@ void ReluConstraint::unregisterAsWatcher( ITableau *tableau )
 
 void ReluConstraint::checkIfLowerBoundUpdateFixesPhase( unsigned variable, double bound )
 {
+<<<<<<< HEAD
   if ( variable == _f && FloatUtils::isPositive( bound ) )
     setPhaseStatus( RELU_PHASE_ACTIVE );
   else if ( variable == _b && !FloatUtils::isNegative( bound ) )
@@ -137,6 +197,21 @@ void ReluConstraint::checkIfUpperBoundUpdateFixesPhase( unsigned variable, doubl
     if ( ( variable == _f || variable == _b ) && !FloatUtils::isPositive( bound ) )
         setPhaseStatus( RELU_PHASE_INACTIVE );
 
+=======
+    if ( variable == _f && FloatUtils::isPositive( bound ) )
+        setPhaseStatus( RELU_PHASE_ACTIVE );
+    else if ( variable == _b && !FloatUtils::isNegative( bound ) )
+        setPhaseStatus( RELU_PHASE_ACTIVE );
+    else if ( _auxVarInUse && variable == _aux && FloatUtils::isPositive( bound ) )
+        setPhaseStatus( RELU_PHASE_INACTIVE );
+}
+
+void ReluConstraint::checkIfUpperBoundUpdateFixesPhase( unsigned variable, double bound )
+{
+    if ( ( variable == _f || variable == _b ) && !FloatUtils::isPositive( bound ) )
+        setPhaseStatus( RELU_PHASE_INACTIVE );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( _auxVarInUse && variable == _aux && FloatUtils::isZero( bound ) )
         setPhaseStatus( RELU_PHASE_ACTIVE );
 }
@@ -144,12 +219,21 @@ void ReluConstraint::checkIfUpperBoundUpdateFixesPhase( unsigned variable, doubl
 void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
 {
     if ( _statistics )
+<<<<<<< HEAD
         _statistics->incLongAttribute(
             Statistics::NUM_BOUND_NOTIFICATIONS_TO_PL_CONSTRAINTS );
 
     if ( _boundManager == nullptr )
     {
         if ( existsLowerBound( variable ) && !FloatUtils::gt( newBound, getLowerBound( variable ) ) )
+=======
+        _statistics->incLongAttribute( Statistics::NUM_BOUND_NOTIFICATIONS_TO_PL_CONSTRAINTS );
+
+    if ( _boundManager == nullptr )
+    {
+        if ( existsLowerBound( variable ) &&
+             !FloatUtils::gt( newBound, getLowerBound( variable ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             return;
         setLowerBound( variable, newBound );
         checkIfLowerBoundUpdateFixesPhase( variable, newBound );
@@ -163,6 +247,7 @@ void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
         if ( isActive() )
         {
             bool proofs = _boundManager->shouldProduceProofs();
+<<<<<<< HEAD
 
             if ( proofs )
                 createTighteningRow();
@@ -182,13 +267,40 @@ void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
                 _boundManager->tightenLowerBound( partner, bound, *_tighteningRow );
             }
 
+=======
+
+            if ( proofs )
+                createTighteningRow();
+
+            // A positive lower bound is always propagated between f and b
+            if ( ( variable == _f || variable == _b ) && bound > 0 )
+            {
+                // If we're in the active phase, aux should be 0
+                if ( proofs && _auxVarInUse )
+                    _boundManager->addLemmaExplanationAndTightenBound(
+                        _aux, 0, BoundType::UPPER, { variable }, BoundType::LOWER, getType() );
+                else if ( !proofs && _auxVarInUse )
+                    _boundManager->tightenUpperBound( _aux, 0 );
+
+                // After updating to active phase
+                unsigned partner = ( variable == _f ) ? _b : _f;
+                _boundManager->tightenLowerBound( partner, bound, *_tighteningRow );
+            }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             // If b is non-negative, we're in the active phase
             else if ( _auxVarInUse && variable == _b && FloatUtils::isZero( bound ) )
             {
                 if ( proofs && _auxVarInUse )
+<<<<<<< HEAD
                     _boundManager->addLemmaExplanationAndTightenBound( _aux, 0, BoundType::UPPER, { variable },
                                                                       BoundType::LOWER, getType() );
 			    else if ( !proofs && _auxVarInUse )
+=======
+                    _boundManager->addLemmaExplanationAndTightenBound(
+                        _aux, 0, BoundType::UPPER, { variable }, BoundType::LOWER, getType() );
+                else if ( !proofs && _auxVarInUse )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     _boundManager->tightenUpperBound( _aux, 0 );
             }
 
@@ -197,12 +309,21 @@ void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
             else if ( _auxVarInUse && variable == _aux && bound > 0 )
             {
                 if ( proofs )
+<<<<<<< HEAD
                     _boundManager->addLemmaExplanationAndTightenBound( _f, 0, BoundType::UPPER, { variable },
                                                                       BoundType::LOWER, getType() );
                 else
                     _boundManager->tightenUpperBound( _f, 0 );
 
 			    // After updating to inactive phase
+=======
+                    _boundManager->addLemmaExplanationAndTightenBound(
+                        _f, 0, BoundType::UPPER, { variable }, BoundType::LOWER, getType() );
+                else
+                    _boundManager->tightenUpperBound( _f, 0 );
+
+                // After updating to inactive phase
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 _boundManager->tightenUpperBound( _b, -bound, *_tighteningRow );
             }
 
@@ -215,8 +336,17 @@ void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
                     if ( _phaseStatus == RELU_PHASE_INACTIVE )
                         _boundManager->tightenUpperBound( _aux, -bound, *_tighteningRow );
                     else if ( _phaseStatus == PHASE_NOT_FIXED )
+<<<<<<< HEAD
                         _boundManager->addLemmaExplanationAndTightenBound( _aux, -bound, BoundType::UPPER, { variable },
                                                                           BoundType::LOWER, getType() );
+=======
+                        _boundManager->addLemmaExplanationAndTightenBound( _aux,
+                                                                           -bound,
+                                                                           BoundType::UPPER,
+                                                                           { variable },
+                                                                           BoundType::LOWER,
+                                                                           getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
                 else
                     _boundManager->tightenUpperBound( _aux, -bound );
@@ -227,8 +357,13 @@ void ReluConstraint::notifyLowerBound( unsigned variable, double newBound )
             else if ( bound < 0 && variable == _f )
             {
                 if ( proofs )
+<<<<<<< HEAD
                     _boundManager->addLemmaExplanationAndTightenBound( _f, 0, BoundType::LOWER, { variable },
                                                                       BoundType::LOWER, getType() );
+=======
+                    _boundManager->addLemmaExplanationAndTightenBound(
+                        _f, 0, BoundType::LOWER, { variable }, BoundType::LOWER, getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 else
                     _boundManager->tightenLowerBound( _f, 0 );
             }
@@ -272,8 +407,17 @@ void ReluConstraint::notifyUpperBound( unsigned variable, double newBound )
                     else
                     {
                         if ( FloatUtils::isZero( bound ) )
+<<<<<<< HEAD
                             _boundManager->addLemmaExplanationAndTightenBound( _b, 0, BoundType::UPPER, { variable },
                                                                               BoundType::UPPER, getType() );
+=======
+                            _boundManager->addLemmaExplanationAndTightenBound( _b,
+                                                                               0,
+                                                                               BoundType::UPPER,
+                                                                               { variable },
+                                                                               BoundType::UPPER,
+                                                                               getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                         // Bound cannot be negative if ReLU is inactive
                         else if ( FloatUtils::isNegative( bound ) )
                             throw InfeasibleQueryException();
@@ -281,7 +425,10 @@ void ReluConstraint::notifyUpperBound( unsigned variable, double newBound )
                 }
                 else
                     _boundManager->tightenUpperBound( _b, bound );
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
             else if ( variable == _b )
             {
@@ -289,8 +436,13 @@ void ReluConstraint::notifyUpperBound( unsigned variable, double newBound )
                 {
                     // If b has a non-positive upper bound, f's upper bound is 0
                     if ( proofs )
+<<<<<<< HEAD
                         _boundManager->addLemmaExplanationAndTightenBound( _f, 0, BoundType::UPPER, { variable },
                                                                           BoundType::UPPER, getType() );
+=======
+                        _boundManager->addLemmaExplanationAndTightenBound(
+                            _f, 0, BoundType::UPPER, { variable }, BoundType::UPPER, getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     else
                         _boundManager->tightenUpperBound( _f, 0 );
 
@@ -308,8 +460,17 @@ void ReluConstraint::notifyUpperBound( unsigned variable, double newBound )
                         if ( _phaseStatus == RELU_PHASE_ACTIVE )
                             _boundManager->tightenUpperBound( _f, bound, *_tighteningRow );
                         else if ( _phaseStatus == PHASE_NOT_FIXED )
+<<<<<<< HEAD
                             _boundManager->addLemmaExplanationAndTightenBound( _f, bound, BoundType::UPPER, { variable },
                                                                               BoundType::UPPER, getType() );
+=======
+                            _boundManager->addLemmaExplanationAndTightenBound( _f,
+                                                                               bound,
+                                                                               BoundType::UPPER,
+                                                                               { variable },
+                                                                               BoundType::UPPER,
+                                                                               getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     }
                     else
                         _boundManager->tightenUpperBound( _f, bound );
@@ -317,21 +478,40 @@ void ReluConstraint::notifyUpperBound( unsigned variable, double newBound )
             }
             else if ( _auxVarInUse && variable == _aux )
             {
+<<<<<<< HEAD
                if ( proofs )
                {
+=======
+                if ( proofs )
+                {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     if ( _phaseStatus != RELU_PHASE_ACTIVE )
                         _boundManager->tightenLowerBound( _b, -bound, *_tighteningRow );
                     else
                     {
                         if ( FloatUtils::isZero( bound ) )
+<<<<<<< HEAD
                             _boundManager->addLemmaExplanationAndTightenBound( _b, 0, BoundType::LOWER, { variable },
                                                                               BoundType::UPPER, getType() );
+=======
+                            _boundManager->addLemmaExplanationAndTightenBound( _b,
+                                                                               0,
+                                                                               BoundType::LOWER,
+                                                                               { variable },
+                                                                               BoundType::UPPER,
+                                                                               getType() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                         // Bound cannot be negative if ReLU is active
                         else if ( FloatUtils::isNegative( bound ) )
                             throw InfeasibleQueryException();
                     }
+<<<<<<< HEAD
                }
                else
+=======
+                }
+                else
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     _boundManager->tightenLowerBound( _b, -bound );
             }
         }
@@ -345,9 +525,13 @@ bool ReluConstraint::participatingVariable( unsigned variable ) const
 
 List<unsigned> ReluConstraint::getParticipatingVariables() const
 {
+<<<<<<< HEAD
     return _auxVarInUse?
         List<unsigned>( { _b, _f, _aux } ) :
         List<unsigned>( { _b, _f } );
+=======
+    return _auxVarInUse ? List<unsigned>( { _b, _f, _aux } ) : List<unsigned>( { _b, _f } );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool ReluConstraint::satisfied() const
@@ -362,7 +546,12 @@ bool ReluConstraint::satisfied() const
         return false;
 
     if ( FloatUtils::isPositive( fValue ) )
+<<<<<<< HEAD
         return FloatUtils::areEqual( bValue, fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE );
+=======
+        return FloatUtils::areEqual(
+            bValue, fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     else
         return !FloatUtils::isPositive( bValue );
 }
@@ -435,7 +624,12 @@ List<PiecewiseLinearConstraint::Fix> ReluConstraint::getSmartFixes( ITableau *ta
 
     double bDeltaToFDelta;
     double fDeltaToBDelta;
+<<<<<<< HEAD
     bool linearlyDependent = tableau->areLinearlyDependent( _b, _f, bDeltaToFDelta, fDeltaToBDelta );
+=======
+    bool linearlyDependent =
+        tableau->areLinearlyDependent( _b, _f, bDeltaToFDelta, fDeltaToBDelta );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       If b and f are linearly independent, there's nothing clever to be done -
@@ -526,7 +720,11 @@ List<PiecewiseLinearConstraint::Fix> ReluConstraint::getSmartFixes( ITableau *ta
 
     if ( !fIsBasic )
     {
+<<<<<<< HEAD
         double newBValue = bValue + fDeltaToBDelta * (-fValue);
+=======
+        double newBValue = bValue + fDeltaToBDelta * ( -fValue );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if ( newBValue <= 0 )
             fixes.append( PiecewiseLinearConstraint::Fix( _f, 0 ) );
     }
@@ -681,6 +879,7 @@ PiecewiseLinearCaseSplit ReluConstraint::getValidCaseSplit() const
 void ReluConstraint::dump( String &output ) const
 {
     output = Stringf( "ReluConstraint: x%u = ReLU( x%u ). Active? %s. PhaseStatus = %u (%s).\n",
+<<<<<<< HEAD
                       _f, _b,
                       _constraintActive ? "Yes" : "No",
                       _phaseStatus, phaseToString( _phaseStatus ).ascii()
@@ -700,6 +899,31 @@ void ReluConstraint::dump( String &output ) const
                            _aux,
                            existsLowerBound( _aux ) ? Stringf( "%lf", getLowerBound( _aux ) ).ascii() : "-inf",
                            existsUpperBound( _aux ) ? Stringf( "%lf", getUpperBound( _aux ) ).ascii() : "inf" );
+=======
+                      _f,
+                      _b,
+                      _constraintActive ? "Yes" : "No",
+                      _phaseStatus,
+                      phaseToString( _phaseStatus ).ascii() );
+
+    output +=
+        Stringf( "b in [%s, %s], ",
+                 existsLowerBound( _b ) ? Stringf( "%lf", getLowerBound( _b ) ).ascii() : "-inf",
+                 existsUpperBound( _b ) ? Stringf( "%lf", getUpperBound( _b ) ).ascii() : "inf" );
+
+    output +=
+        Stringf( "f in [%s, %s]",
+                 existsLowerBound( _f ) ? Stringf( "%lf", getLowerBound( _f ) ).ascii() : "-inf",
+                 existsUpperBound( _f ) ? Stringf( "%lf", getUpperBound( _f ) ).ascii() : "inf" );
+
+    if ( _auxVarInUse )
+    {
+        output += Stringf(
+            ". Aux var: %u. Range: [%s, %s]\n",
+            _aux,
+            existsLowerBound( _aux ) ? Stringf( "%lf", getLowerBound( _aux ) ).ascii() : "-inf",
+            existsUpperBound( _aux ) ? Stringf( "%lf", getUpperBound( _aux ) ).ascii() : "inf" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -710,8 +934,12 @@ void ReluConstraint::updateVariableIndex( unsigned oldIndex, unsigned newIndex )
     ASSERT( _gurobi == NULL );
 
     ASSERT( oldIndex == _b || oldIndex == _f || ( _auxVarInUse && oldIndex == _aux ) );
+<<<<<<< HEAD
     ASSERT( !_lowerBounds.exists( newIndex ) &&
             !_upperBounds.exists( newIndex ) &&
+=======
+    ASSERT( !_lowerBounds.exists( newIndex ) && !_upperBounds.exists( newIndex ) &&
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             newIndex != _b && newIndex != _f && ( !_auxVarInUse || newIndex != _aux ) );
 
     if ( _lowerBounds.exists( oldIndex ) )
@@ -734,17 +962,18 @@ void ReluConstraint::updateVariableIndex( unsigned oldIndex, unsigned newIndex )
         _aux = newIndex;
 }
 
-void ReluConstraint::eliminateVariable( __attribute__((unused)) unsigned variable,
-                                        __attribute__((unused)) double fixedValue )
+void ReluConstraint::eliminateVariable( __attribute__( ( unused ) ) unsigned variable,
+                                        __attribute__( ( unused ) ) double fixedValue )
 {
     ASSERT( variable == _b || variable == _f || ( _auxVarInUse && variable == _aux ) );
 
-    DEBUG({
-            if ( variable == _f )
-            {
-                ASSERT( FloatUtils::gte( fixedValue, 0.0 ) );
-            }
+    DEBUG( {
+        if ( variable == _f )
+        {
+            ASSERT( FloatUtils::gte( fixedValue, 0.0 ) );
+        }
 
+<<<<<<< HEAD
             if ( variable == _f || variable == _b )
             {
                 if ( FloatUtils::gt( fixedValue, 0 ) )
@@ -755,16 +984,36 @@ void ReluConstraint::eliminateVariable( __attribute__((unused)) unsigned variabl
                 {
                     ASSERT( _phaseStatus != RELU_PHASE_ACTIVE );
                 }
-            }
-            else
+=======
+        if ( variable == _f || variable == _b )
+        {
+            if ( FloatUtils::gt( fixedValue, 0 ) )
             {
+                ASSERT( _phaseStatus != RELU_PHASE_INACTIVE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+            }
+            else if ( FloatUtils::lt( fixedValue, 0 ) )
+            {
+<<<<<<< HEAD
                 // This is the aux variable
                 if ( FloatUtils::isPositive( fixedValue ) )
                 {
                     ASSERT( _phaseStatus != RELU_PHASE_ACTIVE );
                 }
+=======
+                ASSERT( _phaseStatus != RELU_PHASE_ACTIVE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
-        });
+        }
+        else
+        {
+            // This is the aux variable
+            if ( FloatUtils::isPositive( fixedValue ) )
+            {
+                ASSERT( _phaseStatus != RELU_PHASE_ACTIVE );
+            }
+        }
+    } );
 
     // In a ReLU constraint, if a variable is removed the entire constraint can be discarded.
     _haveEliminatedVariables = true;
@@ -777,8 +1026,13 @@ bool ReluConstraint::constraintObsolete() const
 
 void ReluConstraint::getEntailedTightenings( List<Tightening> &tightenings ) const
 {
+<<<<<<< HEAD
     ASSERT( existsLowerBound( _b ) && existsLowerBound( _f ) &&
             existsUpperBound( _b ) && existsUpperBound( _f ) );
+=======
+    ASSERT( existsLowerBound( _b ) && existsLowerBound( _f ) && existsUpperBound( _b ) &&
+            existsUpperBound( _f ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     ASSERT( !_auxVarInUse || ( existsLowerBound( _aux ) && existsUpperBound( _aux ) ) );
 
@@ -798,8 +1052,12 @@ void ReluConstraint::getEntailedTightenings( List<Tightening> &tightenings ) con
     }
 
     // Determine if we are in the active phase, inactive phase or unknown phase
+<<<<<<< HEAD
     if ( !FloatUtils::isNegative( bLowerBound ) ||
          FloatUtils::isPositive( fLowerBound ) ||
+=======
+    if ( !FloatUtils::isNegative( bLowerBound ) || FloatUtils::isPositive( fLowerBound ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
          ( _auxVarInUse && FloatUtils::isZero( auxUpperBound ) ) )
     {
         // Active case;
@@ -821,8 +1079,12 @@ void ReluConstraint::getEntailedTightenings( List<Tightening> &tightenings ) con
         tightenings.append( Tightening( _b, 0, Tightening::LB ) );
         tightenings.append( Tightening( _f, 0, Tightening::LB ) );
     }
+<<<<<<< HEAD
     else if ( FloatUtils::isNegative( bUpperBound ) ||
               FloatUtils::isZero( fUpperBound ) ||
+=======
+    else if ( FloatUtils::isNegative( bUpperBound ) || FloatUtils::isZero( fUpperBound ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
               ( _auxVarInUse && FloatUtils::isPositive( auxLowerBound ) ) )
     {
         // Inactive case
@@ -830,6 +1092,7 @@ void ReluConstraint::getEntailedTightenings( List<Tightening> &tightenings ) con
         // f is zero
         tightenings.append( Tightening( _f, 0, Tightening::LB ) );
         tightenings.append( Tightening( _f, 0, Tightening::UB ) );
+<<<<<<< HEAD
 
         // b is non-positive
         tightenings.append( Tightening( _b, 0, Tightening::UB ) );
@@ -840,6 +1103,18 @@ void ReluConstraint::getEntailedTightenings( List<Tightening> &tightenings ) con
             tightenings.append( Tightening( _aux, -bLowerBound, Tightening::UB ) );
             tightenings.append( Tightening( _aux, -bUpperBound, Tightening::LB ) );
 
+=======
+
+        // b is non-positive
+        tightenings.append( Tightening( _b, 0, Tightening::UB ) );
+
+        // aux = -b, aux is non-negative
+        if ( _auxVarInUse )
+        {
+            tightenings.append( Tightening( _aux, -bLowerBound, Tightening::UB ) );
+            tightenings.append( Tightening( _aux, -bUpperBound, Tightening::LB ) );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             tightenings.append( Tightening( _b, -auxLowerBound, Tightening::UB ) );
             tightenings.append( Tightening( _b, -auxUpperBound, Tightening::LB ) );
 
@@ -914,6 +1189,7 @@ void ReluConstraint::transformToUseAuxVariables( InputQuery &inputQuery )
     equation.addAddend( -1.0, _aux );
     equation.setScalar( 0 );
     inputQuery.addEquation( equation );
+<<<<<<< HEAD
 
     // Adjust the bounds for the new variable
     inputQuery.setLowerBound( _aux, 0 );
@@ -925,17 +1201,36 @@ void ReluConstraint::transformToUseAuxVariables( InputQuery &inputQuery )
     // phase), then aux.ub needs to be 0
     double auxUpperBound =
         bLowerBounds > 0 ? 0 : -bLowerBounds;
+=======
+
+    // Adjust the bounds for the new variable
+    inputQuery.setLowerBound( _aux, 0 );
+
+    double bLowerBounds =
+        existsLowerBound( _b ) ? getLowerBound( _b ) : FloatUtils::negativeInfinity();
+
+    // Generally, aux.ub = -b.lb. However, if b.lb is positive (active
+    // phase), then aux.ub needs to be 0
+    double auxUpperBound = bLowerBounds > 0 ? 0 : -bLowerBounds;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     inputQuery.setUpperBound( _aux, auxUpperBound );
 
     // We now care about the auxiliary variable, as well
     _auxVarInUse = true;
 }
 
+<<<<<<< HEAD
 void ReluConstraint::getCostFunctionComponent( LinearExpression &cost,
                                                PhaseStatus phase ) const
 {
     // If the constraint is not active or is fixed, it contributes nothing
     if( !isActive() || phaseFixed() )
+=======
+void ReluConstraint::getCostFunctionComponent( LinearExpression &cost, PhaseStatus phase ) const
+{
+    // If the constraint is not active or is fixed, it contributes nothing
+    if ( !isActive() || phaseFixed() )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return;
 
     // This should not be called when the linear constraints have
@@ -966,12 +1261,20 @@ void ReluConstraint::getCostFunctionComponent( LinearExpression &cost,
     }
 }
 
+<<<<<<< HEAD
 PhaseStatus ReluConstraint::getPhaseStatusInAssignment( const Map<unsigned, double>
                                                         &assignment ) const
 {
     ASSERT( assignment.exists( _b ) );
     return FloatUtils::isNegative( assignment[_b] ) ?
         RELU_PHASE_INACTIVE : RELU_PHASE_ACTIVE;
+=======
+PhaseStatus
+ReluConstraint::getPhaseStatusInAssignment( const Map<unsigned, double> &assignment ) const
+{
+    ASSERT( assignment.exists( _b ) );
+    return FloatUtils::isNegative( assignment[_b] ) ? RELU_PHASE_INACTIVE : RELU_PHASE_ACTIVE;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool ReluConstraint::haveOutOfBoundVariables() const
@@ -979,12 +1282,25 @@ bool ReluConstraint::haveOutOfBoundVariables() const
     double bValue = getAssignment( _b );
     double fValue = getAssignment( _f );
 
+<<<<<<< HEAD
     if ( FloatUtils::gt( getLowerBound( _b ), bValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE )
          || FloatUtils::lt( getUpperBound( _b ), bValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) )
         return true;
 
     if ( FloatUtils::gt( getLowerBound( _f ), fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE )
          || FloatUtils::lt( getUpperBound( _f ), fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) )
+=======
+    if ( FloatUtils::gt(
+             getLowerBound( _b ), bValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) ||
+         FloatUtils::lt(
+             getUpperBound( _b ), bValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) )
+        return true;
+
+    if ( FloatUtils::gt(
+             getLowerBound( _f ), fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) ||
+         FloatUtils::lt(
+             getUpperBound( _f ), fValue, GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return true;
 
     return false;
@@ -1028,8 +1344,15 @@ double ReluConstraint::computePolarity() const
 {
     double currentLb = getLowerBound( _b );
     double currentUb = getUpperBound( _b );
+<<<<<<< HEAD
     if ( currentLb >= 0 ) return 1;
     if ( currentUb <= 0 ) return -1;
+=======
+    if ( currentLb >= 0 )
+        return 1;
+    if ( currentUb <= 0 )
+        return -1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     double width = currentUb - currentLb;
     double sum = currentUb + currentLb;
     return sum / width;
@@ -1053,6 +1376,7 @@ void ReluConstraint::updateScoreBasedOnPolarity()
 void ReluConstraint::createTighteningRow()
 {
     // Create the row only when needed and when not already created
+<<<<<<< HEAD
     if ( !_boundManager->getBoundExplainer() || _tighteningRow || !_auxVarInUse || _tableauAuxVars.empty() )
         return;
 
@@ -1060,6 +1384,16 @@ void ReluConstraint::createTighteningRow()
 
     // f = b + aux + counterpart (an additional aux variable of tableau)
     _tighteningRow->_lhs =  _f;
+=======
+    if ( !_boundManager->getBoundExplainer() || _tighteningRow || !_auxVarInUse ||
+         _tableauAuxVars.empty() )
+        return;
+
+    _tighteningRow = std::unique_ptr<TableauRow>( new TableauRow( 3 ) );
+
+    // f = b + aux + counterpart (an additional aux variable of tableau)
+    _tighteningRow->_lhs = _f;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     _tighteningRow->_row[0] = TableauRow::Entry( _b, 1 );
     _tighteningRow->_row[1] = TableauRow::Entry( _aux, 1 );
     _tighteningRow->_row[2] = TableauRow::Entry( _tableauAuxVars.back(), 1 );

@@ -17,9 +17,16 @@
 #define __SmtCore_h__
 
 #include "DivideStrategy.h"
+<<<<<<< HEAD
 #include "PiecewiseLinearCaseSplit.h"
 #include "PiecewiseLinearConstraint.h"
 #include "PLConstraintScoreTracker.h"
+=======
+#include "PLConstraintScoreTracker.h"
+#include "PiecewiseLinearCaseSplit.h"
+#include "PiecewiseLinearConstraint.h"
+#include "SmtStackEntry.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "SmtState.h"
 #include "Stack.h"
 #include "SmtStackEntry.h"
@@ -55,8 +62,12 @@ public:
     /*
       Initialize the score tracker with the given list of pl constraints.
     */
+<<<<<<< HEAD
     void initializeScoreTrackerIfNeeded( const List<PiecewiseLinearConstraint *>
                                          &plConstraints );
+=======
+    void initializeScoreTrackerIfNeeded( const List<PiecewiseLinearConstraint *> &plConstraints );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Inform the SMT core that a SoI phase pattern proposal is rejected.
@@ -66,8 +77,12 @@ public:
     /*
       Update the score of the constraint with the given score in the costTracker.
     */
+<<<<<<< HEAD
     inline void updatePLConstraintScore( PiecewiseLinearConstraint *constraint,
                                          double score )
+=======
+    inline void updatePLConstraintScore( PiecewiseLinearConstraint *constraint, double score )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         ASSERT( _scoreTracker != nullptr );
         _scoreTracker->updateScore( constraint, score );
@@ -90,7 +105,11 @@ public:
       Get the number of times a specific PL constraint has been reported as
       violated.
     */
+<<<<<<< HEAD
     unsigned getViolationCounts( PiecewiseLinearConstraint* constraint ) const;
+=======
+    unsigned getViolationCounts( PiecewiseLinearConstraint *constraint ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Reset all reported violation counts and the number of rejected SoI
@@ -151,7 +170,12 @@ public:
       Have the SMT core choose, among a set of violated PL constraints, which
       constraint should be repaired (without splitting)
     */
+<<<<<<< HEAD
     PiecewiseLinearConstraint *chooseViolatedConstraintForFixing( List<PiecewiseLinearConstraint *> &_violatedPlConstraints ) const;
+=======
+    PiecewiseLinearConstraint *chooseViolatedConstraintForFixing(
+        List<PiecewiseLinearConstraint *> &_violatedPlConstraints ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     inline void setBranchingHeuristics( DivideStrategy strategy )
     {

@@ -21,8 +21,12 @@ void PLConstraintScoreTracker::reset()
     _plConstraintToScore.clear();
 }
 
+<<<<<<< HEAD
 void PLConstraintScoreTracker::initialize( const List<PiecewiseLinearConstraint *>
                                            &plConstraints )
+=======
+void PLConstraintScoreTracker::initialize( const List<PiecewiseLinearConstraint *> &plConstraints )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     reset();
     for ( const auto &constraint : plConstraints )
@@ -32,8 +36,12 @@ void PLConstraintScoreTracker::initialize( const List<PiecewiseLinearConstraint 
     }
 }
 
+<<<<<<< HEAD
 void PLConstraintScoreTracker::setScore( PiecewiseLinearConstraint *constraint,
                                          double score )
+=======
+void PLConstraintScoreTracker::setScore( PiecewiseLinearConstraint *constraint, double score )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( _plConstraintToScore.exists( constraint ) );
 
@@ -52,8 +60,13 @@ PiecewiseLinearConstraint *PLConstraintScoreTracker::topUnfixed()
     {
         if ( entry._constraint->isActive() && !entry._constraint->phaseFixed() )
         {
+<<<<<<< HEAD
             SCORE_TRACKER_LOG( Stringf( "Score of top unfixed plConstraint: %.2f",
                                         entry._score ).ascii() );
+=======
+            SCORE_TRACKER_LOG(
+                Stringf( "Score of top unfixed plConstraint: %.2f", entry._score ).ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             return entry._constraint;
         }
     }

@@ -36,7 +36,13 @@ public:
 
     static bool exists( const String &path );
 
+<<<<<<< HEAD
     virtual ~IFile() {}
+=======
+    virtual ~IFile()
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __IFile_h__

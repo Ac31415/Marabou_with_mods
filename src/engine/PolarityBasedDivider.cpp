@@ -13,10 +13,18 @@
 
 **/
 
+<<<<<<< HEAD
 #include "Debug.h"
 #include "EngineState.h"
 #include "FloatUtils.h"
 #include "PolarityBasedDivider.h"
+=======
+#include "PolarityBasedDivider.h"
+
+#include "Debug.h"
+#include "EngineState.h"
+#include "FloatUtils.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MStringf.h"
 #include "PiecewiseLinearCaseSplit.h"
 
@@ -25,6 +33,7 @@ PolarityBasedDivider::PolarityBasedDivider( std::shared_ptr<IEngine> engine )
 {
 }
 
+<<<<<<< HEAD
 void PolarityBasedDivider::createSubQueries( unsigned numNewSubqueries, const
                                              String queryIdPrefix, const
                                              unsigned previousDepth, const
@@ -32,6 +41,14 @@ void PolarityBasedDivider::createSubQueries( unsigned numNewSubqueries, const
                                              &previousSplit, const unsigned
                                              timeoutInSeconds, SubQueries
                                              &subQueries )
+=======
+void PolarityBasedDivider::createSubQueries( unsigned numNewSubqueries,
+                                             const String queryIdPrefix,
+                                             const unsigned previousDepth,
+                                             const PiecewiseLinearCaseSplit &previousSplit,
+                                             const unsigned timeoutInSeconds,
+                                             SubQueries &subQueries )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     unsigned numBisects = (unsigned)log2( numNewSubqueries );
 
@@ -45,8 +62,12 @@ void PolarityBasedDivider::createSubQueries( unsigned numNewSubqueries, const
         List<PiecewiseLinearCaseSplit *> newSplits;
         for ( const auto &split : splits )
         {
+<<<<<<< HEAD
             PiecewiseLinearConstraint *pLConstraintToSplit =
                 getPLConstraintToSplit( *split );
+=======
+            PiecewiseLinearConstraint *pLConstraintToSplit = getPLConstraintToSplit( *split );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             if ( pLConstraintToSplit == NULL )
             {
                 auto newSplit = new PiecewiseLinearCaseSplit();
@@ -91,8 +112,13 @@ void PolarityBasedDivider::createSubQueries( unsigned numNewSubqueries, const
     }
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *PolarityBasedDivider::getPLConstraintToSplit
 ( const PiecewiseLinearCaseSplit &split )
+=======
+PiecewiseLinearConstraint *
+PolarityBasedDivider::getPLConstraintToSplit( const PiecewiseLinearCaseSplit &split )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     _engine->applySnCSplit( split, "" );
 

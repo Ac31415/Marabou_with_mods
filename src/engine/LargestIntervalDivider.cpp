@@ -13,6 +13,7 @@
 
 **/
 
+<<<<<<< HEAD
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "LargestIntervalDivider.h"
@@ -21,6 +22,16 @@
 
 LargestIntervalDivider::LargestIntervalDivider( const List<unsigned>
                                                 &inputVariables )
+=======
+#include "LargestIntervalDivider.h"
+
+#include "Debug.h"
+#include "FloatUtils.h"
+#include "MStringf.h"
+#include "PiecewiseLinearCaseSplit.h"
+
+LargestIntervalDivider::LargestIntervalDivider( const List<unsigned> &inputVariables )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     : _inputVariables( inputVariables )
 {
 }
@@ -28,8 +39,12 @@ LargestIntervalDivider::LargestIntervalDivider( const List<unsigned>
 void LargestIntervalDivider::createSubQueries( unsigned numNewSubqueries,
                                                const String queryIdPrefix,
                                                const unsigned previousDepth,
+<<<<<<< HEAD
                                                const PiecewiseLinearCaseSplit
                                                &previousSplit,
+=======
+                                               const PiecewiseLinearCaseSplit &previousSplit,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                                const unsigned timeoutInSeconds,
                                                SubQueries &subQueries )
 {
@@ -78,45 +93,70 @@ void LargestIntervalDivider::createSubQueries( unsigned numNewSubqueries,
             queryId = queryIdPrefix + Stringf( "-%u", queryIdSuffix++ );
 
         // Create a new case split
+<<<<<<< HEAD
         auto split = std::unique_ptr<PiecewiseLinearCaseSplit>
             ( new PiecewiseLinearCaseSplit() );
+=======
+        auto split = std::unique_ptr<PiecewiseLinearCaseSplit>( new PiecewiseLinearCaseSplit() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // Add bound as equations for each input variable
         for ( const auto &variable : _inputVariables )
         {
             double lb = inputRegion._lowerBounds[variable];
             double ub = inputRegion._upperBounds[variable];
+<<<<<<< HEAD
             split->storeBoundTightening( Tightening( variable, lb,
                                                      Tightening::LB ) );
             split->storeBoundTightening( Tightening( variable, ub,
                                                      Tightening::UB ) );
+=======
+            split->storeBoundTightening( Tightening( variable, lb, Tightening::LB ) );
+            split->storeBoundTightening( Tightening( variable, ub, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         // Construct the new subquery and add it to subqueries
         SubQuery *subQuery = new SubQuery;
         subQuery->_queryId = queryId;
+<<<<<<< HEAD
         subQuery->_split = std::move(split);
+=======
+        subQuery->_split = std::move( split );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         subQuery->_timeoutInSeconds = timeoutInSeconds;
         subQuery->_depth = previousDepth + 1;
         subQueries.append( subQuery );
     }
 }
 
+<<<<<<< HEAD
 unsigned LargestIntervalDivider::getLargestInterval( const InputRegion
                                                      &inputRegion )
 {
     ASSERT( inputRegion._lowerBounds.size() == inputRegion._upperBounds.size() );
     unsigned dimensionToSplit = 0;
     double largestInterval = 0;
+=======
+unsigned LargestIntervalDivider::getLargestInterval( const InputRegion &inputRegion )
+{
+    ASSERT( inputRegion._lowerBounds.size() == inputRegion._upperBounds.size() );
+    unsigned dimensionToSplit = 0;
+    double largestInterval = -1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     DEBUG( bool haveCandidate = false );
 
     for ( const auto &variable : _inputVariables )
     {
+<<<<<<< HEAD
         double interval = inputRegion._upperBounds[variable] -
             inputRegion._lowerBounds[variable];
 
         if ( FloatUtils::isZero( interval ) )
             continue;
+=======
+        double interval = inputRegion._upperBounds[variable] - inputRegion._lowerBounds[variable];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         DEBUG( haveCandidate = true );
 
@@ -126,6 +166,10 @@ unsigned LargestIntervalDivider::getLargestInterval( const InputRegion
             largestInterval = interval;
         }
     }
+<<<<<<< HEAD
+=======
+    ASSERT( largestInterval >= 0 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     ASSERT( haveCandidate );
 

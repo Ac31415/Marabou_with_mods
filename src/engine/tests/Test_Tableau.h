@@ -14,19 +14,29 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
 #include "BoundManager.h"
 #include "context/context.h"
+=======
+#include "BoundManager.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Equation.h"
+#include "MarabouError.h"
 #include "MockCostFunctionManager.h"
 #include "MockErrno.h"
+<<<<<<< HEAD
 #include "MarabouError.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Options.h"
 #include "Tableau.h"
 #include "TableauRow.h"
 #include "TableauState.h"
+#include "context/context.h"
 
+#include <cxxtest/TestSuite.h>
 #include <string.h>
 
 using namespace CVC4::context;
@@ -93,9 +103,15 @@ public:
         */
 
         double A[] = {
+<<<<<<< HEAD
             3, 2, 1, 2, 1, 0, 0,
             1, 1, 1, 1, 0, 1, 0,
             4, 3, 3, 4, 0, 0, 1,
+=======
+            3, 2, 1, 2, 1, 0, 0, //
+            1, 1, 1, 1, 0, 1, 0, //
+            4, 3, 3, 4, 0, 0, 1, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         tableau.setConstraintMatrix( A );
@@ -328,7 +344,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         tableau->setEnteringVariableIndex( 2u );
@@ -436,7 +456,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         tableau->setEnteringVariableIndex( 2u );
@@ -500,7 +524,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         tableau->setEnteringVariableIndex( 2u );
@@ -574,9 +602,9 @@ public:
 
         TableauRow row( 4 );
 
-           // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
-           // x6 = 117 -  x1 -  x2 - x3  -  x4
-           // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
+        // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
+        // x6 = 117 -  x1 -  x2 - x3  -  x4
+        // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
 
         TS_ASSERT_THROWS_NOTHING( tableau->getTableauRow( 0, &row ) );
 
@@ -647,7 +675,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         tableau->setEnteringVariableIndex( 2u );
@@ -658,7 +690,12 @@ public:
 
         const double expectedChangeColumn[] = { 1.0, 1.0, 3.0 };
         for ( unsigned i = 0; i < 3; ++i )
+<<<<<<< HEAD
             TS_ASSERT( FloatUtils::areEqual( tableau->getChangeColumn()[i], expectedChangeColumn[i] ) );
+=======
+            TS_ASSERT(
+                FloatUtils::areEqual( tableau->getChangeColumn()[i], expectedChangeColumn[i] ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable() );
         TS_ASSERT_EQUALS( tableau->getEnteringVariable(), 2u );
@@ -680,15 +717,21 @@ public:
 
         // Old equations are:
 
-           // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
-           // x6 = 117 -  x1 -  x2 - x3  -  x4
-           // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
+        // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
+        // x6 = 117 -  x1 -  x2 - x3  -  x4
+        // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
 
         // New equations are:
 
+<<<<<<< HEAD
            // x5 = 108 - 2x1 -  x2 + x6  -  x4
            // x3 = 117 -  x1 -  x2 - x6  -  x4
            // x7 =  69 -  x1       + 3x6 -  x4
+=======
+        // x5 = 108 - 2x1 -  x2 + x6  -  x4
+        // x3 = 117 -  x1 -  x2 - x6  -  x4
+        // x7 =  69 -  x1       + 3x6 -  x4
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( tableau->getTableauRow( 0, &row ) );
 
@@ -887,15 +930,15 @@ public:
 
         // Old equations are:
 
-           // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
-           // x6 = 117 -  x1 -  x2 - x3  -  x4
-           // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
+        // x5 = 225 - 3x1 - 2x2 - x3  - 2x4
+        // x6 = 117 -  x1 -  x2 - x3  -  x4
+        // x7 = 420 - 4x1 - 3x2 - 3x3 - 4x4
 
         // New equations are:
 
-           // x5 = 108 - 2x1 -  x2 + x6  -  x4
-           // x3 = 117 -  x1 -  x2 - x6  -  x4
-           // x7 = 69  -  x1       + 3x6 -  x4
+        // x5 = 108 - 2x1 -  x2 + x6  -  x4
+        // x3 = 117 -  x1 -  x2 - x6  -  x4
+        // x7 = 69  -  x1       + 3x6 -  x4
 
         // Check equations after the pivot
         TS_ASSERT_THROWS_NOTHING( tableau->getTableauRow( 0, &row ) );
@@ -996,7 +1039,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         TS_ASSERT( hasCandidates( *tableau ) );
@@ -1026,9 +1073,14 @@ public:
         TableauState *tableauState = NULL;
         TS_ASSERT( tableauState = new TableauState );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( tableau->storeState
                                   ( *tableauState,
                                     TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( tableau->storeState(
+            *tableauState, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Do some more stuff
         TS_ASSERT_THROWS_NOTHING( tableau->computeCostFunction() );
@@ -1057,9 +1109,14 @@ public:
         TS_ASSERT( !tableau->isBasic( 5u ) );
 
         // Now restore the tableau
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( tableau->restoreState
                                   ( *tableauState,
                                     TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( tableau->restoreState(
+            *tableauState, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Do some more stuff again
         TS_ASSERT_THROWS_NOTHING( tableau->computeCostFunction() );
@@ -1133,7 +1190,11 @@ public:
         costFunctionManager.nextCostFunction[3] = -1;
 
         costFunctionManager.nextBasicCost[0] = -1;
+<<<<<<< HEAD
         costFunctionManager.nextBasicCost[1] =  0;
+=======
+        costFunctionManager.nextBasicCost[1] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         costFunctionManager.nextBasicCost[2] = +1;
 
         TS_ASSERT_THROWS_NOTHING( tableau->computeChangeColumn() );
@@ -1405,11 +1466,19 @@ public:
 
         TS_ASSERT( tableau->areLinearlyDependent( 0, 4, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -3 ) );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0/3 ) );
 
         TS_ASSERT( tableau->areLinearlyDependent( 1, 4, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -2 ) );
         TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0/2 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 3 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 1, 4, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -2 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT( tableau->areLinearlyDependent( 2, 4, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
@@ -1417,7 +1486,11 @@ public:
 
         TS_ASSERT( tableau->areLinearlyDependent( 3, 4, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -2 ) );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0/2 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT( tableau->areLinearlyDependent( 0, 5, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
@@ -1437,6 +1510,7 @@ public:
 
         TS_ASSERT( tableau->areLinearlyDependent( 0, 6, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -4 ) );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0/4 ) );
 
         TS_ASSERT( tableau->areLinearlyDependent( 1, 6, coefficient, inverseCoefficient ) );
@@ -1450,6 +1524,21 @@ public:
         TS_ASSERT( tableau->areLinearlyDependent( 3, 6, coefficient, inverseCoefficient ) );
         TS_ASSERT( FloatUtils::areEqual( coefficient, -4 ) );
         TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0/4 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 4 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 1, 6, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -3 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 3 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 2, 6, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -3 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 3 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 3, 6, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -4 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1.0 / 4 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Now perform a pivot, and see that things still make sense afterwards
 
@@ -1478,6 +1567,7 @@ public:
            x7 = 69  -  x1       + 3x6 -  x4
 
         */
+<<<<<<< HEAD
 
         TS_ASSERT( !tableau->areLinearlyDependent( 0, 1, coefficient, inverseCoefficient ) );
         TS_ASSERT( !tableau->areLinearlyDependent( 1, 0, coefficient, inverseCoefficient ) );
@@ -1629,6 +1719,159 @@ public:
         TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
         TS_ASSERT_EQUALS( tableau->getChangeRatio(), 2.0 );
 
+=======
+
+        TS_ASSERT( !tableau->areLinearlyDependent( 0, 1, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 1, 0, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 0, 5, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 5, 0, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 0, 3, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 3, 0, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 1, 5, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 5, 1, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 1, 3, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 3, 1, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 5, 3, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 3, 5, coefficient, inverseCoefficient ) );
+
+        TS_ASSERT( !tableau->areLinearlyDependent( 4, 2, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 2, 4, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 4, 6, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 6, 4, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 2, 6, coefficient, inverseCoefficient ) );
+        TS_ASSERT( !tableau->areLinearlyDependent( 6, 2, coefficient, inverseCoefficient ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 0, 2, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 1, 2, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 5, 2, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1 ) );
+
+        TS_ASSERT( tableau->areLinearlyDependent( 3, 2, coefficient, inverseCoefficient ) );
+        TS_ASSERT( FloatUtils::areEqual( coefficient, -1 ) );
+        TS_ASSERT( FloatUtils::areEqual( inverseCoefficient, -1 ) );
+
+        TS_ASSERT_THROWS_NOTHING( delete tableau );
+    }
+
+    void test_get_get_leaving_variable_optimize()
+    {
+        Tableau *tableau = NULL;
+        MockCostFunctionManager costFunctionManager;
+
+        Context context;
+        BoundManager boundManager( context );
+        boundManager.initialize( 7 );
+
+        TS_ASSERT( tableau = new Tableau( boundManager ) );
+
+        TS_ASSERT_THROWS_NOTHING( tableau->setDimensions( 3, 7 ) );
+        tableau->registerCostFunctionManager( &costFunctionManager );
+        initializeTableauValues( *tableau );
+
+        for ( unsigned i = 0; i < 4; ++i )
+        {
+            TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( i, 1 ) );
+            TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( i, 10 ) );
+        }
+
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 4, 210 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 4, 218 ) );
+
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 5, 112 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 5, 114 ) );
+
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 6, 300 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 6, 408 ) );
+
+        List<unsigned> basics = { 4, 5, 6 };
+        TS_ASSERT_THROWS_NOTHING( tableau->initializeTableau( basics ) );
+
+        TS_ASSERT_EQUALS( tableau->getBasicStatus( 4 ), Tableau::BETWEEN );
+        TS_ASSERT_EQUALS( tableau->getBasicStatus( 5 ), Tableau::BETWEEN );
+        TS_ASSERT_EQUALS( tableau->getBasicStatus( 6 ), Tableau::BETWEEN );
+
+        /*
+               | 3 2 1 2 1 0 0 | | x0 |   | 225 |
+          Ax = | 1 1 1 1 0 1 0 | | x1 | = | 117 | = b
+               | 4 3 3 4 0 0 1 | | x2 |   | 420 |
+                                 | x3 |
+                                 | x4 |
+                                 | x5 |
+                                 | x6 |
+
+          x4 = 225 - 3x0 - 2x1 - x2  - 2x3
+          x5 = 117 -  x0 -  x1 - x2  -  x3
+          x6 = 420 - 4x0 - 3x1 - 3x2 - 4x3
+
+        */
+
+        // Minimize x6 - x1
+        // x6 - x1 = 117 - x0 - 2x1 - x2 - x3
+
+        tableau->toggleOptimization( true );
+
+        costFunctionManager.nextCostFunction = new double[4];
+        costFunctionManager.nextCostFunction[0] = -1;
+        costFunctionManager.nextCostFunction[1] = -2;
+        costFunctionManager.nextCostFunction[2] = -1;
+        costFunctionManager.nextCostFunction[3] = -1;
+
+        costFunctionManager.nextBasicCost[0] = 0;
+        costFunctionManager.nextBasicCost[1] = 0;
+        costFunctionManager.nextBasicCost[2] = 0;
+
+        tableau->setEnteringVariableIndex( 2u );
+        TS_ASSERT( hasCandidates( *tableau ) );
+        TS_ASSERT_EQUALS( tableau->getEnteringVariable(), 2u );
+
+        // Entering variable is 2, and it needs to increase
+        // Current basic values are: 217, 113, 406
+        TS_ASSERT_EQUALS( tableau->getValue( 4 ), 217.0 );
+        TS_ASSERT_EQUALS( tableau->getValue( 5 ), 113.0 );
+        TS_ASSERT_EQUALS( tableau->getValue( 6 ), 406.0 );
+
+        double d1[] = { -1, -1, -1 };
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d1 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 1.0 );
+
+        double d2[] = { -0.5, -0.5, -0.5 };
+        // d1 scaled by 1/2
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d2 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 2.0 );
+
+        double d3[] = { 1, 1, 1 };
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d3 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 5u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 1.0 );
+
+        double d4[] = { 1, 0.1, 2 };
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d4 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 7.0 );
+
+        double d5[] = { 1, 0, 0.5 };
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d5 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 7.0 );
+
+        double d6[] = { -0.5, 0, 0.1 };
+        // Var 4 will hit its lower bound: constraint is 4
+        // Var 5 poses no constraint
+        // Var 6 will hit its upper bound: constraint is 40
+        TS_ASSERT_THROWS_NOTHING( tableau->pickLeavingVariable( d6 ) );
+        TS_ASSERT_EQUALS( tableau->getLeavingVariable(), 4u );
+        TS_ASSERT_EQUALS( tableau->getChangeRatio(), 2.0 );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         double d7[] = { 1, 0, 0.00001 };
         // The entering variable (2) can change by 9 at most. Here
         // this will be the bound.

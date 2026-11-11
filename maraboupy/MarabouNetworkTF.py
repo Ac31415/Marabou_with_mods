@@ -109,6 +109,10 @@ class MarabouNetworkTF(MarabouNetwork.MarabouNetwork):
 
             # Read SavedModel format created by tensorflow version 2.X
             sess = tf.compat.v1.Session()
+<<<<<<< HEAD
+=======
+            # print("Loading SavedModel from", filename)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             loaded = tf.saved_model.load(filename)
             model = loaded.signatures[savedModelTags[0]]
 

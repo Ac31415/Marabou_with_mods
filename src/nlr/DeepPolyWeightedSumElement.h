@@ -20,6 +20,10 @@
 #include "Layer.h"
 #include "MStringf.h"
 #include "NLRError.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <climits>
 
 namespace NLR {
@@ -27,11 +31,15 @@ namespace NLR {
 class DeepPolyWeightedSumElement : public DeepPolyElement
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     DeepPolyWeightedSumElement( Layer *layer );
     ~DeepPolyWeightedSumElement();
 
     void execute( const Map<unsigned, DeepPolyElement *> &deepPolyElements );
+<<<<<<< HEAD
     void symbolicBoundInTermsOfPredecessor
     ( const double *symbolicLb, const double*symbolicUb, double
       *symbolicLowerBias, double *symbolicUpperBias, double
@@ -40,6 +48,18 @@ public:
 
 private:
 
+=======
+    void symbolicBoundInTermsOfPredecessor( const double *symbolicLb,
+                                            const double *symbolicUb,
+                                            double *symbolicLowerBias,
+                                            double *symbolicUpperBias,
+                                            double *symbolicLbInTermsOfPredecessor,
+                                            double *symbolicUbInTermsOfPredecessor,
+                                            unsigned targetLayerSize,
+                                            DeepPolyElement *predecessor );
+
+private:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     /*
       Memory allocated to store concrete bounds computed at different stages
       of back substitution.
@@ -47,21 +67,33 @@ private:
     double *_workLb;
     double *_workUb;
 
+<<<<<<< HEAD
     Set<unsigned>  _residualLayerIndices;
     Map<unsigned, double *>  _residualLb;
     Map<unsigned, double *>  _residualUb;
+=======
+    Set<unsigned> _residualLayerIndices;
+    Map<unsigned, double *> _residualLb;
+    Map<unsigned, double *> _residualUb;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Compute the concrete upper- and lower- bounds of this layer by concretizing
       the symbolic bounds with respect to every preceding element.
     */
+<<<<<<< HEAD
     void computeBoundWithBackSubstitution( const Map<unsigned, DeepPolyElement *>
                                            &deepPolyElementsBefore );
+=======
+    void computeBoundWithBackSubstitution(
+        const Map<unsigned, DeepPolyElement *> &deepPolyElementsBefore );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Compute concrete bounds using symbolic bounds with respect to a
       sourceElement.
     */
+<<<<<<< HEAD
     void concretizeSymbolicBound( const double *symbolicLb, const double
                                   *symbolicUb, const double *symbolicLowerBias,
                                   const double *symbolicUpperBias,
@@ -71,6 +103,17 @@ private:
 
     void concretizeSymbolicBoundForSourceLayer( const double *symbolicLb,
                                                 const double*symbolicUb,
+=======
+    void concretizeSymbolicBound( const double *symbolicLb,
+                                  const double *symbolicUb,
+                                  const double *symbolicLowerBias,
+                                  const double *symbolicUpperBias,
+                                  DeepPolyElement *sourceElement,
+                                  const Map<unsigned, DeepPolyElement *> &deepPolyElementsBefore );
+
+    void concretizeSymbolicBoundForSourceLayer( const double *symbolicLb,
+                                                const double *symbolicUb,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                                 const double *symbolicLowerBias,
                                                 const double *symbolicUpperBias,
                                                 DeepPolyElement *sourceElement );

@@ -2,7 +2,11 @@
 /*! \file Test_max.h
  ** \verbatim
  ** Top contributors (to current version):
+<<<<<<< HEAD
  **   Derek Huang, Guy Katz, Duligur Ibeling	
+=======
+ **   Derek Huang, Guy Katz, Duligur Ibeling
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
  ** This file is part of the Marabou project.
  ** Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
  ** in the top-level source directory) and their institutional affiliations.
@@ -12,18 +16,29 @@
 
  **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InputQuery.h"
 #include "MaxConstraint.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class MaxTestSuite : public CxxTest::TestSuite
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void setUp()
     {
     }
@@ -32,13 +47,21 @@ public:
     {
     }
 
+<<<<<<< HEAD
     void test_max_infeasible() 
+=======
+    void test_max_infeasible()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         double large = 1000;
 
         InputQuery inputQuery;
         inputQuery.setNumberOfVariables( 9 );
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.setLowerBound( 0, -large );
         inputQuery.setUpperBound( 0, 0 );
 
@@ -63,7 +86,11 @@ public:
         inputQuery.setUpperBound( 7, 0 );
         inputQuery.setLowerBound( 8, 0 );
         inputQuery.setUpperBound( 8, 0 );
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Equation equation1;
         equation1.addAddend( 1, 0 );
         equation1.addAddend( -1, 1 );
@@ -89,8 +116,13 @@ public:
         MaxConstraint *max1 = new MaxConstraint( 5, Set<unsigned>( { 0, 2, 3 } ) );
         MaxConstraint *max2 = new MaxConstraint( 3, Set<unsigned>( { 0, 4 } ) );
 
+<<<<<<< HEAD
 		inputQuery.addPiecewiseLinearConstraint( max1 );
 		inputQuery.addPiecewiseLinearConstraint( max2 );
+=======
+        inputQuery.addPiecewiseLinearConstraint( max1 );
+        inputQuery.addPiecewiseLinearConstraint( max2 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         Engine engine;
         if ( !engine.processInputQuery( inputQuery, true ) )
@@ -105,7 +137,11 @@ public:
         }
     }
 
+<<<<<<< HEAD
     void test_max_fesible() 
+=======
+    void test_max_fesible()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         double large = 1000;
 
@@ -159,16 +195,28 @@ public:
         equation3.setScalar( 0 );
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
 		MaxConstraint *max1 = new MaxConstraint( 5, Set<unsigned>( { 0, 2, 3 } ) );
 		MaxConstraint *max2 = new MaxConstraint( 3, Set<unsigned>( { 0, 4 } ) );
 
 		inputQuery.addPiecewiseLinearConstraint( max1 );
 		inputQuery.addPiecewiseLinearConstraint( max2 );
+=======
+        MaxConstraint *max1 = new MaxConstraint( 5, Set<unsigned>( { 0, 2, 3 } ) );
+        MaxConstraint *max2 = new MaxConstraint( 3, Set<unsigned>( { 0, 4 } ) );
+
+        inputQuery.addPiecewiseLinearConstraint( max1 );
+        inputQuery.addPiecewiseLinearConstraint( max2 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         Engine engine;
         TS_ASSERT_THROWS_NOTHING( engine.processInputQuery( inputQuery, true ) )
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING ( engine.solve() );
+=======
+        TS_ASSERT_THROWS_NOTHING( engine.solve() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         engine.extractSolution( inputQuery );
 
@@ -188,19 +236,32 @@ public:
 
         TS_ASSERT( FloatUtils::areEqual( value_x3, value_x1f + value_x2f ) )
 
+<<<<<<< HEAD
         TS_ASSERT( !FloatUtils::lt( value_x0, 0 ) ) 
         TS_ASSERT( !FloatUtils::gt( value_x0, 1 ) ) 
+=======
+        TS_ASSERT( !FloatUtils::lt( value_x0, 0 ) )
+        TS_ASSERT( !FloatUtils::gt( value_x0, 1 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( !FloatUtils::lt( value_x1f, 0 ) )
         TS_ASSERT( !FloatUtils::lt( value_x3, 0.5 ) )
         TS_ASSERT( !FloatUtils::gt( value_x3, 1 ) )
         TS_ASSERT( !FloatUtils::lt( value_x2f, 0.0 ) )
 
         double x2_relu = FloatUtils::max( value_x2b, FloatUtils::max( value_x0, value_x2f ) );
+<<<<<<< HEAD
        	TS_ASSERT( FloatUtils::areEqual( x2_relu, value_x2b ) )
 
         double x1_relu = FloatUtils::max( value_x1b, FloatUtils::max( value_x0, FloatUtils::max( value_x2b, value_x1f ) ) );
 		TS_ASSERT ( FloatUtils::areEqual( x1_relu, value_x3 ) )
 
+=======
+        TS_ASSERT( FloatUtils::areEqual( x2_relu, value_x2b ) )
+
+        double x1_relu = FloatUtils::max(
+            value_x1b, FloatUtils::max( value_x0, FloatUtils::max( value_x2b, value_x1f ) ) );
+        TS_ASSERT( FloatUtils::areEqual( x1_relu, value_x3 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 };
 

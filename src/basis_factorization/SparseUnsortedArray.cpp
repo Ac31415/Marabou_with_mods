@@ -13,10 +13,18 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "SparseUnsortedArray.h"
+=======
+#include "SparseUnsortedArray.h"
+
+#include "BasisFactorizationError.h"
+#include "Debug.h"
+#include "FloatUtils.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "SparseUnsortedList.h"
 
 SparseUnsortedArray::SparseUnsortedArray()
@@ -174,7 +182,11 @@ SparseUnsortedArray &SparseUnsortedArray::operator=( const SparseUnsortedArray &
 
     _array = new Entry[_allocatedSize];
 
+<<<<<<< HEAD
     memcpy( _array, other._array, sizeof(Entry) * _nnz );
+=======
+    memcpy( _array, other._array, sizeof( Entry ) * _nnz );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     return *this;
 }
@@ -222,7 +234,11 @@ void SparseUnsortedArray::append( unsigned index, double value )
 void SparseUnsortedArray::addLastEntry( double entry )
 {
     if ( !FloatUtils::isZero( entry ) )
+<<<<<<< HEAD
          append( _maxSize, entry );
+=======
+        append( _maxSize, entry );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     ++_maxSize;
 }
 
@@ -293,7 +309,11 @@ void SparseUnsortedArray::incrementSize()
 void SparseUnsortedArray::increaseCapacity()
 {
     Entry *newArray = new Entry[_allocatedSize + CHUNK_SIZE];
+<<<<<<< HEAD
     memcpy( newArray, _array, sizeof(Entry) * _nnz );
+=======
+    memcpy( newArray, _array, sizeof( Entry ) * _nnz );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     delete[] _array;
     _array = newArray;
     _allocatedSize += CHUNK_SIZE;

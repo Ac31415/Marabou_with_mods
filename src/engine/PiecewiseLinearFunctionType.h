@@ -22,6 +22,10 @@ enum PiecewiseLinearFunctionType {
     MAX = 2,
     DISJUNCTION = 3,
     SIGN = 4,
+<<<<<<< HEAD:src/engine/PiecewiseLinearFunctionType.h
+=======
+    LEAKY_RELU = 5,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:src/engine/FreshVariables.h
 };
 
 #endif // __PiecewiseLinearFunctionType_h__

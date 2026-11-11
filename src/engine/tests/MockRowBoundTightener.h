@@ -21,10 +21,10 @@
 class MockRowBoundTightener : public IRowBoundTightener
 {
 public:
-	MockRowBoundTightener()
-	{
-		wasCreated = false;
-		wasDiscarded = false;
+    MockRowBoundTightener()
+    {
+        wasCreated = false;
+        wasDiscarded = false;
 
         setDimensionsWasCalled = false;
     }
@@ -33,6 +33,7 @@ public:
     {
     }
 
+<<<<<<< HEAD
 	bool wasCreated;
 	bool wasDiscarded;
     const ITableau *lastTableau;
@@ -43,16 +44,29 @@ public:
 		wasCreated = true;
         lastTableau = &tableau;
 	}
+=======
+    bool wasCreated;
+    bool wasDiscarded;
+    const ITableau *lastTableau;
 
-	void mockDestructor()
-	{
-		TS_ASSERT( wasCreated );
-		TS_ASSERT( !wasDiscarded );
-		wasDiscarded = true;
-	}
+    void mockConstructor( const ITableau &tableau )
+    {
+        TS_ASSERT( !wasCreated );
+        wasCreated = true;
+        lastTableau = &tableau;
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+
+    void mockDestructor()
+    {
+        TS_ASSERT( wasCreated );
+        TS_ASSERT( !wasDiscarded );
+        wasDiscarded = true;
+    }
 
     bool setDimensionsWasCalled;
     void setDimensions()
+<<<<<<< HEAD
     {
         setDimensionsWasCalled = true;
     }
@@ -71,6 +85,46 @@ public:
     void setStatistics( Statistics */* statistics */ ) {}
     void examineImplicitInvertedBasisMatrix( bool /* untilSaturation */ ) {}
     void setBoundsPointers( const double */* lower */, const double */* upper */ ) {}
+=======
+    {
+        setDimensionsWasCalled = true;
+    }
+
+    void resetBounds()
+    {
+    }
+
+    void clear()
+    {
+    }
+    void notifyLowerBound( unsigned /* variable */, double /* bound */ )
+    {
+    }
+    void notifyUpperBound( unsigned /* variable */, double /* bound */ )
+    {
+    }
+    void examineInvertedBasisMatrix( bool /* untilSaturation */ )
+    {
+    }
+    void examineConstraintMatrix( bool /* untilSaturation */ )
+    {
+    }
+    void examinePivotRow()
+    {
+    }
+    void getRowTightenings( List<Tightening> & /* tightenings */ ) const
+    {
+    }
+    void setStatistics( Statistics * /* statistics */ )
+    {
+    }
+    void examineImplicitInvertedBasisMatrix( bool /* untilSaturation */ )
+    {
+    }
+    void setBoundsPointers( const double * /* lower */, const double * /* upper */ )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __MockRowBoundTightener_h__

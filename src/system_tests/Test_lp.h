@@ -13,17 +13,28 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InputQuery.h"
 #include "LinearExpression.h"
 
+<<<<<<< HEAD
 class LpTestSuite : public CxxTest::TestSuite
 {
 public:
 
+=======
+#include <cxxtest/TestSuite.h>
+
+class LpTestSuite : public CxxTest::TestSuite
+{
+public:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void setUp()
     {
     }
@@ -56,21 +67,34 @@ public:
         equation2.setScalar( 0.5 );
         inputQuery.addEquation( equation2 );
 
+<<<<<<< HEAD
         Equation equation3( Equation:: GE );
+=======
+        Equation equation3( Equation::GE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         equation3.addAddend( 1, 1 );
         equation3.addAddend( -1, 2 );
         equation3.setScalar( 0 );
         inputQuery.addEquation( equation3 );
 
+<<<<<<< HEAD
         Equation equation4( Equation:: GE );
+=======
+        Equation equation4( Equation::GE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         equation4.addAddend( 1, 1 );
         equation4.addAddend( -1, 3 );
         equation4.setScalar( 0 );
         inputQuery.addEquation( equation4 );
 
         Engine engine;
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING ( engine.processInputQuery( inputQuery ));
         TS_ASSERT_THROWS_NOTHING ( engine.solve() );
+=======
+        TS_ASSERT_THROWS_NOTHING( engine.processInputQuery( inputQuery ) );
+        TS_ASSERT_THROWS_NOTHING( engine.solve() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Cost function: x0 - x1
         Map<unsigned, double> heuristicCost;
@@ -82,8 +106,12 @@ public:
 
         engine.extractSolution( inputQuery );
 
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost
                                          ( heuristicCost ), -0.5 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost( heuristicCost ), -0.5 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         heuristicCost.clear();
         heuristicCost[0] = -2;
@@ -95,8 +123,12 @@ public:
 
         engine.extractSolution( inputQuery );
 
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost
                                          ( cost ), -0.25 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost( cost ), -0.25 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         heuristicCost.clear();
         heuristicCost[1] = -2;
@@ -108,8 +140,12 @@ public:
 
         engine.extractSolution( inputQuery );
 
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost
                                          ( cost ), -6 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( engine.computeHeuristicCost( cost ), -6 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_fesiablbe()
@@ -138,8 +174,13 @@ public:
 
 
         Engine engine;
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING ( engine.processInputQuery( inputQuery ));
         TS_ASSERT_THROWS_NOTHING ( engine.solve() );
+=======
+        TS_ASSERT_THROWS_NOTHING( engine.processInputQuery( inputQuery ) );
+        TS_ASSERT_THROWS_NOTHING( engine.solve() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         engine.extractSolution( inputQuery );
 
@@ -152,6 +193,7 @@ public:
         double value2 = inputQuery.getSolutionValue( 2 );
         double value3 = inputQuery.getSolutionValue( 3 );
 
+<<<<<<< HEAD
         value += 1  * value0;
         value += 2  * value1;
         value += -1 * value2;
@@ -160,16 +202,32 @@ public:
         TS_ASSERT_EQUALS( value, 11 );
 
         TS_ASSERT( value0 >=  0 );
+=======
+        value += 1 * value0;
+        value += 2 * value1;
+        value += -1 * value2;
+        value += 1 * value3;
+
+        TS_ASSERT_EQUALS( value, 11 );
+
+        TS_ASSERT( value0 >= 0 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( value0 <= 2 );
         TS_ASSERT( value1 >= -3 );
         TS_ASSERT( value1 <= 3 );
         TS_ASSERT( value2 >= 4 );
         TS_ASSERT( value2 <= 6 );
         TS_ASSERT( value3 >= 0 );
+<<<<<<< HEAD
 
     }
 
     void test_infesiable() 
+=======
+    }
+
+    void test_infesiable()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         InputQuery inputQuery;
         inputQuery.setNumberOfVariables( 7 );
@@ -217,6 +275,7 @@ public:
         inputQuery.addEquation( equation3 );
 
         Engine engine;
+<<<<<<< HEAD
         bool result = engine.processInputQuery( inputQuery ) ;
         if ( !result )
         {
@@ -224,6 +283,15 @@ public:
             TS_ASSERT(1);
         }
         else 
+=======
+        bool result = engine.processInputQuery( inputQuery );
+        if ( !result )
+        {
+            // got UNSAT from the preprocessing
+            TS_ASSERT( 1 );
+        }
+        else
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             result = engine.solve();
             TS_ASSERT( !result );

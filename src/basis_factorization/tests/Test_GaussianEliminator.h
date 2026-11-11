@@ -13,13 +13,22 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "EtaMatrix.h"
 #include "FloatUtils.h"
 #include "GaussianEliminator.h"
+<<<<<<< HEAD
 #include <cstring>
+=======
+
+#include <cstring>
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class MockForGaussianEliminator
 {
@@ -50,10 +59,17 @@ public:
         {
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 result[i*m + j] = 0;
                 for ( unsigned k = 0; k < m; ++k )
                 {
                     result[i*m + j] += lu->_F[i*m + k] * lu->_V[k*m + j];
+=======
+                result[i * m + j] = 0;
+                for ( unsigned k = 0; k < m; ++k )
+                {
+                    result[i * m + j] += lu->_F[i * m + k] * lu->_V[k * m + j];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
             }
         }
@@ -69,7 +85,11 @@ public:
             printf( "\t" );
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 printf( "%8.lf ", matrix[i*m + j] );
+=======
+                printf( "%8.lf ", matrix[i * m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
             printf( "\n" );
         }
@@ -83,11 +103,18 @@ public:
         LUFactors lu4( 4 );
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 0,
                 0, 0, 1
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 0, //
+                0, 0, 1  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;
@@ -107,11 +134,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 2,
                 0, 4, 1
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 2, //
+                0, 4, 1, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;
@@ -131,11 +165,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, -4,
                 -5, 1, 2,
                 0, 4, 1
+=======
+            double A[] = {
+                2,  3, -4, //
+                -5, 1, 2,  //
+                0,  4, 1,  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;
@@ -155,12 +196,20 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, -4, 0,
                 -5, 1, 2, 2,
                 0, 4, 1, -5,
                 1, 2, 3, 4,
+=======
+            double A[] = {
+                2,  3, -4, 0,  //
+                -5, 1, 2,  2,  //
+                0,  4, 1,  -5, //
+                1,  2, 3,  4,  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;
@@ -180,11 +229,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 0,
                 5, 4, 0
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 0, //
+                5, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;
@@ -199,11 +255,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 7,
                 0, 0, 0,
                 5, 4, 0
+=======
+            double A[] = {
+                2, 3, 7, //
+                0, 0, 0, //
+                5, 4, 0  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             GaussianEliminator *ge;

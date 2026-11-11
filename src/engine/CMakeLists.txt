@@ -17,6 +17,10 @@ macro(engine_add_unit_test name)
 endmacro()
 
 engine_add_unit_test(AbsoluteValueConstraint)
+<<<<<<< HEAD
+=======
+engine_add_unit_test(BilinearConstraint)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 engine_add_unit_test(BlandsRule)
 engine_add_unit_test(BoundManager)
 engine_add_unit_test(ConstraintMatrixAnalyzer)
@@ -26,8 +30,15 @@ engine_add_unit_test(DegradationChecker)
 engine_add_unit_test(DisjunctionConstraint)
 engine_add_unit_test(DnCWorker)
 engine_add_unit_test(Engine)
+<<<<<<< HEAD
 engine_add_unit_test(InputQuery)
 engine_add_unit_test(LargestIntervalDivider)
+=======
+engine_add_unit_test(Equation)
+engine_add_unit_test(InputQuery)
+engine_add_unit_test(LargestIntervalDivider)
+engine_add_unit_test(LeakyReluConstraint)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 engine_add_unit_test(MaxConstraint)
 engine_add_unit_test(MILPEncoder)
 engine_add_unit_test(PolarityBasedDivider)
@@ -35,9 +46,17 @@ engine_add_unit_test(Preprocessor)
 engine_add_unit_test(ProjectedSteepestEdge)
 engine_add_unit_test(PseudoImpactTracker)
 engine_add_unit_test(ReluConstraint)
+<<<<<<< HEAD
 engine_add_unit_test(RowBoundTightener)
 engine_add_unit_test(SignConstraint)
 engine_add_unit_test(SigmoidConstraint)
+=======
+engine_add_unit_test(RoundConstraint)
+engine_add_unit_test(RowBoundTightener)
+engine_add_unit_test(SignConstraint)
+engine_add_unit_test(SigmoidConstraint)
+engine_add_unit_test(SoftmaxConstraint)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 engine_add_unit_test(SmtCore)
 engine_add_unit_test(SumOfInfeasibilitiesManager)
 engine_add_unit_test(Tableau)

@@ -24,7 +24,11 @@ class SparseUnsortedList;
 class IConstraintMatrixAnalyzer
 {
 public:
+<<<<<<< HEAD
     virtual ~IConstraintMatrixAnalyzer() {};
+=======
+    virtual ~IConstraintMatrixAnalyzer(){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     virtual void analyze( const double *matrix, unsigned m, unsigned n ) = 0;
     virtual void analyze( const SparseUnsortedList **matrix, unsigned m, unsigned n ) = 0;

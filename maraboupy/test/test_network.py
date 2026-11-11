@@ -1,5 +1,9 @@
 # Tests MarabouNetwork features not tested by it's subclasses
 from maraboupy import Marabou
+<<<<<<< HEAD
+=======
+from maraboupy import MarabouUtils
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 from maraboupy import MarabouCore
 import os
 import numpy as np
@@ -56,12 +60,20 @@ def test_disjunction_constraint():
 
     for var in network.inputVars[0][0]:
         # eq1: 1 * var = 0
+<<<<<<< HEAD
         eq1 = MarabouCore.Equation(MarabouCore.Equation.EQ)
+=======
+        eq1 = MarabouUtils.Equation(MarabouCore.Equation.EQ)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         eq1.addAddend(1, var)
         eq1.setScalar(0)
 
         # eq2: 1 * var = 1
+<<<<<<< HEAD
         eq2 = MarabouCore.Equation(MarabouCore.Equation.EQ)
+=======
+        eq2 = MarabouUtils.Equation(MarabouCore.Equation.EQ)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         eq2.addAddend(1, var)
         eq2.setScalar(1)
 
@@ -122,6 +134,7 @@ def test_concat():
     filename =  "concat/concat_axis_0.onnx"
     network = loadNetworkInONNX(filename)
 
+<<<<<<< HEAD
     # Y = concat(X1, X2) + X3
     assert network.shapeMap['X1'] == [2, 2, 2]
     assert network.shapeMap['X2'] == [2, 2, 2]
@@ -131,6 +144,17 @@ def test_concat():
     inputVars = network.inputVars
     outputVars = network.outputVars[0]
 
+=======
+    inputVars = network.inputVars
+    outputVars = network.outputVars[0]
+
+    # Y = concat(X1, X2) + X3
+    assert inputVars[0].shape == (2, 2, 2)
+    assert inputVars[1].shape == (2, 2, 2)
+    assert inputVars[2].shape == (4, 2, 2)
+    assert outputVars.shape == (4, 2, 2)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     # set bounds for X1 and X2
     num = 1
     for i in range(len(inputVars[0])):
@@ -171,6 +195,7 @@ def test_concat():
     filename =  "concat/concat_axis_1.onnx"
     network = loadNetworkInONNX(filename)
 
+<<<<<<< HEAD
     # Y = concat(X1, X2) + X3
     assert network.shapeMap['X1'] == [2, 2, 2]
     assert network.shapeMap['X2'] == [2, 2, 2]
@@ -180,6 +205,17 @@ def test_concat():
     inputVars = network.inputVars
     outputVars = network.outputVars[0]
 
+=======
+    inputVars = network.inputVars
+    outputVars = network.outputVars[0]
+
+    # Y = concat(X1, X2) + X3
+    assert inputVars[0].shape == (2, 2, 2)
+    assert inputVars[1].shape == (2, 2, 2)
+    assert inputVars[2].shape == (2, 4, 2)
+    assert outputVars.shape == (2, 4, 2)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     # set bounds for X1 and X2
     num = 1
     for i in range(len(inputVars[0])):
@@ -220,6 +256,7 @@ def test_concat():
     filename =  "concat/concat_axis_2.onnx"
     network = loadNetworkInONNX(filename)
 
+<<<<<<< HEAD
     # Y = concat(X1, X2) + X3
     assert network.shapeMap['X1'] == [2, 2, 2]
     assert network.shapeMap['X2'] == [2, 2, 2]
@@ -229,6 +266,17 @@ def test_concat():
     inputVars = network.inputVars
     outputVars = network.outputVars[0]
 
+=======
+    inputVars = network.inputVars
+    outputVars = network.outputVars[0]
+
+    # Y = concat(X1, X2) + X3
+    assert inputVars[0].shape == (2, 2, 2)
+    assert inputVars[1].shape == (2, 2, 2)
+    assert inputVars[2].shape == (2, 2, 4)
+    assert outputVars.shape == (2, 2, 4)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     # set bounds for X1 and X2
     num = 1
     for i in range(len(inputVars[0])):
@@ -278,11 +326,20 @@ def test_split():
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y1')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [6]
     assert network.shapeMap['Y1'] == (2,)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (6,)
+    assert outputVars.shape == (2,)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         network.setLowerBound(inputVars[i], i + 1)
         network.setUpperBound(inputVars[i], i + 1)
@@ -292,11 +349,20 @@ def test_split():
 
     # output2
     network = loadNetworkInONNX(filename, outputName='Y2')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [6]
     assert network.shapeMap['Y2'] == (2,)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (6,)
+    assert outputVars.shape == (2,)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         network.setLowerBound(inputVars[i], i + 1)
         network.setUpperBound(inputVars[i], i + 1)
@@ -306,11 +372,20 @@ def test_split():
 
     # output3
     network = loadNetworkInONNX(filename, outputName='Y3')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [6]
     assert network.shapeMap['Y3'] == (2,)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (6,)
+    assert outputVars.shape == (2,)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         network.setLowerBound(inputVars[i], i + 1)
         network.setUpperBound(inputVars[i], i + 1)
@@ -319,17 +394,30 @@ def test_split():
     assert abs(vals[outputVars[1]] - 18.0) < TOL
 
     # input: 1d
+<<<<<<< HEAD
     # split: [2, 4] (array)
+=======
+    # split: (2, 4) (array)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     # axis: 0
     filename =  'split/split_1d_split-2-4_axis-0.onnx'
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y1')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [6]
     assert network.shapeMap['Y1'] == (2,)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (6,)
+    assert outputVars.shape == (2,)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         network.setLowerBound(inputVars[i], i + 1)
         network.setUpperBound(inputVars[i], i + 1)
@@ -339,11 +427,20 @@ def test_split():
 
     # output2
     network = loadNetworkInONNX(filename, outputName='Y2')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [6]
     assert network.shapeMap['Y2'] == (4,)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (6,)
+    assert outputVars.shape == (4,)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         network.setLowerBound(inputVars[i], i + 1)
         network.setUpperBound(inputVars[i], i + 1)
@@ -360,11 +457,20 @@ def test_split():
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y1')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [2, 6]
     assert network.shapeMap['Y1'] == (2, 3)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (2, 6)
+    assert outputVars.shape == (2, 3)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         for j in range(len(inputVars[i])):
             network.setLowerBound(inputVars[i][j], (len(inputVars[i])) * i + j + 1)
@@ -379,11 +485,20 @@ def test_split():
 
     # output2
     network = loadNetworkInONNX(filename, outputName='Y2')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [2, 6]
     assert network.shapeMap['Y2'] == (2, 3)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (2, 6)
+    assert outputVars.shape == (2, 3)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         for j in range(len(inputVars[i])):
             network.setLowerBound(inputVars[i][j], (len(inputVars[i])) * i + j + 1)
@@ -403,11 +518,20 @@ def test_split():
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y1')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [2, 6]
     assert network.shapeMap['Y1'] == (2, 2)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (2, 6)
+    assert outputVars.shape == (2, 2)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         for j in range(len(inputVars[i])):
             network.setLowerBound(inputVars[i][j], (len(inputVars[i])) * i + j + 1)
@@ -420,11 +544,20 @@ def test_split():
 
     # output2
     network = loadNetworkInONNX(filename, outputName='Y2')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [2, 6]
     assert network.shapeMap['Y2'] == (2, 4)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (2, 6)
+    assert outputVars.shape == (2, 4)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(len(inputVars)):
         for j in range(len(inputVars[i])):
             network.setLowerBound(inputVars[i][j], (len(inputVars[i])) * i + j + 1)
@@ -447,11 +580,20 @@ def test_split():
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y1')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [1, 1, 1, 1, 85]
     assert network.shapeMap['Y1'] == (1, 1, 1, 1, 2)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (1, 1, 1, 1, 85)
+    assert outputVars.shape == (1, 1, 1, 1, 2)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(85):
         network.setLowerBound(inputVars[0][0][0][0][i], i + 1)
         network.setUpperBound(inputVars[0][0][0][0][i], i + 1)
@@ -461,11 +603,20 @@ def test_split():
 
     # output2
     network = loadNetworkInONNX(filename, outputName='Y2')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [1, 1, 1, 1, 85]
     assert network.shapeMap['Y2'] == (1, 1, 1, 1, 2)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (1, 1, 1, 1, 85)
+    assert outputVars.shape == (1, 1, 1, 1, 2)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(85):
         network.setLowerBound(inputVars[0][0][0][0][i], i + 1)
         network.setUpperBound(inputVars[0][0][0][0][i], i + 1)
@@ -475,11 +626,20 @@ def test_split():
 
     # output3
     network = loadNetworkInONNX(filename, outputName='Y3')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [1, 1, 1, 1, 85]
     assert network.shapeMap['Y3'] == (1, 1, 1, 1, 81)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (1, 1, 1, 1, 85)
+    assert outputVars.shape == (1, 1, 1, 1, 81)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(85):
         network.setLowerBound(inputVars[0][0][0][0][i], i + 1)
         network.setUpperBound(inputVars[0][0][0][0][i], i + 1)
@@ -496,11 +656,20 @@ def test_split():
 
     # output1
     network = loadNetworkInONNX(filename, outputName='Y')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [1, 1, 1, 1, 85]
     assert network.shapeMap['Y'] == (1, 1, 1, 1, 85)
 
     inputVars = network.inputVars[0]
     outputVars = network.outputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (1, 1, 1, 1, 85)
+    assert outputVars.shape == (1, 1, 1, 1, 85)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for i in range(85):
         network.setLowerBound(inputVars[0][0][0][0][i], i + 1)
         network.setUpperBound(inputVars[0][0][0][0][i], i + 1)
@@ -516,10 +685,19 @@ def test_resize():
     filename =  'resize/resize_4dims.onnx'
 
     network = loadNetworkInONNX(filename, outputName='Y')
+<<<<<<< HEAD
     assert network.shapeMap['X'] == [1, 3, 2, 2]
     assert network.shapeMap['Y'] == (1, 3, 4, 4)
 
     inputVars = network.inputVars[0]
+=======
+
+    inputVars = network.inputVars[0]
+    outputVars = network.outputVars[0]
+    assert inputVars.shape == (1, 3, 2, 2)
+    assert outputVars.shape == (1, 3, 4, 4)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     inputValues = np.array(
         [[[[ 1.,  2.],
           [ 3.,  4.]],
@@ -541,7 +719,10 @@ def test_resize():
     # solve
     _, vals, _ = network.solve(options = options)
 
+<<<<<<< HEAD
     outputVars = network.outputVars[0]
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     expectedOutputValues = np.array(
         [[[[ 1.,  1.,  2.,  2.],
           [ 1.,  1.,  2.,  2.],

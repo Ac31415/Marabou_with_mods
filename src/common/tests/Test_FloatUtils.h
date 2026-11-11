@@ -13,10 +13,15 @@
  **
  ** [[ Add lengthier description here ]]
  **/
+<<<<<<< HEAD
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include "FloatUtils.h"
+
+#include <cxxtest/TestSuite.h>
 #include <math.h>
 
 #ifdef _WIN32
@@ -93,12 +98,18 @@ public:
         float zero = 0.0;
         TS_ASSERT( FloatUtils::isInf( 5.0 / zero ) );
     }
-};
 
-//
-// Local Variables:
-// compile-command: "make -C ../../.. "
-// tags-file-name: "../../../TAGS"
-// c-basic-offset: 4
-// End:
-//
+    void test_round()
+    {
+        TS_ASSERT_EQUALS( FloatUtils::round( 0.5 ), 0 );
+        TS_ASSERT_EQUALS( FloatUtils::round( -0.5 ), 0 );
+        TS_ASSERT_EQUALS( FloatUtils::round( 1.51 ), 2 );
+        TS_ASSERT_EQUALS( FloatUtils::round( 1.49 ), 1 );
+        TS_ASSERT_EQUALS( FloatUtils::round( 1.5 ), 2 );
+        TS_ASSERT_EQUALS( FloatUtils::round( 2.5 ), 2 );
+        TS_ASSERT_EQUALS( FloatUtils::round( -1.51 ), -2 );
+        TS_ASSERT_EQUALS( FloatUtils::round( -1.49 ), -1 );
+        TS_ASSERT_EQUALS( FloatUtils::round( -1.5 ), -2 );
+        TS_ASSERT_EQUALS( FloatUtils::round( -2.5 ), -2 );
+    }
+};

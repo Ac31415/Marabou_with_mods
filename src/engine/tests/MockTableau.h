@@ -21,18 +21,23 @@
 #include "FloatUtils.h"
 #include "ITableau.h"
 #include "Map.h"
+<<<<<<< HEAD
+=======
+#include "MockBoundManager.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "SparseUnsortedList.h"
 #include "TableauRow.h"
+#include "context/context.h"
 
 #include <cstring>
 
 class MockTableau : public ITableau
 {
 public:
-	MockTableau()
-	{
-		wasCreated = false;
-		wasDiscarded = false;
+    MockTableau()
+    {
+        wasCreated = false;
+        wasDiscarded = false;
 
         setDimensionsCalled = false;
         lastRightHandSide = NULL;
@@ -128,7 +133,7 @@ public:
         lastRightHandSide = new double[m];
         lastM = m;
         lastN = n;
-        lastEntries = new double[m*n];
+        lastEntries = new double[m * n];
         std::fill( lastEntries, lastEntries + ( n * m ), 0.0 );
 
         nextCostFunction = new double[n - m];
@@ -149,15 +154,19 @@ public:
     void setConstraintMatrix( const double *A )
     {
         TS_ASSERT( setDimensionsCalled );
+<<<<<<< HEAD
         memcpy( lastEntries, A, sizeof(double) * lastM * lastN );
+=======
+        memcpy( lastEntries, A, sizeof( double ) * lastM * lastN );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     double *lastRightHandSide;
-    void setRightHandSide( const double * b )
+    void setRightHandSide( const double *b )
     {
         TS_ASSERT( setDimensionsCalled );
         TS_ASSERT( !initializeTableauCalled );
-        memcpy( lastRightHandSide, b, sizeof(double) * lastM );
+        memcpy( lastRightHandSide, b, sizeof( double ) * lastM );
     }
 
     void setRightHandSide( unsigned index, double value )
@@ -205,7 +214,11 @@ public:
     Map<unsigned, double> lowerBounds;
     double getLowerBound( unsigned variable ) const
     {
+<<<<<<< HEAD
         //return _boundManager->getLowerBound( variable );
+=======
+        // return _boundManager->getLowerBound( variable );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return lowerBounds[variable];
     }
 
@@ -218,7 +231,11 @@ public:
     Map<unsigned, double> upperBounds;
     double getUpperBound( unsigned variable ) const
     {
+<<<<<<< HEAD
         //return _boundManager->getLowerBound( variable );
+=======
+        // return _boundManager->getLowerBound( variable );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return upperBounds[variable];
     }
 
@@ -242,21 +259,36 @@ public:
     {
         for ( auto it : lowerBounds.keys() )
         {
-            if ( lowerBounds.exists(it) &&
-                !FloatUtils::lte( lowerBounds[it], upperBounds[it] ) )
-                    return false;
+            if ( lowerBounds.exists( it ) && !FloatUtils::lte( lowerBounds[it], upperBounds[it] ) )
+                return false;
         }
         return true;
     }
 
-    unsigned getBasicStatus( unsigned /* basic */ ) { return 0; }
-    unsigned getBasicStatusByIndex( unsigned /* basicIndex */ ) { return 0; }
+    unsigned getBasicStatus( unsigned /* basic */ )
+    {
+        return 0;
+    }
+    unsigned getBasicStatusByIndex( unsigned /* basicIndex */ )
+    {
+        return 0;
+    }
 
-    bool existsBasicOutOfBounds() const { return false; }
-    void computeBasicStatus() {}
-    void computeBasicStatus( unsigned /* basic */ ) {}
-    bool pickEnteringVariable( EntrySelectionStrategy */* strategy */ ) { return false; }
-    bool eligibleForEntry( unsigned nonBasic, const double */* costFunction */ ) const
+    bool existsBasicOutOfBounds() const
+    {
+        return false;
+    }
+    void computeBasicStatus()
+    {
+    }
+    void computeBasicStatus( unsigned /* basic */ )
+    {
+    }
+    bool pickEnteringVariable( EntrySelectionStrategy * /* strategy */ )
+    {
+        return false;
+    }
+    bool eligibleForEntry( unsigned nonBasic, const double * /* costFunction */ ) const
     {
         return mockCandidates.exists( nonBasic );
     }
@@ -273,8 +305,10 @@ public:
         return nextEnteringVariableIndex;
     }
 
-    void pickLeavingVariable() {};
-    void pickLeavingVariable( double */* d */ ) {}
+    void pickLeavingVariable(){};
+    void pickLeavingVariable( double * /* d */ )
+    {
+    }
 
     unsigned mockLeavingVariable;
     void setLeavingVariableIndex( unsigned basic )
@@ -297,16 +331,35 @@ public:
         return mockLeavingVariable;
     }
 
+<<<<<<< HEAD
     double getChangeRatio() const { return 0; }
     void setChangeRatio( double /* changeRatio */ ) {}
 
     void performPivot() {}
+=======
+    double getChangeRatio() const
+    {
+        return 0;
+    }
+    void setChangeRatio( double /* changeRatio */ )
+    {
+    }
+
+    void performPivot()
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     bool performingFakePivot() const
     {
         return false;
     }
 
-    double ratioConstraintPerBasic( unsigned /* basicIndex */, double /* coefficient */, bool /* decrease */ ) { return 0;}
+    double ratioConstraintPerBasic( unsigned /* basicIndex */,
+                                    double /* coefficient */,
+                                    bool /* decrease */ )
+    {
+        return 0;
+    }
 
     Set<unsigned> nextIsBasic;
     bool isBasic( unsigned variable ) const
@@ -314,9 +367,16 @@ public:
         return nextIsBasic.exists( variable );
     }
 
-    void setNonBasicAssignment( unsigned /* variable */, double /* value */, bool /* updateBasics */ ) {}
-    void computeCostFunction() {}
-    void computeReducedCost (unsigned /* variable */) {}
+    void
+    setNonBasicAssignment( unsigned /* variable */, double /* value */, bool /* updateBasics */ )
+    {
+    }
+    void computeCostFunction()
+    {
+    }
+    void computeReducedCost( unsigned /* variable */ )
+    {
+    }
 
     double *nextCostFunction;
     const double *getCostFunction() const
@@ -359,7 +419,9 @@ public:
         return nextBasicTooLow.exists( basic );
     }
 
-    void computeChangeColumn() {}
+    void computeChangeColumn()
+    {
+    }
 
     double *nextChangeColumn;
     const double *getChangeColumn() const
@@ -382,6 +444,7 @@ public:
         return nextPivotRow;
     }
 
+<<<<<<< HEAD
     void computeAssignment() {}
     bool checkValueWithinBounds( unsigned variable, double value ){
         return FloatUtils::gte( value, getLowerBound( variable ) ) && FloatUtils::lte( value, getUpperBound( variable ) );
@@ -389,6 +452,25 @@ public:
     void dump() const {}
     void dumpAssignment() {}
     void dumpEquations() {}
+=======
+    void computeAssignment()
+    {
+    }
+    bool checkValueWithinBounds( unsigned variable, double value )
+    {
+        return FloatUtils::gte( value, getLowerBound( variable ) ) &&
+               FloatUtils::lte( value, getUpperBound( variable ) );
+    }
+    void dump() const
+    {
+    }
+    void dumpAssignment()
+    {
+    }
+    void dumpEquations()
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     Map<unsigned, unsigned> nextNonBasicIndexToVariable;
     unsigned nonBasicIndexToVariable( unsigned index ) const
@@ -412,7 +494,11 @@ public:
     }
 
     unsigned nextAuxVar;
+<<<<<<< HEAD
     unsigned addEquation( const Equation &/* equation */ )
+=======
+    unsigned addEquation( const Equation & /* equation */ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         return nextAuxVar;
     }
@@ -473,6 +559,7 @@ public:
 
     double *A;
     void getSparseARow( unsigned row, SparseUnsortedList *result ) const
+<<<<<<< HEAD
     {
         double *temp = new double[lastN];
 
@@ -489,6 +576,24 @@ public:
     mutable SparseUnsortedList sparseRow;
     const SparseUnsortedList *getSparseARow( unsigned row ) const
     {
+=======
+    {
+        double *temp = new double[lastN];
+
+        for ( unsigned i = 0; i < lastN; ++i )
+        {
+            temp[i] = A[row * lastN + i];
+        }
+
+        result->initialize( temp, lastN );
+
+        delete[] temp;
+    }
+
+    mutable SparseUnsortedList sparseRow;
+    const SparseUnsortedList *getSparseARow( unsigned row ) const
+    {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sparseRow.initialize( A + ( row * lastN ), lastN );
         return &sparseRow;
     }
@@ -497,6 +602,7 @@ public:
     {
     }
 
+<<<<<<< HEAD
     void storeState( TableauState &/* state */,
                      TableauStateStorageLevel /*level*/ ) const
     {
@@ -504,6 +610,13 @@ public:
 
     void restoreState( const TableauState &/* state */,
                        TableauStateStorageLevel /*level*/ )
+=======
+    void storeState( TableauState & /* state */, TableauStateStorageLevel /*level*/ ) const
+    {
+    }
+
+    void restoreState( const TableauState & /* state */, TableauStateStorageLevel /*level*/ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 
@@ -519,18 +632,29 @@ public:
         tightenedUpperBounds[variable] = value;
     }
 
+<<<<<<< HEAD
     void setBoundsPointers( const double */*lower*/, const double */*upper*/ )
     {
     }
 
     void applySplit( const PiecewiseLinearCaseSplit &/* split */)
+=======
+    void setBoundsPointers( const double * /*lower*/, const double * /*upper*/ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 
-    void registerToWatchAllVariables( VariableWatcher */* watcher */ )
+    void applySplit( const PiecewiseLinearCaseSplit & /* split */ )
     {
     }
 
+<<<<<<< HEAD
+=======
+    void registerToWatchAllVariables( VariableWatcher * /* watcher */ )
+    {
+    }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     Set<ResizeWatcher *> lastResizeWatchers;
     void registerResizeWatcher( ResizeWatcher *watcher )
     {
@@ -560,11 +684,19 @@ public:
     {
     }
 
+<<<<<<< HEAD
     void setGurobi( GurobiWrapper */* gurobi */ )
     {
     }
 
     void setStatistics( Statistics */* statistics */ )
+=======
+    void setGurobi( GurobiWrapper * /* gurobi */ )
+    {
+    }
+
+    void setStatistics( Statistics * /* statistics */ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 
@@ -574,14 +706,16 @@ public:
         return b;
     }
 
-    void forwardTransformation( const double *, double * ) const {}
+    void forwardTransformation( const double *, double * ) const
+    {
+    }
 
     mutable double *lastBtranInput;
     double *nextBtranOutput;
     void backwardTransformation( const double *input, double *output ) const
     {
-        memcpy( lastBtranInput, input, lastM * sizeof(double) );
-        memcpy( output, nextBtranOutput, lastM * sizeof(double) );
+        memcpy( lastBtranInput, input, lastM * sizeof( double ) );
+        memcpy( output, nextBtranOutput, lastM * sizeof( double ) );
     }
 
     double getSumOfInfeasibilities() const
@@ -603,10 +737,24 @@ public:
     }
 
     double *getInverseBasisMatrix() const
+<<<<<<< HEAD
     {
         return NULL;
     }
 
+    void refreshBasisFactorization()
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+    {
+        return NULL;
+    }
+
+<<<<<<< HEAD
+    void mergeColumns( unsigned /* x1 */, unsigned /* x2 */ )
+    {
+    }
+
+=======
     void refreshBasisFactorization()
     {
     }
@@ -615,6 +763,7 @@ public:
     {
     }
 
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     unsigned lastLinearlyDependentX1;
     unsigned lastLinearlyDependentX2;
     double nextLinearlyDependentCoefficient;
@@ -624,7 +773,10 @@ public:
                                double &coefficient,
                                double &inverseCoefficient )
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         lastLinearlyDependentX1 = x1;
         lastLinearlyDependentX2 = x2;
 
@@ -639,7 +791,13 @@ public:
         return 0;
     }
 
+<<<<<<< HEAD
     void postContextPopHook() {}
+=======
+    void postContextPopHook()
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     IBoundManager *_boundManager;
     IBoundManager &getBoundManager() const

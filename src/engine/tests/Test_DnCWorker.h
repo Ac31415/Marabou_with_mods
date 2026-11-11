@@ -13,17 +13,27 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
 #include "DnCWorker.h"
 #include "MockEngine.h"
 
+=======
+#include "DnCWorker.h"
+#include "MockEngine.h"
+
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <string.h>
 
 class DnCWorkerTestSuite : public CxxTest::TestSuite
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     WorkerQueue *_workload;
     std::shared_ptr<MockEngine> _engine;
 
@@ -79,8 +89,12 @@ public:
 
         SubQuery *subQuery = new SubQuery;
 
+<<<<<<< HEAD
         auto split = std::unique_ptr<PiecewiseLinearCaseSplit>
             ( new PiecewiseLinearCaseSplit );
+=======
+        auto split = std::unique_ptr<PiecewiseLinearCaseSplit>( new PiecewiseLinearCaseSplit );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Tightening bound1( 1, -2.0, Tightening::LB );
         Tightening bound2( 1, 2.0, Tightening::UB );
         Tightening bound3( 2, 3.0, Tightening::LB );
@@ -125,9 +139,22 @@ public:
         SnCDivideStrategy divideStrategy = SnCDivideStrategy::LargestInterval;
         unsigned verbosity = 0;
         bool portfolio = false;
+<<<<<<< HEAD
         DnCWorker dncWorker( _workload, _engine, numUnsolvedSubQueries,
                              shouldQuitSolving, threadId, onlineDivides,
                              timeoutFactor, divideStrategy, verbosity, portfolio );
+=======
+        DnCWorker dncWorker( _workload,
+                             _engine,
+                             numUnsolvedSubQueries,
+                             shouldQuitSolving,
+                             threadId,
+                             onlineDivides,
+                             timeoutFactor,
+                             divideStrategy,
+                             verbosity,
+                             portfolio );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         dncWorker.popOneSubQueryAndSolve();
         TS_ASSERT( _engine->getExitCode() == IEngine::TIMEOUT );
@@ -147,12 +174,27 @@ public:
         createPlaceHolderSubQuery();
         createPlaceHolderSubQuery();
         _engine->setExitCode( IEngine::UNSAT );
+<<<<<<< HEAD
         numUnsolvedSubQueries= 2;
         shouldQuitSolving= false;
 		dncWorker = DnCWorker( _workload, _engine, numUnsolvedSubQueries,
                                        shouldQuitSolving, threadId, onlineDivides,
                                        timeoutFactor, divideStrategy, verbosity,
                                        portfolio );
+=======
+        numUnsolvedSubQueries = 2;
+        shouldQuitSolving = false;
+        dncWorker = DnCWorker( _workload,
+                               _engine,
+                               numUnsolvedSubQueries,
+                               shouldQuitSolving,
+                               threadId,
+                               onlineDivides,
+                               timeoutFactor,
+                               divideStrategy,
+                               verbosity,
+                               portfolio );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         dncWorker.popOneSubQueryAndSolve();
         TS_ASSERT( _engine->getExitCode() == IEngine::UNSAT );
@@ -173,12 +215,27 @@ public:
 
         createPlaceHolderSubQuery();
         _engine->setExitCode( IEngine::UNSAT );
+<<<<<<< HEAD
         numUnsolvedSubQueries= 1;
         shouldQuitSolving= false;
 
         dncWorker = DnCWorker( _workload, _engine, numUnsolvedSubQueries,
                                shouldQuitSolving, threadId, onlineDivides,
                                timeoutFactor, divideStrategy, verbosity,
+=======
+        numUnsolvedSubQueries = 1;
+        shouldQuitSolving = false;
+
+        dncWorker = DnCWorker( _workload,
+                               _engine,
+                               numUnsolvedSubQueries,
+                               shouldQuitSolving,
+                               threadId,
+                               onlineDivides,
+                               timeoutFactor,
+                               divideStrategy,
+                               verbosity,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                portfolio );
 
         dncWorker.popOneSubQueryAndSolve();
@@ -199,12 +256,27 @@ public:
 
         createPlaceHolderSubQuery();
         _engine->setExitCode( IEngine::SAT );
+<<<<<<< HEAD
         numUnsolvedSubQueries=( 1 );
         shouldQuitSolving=( false );
 		dncWorker = DnCWorker( _workload, _engine, numUnsolvedSubQueries,
                                        shouldQuitSolving, threadId, onlineDivides,
                                        timeoutFactor, divideStrategy, verbosity,
                                        portfolio);
+=======
+        numUnsolvedSubQueries = ( 1 );
+        shouldQuitSolving = ( false );
+        dncWorker = DnCWorker( _workload,
+                               _engine,
+                               numUnsolvedSubQueries,
+                               shouldQuitSolving,
+                               threadId,
+                               onlineDivides,
+                               timeoutFactor,
+                               divideStrategy,
+                               verbosity,
+                               portfolio );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         dncWorker.popOneSubQueryAndSolve();
         TS_ASSERT( _engine->getExitCode() == IEngine::SAT );
@@ -223,12 +295,27 @@ public:
 
         createPlaceHolderSubQuery();
         _engine->setExitCode( IEngine::QUIT_REQUESTED );
+<<<<<<< HEAD
         numUnsolvedSubQueries= 1;
         shouldQuitSolving =  true;
 		dncWorker = DnCWorker( _workload, _engine, numUnsolvedSubQueries,
                                        shouldQuitSolving, threadId, onlineDivides,
                                        timeoutFactor, divideStrategy, verbosity,
                                        portfolio );
+=======
+        numUnsolvedSubQueries = 1;
+        shouldQuitSolving = true;
+        dncWorker = DnCWorker( _workload,
+                               _engine,
+                               numUnsolvedSubQueries,
+                               shouldQuitSolving,
+                               threadId,
+                               onlineDivides,
+                               timeoutFactor,
+                               divideStrategy,
+                               verbosity,
+                               portfolio );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         dncWorker.popOneSubQueryAndSolve();
         TS_ASSERT( _engine->getExitCode() == IEngine::QUIT_REQUESTED );
         TS_ASSERT( numUnsolvedSubQueries.load() == 1 );
@@ -245,6 +332,7 @@ public:
 
         createPlaceHolderSubQuery();
         _engine->setExitCode( IEngine::ERROR );
+<<<<<<< HEAD
          numUnsolvedSubQueries= 1;
         shouldQuitSolving = false;
 
@@ -252,6 +340,21 @@ public:
                                        shouldQuitSolving, threadId, onlineDivides,
                                        timeoutFactor, divideStrategy, verbosity,
                                        portfolio );
+=======
+        numUnsolvedSubQueries = 1;
+        shouldQuitSolving = false;
+
+        dncWorker = DnCWorker( _workload,
+                               _engine,
+                               numUnsolvedSubQueries,
+                               shouldQuitSolving,
+                               threadId,
+                               onlineDivides,
+                               timeoutFactor,
+                               divideStrategy,
+                               verbosity,
+                               portfolio );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         dncWorker.popOneSubQueryAndSolve();
         TS_ASSERT( _engine->getExitCode() == IEngine::ERROR );

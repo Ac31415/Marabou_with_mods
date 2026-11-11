@@ -16,7 +16,9 @@
 #ifndef __Set_h__
 #define __Set_h__
 
+#include "List.h"
 #include "T/stdlib.h"
+
 #include <algorithm>
 #include <iostream>
 #include <set>
@@ -25,10 +27,15 @@
 #include <iterator>
 #endif
 
+<<<<<<< HEAD
 template<class Value>
 class Set
+=======
+template <class Value> class Set
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     typedef std::set<Value> Super;
+
 public:
     typedef typename Super::iterator iterator;
     typedef typename Super::const_iterator const_iterator;
@@ -38,7 +45,8 @@ public:
     {
     }
 
-    Set<Value>( const std::initializer_list<Value> &initializerList ) : _container( initializerList )
+    Set<Value>( const std::initializer_list<Value> &initializerList )
+        : _container( initializerList )
     {
     }
 
@@ -48,6 +56,12 @@ public:
     }
 
     void insert( const Set<Value> &other )
+    {
+        for ( auto it = other.begin(); it != other.end(); ++it )
+            _container.insert( *it );
+    }
+
+    void insert( const List<Value> &other )
     {
         for ( auto it = other.begin(); it != other.end(); ++it )
             _container.insert( *it );

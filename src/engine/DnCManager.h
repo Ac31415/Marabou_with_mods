@@ -16,19 +16,31 @@
 #ifndef __DnCManager_h__
 #define __DnCManager_h__
 
+<<<<<<< HEAD
 #include "SnCDivideStrategy.h"
 #include "Engine.h"
 #include "InputQuery.h"
+=======
+#include "Engine.h"
+#include "InputQuery.h"
+#include "SnCDivideStrategy.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "SubQuery.h"
 #include "Vector.h"
 
 #include <atomic>
 
+<<<<<<< HEAD
 #define DNC_MANAGER_LOG( x, ... ) LOG( GlobalConfiguration::DNC_MANAGER_LOGGING, "DnCManager: %s\n", x )
+=======
+#define DNC_MANAGER_LOG( x, ... )                                                                  \
+    LOG( GlobalConfiguration::DNC_MANAGER_LOGGING, "DnCManager: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class DnCManager
 {
 public:
+<<<<<<< HEAD
 
     enum DnCExitCode
         {
@@ -40,6 +52,17 @@ public:
 
             NOT_DONE = 999,
         };
+=======
+    enum DnCExitCode {
+        UNSAT = 0,
+        SAT = 1,
+        ERROR = 2,
+        TIMEOUT = 3,
+        QUIT_REQUESTED = 4,
+
+        NOT_DONE = 999,
+    };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     DnCManager( InputQuery *inputQuery );
 
@@ -68,14 +91,29 @@ public:
     void printResult();
 
     /*
+<<<<<<< HEAD
       Store the solution into the map
     */
     void getSolution( std::map<int, double> &ret, InputQuery &inputQuery );
 
+=======
+      Store the solution into the map and the input query
+
+      NOTE: Currently used in the Python API
+    */
+    void getSolution( std::map<int, double> &ret, InputQuery &inputQuery );
+
+    /*
+      Store the solution into the input query
+    */
+    void extractSolution( InputQuery &inputQuery );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 private:
     /*
       Create and run a DnCWorker
     */
+<<<<<<< HEAD
     static void dncSolve( WorkerQueue *workload, std::shared_ptr<Engine> engine,
                           std::unique_ptr<InputQuery> inputQuery,
                           std::atomic_int &numUnsolvedSubQueries,
@@ -84,6 +122,21 @@ private:
                           float timeoutFactor, SnCDivideStrategy divideStrategy,
                           bool restoreTreeStates, unsigned verbosity,
                           unsigned seed, bool parallelDeepSoI );
+=======
+    static void dncSolve( WorkerQueue *workload,
+                          std::shared_ptr<Engine> engine,
+                          std::unique_ptr<InputQuery> inputQuery,
+                          std::atomic_int &numUnsolvedSubQueries,
+                          std::atomic_bool &shouldQuitSolving,
+                          unsigned threadId,
+                          unsigned onlineDivides,
+                          float timeoutFactor,
+                          SnCDivideStrategy divideStrategy,
+                          bool restoreTreeStates,
+                          unsigned verbosity,
+                          unsigned seed,
+                          bool parallelDeepSoI );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Create the base engine from the network and property files,
@@ -106,8 +159,12 @@ private:
     /*
       Set _timeoutReached to true if timeout has been reached
     */
+<<<<<<< HEAD
     void updateTimeoutReached( timespec startTime,
                                unsigned long long timeoutInMicroSeconds );
+=======
+    void updateTimeoutReached( timespec startTime, unsigned long long timeoutInMicroSeconds );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       The base engine that is used to perform the initial divides

@@ -13,6 +13,11 @@
 
  **/
 
+<<<<<<< HEAD
+=======
+#include "SparseGaussianEliminator.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "EtaMatrix.h"
@@ -20,7 +25,10 @@
 #include "GlobalConfiguration.h"
 #include "MStringf.h"
 #include "MalformedBasisException.h"
+<<<<<<< HEAD
 #include "SparseGaussianEliminator.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include <cstdio>
 
@@ -80,7 +88,12 @@ SparseGaussianEliminator::~SparseGaussianEliminator()
     }
 }
 
+<<<<<<< HEAD
 void SparseGaussianEliminator::initializeFactorization( const SparseColumnsOfBasis *A, SparseLUFactors *sparseLUFactors )
+=======
+void SparseGaussianEliminator::initializeFactorization( const SparseColumnsOfBasis *A,
+                                                        SparseLUFactors *sparseLUFactors )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     // Allocate the work space
     _sparseLUFactors = sparseLUFactors;
@@ -115,8 +128,13 @@ void SparseGaussianEliminator::permute()
 {
     /*
       The element selected for pivoting is U[p,q],
+<<<<<<< HEAD
       We want to update P and Q to move u[p,q] to position [k,k] in U (= P'VQ'), where k is the current
       eliminiation step.
+=======
+      We want to update P and Q to move u[p,q] to position [k,k] in U (= P'VQ'), where k is the
+      current eliminiation step.
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     */
 
     _sparseLUFactors->_P.swapColumns( _uPivotRow, _eliminationStep );
@@ -133,7 +151,12 @@ void SparseGaussianEliminator::permute()
     _numUColumnElements[_eliminationStep] = temp;
 }
 
+<<<<<<< HEAD
 void SparseGaussianEliminator::run( const SparseColumnsOfBasis *A, SparseLUFactors *sparseLUFactors )
+=======
+void SparseGaussianEliminator::run( const SparseColumnsOfBasis *A,
+                                    SparseLUFactors *sparseLUFactors )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     // Initialize the LU factors
     initializeFactorization( A, sparseLUFactors );
@@ -242,9 +265,16 @@ void SparseGaussianEliminator::choosePivot()
             _pivotElement = entry->_value;
 
             SGAUSSIAN_LOG( Stringf( "Choose pivot selected a pivot (singleton row): V[%u,%u] = %lf",
+<<<<<<< HEAD
                           _vPivotRow,
                           _vPivotColumn,
                           _pivotElement ).ascii() );
+=======
+                                    _vPivotRow,
+                                    _vPivotColumn,
+                                    _pivotElement )
+                               .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             return;
         }
     }
@@ -286,10 +316,19 @@ void SparseGaussianEliminator::choosePivot()
 
             ASSERT( found );
 
+<<<<<<< HEAD
             SGAUSSIAN_LOG( Stringf( "Choose pivot selected a pivot (singleton column): V[%u,%u] = %lf",
                           _vPivotRow,
                           _vPivotColumn,
                           _pivotElement ).ascii() );
+=======
+            SGAUSSIAN_LOG(
+                Stringf( "Choose pivot selected a pivot (singleton column): V[%u,%u] = %lf",
+                         _vPivotRow,
+                         _vPivotColumn,
+                         _pivotElement )
+                    .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             return;
         }
     }
@@ -345,6 +384,7 @@ void SparseGaussianEliminator::choosePivot()
             double absContender = FloatUtils::abs( contender );
 
             // Only consider large-enough elements
+<<<<<<< HEAD
             if ( FloatUtils::gt( absContender,
                                  maxInColumn * GlobalConfiguration::GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD ) )
             {
@@ -354,6 +394,20 @@ void SparseGaussianEliminator::choosePivot()
 
                 if ( ( cost < minimalCost ) ||
                      ( ( cost == minimalCost ) && FloatUtils::gt( absContender, absPivotElement ) ) )
+=======
+            if ( FloatUtils::gt(
+                     absContender,
+                     maxInColumn *
+                         GlobalConfiguration::GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD ) )
+            {
+                unsigned cost =
+                    ( _numURowElements[uRow] - 1 ) * ( _numUColumnElements[uColumn] - 1 );
+
+                ASSERT( ( cost != minimalCost ) || found );
+
+                if ( ( cost < minimalCost ) || ( ( cost == minimalCost ) &&
+                                                 FloatUtils::gt( absContender, absPivotElement ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 {
                     minimalCost = cost;
                     _uPivotRow = uRow;
@@ -373,7 +427,16 @@ void SparseGaussianEliminator::choosePivot()
         throw BasisFactorizationError( BasisFactorizationError::GAUSSIAN_ELIMINATION_FAILED,
                                        "Couldn't find a pivot" );
 
+<<<<<<< HEAD
     SGAUSSIAN_LOG( Stringf( "Choose pivot selected a pivot: V[%u,%u] = %lf (cost %u)", _vPivotRow, _vPivotColumn, _pivotElement, minimalCost ).ascii() );
+=======
+    SGAUSSIAN_LOG( Stringf( "Choose pivot selected a pivot: V[%u,%u] = %lf (cost %u)",
+                            _vPivotRow,
+                            _vPivotColumn,
+                            _pivotElement,
+                            minimalCost )
+                       .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void SparseGaussianEliminator::eliminate()
@@ -421,7 +484,11 @@ void SparseGaussianEliminator::eliminate()
           Compute the Gaussian row multiplier for this row.
           The multiplier is: - U[row,k] / pivotElement
         */
+<<<<<<< HEAD
         double rowMultiplier = - entry[index]._value / _pivotElement;
+=======
+        double rowMultiplier = -entry[index]._value / _pivotElement;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Get the row being eliminated in dense format
         _sparseLUFactors->_V->getRowDense( vRow, _work2 );

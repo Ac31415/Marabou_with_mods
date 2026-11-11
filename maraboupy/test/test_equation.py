@@ -127,4 +127,7 @@ def load_network():
     network.setUpperBound(inputVars[1], 10.0)
 
     return network
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

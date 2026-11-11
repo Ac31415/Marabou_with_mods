@@ -13,8 +13,13 @@
 
  **/
 
+<<<<<<< HEAD
 #include "DnCMarabou.h"
 #include "ConfigurationError.h"
+=======
+#include "ConfigurationError.h"
+#include "DnCMarabou.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Error.h"
 #include "LPSolverType.h"
 #include "Marabou.h"
@@ -24,33 +29,58 @@
 #include "cblas.h"
 #endif
 
+<<<<<<< HEAD
 static std::string getCompiler() {
     std::stringstream ss;
 #ifdef __GNUC__
     ss << "GCC";
 #else /* __GNUC__ */
+=======
+static std::string getCompiler()
+{
+    std::stringstream ss;
+#ifdef __GNUC__
+    ss << "GCC";
+#else  /* __GNUC__ */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     ss << "unknown compiler";
 #endif /* __GNUC__ */
 #ifdef __VERSION__
     ss << " version " << __VERSION__;
+<<<<<<< HEAD
 #else /* __VERSION__ */
+=======
+#else  /* __VERSION__ */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     ss << ", unknown version";
 #endif /* __VERSION__ */
     return ss.str();
 }
 
+<<<<<<< HEAD
 static std::string getCompiledDateTime() {
+=======
+static std::string getCompiledDateTime()
+{
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     return __DATE__ " " __TIME__;
 }
 
 void printVersion()
 {
+<<<<<<< HEAD
     std::cout <<
         "Marabou version " << MARABOU_VERSION <<
         " [" << GIT_BRANCH << " " << GIT_COMMIT_HASH << "]"
 	      << "\ncompiled with " << getCompiler()
 	      << "\non " << getCompiledDateTime()
 	      << std::endl;
+=======
+    std::cout << "Marabou version " << MARABOU_VERSION << " [" << GIT_BRANCH << " "
+              << GIT_COMMIT_HASH << "]"
+              << "\ncompiled with " << getCompiler() << "\non " << getCompiledDateTime()
+              << std::endl;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void printHelpMessage()
@@ -81,15 +111,25 @@ int marabouMain( int argc, char **argv )
         if ( options->getBool( Options::PRODUCE_PROOFS ) )
         {
             GlobalConfiguration::USE_DEEPSOI_LOCAL_SEARCH = false;
+<<<<<<< HEAD
             printf( "Proof production is not yet supported with DEEPSOI search, turning search off.\n" );
         }
 
         if ( options->getBool( Options::PRODUCE_PROOFS ) && ( options->getBool( Options::DNC_MODE ) ) )
+=======
+            printf( "Proof production is not yet supported with DEEPSOI search, turning search "
+                    "off.\n" );
+        }
+
+        if ( options->getBool( Options::PRODUCE_PROOFS ) &&
+             ( options->getBool( Options::DNC_MODE ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             options->setBool( Options::DNC_MODE, false );
             printf( "Proof production is not yet supported with snc mode, turning --snc off.\n" );
         }
 
+<<<<<<< HEAD
         if ( options->getBool( Options::PRODUCE_PROOFS ) && ( options->getBool( Options::SOLVE_WITH_MILP ) ) )
         {
             options->setBool( Options::SOLVE_WITH_MILP, false );
@@ -100,6 +140,22 @@ int marabouMain( int argc, char **argv )
         {
             options->setString( Options::LP_SOLVER, "native" );
             printf( "Proof production is not yet supported with MILP solvers, using native simplex engine.\n" );
+=======
+        if ( options->getBool( Options::PRODUCE_PROOFS ) &&
+             ( options->getBool( Options::SOLVE_WITH_MILP ) ) )
+        {
+            options->setBool( Options::SOLVE_WITH_MILP, false );
+            printf(
+                "Proof production is not yet supported with MILP solvers, turning --milp off.\n" );
+        }
+
+        if ( options->getBool( Options::PRODUCE_PROOFS ) &&
+             ( options->getLPSolverType() == LPSolverType::GUROBI ) )
+        {
+            options->setString( Options::LP_SOLVER, "native" );
+            printf( "Proof production is not yet supported with MILP solvers, using native simplex "
+                    "engine.\n" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         if ( options->getBool( Options::DNC_MODE ) &&
@@ -109,13 +165,19 @@ int marabouMain( int argc, char **argv )
                                       "Cannot set both --snc and --poi to true..." );
         }
 
+<<<<<<< HEAD
         if ( options->getBool( Options::PARALLEL_DEEPSOI ) && ( options->getBool( Options::SOLVE_WITH_MILP ) ) )
+=======
+        if ( options->getBool( Options::PARALLEL_DEEPSOI ) &&
+             ( options->getBool( Options::SOLVE_WITH_MILP ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             options->setBool( Options::SOLVE_WITH_MILP, false );
             printf( "Cannot set both --poi and --milp to true, turning --milp off.\n" );
         }
 
         if ( options->getBool( Options::DNC_MODE ) ||
+<<<<<<< HEAD
              ( options->getBool( Options::PARALLEL_DEEPSOI ) && options->getInt( Options::NUM_WORKERS ) > 1 ) )
             DnCMarabou().run();
         else
@@ -133,6 +195,27 @@ int marabouMain( int argc, char **argv )
                 e.getCode(),
                 e.getErrno(),
                 e.getUserMessage() );
+=======
+             ( options->getBool( Options::PARALLEL_DEEPSOI ) &&
+               options->getInt( Options::NUM_WORKERS ) > 1 ) )
+            DnCMarabou().run();
+        else
+        {
+#ifdef ENABLE_OPENBLAS
+            openblas_set_num_threads( options->getInt( Options::NUM_BLAS_THREADS ) );
+#endif
+            Marabou().run();
+        }
+    }
+    catch ( const Error &e )
+    {
+        fprintf( stderr,
+                 "Caught a %s error. Code: %u, Errno: %i, Message: %s.\n",
+                 e.getErrorClass(),
+                 e.getCode(),
+                 e.getErrno(),
+                 e.getUserMessage() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         return 1;
     }

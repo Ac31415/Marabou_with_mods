@@ -23,7 +23,12 @@ void QueryDivider::bisectInputRegion( const InputRegion &inputRegion,
     InputRegion inputRegion2;
 
     double mid = ( inputRegion._lowerBounds[dimensionToBisect] +
+<<<<<<< HEAD
                    inputRegion._upperBounds[dimensionToBisect] ) / 2;
+=======
+                   inputRegion._upperBounds[dimensionToBisect] ) /
+                 2;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     inputRegion1 = inputRegion;
     inputRegion1._upperBounds[dimensionToBisect] = mid;

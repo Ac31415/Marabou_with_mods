@@ -18,15 +18,37 @@
 
 #include <cstdlib>
 #include <stdio.h>
+<<<<<<< HEAD
 
 
 #ifndef NDEBUG
 #  define DEBUG(x) x
+=======
+
+
+#ifndef NDEBUG
+#define DEBUG( x ) x
 #else
-#  define DEBUG(x)
+#define DEBUG( x )
 #endif
 
 #ifndef NDEBUG
+#define LOG( x, f, y, ... )                                                                        \
+    {                                                                                              \
+        if ( ( x ) )                                                                               \
+        {                                                                                          \
+            printf( f, y );                                                                        \
+        }                                                                                          \
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+#else
+#define LOG( x, f, y, ... )                                                                        \
+    {                                                                                              \
+    }
+#endif
+
+#ifndef NDEBUG
+<<<<<<< HEAD
 #  define LOG(x, f, y, ...)                     \
     {                                           \
         if ( ( x ) )                            \
@@ -59,9 +81,31 @@
             printf( "Assertion violation! File %s, line %d\n", __FILE__, __LINE__ ); \
             exit( 1 );                          \
         }                                       \
+=======
+#define ASSERTM( x, y, ... )                                                                       \
+    {                                                                                              \
+        if ( !( x ) )                                                                              \
+        {                                                                                          \
+            printf( y );                                                                           \
+            exit( 1 );                                                                             \
+        }                                                                                          \
     }
 #else
-#  define ASSERT(x)
+#define ASSERTM( x, y, ... )
+#endif
+
+#ifndef NDEBUG
+#define ASSERT( x )                                                                                \
+    {                                                                                              \
+        if ( !( x ) )                                                                              \
+        {                                                                                          \
+            printf( "Assertion violation! File %s, line %d\n", __FILE__, __LINE__ );               \
+            exit( 1 );                                                                             \
+        }                                                                                          \
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+    }
+#else
+#define ASSERT( x )
 #endif
 
 #endif // __Debug_h__

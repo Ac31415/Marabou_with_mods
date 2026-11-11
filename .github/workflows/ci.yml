@@ -50,7 +50,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+<<<<<<< HEAD
       - uses: actions/setup-python@v4
+=======
+      - uses: actions/setup-python@v5
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         with:
           python-version: "3.8"
 
@@ -101,7 +105,11 @@ jobs:
       # Add ${{ matrix.cache-key }}- to the key pattern if matrix grows
       - name: Restore ccache
         id: ccache
+<<<<<<< HEAD
         uses: actions/cache@v3
+=======
+        uses: actions/cache@v4
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         env:
           cache-name: ccache-
         with:
@@ -155,6 +163,10 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ ( matrix.compiler == 'g++' ) && ( matrix.build_type == 'Debug' ) }}
+<<<<<<< HEAD
         uses: codecov/codecov-action@v3
+=======
+        uses: codecov/codecov-action@v4
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         with:
           files: ./coverage.xml

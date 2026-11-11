@@ -13,12 +13,20 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "CSRMatrix.h"
 #include "MString.h"
 #include "SparseUnsortedList.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class MockForCSRMatrix
 {
 public:
@@ -49,16 +57,25 @@ public:
 
         // Initialize through empty constructor and initialize();
         double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 0, 3, 0,
                 0, 6, 0, 0,
             };
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+        };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         CSRMatrix csr1;
         csr1.initialize( M1, 4, 4 );
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( M1[i*4 + j], csr1.get( i, j ) );
 
         // Dense matrix, initialize through constructor
@@ -69,22 +86,45 @@ public:
                 5, 6, 7, 8,
                 9, 1, 2, 3,
             };
+=======
+                TS_ASSERT_EQUALS( M1[i * 4 + j], csr1.get( i, j ) );
+
+        // Dense matrix, initialize through constructor
+        double M2[] = {
+            1, 2, 3, 4, //
+            5, 8, 5, 6, //
+            1, 2, 3, 4, //
+            5, 6, 7, 8, //
+            9, 1, 2, 3, //
+        };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         CSRMatrix csr2;
         csr2.initialize( M2, 5, 4 );
 
         for ( unsigned i = 0; i < 5; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( M2[i*4 + j], csr2.get( i, j ) );
+=======
+                TS_ASSERT_EQUALS( M2[i * 4 + j], csr2.get( i, j ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_store_restore()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
             0, 6, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -104,10 +144,17 @@ public:
     void test_add_last_row()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
             0, 6, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -122,6 +169,7 @@ public:
         csr1.addLastRow( row7 );
 
         double expected[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
@@ -129,21 +177,41 @@ public:
             1, 2, 0, 0,
             0, 2, -3, 0,
             1, 0, 0, 4,
+=======
+            0, 0, 0,  0, //
+            5, 8, 0,  0, //
+            0, 0, 3,  0, //
+            0, 6, 0,  0, //
+            1, 2, 0,  0, //
+            0, 2, -3, 0, //
+            1, 0, 0,  4, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         for ( unsigned i = 0; i < 7; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_add_last_column()
     {
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 2,
                 5, 8, 0, 0,
                 0, 0, 3, 0,
                 0, 6, 0, 0,
+=======
+                0, 0, 0, 2, //
+                5, 8, 0, 0, //
+                0, 0, 3, 0, //
+                0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -158,25 +226,43 @@ public:
             csr1.addLastColumn( col7 );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 2, 1,  0, 1,
                 5, 8, 0, 0, 2,  2, 0,
                 0, 0, 3, 0, 0, -3, 0,
                 0, 6, 0, 0, 0,  0, 4,
+=======
+                0, 0, 0, 2, 1, 0,  1, //
+                5, 8, 0, 0, 2, 2,  0, //
+                0, 0, 3, 0, 0, -3, 0, //
+                0, 6, 0, 0, 0, 0,  4, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 7; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*7 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 7 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 11U );
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 0, 0,
+=======
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -186,15 +272,26 @@ public:
             csr1.addLastColumn( col5 );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
+=======
+                0, 0, 0, 0, 0, //
+                0, 0, 0, 0, 0, //
+                0, 0, 0, 0, 0, //
+                0, 0, 0, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 5; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*5 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 5 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 0U );
         }
@@ -203,10 +300,17 @@ public:
     void test_get_row()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
             0, 6, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -230,10 +334,17 @@ public:
     {
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 0, 3, 0,
                 0, 6, 0, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                0, 0, 3, 0, //
+                0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -243,16 +354,28 @@ public:
 
             TS_ASSERT_THROWS_NOTHING( csr1.toDense( dense ) );
 
+<<<<<<< HEAD
             TS_ASSERT_SAME_DATA( M1, dense, sizeof(M1) );
+=======
+            TS_ASSERT_SAME_DATA( M1, dense, sizeof( M1 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 1, 2, 3, 4,
                 0, 6, 0, 0,
+=======
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                1, 2, 3, 4, //
+                0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -262,17 +385,28 @@ public:
 
             TS_ASSERT_THROWS_NOTHING( csr1.toDense( dense ) );
 
+<<<<<<< HEAD
             TS_ASSERT_SAME_DATA( M1, dense, sizeof(M1) );
+=======
+            TS_ASSERT_SAME_DATA( M1, dense, sizeof( M1 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
     void test_get_column()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
             0, 6, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -304,10 +438,17 @@ public:
     {
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 2, 3, 0,
                 0, 0, 4, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                0, 2, 3, 0, //
+                0, 0, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -316,25 +457,43 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.mergeColumns( 1, 2 ) );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 5, 0, 0,
                 0, 4, 0, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                0, 5, 0, 0, //
+                0, 4, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 4U );
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, -1, 1,
                 5, 8, 0, 1,
                 0, 2, 3, 0,
                 0, 0, 4, 1,
+=======
+                0, 0, -1, 1, //
+                5, 8, 0,  1, //
+                0, 2, 3,  0, //
+                0, 0, 4,  1, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -343,15 +502,26 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.mergeColumns( 2, 3 ) );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 1, 0,
                 0, 2, 3, 0,
                 0, 0, 5, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 1, 0, //
+                0, 2, 3, 0, //
+                0, 0, 5, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 6U );
 
@@ -359,26 +529,45 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.addLastRow( newRow ) );
 
             double expected2[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 1, 0,
                 0, 2, 3, 0,
                 0, 0, 5, 0,
                 1, 2, 3, 5,
+=======
+                0, 0, 0, 0, //
+                5, 8, 1, 0, //
+                0, 2, 3, 0, //
+                0, 0, 5, 0, //
+                1, 2, 3, 5, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 5; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 10U );
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, -1, 1,
                 0, 0, -1, 1,
                 0, 0,  0, 0,
                 0, 0, -1, 1,
+=======
+                0, 0, -1, 1, //
+                0, 0, -1, 1, //
+                0, 0, 0,  0, //
+                0, 0, -1, 1, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -387,25 +576,43 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.mergeColumns( 2, 3 ) );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 0, 0,
+=======
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+                0, 0, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 0U );
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 2, 3, 1,
                 0, 0, 4, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                0, 2, 3, 1, //
+                0, 0, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -414,25 +621,43 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.mergeColumns( 0, 3 ) );
 
             double expected[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 1, 2, 3, 0,
                 0, 0, 4, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                1, 2, 3, 0, //
+                0, 0, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 6U );
         }
 
         {
             double M1[] = {
+<<<<<<< HEAD
                 0, 0, 0, 0,
                 5, 8, 0, 0,
                 0, 2, 3, 1,
                 0, 0, 4, 0,
+=======
+                0, 0, 0, 0, //
+                5, 8, 0, 0, //
+                0, 2, 3, 1, //
+                0, 0, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             CSRMatrix csr1;
@@ -441,15 +666,26 @@ public:
             TS_ASSERT_THROWS_NOTHING( csr1.mergeColumns( 0, 1 ) );
 
             double expected[] = {
+<<<<<<< HEAD
                 0,  0, 0, 0,
                 13, 0, 0, 0,
                 2,  0, 3, 1,
                 0,  0, 4, 0,
+=======
+                0,  0, 0, 0, //
+                13, 0, 0, 0, //
+                2,  0, 3, 1, //
+                0,  0, 4, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             for ( unsigned i = 0; i < 4; ++i )
                 for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                     TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                    TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             TS_ASSERT_EQUALS( csr1.getNnz(), 5U );
         }
@@ -458,6 +694,7 @@ public:
     void test_deletions()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
@@ -469,6 +706,19 @@ public:
             0, 8, 0, 0,
             0, 0, 3, 0,
             0, 0, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+        };
+
+        double expected[] = {
+            0, 0, 0, 0, //
+            0, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 0, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -480,13 +730,21 @@ public:
         // No changes before "execute" is called
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( csr1.executeChanges() );
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Fake elements
         csr1.commitChange( 1, 3, 0.0 );
@@ -495,7 +753,11 @@ public:
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         csr1.commitChange( 1, 1, 0.0 );
         csr1.commitChange( 2, 2, 0.0 );
@@ -509,6 +771,7 @@ public:
     void test_changes()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
@@ -527,6 +790,26 @@ public:
             5, 8, 0, 0,
             1.5, 0, 4, 0,
             0, 6, 0, 3,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+        };
+
+        double expected[] = {
+            0, 0, 2, 0, //
+            5, 8, 0, 0, //
+            0, 0, 4, 0, //
+            0, 6, 0, 3, //
+        };
+
+        double expected2[] = {
+            0,   0, 5, 0, //
+            5,   8, 0, 0, //
+            1.5, 0, 4, 0, //
+            0,   6, 0, 3, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -539,13 +822,21 @@ public:
         // No changes before "execute" is called
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( csr1.executeChanges() );
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         csr1.commitChange( 0, 2, 5.0 );
         csr1.commitChange( 2, 0, 1.5 );
@@ -554,12 +845,17 @@ public:
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_changes_and_deletions()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
@@ -578,6 +874,26 @@ public:
             5, 4, 0, 0,
             0, 0, 4, 0,
             0, 0, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+        };
+
+        double expected[] = {
+            0, 0, 2, 0, //
+            5, 0, 0, 0, //
+            0, 0, 4, 0, //
+            0, 0, 0, 3, //
+        };
+
+        double expected2[] = {
+            0, 0, 2, 0, //
+            5, 4, 0, 0, //
+            0, 0, 4, 0, //
+            0, 0, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -595,13 +911,21 @@ public:
         // No changes before "execute" is called
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), M1[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( csr1.executeChanges() );
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 
         csr1.commitChange( 1, 0, 5.0 );
@@ -613,16 +937,27 @@ public:
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr1.get( i, j ), expected2[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_count_elements()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0, 1,
             5, 8, 0, 0, 2,
             0, 2, 3, 0, 3,
             0, 0, 4, 0, 4,
+=======
+            0, 0, 0, 0, 1, //
+            5, 8, 0, 0, 2, //
+            0, 2, 3, 0, 3, //
+            0, 0, 4, 0, 4, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -648,10 +983,17 @@ public:
     void test_transpose()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0, 1,
             5, 8, 0, 0, 2,
             0, 2, 3, 0, 3,
             0, 0, 4, 0, 4,
+=======
+            0, 0, 0, 0, 1, //
+            5, 8, 0, 0, 2, //
+            0, 2, 3, 0, 3, //
+            0, 0, 4, 0, 4, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;
@@ -661,22 +1003,35 @@ public:
         TS_ASSERT_THROWS_NOTHING( csr1.transposeIntoOther( &csr2 ) );
 
         double expected[] = {
+<<<<<<< HEAD
             0, 5, 0, 0,
             0, 8, 2, 0,
             0, 0, 3, 4,
             0, 0, 0, 0,
             1, 2, 3, 4,
+=======
+            0, 5, 0, 0, //
+            0, 8, 2, 0, //
+            0, 0, 3, 4, //
+            0, 0, 0, 0, //
+            1, 2, 3, 4, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         for ( unsigned i = 0; i < 5; ++i )
             for ( unsigned j = 0; j < 4; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr2.get( i, j ), expected[i*4 + j] );
+=======
+                TS_ASSERT_EQUALS( csr2.get( i, j ), expected[i * 4 + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         CSRMatrix csr3;
         TS_ASSERT_THROWS_NOTHING( csr2.transposeIntoOther( &csr3 ) );
 
         for ( unsigned i = 0; i < 4; ++i )
             for ( unsigned j = 0; j < 5; ++j )
+<<<<<<< HEAD
                 TS_ASSERT_EQUALS( csr3.get( i, j ), M1[i*5 + j] );
 
         // Transpose an empty matrix
@@ -684,6 +1039,13 @@ public:
             0, 0,
             0, 0,
             0, 0,
+=======
+                TS_ASSERT_EQUALS( csr3.get( i, j ), M1[i * 5 + j] );
+
+        // Transpose an empty matrix
+        double empty[] = {
+            0, 0, 0, 0, 0, 0,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr4;
@@ -700,10 +1062,17 @@ public:
     void test_clear()
     {
         double M1[] = {
+<<<<<<< HEAD
             0, 0, 0, 0,
             5, 8, 0, 0,
             0, 0, 3, 0,
             0, 6, 0, 0,
+=======
+            0, 0, 0, 0, //
+            5, 8, 0, 0, //
+            0, 0, 3, 0, //
+            0, 6, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         CSRMatrix csr1;

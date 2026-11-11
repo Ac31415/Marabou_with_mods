@@ -16,6 +16,10 @@
 #include "context/cdlist.h"
 #include "context/cdo.h"
 #include "context/context.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <cxxtest/TestSuite.h>
 
 using CVC4::context::Context;
@@ -65,7 +69,12 @@ public:
         double value = -2.55;
         BoundExplainer be( numberOfVariables, numberOfRows, *context );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( Vector<double>( numberOfVariables, value ), 0, true ) );
+=======
+        TS_ASSERT_THROWS_NOTHING(
+            be.setExplanation( Vector<double>( numberOfVariables, value ), 0, true ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         auto explanation = be.getExplanation( 0, true );
 
         for ( const auto &entry : explanation )
@@ -75,7 +84,12 @@ public:
     }
 
     /*
+<<<<<<< HEAD
       Test addition of an explanation of the new variable, and correct updates of all previous explanations
+=======
+      Test addition of an explanation of the new variable, and correct updates of all previous
+      explanations
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     */
     void test_variable_addition()
     {
@@ -83,13 +97,21 @@ public:
         unsigned numberOfRows = 2;
         BoundExplainer be( numberOfVariables, numberOfRows, *context );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( Vector<double>( numberOfVariables, 1 ), numberOfVariables - 1, true ) );
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( Vector<double>( numberOfVariables, 5 ), numberOfVariables - 1, false ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( be.setExplanation(
+            Vector<double>( numberOfVariables, 1 ), numberOfVariables - 1, true ) );
+        TS_ASSERT_THROWS_NOTHING( be.setExplanation(
+            Vector<double>( numberOfVariables, 5 ), numberOfVariables - 1, false ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         be.addVariable();
 
         TS_ASSERT_EQUALS( be.getNumberOfRows(), numberOfRows + 1 );
         TS_ASSERT_EQUALS( be.getNumberOfVariables(), numberOfVariables + 1 );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < numberOfVariables; ++ i )
         {
             // the sizes of explanations should not change
@@ -99,6 +121,19 @@ public:
 
         TS_ASSERT( be.isExplanationTrivial( numberOfVariables, true ) );
         TS_ASSERT( be.isExplanationTrivial( numberOfVariables, false ) ) ;
+=======
+        for ( unsigned i = 0; i < numberOfVariables; ++i )
+        {
+            // the sizes of explanations should not change
+            TS_ASSERT( be.isExplanationTrivial( i, true ) ||
+                       be.getExplanation( i, true ).getSize() == numberOfVariables );
+            TS_ASSERT( be.isExplanationTrivial( i, false ) ||
+                       be.getExplanation( i, false ).getSize() == numberOfVariables );
+        }
+
+        TS_ASSERT( be.isExplanationTrivial( numberOfVariables, true ) );
+        TS_ASSERT( be.isExplanationTrivial( numberOfVariables, false ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     /*
@@ -125,9 +160,15 @@ public:
         unsigned numberOfVariables = 6;
         unsigned numberOfRows = 3;
         BoundExplainer be( numberOfVariables, numberOfRows, *context );
+<<<<<<< HEAD
         Vector<double> row1 { 1, 0, 0 };
         Vector<double> row2 { 0, -1, 0 };
         Vector<double> row3 { 0, 0, 2.5 };
+=======
+        Vector<double> row1{ 1, 0, 0 };
+        Vector<double> row2{ 0, -1, 0 };
+        Vector<double> row3{ 0, 0, 2.5 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TableauRow updateTableauRow( 6 );
         // row1 + row2 :=  x2 = x0 + 2 x1 - x3 + x4
@@ -145,24 +186,41 @@ public:
 
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( row1, 0, true ) );
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( row2, 1, true ) );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( be.setExplanation( row3, 1, false ) ); // Will not be possible in an actual tableau
 
         be.updateBoundExplanation( updateTableauRow, true );
         // Result is { 1, 0, 0 } + 2 * { 0, -1, 0 } + { 1, -1, 0}
         Vector<double> res1 { 2, -3, 0 };
+=======
+        TS_ASSERT_THROWS_NOTHING( be.setExplanation( row3, 1, false ) ); // Will not be possible in
+                                                                         // an actual tableau
+
+        be.updateBoundExplanation( updateTableauRow, true );
+        // Result is { 1, 0, 0 } + 2 * { 0, -1, 0 } + { 1, -1, 0}
+        Vector<double> res1{ 2, -3, 0 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         for ( unsigned i = 0; i < 3; ++i )
             TS_ASSERT_EQUALS( be.getExplanation( 2, true ).get( i ), res1[i] );
 
         be.updateBoundExplanation( updateTableauRow, false, 3 );
         // Result is 2 * { 0, 0, 2.5 } + { -1, 1, 0 }
+<<<<<<< HEAD
         Vector<double> res2 { -1, 2, 5 };
+=======
+        Vector<double> res2{ -1, 2, 5 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for ( unsigned i = 0; i < 3; ++i )
             TS_ASSERT_EQUALS( be.getExplanation( 3, false ).get( i ), res2[i] );
 
         be.updateBoundExplanation( updateTableauRow, false, 1 );
         // Result is -0.5 * { 1, 0, 0 } + 0.5 * { -1, 2, 5 } - 0.5 * { 1, -1, 0 }
+<<<<<<< HEAD
         Vector<double> res3 { -1.5, 1.5, 2.5 };
+=======
+        Vector<double> res3{ -1.5, 1.5, 2.5 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         for ( unsigned i = 0; i < 3; ++i )
             TS_ASSERT_EQUALS( be.getExplanation( 1, false ).get( i ), res3[i] );
@@ -175,8 +233,13 @@ public:
 
         be.updateBoundExplanationSparse( updateSparseRow, true, 5 );
         // Result is  ( 1 / 2.5 ) * ( -2.5 ) * { -1.5, 1.5, 2.5 } + ( 1 / 2.5 ) * { 0, 0, 2.5 }
+<<<<<<< HEAD
         Vector<double> res4 { 1.5, -1.5, -1.5 };
         for ( unsigned i = 0; i < 3; ++i)
+=======
+        Vector<double> res4{ 1.5, -1.5, -1.5 };
+        for ( unsigned i = 0; i < 3; ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT_EQUALS( be.getExplanation( 5, true ).get( i ), res4[i] );
     }
 };

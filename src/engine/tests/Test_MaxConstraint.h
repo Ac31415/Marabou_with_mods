@@ -10,18 +10,27 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
+
+**/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 **/
 
-#include <cxxtest/TestSuite.h>
-
+<<<<<<< HEAD
 #include "InputQuery.h"
 #include "FloatUtils.h"
+=======
+#include "FloatUtils.h"
+#include "InputQuery.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MarabouError.h"
 #include "MaxConstraint.h"
 #include "MockTableau.h"
 #include "PiecewiseLinearCaseSplit.h"
 
+#include <cxxtest/TestSuite.h>
 #include <string.h>
 
 class MockForMaxConstraint
@@ -35,9 +44,16 @@ public:
 class TestMaxConstraint : public MaxConstraint
 {
 public:
+<<<<<<< HEAD
     TestMaxConstraint( unsigned f, const Set<unsigned> elements  )
         : MaxConstraint( f, elements )
     {}
+=======
+    TestMaxConstraint( unsigned f, const Set<unsigned> elements )
+        : MaxConstraint( f, elements )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     using MaxConstraint::getPhaseStatus;
 };
@@ -107,6 +123,7 @@ public:
             tableau.setValue( i, 0 );
 
         tableau.setValue( 8, 5 );
+<<<<<<< HEAD
 
         TS_ASSERT( !max.satisfied() );
 
@@ -187,6 +204,88 @@ public:
 
         TS_ASSERT( max2.satisfied() );
 
+=======
+
+        TS_ASSERT( !max.satisfied() );
+
+        // now f = 4
+        tableau.setValue( f, 4 );
+
+        TS_ASSERT( !max.satisfied() );
+
+        // now x_8 = 4
+        tableau.setValue( 8, 4 );
+
+        TS_ASSERT( max.satisfied() );
+
+        // now x_8 = 6
+        tableau.setValue( 8, 6 );
+
+        TS_ASSERT( !max.satisfied() );
+
+        tableau.setValue( f, 6 );
+
+        TS_ASSERT( max.satisfied() );
+
+        tableau.setValue( 7, 12 );
+
+        TS_ASSERT( !max.satisfied() );
+
+        tableau.setValue( f, 12 );
+
+        TS_ASSERT( max.satisfied() );
+
+        //
+        // From here, the test is going to run tests for the case that f is included in elements.
+        //
+        elements.insert( f );
+
+        MaxConstraint max2( f, elements );
+        max2.registerTableau( &tableau );
+
+        TS_ASSERT_THROWS_NOTHING( participatingVariables = max2.getParticipatingVariables() );
+        TS_ASSERT_EQUALS( participatingVariables.size(), 9U );
+
+        it = participatingVariables.begin();
+        for ( unsigned i = 1; i < 10; ++i, ++it )
+            TS_ASSERT( max2.participatingVariable( i ) );
+
+        TS_ASSERT( !max2.participatingVariable( 20 ) );
+        TS_ASSERT( !max2.participatingVariable( 15 ) );
+
+        // f = max(x_1 ... x_9)
+        // f = 5
+        // x_2..x7,x9 = 0
+        // x_8 = 10
+
+        tableau.setValue( f, 5 );
+        for ( unsigned i = 1; i < 10; ++i )
+            tableau.setValue( i, 0 );
+
+        tableau.setValue( 8, 10 );
+        TS_ASSERT( !max2.satisfied() );
+
+        // now f = 4
+        tableau.setValue( f, 4 );
+
+        TS_ASSERT( !max2.satisfied() );
+
+        // now x_8 = 4
+        tableau.setValue( 8, 4 );
+
+        TS_ASSERT( max2.satisfied() );
+
+        // now x_8 = 6
+        tableau.setValue( 8, 6 );
+
+        TS_ASSERT( !max2.satisfied() );
+
+        // now f = 6
+        tableau.setValue( f, 6 );
+
+        TS_ASSERT( max2.satisfied() );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // now x_7 = 12
         tableau.setValue( 7, 12 );
 
@@ -210,6 +309,12 @@ public:
 
     void test_f_in_input_var()
     {
+<<<<<<< HEAD
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        for ( unsigned i = 1; i < 10; ++i )
+=======
         unsigned f = 1;
         Set<unsigned> elements;
 
@@ -220,6 +325,45 @@ public:
 
         InputQuery ipq;
         ipq.setNumberOfVariables( 10 );
+        TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 10u );
+        TS_ASSERT_EQUALS( ipq.getEquations().size(), 0u );
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+        TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 18u );
+        TS_ASSERT_EQUALS( ipq.getEquations().size(), 8u ); // f >= x2...x9
+
+        // Check that correct equations are added to input query
+        // And aux variables have correct lower bounds (0)
+        auto equation = ipq.getEquations().begin();
+        for ( unsigned i = 0; i < 8; ++i )
+        {
+            Equation eq;
+            eq.addAddend( 1, 1 );
+            eq.addAddend( -1, i + 2 );  // max input
+            eq.addAddend( -1, 10 + i ); // aux
+            eq._scalar = 0;
+            TS_ASSERT_EQUALS( eq, *equation );
+            TS_ASSERT_EQUALS( ipq.getLowerBound( 10 + i ), 0 );
+
+            ++equation;
+        }
+
+        TS_ASSERT( max.constraintObsolete() );
+    }
+
+    void test_max_case_splits()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        for ( unsigned i = 2; i < 10; ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
+            elements.insert( i );
+
+        MaxConstraint max( f, elements );
+
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 10 );
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 10u );
         TS_ASSERT_EQUALS( ipq.getEquations().size(), 0u );
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
@@ -527,6 +671,271 @@ public:
 
         TS_ASSERT_THROWS_NOTHING( max.unregisterAsWatcher( &tableau ) );
 
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+
+        TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 18u );
+
+        // f = max(x_2 ... x_9)
+        // f = 1
+
+        List<PiecewiseLinearCaseSplit> splits = max.getCaseSplits();
+
+        // there are 8 possible phases
+        TS_ASSERT_EQUALS( splits.size(), 8U );
+
+        auto split = splits.begin();
+        for ( unsigned i = 0; i < splits.size(); ++i, ++split )
+        {
+            unsigned aux = 10 + i;
+            List<Tightening> bounds = split->getBoundTightenings();
+
+            // Since no upper bounds known for any of the variables, no bounds
+            TS_ASSERT_EQUALS( bounds.size(), 1U );
+            TS_ASSERT_EQUALS( *bounds.begin(), Tightening( aux, 0, Tightening::UB ) );
+
+            auto equations = split->getEquations();
+            TS_ASSERT_EQUALS( equations.size(), 0U );
+        }
+    }
+
+    void test_max_phase_fixed()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        for ( unsigned i = 2; i < 10; ++i )
+            elements.insert( i );
+
+        MaxConstraint max( f, elements );
+
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 10 );
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+
+        TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 18u );
+
+        // all variables initially between 1 and 10
+        for ( unsigned i = 2; i < 10; i++ )
+        {
+            max.notifyUpperBound( i, 10 );
+            max.notifyLowerBound( i, 1 );
+        }
+
+        TS_ASSERT( !max.phaseFixed() );
+
+        // set x_2 to be at least 6, others to be at most 5
+        max.notifyLowerBound( 2, 6 );
+        for ( unsigned i = 3; i < 10; i++ )
+            max.notifyUpperBound( i, 5 );
+
+        // now, phase should be fixed to x_2; all other variables should be removed
+        TS_ASSERT( max.phaseFixed() );
+        TS_ASSERT_EQUALS( max.getParticipatingVariables().size(), 3U );
+
+        PiecewiseLinearCaseSplit validSplit;
+        TS_ASSERT_THROWS_NOTHING( validSplit = max.getValidCaseSplit() );
+        auto equations = validSplit.getEquations();
+        TS_ASSERT_EQUALS( equations.size(), 0U );
+
+        auto bounds = validSplit.getBoundTightenings();
+        TS_ASSERT_EQUALS( bounds.size(), 1U );
+        // The aux var to the first max case is 10
+        TS_ASSERT_EQUALS( *bounds.begin(), Tightening( 10, 0, Tightening::UB ) );
+    }
+
+    void test_max_var_elims()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        elements.insert( 2 );
+        elements.insert( 3 );
+
+        MaxConstraint max( f, elements );
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 4 );
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+
+        max.notifyUpperBound( 2, 8 );
+        max.notifyLowerBound( 2, 1 );
+        max.notifyUpperBound( 3, 6 );
+        max.notifyLowerBound( 3, 1 );
+
+        max.notifyUpperBound( 1, 10 );
+        max.notifyLowerBound( 1, 0 );
+        TS_ASSERT( max.getParticipatingVariables().exists( 2 ) );
+        TS_ASSERT( max.getParticipatingVariables().exists( 3 ) );
+
+        max.notifyLowerBound( 1, 6 );
+        TS_ASSERT( max.getParticipatingVariables().exists( 2 ) );
+        TS_ASSERT( max.getParticipatingVariables().exists( 3 ) );
+
+        max.notifyLowerBound( 2, 7 );
+        TS_ASSERT( max.getParticipatingVariables().exists( 2 ) );
+        TS_ASSERT( !max.getParticipatingVariables().exists( 3 ) );
+    }
+
+    void test_get_entailed_tightenings()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        elements.insert( 2 );
+        elements.insert( 3 );
+
+        MaxConstraint max( f, elements );
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 4 );
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+
+        max.notifyLowerBound( 2, 1 );
+        max.notifyUpperBound( 2, 8 );
+        // No lower bound for 3
+        max.notifyUpperBound( 3, 6 );
+
+        List<Tightening> tightenings;
+        TS_ASSERT_THROWS_NOTHING( max.getEntailedTightenings( tightenings ) );
+
+        // expect f to be in the range [1, 8]
+        TS_ASSERT_EQUALS( tightenings.size(), 2U );
+        auto it = tightenings.begin();
+
+        TS_ASSERT_EQUALS( it->_variable, 1U );
+        TS_ASSERT_EQUALS( it->_value, 8 );
+        TS_ASSERT_EQUALS( it->_type, Tightening::UB );
+
+        ++it;
+
+        TS_ASSERT_EQUALS( it->_variable, 1U );
+        TS_ASSERT_EQUALS( it->_value, 1 );
+        TS_ASSERT_EQUALS( it->_type, Tightening::LB );
+
+        //
+        // From here, the test is going to run tests for the case that f is included in elements.
+        //
+        Set<unsigned> elements2;
+        elements2.insert( 1 );
+        elements2.insert( 2 );
+        elements2.insert( 3 );
+
+        MaxConstraint max2( f, elements2 );
+
+        // No lower bound for 1
+        max2.notifyUpperBound( 1, 7 );
+
+        max2.notifyLowerBound( 2, 1 );
+        max2.notifyUpperBound( 2, 8 );
+
+        // No lower bound for 3
+        max2.notifyUpperBound( 3, 6 );
+
+        List<Tightening> tightenings2;
+        TS_ASSERT_THROWS_NOTHING( max2.getEntailedTightenings( tightenings2 ) );
+
+        // expect f to be in the range [1, 7], x2 to be in the range [1, 7]
+        TS_ASSERT_EQUALS( tightenings2.size(), 2U );
+        it = tightenings2.begin();
+
+        TS_ASSERT_EQUALS( it->_variable, 2U );
+        TS_ASSERT_EQUALS( it->_value, 7 );
+        TS_ASSERT_EQUALS( it->_type, Tightening::UB );
+
+        ++it;
+
+        TS_ASSERT_EQUALS( it->_variable, 1U );
+        TS_ASSERT_EQUALS( it->_value, 1 );
+        TS_ASSERT_EQUALS( it->_type, Tightening::LB );
+    }
+
+    void test_max_obsolete()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        for ( unsigned i = 2; i < 10; ++i )
+            elements.insert( i );
+
+        MaxConstraint max( f, elements );
+
+        TS_ASSERT( !max.constraintObsolete() );
+        for ( unsigned i = 2; i < 10; ++i )
+            max.eliminateVariable( i, 0 );
+        TS_ASSERT( max.constraintObsolete() );
+
+        MaxConstraint max2( f, elements );
+        for ( unsigned i = 3; i < 10; i++ )
+            max2.eliminateVariable( i, 0 );
+
+        TS_ASSERT( !max2.constraintObsolete() );
+        max2.eliminateVariable( 1, 0 );
+        TS_ASSERT( max2.constraintObsolete() );
+
+        elements.insert( 1 );
+        MaxConstraint max3( f, elements );
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 10 );
+        TS_ASSERT_THROWS_NOTHING( max3.transformToUseAuxVariables( ipq ) );
+
+        TS_ASSERT( max3.constraintObsolete() );
+    }
+
+    void test_register_as_watcher()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        MockTableau tableau;
+
+        for ( unsigned i = 2; i < 10; ++i )
+            elements.insert( i );
+
+        MaxConstraint max( f, elements );
+
+        TS_ASSERT_THROWS_NOTHING( max.registerAsWatcher( &tableau ) );
+        TS_ASSERT_EQUALS( tableau.lastRegisteredVariableToWatcher.size(), 9U );
+        for ( int i = 1; i < 10; ++i )
+        {
+            TS_ASSERT_EQUALS( tableau.lastRegisteredVariableToWatcher[i].size(), 1U );
+            TS_ASSERT( tableau.lastRegisteredVariableToWatcher[i].exists( &max ) );
+        }
+        tableau.lastRegisteredVariableToWatcher.clear();
+
+        TS_ASSERT_THROWS_NOTHING( max.unregisterAsWatcher( &tableau ) );
+
+        TS_ASSERT( tableau.lastRegisteredVariableToWatcher.empty() );
+        TS_ASSERT_EQUALS( tableau.lastUnregisteredVariableToWatcher.size(), 9U );
+        for ( int i = 1; i < 10; ++i )
+        {
+            TS_ASSERT_EQUALS( tableau.lastUnregisteredVariableToWatcher[i].size(), 1U );
+            TS_ASSERT( tableau.lastUnregisteredVariableToWatcher[i].exists( &max ) );
+        }
+    }
+
+    void test_register_as_watcher2()
+    {
+        unsigned f = 1;
+        Set<unsigned> elements;
+
+        MockTableau tableau;
+
+        for ( unsigned i = 1; i < 10; ++i )
+            elements.insert( i );
+
+        MaxConstraint max( f, elements );
+
+        TS_ASSERT_THROWS_NOTHING( max.registerAsWatcher( &tableau ) );
+        TS_ASSERT_EQUALS( tableau.lastRegisteredVariableToWatcher.size(), 9U );
+        for ( int i = 1; i < 10; ++i )
+        {
+            TS_ASSERT_EQUALS( tableau.lastRegisteredVariableToWatcher[i].size(), 1U );
+            TS_ASSERT( tableau.lastRegisteredVariableToWatcher[i].exists( &max ) );
+        }
+        tableau.lastRegisteredVariableToWatcher.clear();
+
+        TS_ASSERT_THROWS_NOTHING( max.unregisterAsWatcher( &tableau ) );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( tableau.lastRegisteredVariableToWatcher.empty() );
         TS_ASSERT_EQUALS( tableau.lastUnregisteredVariableToWatcher.size(), 9U );
         for ( int i = 1; i < 10; ++i )
@@ -553,8 +962,12 @@ public:
         String originalSerialized = originalMax.serializeToString();
         MaxConstraint recoveredMax( originalSerialized );
 
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( originalMax.serializeToString(),
                           recoveredMax.serializeToString() );
+=======
+        TS_ASSERT_EQUALS( originalMax.serializeToString(), recoveredMax.serializeToString() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_serialize_and_unserialize_2()
@@ -575,8 +988,12 @@ public:
 
         MaxConstraint recoveredMax( originalSerialized );
 
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( originalMax.serializeToString(),
                           recoveredMax.serializeToString() );
+=======
+        TS_ASSERT_EQUALS( originalMax.serializeToString(), recoveredMax.serializeToString() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_phase_fixed_with_variable_elimination()
@@ -591,8 +1008,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 9u );
 
         TS_ASSERT( !max.getAllCases().exists( MAX_PHASE_ELIMINATED ) );
@@ -619,8 +1040,12 @@ public:
         MaxConstraint max2( f2, elements2 );
         InputQuery ipq2;
         ipq2.setNumberOfVariables( 45 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables
                                   ( ipq2 ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables( ipq2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq2.getNumberOfVariables(), 49u );
 
         TS_ASSERT( !max2.getAllCases().exists( MAX_PHASE_ELIMINATED ) );
@@ -651,8 +1076,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 9u );
 
         Context context;
@@ -684,8 +1113,12 @@ public:
         MaxConstraint max2( f2, elements2 );
         InputQuery ipq2;
         ipq2.setNumberOfVariables( 45 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables
                                   ( ipq2 ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables( ipq2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq2.getNumberOfVariables(), 49u );
 
         Context context2;
@@ -720,8 +1153,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 6 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 10u );
 
         // f = max(x_2 ... x_5)
@@ -743,34 +1180,51 @@ public:
         {
             List<Tightening> bounds = split->getBoundTightenings();
             TS_ASSERT_EQUALS( bounds.size(), 1U );
+<<<<<<< HEAD
             TS_ASSERT_EQUALS( *bounds.begin(),
                               Tightening( 6, 0 ,Tightening::UB ) );
+=======
+            TS_ASSERT_EQUALS( *bounds.begin(), Tightening( 6, 0, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT_EQUALS( split->getEquations().size(), 0U );
         }
         ++split;
         {
             List<Tightening> bounds = split->getBoundTightenings();
             TS_ASSERT_EQUALS( bounds.size(), 1U );
+<<<<<<< HEAD
             TS_ASSERT_EQUALS( *bounds.begin(),
                               Tightening( 7, 0 ,Tightening::UB ) );
+=======
+            TS_ASSERT_EQUALS( *bounds.begin(), Tightening( 7, 0, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT_EQUALS( split->getEquations().size(), 0U );
         }
         ++split;
         {
             List<Tightening> bounds = split->getBoundTightenings();
             TS_ASSERT_EQUALS( bounds.size(), 1U );
+<<<<<<< HEAD
             TS_ASSERT_EQUALS( *bounds.begin(),
                               Tightening( 8, 0 ,Tightening::UB ) );
+=======
+            TS_ASSERT_EQUALS( *bounds.begin(), Tightening( 8, 0, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT_EQUALS( split->getEquations().size(), 0U );
         }
         ++split;
         {
             List<Tightening> bounds = split->getBoundTightenings();
             TS_ASSERT_EQUALS( bounds.size(), 2U );
+<<<<<<< HEAD
             TS_ASSERT_EQUALS( *bounds.begin(),
                               Tightening( f, 5 ,Tightening::LB ) );
             TS_ASSERT_EQUALS( *(++bounds.begin()),
                               Tightening( f, 5 ,Tightening::UB ) );
+=======
+            TS_ASSERT_EQUALS( *bounds.begin(), Tightening( f, 5, Tightening::LB ) );
+            TS_ASSERT_EQUALS( *( ++bounds.begin() ), Tightening( f, 5, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT_EQUALS( split->getEquations().size(), 0U );
         }
     }
@@ -790,8 +1244,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 6 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 10u );
 
         // All input variables initially between 1 and 10
@@ -846,8 +1304,12 @@ public:
         MaxConstraint max2( f2, elements2 );
         InputQuery ipq2;
         ipq2.setNumberOfVariables( 6 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables
                                   ( ipq2 ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables( ipq2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq2.getNumberOfVariables(), 10u );
 
         // All input variables initially between 1 and 10
@@ -919,8 +1381,12 @@ public:
         MaxConstraint max3( f3, elements3 );
         InputQuery ipq3;
         ipq3.setNumberOfVariables( 6 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max3.transformToUseAuxVariables
                                   ( ipq3 ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max3.transformToUseAuxVariables( ipq3 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq3.getNumberOfVariables(), 10u );
 
         // All input variables initially between 1 and 10
@@ -963,8 +1429,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 8u );
 
         // Eliminate variable x_4 = 2.5
@@ -1010,8 +1480,12 @@ public:
         max.registerTableau( &tableau );
         InputQuery ipq;
         ipq.setNumberOfVariables( 10 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 18u );
 
         List<unsigned> participatingVariables;
@@ -1054,6 +1528,7 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 10 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
 
@@ -1066,6 +1541,21 @@ public:
         TS_ASSERT_DIFFERS( max.getActiveStatusCDO(), static_cast<CDO<bool>*>( nullptr ) );
         TS_ASSERT_DIFFERS( max.getPhaseStatusCDO(), static_cast<CDO<PhaseStatus>*>( nullptr ) );
         TS_ASSERT_DIFFERS( max.getInfeasibleCasesCDList(), static_cast<CDList<PhaseStatus>*>( nullptr ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+
+        TS_ASSERT_EQUALS( max.getContext(), static_cast<Context *>( nullptr ) );
+        TS_ASSERT_EQUALS( max.getActiveStatusCDO(), static_cast<CDO<bool> *>( nullptr ) );
+        TS_ASSERT_EQUALS( max.getPhaseStatusCDO(), static_cast<CDO<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_EQUALS( max.getInfeasibleCasesCDList(),
+                          static_cast<CDList<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_THROWS_NOTHING( max.initializeCDOs( &context ) );
+        TS_ASSERT_EQUALS( max.getContext(), &context );
+        TS_ASSERT_DIFFERS( max.getActiveStatusCDO(), static_cast<CDO<bool> *>( nullptr ) );
+        TS_ASSERT_DIFFERS( max.getPhaseStatusCDO(), static_cast<CDO<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_DIFFERS( max.getInfeasibleCasesCDList(),
+                           static_cast<CDList<PhaseStatus> *>( nullptr ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         bool active = false;
         TS_ASSERT_THROWS_NOTHING( active = max.isActive() );
@@ -1093,8 +1583,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 10 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         List<PhaseStatus> cases = max.getAllCases();
 
@@ -1130,8 +1624,12 @@ public:
 
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 
         // In search phase, we initialize context-dependent structures
@@ -1146,7 +1644,11 @@ public:
 
         TS_ASSERT_EQUALS( max.numFeasibleCases(), 2u );
 
+<<<<<<< HEAD
         context.push(); // L1
+=======
+        context.push();               // L1
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         max.notifyUpperBound( 3, 6 ); // This should eliminate variable 3;
         TS_ASSERT( max.isImplication() );
 
@@ -1190,8 +1692,12 @@ public:
         TestMaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 6 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 10u );
 
         BoundManager bm( context );
@@ -1214,7 +1720,11 @@ public:
         TS_ASSERT_EQUALS( max.numFeasibleCases(), 3u );
 
         bm.storeLocalBounds();
+<<<<<<< HEAD
         context.push(); // L1
+=======
+        context.push();               // L1
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         max.notifyUpperBound( 3, 5 ); // This should eliminate variable 3;
         TS_ASSERT_EQUALS( max.numFeasibleCases(), 2u );
 
@@ -1260,8 +1770,12 @@ public:
 
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max1.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max1.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 8u );
 
         // element to aux: 2: 5, 3: 6, 4: 7.
@@ -1293,16 +1807,24 @@ public:
         // Phase fixed, should not add any cost terms.
         TS_ASSERT( max1.phaseFixed() );
         LinearExpression cost1;
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max1.getCostFunctionComponent
                                   ( cost1, MAX_PHASE_ELIMINATED ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max1.getCostFunctionComponent( cost1, MAX_PHASE_ELIMINATED ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( cost1._addends.size(), 0u );
         TS_ASSERT_EQUALS( cost1._constant, 0 );
 
         MaxConstraint max2( f, elements );
         max2.registerTableau( &tableau );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 11u );
         // element to aux: 2: 8, 3: 9, 4: 10.
 
@@ -1332,14 +1854,22 @@ public:
         // Phase not fixed, can add cost terms to eligible phases.
         TS_ASSERT( !max2.phaseFixed() );
         LinearExpression cost2;
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent
                                   ( cost2, MAX_PHASE_ELIMINATED ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent( cost2, MAX_PHASE_ELIMINATED ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( cost2._addends.size(), 1u );
         TS_ASSERT_EQUALS( cost2._addends[1], 1 );
         TS_ASSERT_EQUALS( cost2._constant, -1 );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent
                                   ( cost2, MAX_PHASE_ELIMINATED ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent( cost2, MAX_PHASE_ELIMINATED ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( cost2._addends.size(), 1u );
         TS_ASSERT_EQUALS( cost2._addends[1], 2 );
         TS_ASSERT_EQUALS( cost2._constant, -2 );
@@ -1347,8 +1877,12 @@ public:
         LinearExpression cost3;
         List<PhaseStatus> phases;
         TS_ASSERT_THROWS_NOTHING( phases = max2.getAllCases() );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent
                                   ( cost3, *(phases.begin()) ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent( cost3, *( phases.begin() ) ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( cost3._addends.size(), 1u );
         // The first case is eliminate, the aux var to the second case is 9
         TS_ASSERT_EQUALS( cost3._addends[9], 1 );
@@ -1357,8 +1891,12 @@ public:
         // Each case returned by getAllCases() should be eligible as a term in
         // the SoI.
         for ( const auto &phase : phases )
+<<<<<<< HEAD
             TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent
                                       ( cost3, phase ) );
+=======
+            TS_ASSERT_THROWS_NOTHING( max2.getCostFunctionComponent( cost3, phase ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_get_phase_in_assignment()
@@ -1385,14 +1923,22 @@ public:
         assignment[4] = 1;
         List<PhaseStatus> phases;
         TS_ASSERT_THROWS_NOTHING( phases = max.getAllCases() );
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( max.getPhaseStatusInAssignment( assignment ),
                           *phases.begin() );
+=======
+        TS_ASSERT_EQUALS( max.getPhaseStatusInAssignment( assignment ), *phases.begin() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         assignment[1] = 1;
         assignment[3] = 0.9;
         assignment[4] = 0.8;
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( max.getPhaseStatusInAssignment( assignment ),
                           MAX_PHASE_ELIMINATED );
+=======
+        TS_ASSERT_EQUALS( max.getPhaseStatusInAssignment( assignment ), MAX_PHASE_ELIMINATED );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_get_all_cases()
@@ -1434,8 +1980,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 8u );
 
         for ( unsigned i = 2; i < 5; ++i )
@@ -1448,8 +1998,12 @@ public:
         max.getEntailedTightenings( tightenings );
         double lowerBound = FloatUtils::negativeInfinity();
         for ( const auto &t : tightenings )
+<<<<<<< HEAD
             if ( t._variable == f && t._type == Tightening::LB &&
                  t._value > lowerBound )
+=======
+            if ( t._variable == f && t._type == Tightening::LB && t._value > lowerBound )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 lowerBound = t._value;
         TS_ASSERT_EQUALS( lowerBound, 1 );
 
@@ -1460,8 +2014,12 @@ public:
 
         lowerBound = FloatUtils::negativeInfinity();
         for ( const auto &t : tightenings )
+<<<<<<< HEAD
             if ( t._variable == f && t._type == Tightening::LB &&
                  t._value > lowerBound )
+=======
+            if ( t._variable == f && t._type == Tightening::LB && t._value > lowerBound )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 lowerBound = t._value;
         TS_ASSERT_EQUALS( lowerBound, 1.5 );
     }
@@ -1479,8 +2037,12 @@ public:
         MaxConstraint max( f, elements );
         InputQuery ipq;
         ipq.setNumberOfVariables( 5 );
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables
                                   ( ipq ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( max.transformToUseAuxVariables( ipq ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( ipq.getNumberOfVariables(), 8u );
 
         for ( unsigned i = 2; i < 5; ++i )
@@ -1493,8 +2055,12 @@ public:
         max.getEntailedTightenings( tightenings );
         double upperBound = FloatUtils::infinity();
         for ( const auto &t : tightenings )
+<<<<<<< HEAD
             if ( t._variable == f && t._type == Tightening::UB &&
                  t._value < upperBound )
+=======
+            if ( t._variable == f && t._type == Tightening::UB && t._value < upperBound )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 upperBound = t._value;
         TS_ASSERT_EQUALS( upperBound, 2 );
 
@@ -1504,8 +2070,12 @@ public:
         max.getEntailedTightenings( tightenings );
 
         for ( const auto &t : tightenings )
+<<<<<<< HEAD
             if ( t._variable == f && t._type == Tightening::UB &&
                  t._value < upperBound )
+=======
+            if ( t._variable == f && t._type == Tightening::UB && t._value < upperBound )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 upperBound = t._value;
         TS_ASSERT_EQUALS( upperBound, 2 );
     }

@@ -13,11 +13,16 @@
 
 **/
 
+#include "ProjectedSteepestEdge.h"
+
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "ITableau.h"
 #include "MStringf.h"
+<<<<<<< HEAD
 #include "ProjectedSteepestEdge.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MarabouError.h"
 #include "Statistics.h"
 #include "TableauRow.h"
@@ -74,7 +79,12 @@ void ProjectedSteepestEdgeRule::initialize( const ITableau &tableau )
 
     _referenceSpace = new char[_n];
     if ( !_referenceSpace )
+<<<<<<< HEAD
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "ProjectedSteepestEdgeRule::referenceSpace" );
+=======
+        throw MarabouError( MarabouError::ALLOCATION_FAILED,
+                            "ProjectedSteepestEdgeRule::referenceSpace" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     _gamma = new double[_n - _m];
     if ( !_gamma )
@@ -93,7 +103,7 @@ void ProjectedSteepestEdgeRule::initialize( const ITableau &tableau )
 
 void ProjectedSteepestEdgeRule::resetReferenceSpace( const ITableau &tableau )
 {
-    memset( _referenceSpace, 0, _n * sizeof(char) );
+    memset( _referenceSpace, 0, _n * sizeof( char ) );
 
     for ( unsigned i = 0; i < _n - _m; ++i )
     {
@@ -105,8 +115,12 @@ void ProjectedSteepestEdgeRule::resetReferenceSpace( const ITableau &tableau )
     _errorInGamma = 0.0;
 
     if ( _statistics )
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::PSE_NUM_RESET_REFERENCE_SPACE );
+=======
+        _statistics->incLongAttribute( Statistics::PSE_NUM_RESET_REFERENCE_SPACE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool ProjectedSteepestEdgeRule::select( ITableau &tableau,
@@ -156,8 +170,14 @@ bool ProjectedSteepestEdgeRule::select( ITableau &tableau,
     {
         unsigned contender = *it;
         gammaValue = _gamma[*it];
+<<<<<<< HEAD
         double contenderValue =
             ( gammaValue < DBL_EPSILON ) ? 0 : ( costFunction[*it] * costFunction[*it] ) / gammaValue;
+=======
+        double contenderValue = ( gammaValue < DBL_EPSILON )
+                                  ? 0
+                                  : ( costFunction[*it] * costFunction[*it] ) / gammaValue;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( contenderValue > bestValue )
         {
@@ -201,7 +221,8 @@ void ProjectedSteepestEdgeRule::prePivotHook( const ITableau &tableau, bool fake
     // Update gamma[entering] to the accurate value, taking the pivot into account
     double accurateGamma;
     _errorInGamma = computeAccurateGamma( accurateGamma, tableau );
-    _gamma[enteringIndex] = accurateGamma / ( changeColumn[leavingIndex] * changeColumn[leavingIndex] );
+    _gamma[enteringIndex] =
+        accurateGamma / ( changeColumn[leavingIndex] * changeColumn[leavingIndex] );
 
     unsigned m = tableau.getM();
     unsigned n = tableau.getN();
@@ -252,7 +273,8 @@ void ProjectedSteepestEdgeRule::prePivotHook( const ITableau &tableau, bool fake
     PSE_LOG( "PrePivotHook done" );
 }
 
-double ProjectedSteepestEdgeRule::computeAccurateGamma( double &accurateGamma, const ITableau &tableau )
+double ProjectedSteepestEdgeRule::computeAccurateGamma( double &accurateGamma,
+                                                        const ITableau &tableau )
 {
     unsigned entering = tableau.getEnteringVariable();
     unsigned enteringIndex = tableau.variableToIndex( entering );
@@ -295,7 +317,13 @@ void ProjectedSteepestEdgeRule::postPivotHook( const ITableau &tableau, bool fak
     // If the error is too great, reset the reference space.
     if ( _errorInGamma > GlobalConfiguration::PSE_GAMMA_ERROR_THRESHOLD )
     {
+<<<<<<< HEAD
         PSE_LOG( Stringf( "PostPivotHook reseting ref space (degradation). Error = %.15lf", _errorInGamma ).ascii() );
+=======
+        PSE_LOG( Stringf( "PostPivotHook reseting ref space (degradation). Error = %.15lf",
+                          _errorInGamma )
+                     .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         resetReferenceSpace( tableau );
         return;
     }

@@ -19,7 +19,14 @@ import numpy as np
 # Path to Marabou folder if you did not export it
 
 # sys.path.append('/home/USER/git/Marabou')
+<<<<<<< HEAD
 from maraboupy import Marabou
+=======
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
+from maraboupy import Marabou
+from maraboupy import MarabouUtils
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 from maraboupy import MarabouCore
 from maraboupy.MarabouCore import StatisticsUnsignedAttribute
 
@@ -33,6 +40,7 @@ net1 = Marabou.read_nnet(nnetFile)
 
 # %%
 # Require that a input variable is either 0 or 1
+<<<<<<< HEAD
 for var in net1.inputVars[0]:
     # eq1: 1 * var = 0
     eq1 = MarabouCore.Equation(MarabouCore.Equation.EQ);
@@ -43,6 +51,18 @@ for var in net1.inputVars[0]:
     eq2 = MarabouCore.Equation(MarabouCore.Equation.EQ);
     eq2.addAddend(1, var);
     eq2.setScalar(1);
+=======
+for var in net1.inputVars[0][0]:
+    # eq1: 1 * var = 0
+    eq1 = MarabouUtils.Equation(MarabouCore.Equation.EQ)
+    eq1.addAddend(1, var)
+    eq1.setScalar(0)
+
+    # eq2: 1 * var = 1
+    eq2 = MarabouUtils.Equation(MarabouCore.Equation.EQ)
+    eq2.addAddend(1, var)
+    eq2.setScalar(1)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     # ( var = 0) \/ (var = 1)
     disjunction = [[eq1], [eq2]]
@@ -54,7 +74,12 @@ for var in net1.inputVars[0]:
 
 # %%
 # Solve Marabou query
+<<<<<<< HEAD
 exitCode1, vals1, stats1 = net1.solve()
+=======
+# exitCode1, vals1, stats1 = net1.solve()
+exitCode1, vals1, stats1 = net1.solve("Marbou_Example_5_DisjunctionConstraintExample.log")
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 # %%
 # Example statistics

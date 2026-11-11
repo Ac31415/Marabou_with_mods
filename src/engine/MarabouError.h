@@ -21,7 +21,11 @@
 class MarabouError : public Error
 {
 public:
+<<<<<<< HEAD
 	enum Code {
+=======
+    enum Code {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         ALLOCATION_FAILED = 0,
         VARIABLE_INDEX_OUT_OF_RANGE = 1,
         VARIABLE_DOESNT_EXIST_IN_SOLUTION = 2,
@@ -47,10 +51,19 @@ public:
         INVALID_WEIGHTED_SUM_INDEX = 22,
         UNSUCCESSFUL_QUEUE_PUSH = 23,
         NETWORK_LEVEL_REASONER_ACTIVATION_NOT_SUPPORTED = 24,
+<<<<<<< HEAD
         NETWORK_LEVEL_REASONER_NOT_AVAILABLE = 24,
         REQUESTED_NONEXISTENT_CASE_SPLIT = 25,
         UNABLE_TO_INITIALIZATION_PHASE_PATTERN = 26,
         BOUNDS_NOT_UP_TO_DATE_IN_LP_SOLVER = 27,
+=======
+        NETWORK_LEVEL_REASONER_NOT_AVAILABLE = 25,
+        REQUESTED_NONEXISTENT_CASE_SPLIT = 26,
+        UNABLE_TO_INITIALIZATION_PHASE_PATTERN = 27,
+        BOUNDS_NOT_UP_TO_DATE_IN_LP_SOLVER = 28,
+        INVALID_LEAKY_RELU_SLOPE = 29,
+        UNABLE_TO_RECONSTRUCT_SOLUTION_FOR_ELIMINATED_NEURONS = 30,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Error codes for Query Loader
         FILE_DOES_NOT_EXIST = 100,
@@ -65,12 +78,22 @@ public:
         DEBUGGING_ERROR = 999,
     };
 
+<<<<<<< HEAD
     MarabouError( MarabouError::Code code ) : Error( "MarabouError", (int)code )
 	{
 	}
 
     MarabouError( MarabouError::Code code, const char *userMessage ) :
         Error( "MarabouError", (int)code, userMessage )
+=======
+    MarabouError( MarabouError::Code code )
+        : Error( "MarabouError", (int)code )
+    {
+    }
+
+    MarabouError( MarabouError::Code code, const char *userMessage )
+        : Error( "MarabouError", (int)code, userMessage )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 };

@@ -19,6 +19,7 @@
 #include "MockConstraintMatrixAnalyzer.h"
 #include "T/ConstraintMatrixAnalyzerFactory.h"
 
+<<<<<<< HEAD
 class MockConstraintMatrixAnalyzerFactory :
 	public T::Base_createConstraintMatrixAnalyzer,
 	public T::Base_discardConstraintMatrixAnalyzer
@@ -45,6 +46,34 @@ public:
 		TS_ASSERT_EQUALS( constraintMatrixAnalyzer, &mockConstraintMatrixAnalyzer );
 		mockConstraintMatrixAnalyzer.mockDestructor();
 	}
+=======
+class MockConstraintMatrixAnalyzerFactory
+    : public T::Base_createConstraintMatrixAnalyzer
+    , public T::Base_discardConstraintMatrixAnalyzer
+{
+public:
+    MockConstraintMatrixAnalyzer mockConstraintMatrixAnalyzer;
+
+    ~MockConstraintMatrixAnalyzerFactory()
+    {
+        if ( mockConstraintMatrixAnalyzer.wasCreated )
+        {
+            TS_ASSERT( mockConstraintMatrixAnalyzer.wasDiscarded );
+        }
+    }
+
+    IConstraintMatrixAnalyzer *createConstraintMatrixAnalyzer()
+    {
+        mockConstraintMatrixAnalyzer.mockConstructor();
+        return &mockConstraintMatrixAnalyzer;
+    }
+
+    void discardConstraintMatrixAnalyzer( IConstraintMatrixAnalyzer *constraintMatrixAnalyzer )
+    {
+        TS_ASSERT_EQUALS( constraintMatrixAnalyzer, &mockConstraintMatrixAnalyzer );
+        mockConstraintMatrixAnalyzer.mockDestructor();
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __MockConstraintMatrixAnalyzerFactory_h__

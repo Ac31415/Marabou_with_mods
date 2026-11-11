@@ -14,6 +14,7 @@
 **/
 
 #include "AcasParser.h"
+
 #include "FloatUtils.h"
 #include "InputParserError.h"
 #include "InputQuery.h"
@@ -51,8 +52,12 @@ void AcasParser::generateQuery( InputQuery &inputQuery )
     for ( unsigned i = 1; i < numberOfLayers - 1; ++i )
         numberOfInternalNodes += _acasNeuralNetwork.getLayerSize( i );
 
-    printf( "Number of layers: %u. Input layer size: %u. Output layer size: %u. Number of ReLUs: %u\n",
-            numberOfLayers, inputLayerSize, outputLayerSize, numberOfInternalNodes );
+    printf(
+        "Number of layers: %u. Input layer size: %u. Output layer size: %u. Number of ReLUs: %u\n",
+        numberOfLayers,
+        inputLayerSize,
+        outputLayerSize,
+        numberOfInternalNodes );
 
     // The total number of variables required for the encoding is computed as follows:
     //   1. Each input node appears once
@@ -95,8 +100,13 @@ void AcasParser::generateQuery( InputQuery &inputQuery )
         double min, max;
         _acasNeuralNetwork.getInputRange( i, min, max );
 
+<<<<<<< HEAD
         inputQuery.setLowerBound( _nodeToF[NodeIndex(0, i)], min );
         inputQuery.setUpperBound( _nodeToF[NodeIndex(0, i)], max );
+=======
+        inputQuery.setLowerBound( _nodeToF[NodeIndex( 0, i )], min );
+        inputQuery.setUpperBound( _nodeToF[NodeIndex( 0, i )], max );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     for ( const auto &fNode : _nodeToF )
@@ -126,13 +136,13 @@ void AcasParser::generateQuery( InputQuery &inputQuery )
             Equation equation;
 
             // The b variable
-            unsigned bVar = _nodeToB[NodeIndex(layer + 1, target)];
+            unsigned bVar = _nodeToB[NodeIndex( layer + 1, target )];
             equation.addAddend( -1.0, bVar );
 
             // The f variables from the previous layer
             for ( unsigned source = 0; source < _acasNeuralNetwork.getLayerSize( layer ); ++source )
             {
-                unsigned fVar = _nodeToF[NodeIndex(layer, source)];
+                unsigned fVar = _nodeToF[NodeIndex( layer, source )];
                 equation.addAddend( _acasNeuralNetwork.getWeight( layer, source, target ), fVar );
             }
 
@@ -151,8 +161,8 @@ void AcasParser::generateQuery( InputQuery &inputQuery )
 
         for ( unsigned j = 0; j < currentLayerSize; ++j )
         {
-            unsigned b = _nodeToB[NodeIndex(i, j)];
-            unsigned f = _nodeToF[NodeIndex(i, j)];
+            unsigned b = _nodeToB[NodeIndex( i, j )];
+            unsigned f = _nodeToF[NodeIndex( i, j )];
             PiecewiseLinearConstraint *relu = new ReluConstraint( b, f );
 
             inputQuery.addPiecewiseLinearConstraint( relu );
@@ -207,8 +217,8 @@ unsigned AcasParser::getFVariable( unsigned layer, unsigned index ) const
 
 void AcasParser::evaluate( const Vector<double> &inputs, Vector<double> &outputs ) const
 {
-    _acasNeuralNetwork.evaluate( inputs, outputs,
-                                 _acasNeuralNetwork.getLayerSize( _acasNeuralNetwork.getNumLayers() ) );
+    _acasNeuralNetwork.evaluate(
+        inputs, outputs, _acasNeuralNetwork.getLayerSize( _acasNeuralNetwork.getNumLayers() ) );
 }
 
 //

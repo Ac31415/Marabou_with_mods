@@ -13,14 +13,23 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "CSRMatrix.h"
 #include "EtaMatrix.h"
 #include "FloatUtils.h"
 #include "SparseGaussianEliminator.h"
+<<<<<<< HEAD
 #include <cstring>
+=======
+
+#include <cstring>
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class MockForSparseGaussianEliminator
 {
@@ -57,12 +66,20 @@ public:
         {
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 result[i*m + j] = 0;
+=======
+                result[i * m + j] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 for ( unsigned k = 0; k < m; ++k )
                 {
                     double fValue = ( i == k ) ? 1.0 : lu->_F->get( i, k );
                     double vValue = lu->_V->get( k, j );
+<<<<<<< HEAD
                     result[i*m + j] += fValue * vValue;
+=======
+                    result[i * m + j] += fValue * vValue;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
             }
         }
@@ -77,7 +94,11 @@ public:
         {
             for ( unsigned row = 0; row < m; ++row )
             {
+<<<<<<< HEAD
                 denseColumn[row] = B[row*m + col];
+=======
+                denseColumn[row] = B[row * m + col];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
 
             SparseUnsortedList *list = new SparseUnsortedList( denseColumn, m );
@@ -99,13 +120,21 @@ public:
         {
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 result[i*m + j] = 0;
+=======
+                result[i * m + j] = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 for ( unsigned k = 0; k < m; ++k )
                 {
                     double vtValue = lu->_Vt->get( i, k );
                     double ftValue = ( k == j ) ? 1.0 : lu->_Ft->get( k, j );
 
+<<<<<<< HEAD
                     result[i*m + j] += vtValue * ftValue;
+=======
+                    result[i * m + j] += vtValue * ftValue;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
             }
         }
@@ -121,7 +150,11 @@ public:
             printf( "\t" );
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 printf( "%8.lf ", matrix[i*m + j] );
+=======
+                printf( "%8.lf ", matrix[i * m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
             printf( "\n" );
         }
@@ -135,7 +168,11 @@ public:
         {
             for ( unsigned j = 0; j < m; ++j )
             {
+<<<<<<< HEAD
                 result[i*m + j] = orig[j*m + i];
+=======
+                result[i * m + j] = orig[j * m + i];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }
@@ -146,11 +183,18 @@ public:
         SparseLUFactors lu4( 4 );
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 0,
                 0, 0, 1
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 0, //
+                0, 0, 1  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 3 );
@@ -182,11 +226,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 2,
                 0, 4, 1
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 2, //
+                0, 4, 1  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 3 );
@@ -218,11 +269,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, -4,
                 -5, 1, 2,
                 0, 4, 1
+=======
+            double A[] = {
+                2,  3, -4, //
+                -5, 1, 2,  //
+                0,  4, 1   //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 3 );
@@ -254,12 +312,20 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, -4, 0,
                 -5, 1, 2, 2,
                 0, 4, 1, -5,
                 1, 2, 3, 4,
+=======
+            double A[] = {
+                2,  3, -4, 0,  //
+                -5, 1, 2,  2,  //
+                0,  4, 1,  -5, //
+                1,  2, 3,  4,  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 4 );
@@ -291,11 +357,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 0,
                 0, 1, 0,
                 5, 4, 0
+=======
+            double A[] = {
+                2, 3, 0, //
+                0, 1, 0, //
+                5, 4, 0  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 3 );
@@ -313,11 +386,18 @@ public:
         }
 
         {
+<<<<<<< HEAD
             double A[] =
             {
                 2, 3, 7,
                 0, 0, 0,
                 5, 4, 0
+=======
+            double A[] = {
+                2, 3, 7, //
+                0, 0, 0, //
+                5, 4, 0  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             };
 
             SparseColumnsOfBasis sparseCols( 3 );

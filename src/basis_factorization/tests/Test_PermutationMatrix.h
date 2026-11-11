@@ -10,18 +10,23 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
 
 **/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-#include <cxxtest/TestSuite.h>
+**/
 
 #include "BasisFactorizationError.h"
 #include "EtaMatrix.h"
 #include "FloatUtils.h"
 #include "GlobalConfiguration.h"
-#include "PermutationMatrix.h"
 #include "List.h"
 #include "MockErrno.h"
+#include "PermutationMatrix.h"
+
+#include <cxxtest/TestSuite.h>
 
 class MockForPermutationMatrix
 {

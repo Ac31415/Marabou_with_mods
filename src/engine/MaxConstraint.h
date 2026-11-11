@@ -46,9 +46,16 @@
 #ifndef __MaxConstraint_h__
 #define __MaxConstraint_h__
 
+<<<<<<< HEAD
+=======
+#include "LinearExpression.h"
+#include "Map.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "PiecewiseLinearConstraint.h"
 #include "LinearExpression.h"
 #include "Map.h"
+
+#define MAX_VARIABLE_TO_PHASE_OFFSET 1
 
 #define MAX_VARIABLE_TO_PHASE_OFFSET 1
 
@@ -129,6 +136,7 @@ public:
     */
     PiecewiseLinearCaseSplit getImpliedCaseSplit() const override;
     PiecewiseLinearCaseSplit getValidCaseSplit() const override;
+<<<<<<< HEAD
 
     /*
        Returns case split corresponding to the given phase/id
@@ -149,6 +157,28 @@ public:
     bool isCaseInfeasible( unsigned phase ) const;
 
     /*
+=======
+
+    /*
+       Returns case split corresponding to the given phase/id
+     */
+    PiecewiseLinearCaseSplit getCaseSplit( PhaseStatus phase ) const override;
+
+    /*
+       Returns a list of all cases - { ABS_POSITIVE, ABS_NEGATIVE }
+       The order of returned cases affects the search, and this method is where related
+       heuristics should be implemented.
+     */
+    List<PhaseStatus> getAllCases() const override;
+
+    /*
+       Checks whether a case has been flagged as infeasible. Works only in
+       context-dependent mode.
+     */
+    bool isCaseInfeasible( unsigned phase ) const;
+
+    /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Check if the constraint's phase has been fixed.
     */
     bool phaseFixed() const override;
@@ -185,6 +215,7 @@ public:
     {
         return true;
     }
+<<<<<<< HEAD
 
     /*
       Ask the piecewise linear constraint to add its cost term corresponding to
@@ -240,19 +271,82 @@ public:
         return ( variable == MAX_PHASE_ELIMINATED )
                ? MAX_PHASE_ELIMINATED
                : static_cast<PhaseStatus>( variable + MAX_VARIABLE_TO_PHASE_OFFSET );
+=======
+
+    /*
+      Ask the piecewise linear constraint to add its cost term corresponding to
+      the given phase to the cost function. The cost term for Max is:
+      _f - element_i for each element
+    */
+    virtual void getCostFunctionComponent( LinearExpression &cost,
+                                           PhaseStatus phase ) const override;
+
+    virtual PhaseStatus
+    getPhaseStatusInAssignment( const Map<unsigned, double> &assignment ) const override;
+
+    /*
+      Returns string with shape:
+      max, _f, element_1, element_2, ... , element_n
+    */
+    String serializeToString() const override;
+
+    bool isImplication() const override;
+
+    inline Set<unsigned> getEliminatedElements() const
+    {
+        return _eliminatedElements;
+    }
+
+    inline Set<unsigned> getParticipatingElements() const
+    {
+        Set<unsigned> participatingElements = {};
+        for ( const auto &element : _elements )
+            participatingElements.insert( element );
+
+        for ( const auto &element : _eliminatedElements )
+            participatingElements.insert( element );
+
+        return participatingElements;
+    }
+
+    inline double getMaxValueOfEliminatedPhases() const
+    {
+        return _maxValueOfEliminatedPhases;
+    }
+
+    inline unsigned getAuxToElement( unsigned element )
+    {
+        return _auxToElement[element];
+    }
+
+    /*
+       Conversion functions between variables and PhaseStatus.
+    */
+    inline PhaseStatus variableToPhase( unsigned variable ) const
+    {
+        return ( variable == MAX_PHASE_ELIMINATED )
+                 ? MAX_PHASE_ELIMINATED
+                 : static_cast<PhaseStatus>( variable + MAX_VARIABLE_TO_PHASE_OFFSET );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     inline unsigned phaseToVariable( PhaseStatus phase ) const
     {
         return ( phase == MAX_PHASE_ELIMINATED )
+<<<<<<< HEAD
                ? MAX_PHASE_ELIMINATED
                : static_cast<unsigned>( phase ) - MAX_VARIABLE_TO_PHASE_OFFSET;
+=======
+                 ? MAX_PHASE_ELIMINATED
+                 : static_cast<unsigned>( phase ) - MAX_VARIABLE_TO_PHASE_OFFSET;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
- private:
+private:
     unsigned _f;
     Set<unsigned> _elements;
     Set<unsigned> _initialElements;
+<<<<<<< HEAD
 
     Map<unsigned, unsigned> _auxToElement;
     Map<unsigned, unsigned> _elementToAux;
@@ -269,6 +363,24 @@ public:
     */
     double _maxLowerBound;
 
+=======
+
+    Map<unsigned, unsigned> _auxToElement;
+    Map<unsigned, unsigned> _elementToAux;
+
+    Map<unsigned, unsigned> _elementToTableauAux;
+    Map<unsigned, std::shared_ptr<TableauRow>> _elementToTighteningRow;
+    Set<unsigned> _eliminatedElements;
+    Set<unsigned> _proofEliminatedElements;
+
+    bool _obsolete;
+
+    /*
+      We eagerly keep track of the max lower bound of the inputs.
+    */
+    double _maxLowerBound;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     /*
       We keep track of eliminated variables and the maximal value. The flag is
       true iff some input variables of the max constraint have been eliminated

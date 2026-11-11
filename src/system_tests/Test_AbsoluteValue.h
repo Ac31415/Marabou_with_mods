@@ -13,14 +13,22 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "AbsoluteValueConstraint.h"
 #include "AcasParser.h"
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InputQuery.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class AbsoluteValueTestSuite : public CxxTest::TestSuite
 {
 public:
@@ -163,8 +171,13 @@ public:
         for ( unsigned i = 0; i < 5; ++i )
         {
             unsigned inputVariable = acasParser.getInputVariable( i );
+<<<<<<< HEAD
             AbsoluteValueConstraint *abs = new AbsoluteValueConstraint
                 ( inputVariable, numVariables + i );
+=======
+            AbsoluteValueConstraint *abs =
+                new AbsoluteValueConstraint( inputVariable, numVariables + i );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             inputQuery.addPiecewiseLinearConstraint( abs );
         }
 
@@ -191,14 +204,22 @@ public:
         equationOut.setType( Equation::LE );
 
         // minimal - larger <= 0    -->     larger >= minimal
+<<<<<<< HEAD
         equationOut.addAddend( 1 , minimalOutputVar );
+=======
+        equationOut.addAddend( 1, minimalOutputVar );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         equationOut.addAddend( -1, largerOutputVar );
         equationOut.setScalar( 0 );
         inputQuery.addEquation( equationOut );
 
         // Run the query
         Engine engine;
+<<<<<<< HEAD
         if( !engine.processInputQuery( inputQuery ) )
+=======
+        if ( !engine.processInputQuery( inputQuery ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             // No counter example found, this is acceptable
             return;
@@ -206,8 +227,13 @@ public:
 
         TS_ASSERT( engine.getInputQuery()->getNetworkLevelReasoner() );
 
+<<<<<<< HEAD
         auto constraintsInTopologicalOrder = engine.getInputQuery()->
             getNetworkLevelReasoner()->getConstraintsInTopologicalOrder();
+=======
+        auto constraintsInTopologicalOrder =
+            engine.getInputQuery()->getNetworkLevelReasoner()->getConstraintsInTopologicalOrder();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         auto allConstraints = engine.getInputQuery()->getPiecewiseLinearConstraints();
         TS_ASSERT_EQUALS( constraintsInTopologicalOrder.size(), allConstraints.size() );
 

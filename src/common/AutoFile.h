@@ -22,6 +22,7 @@
 class AutoFile
 {
 public:
+<<<<<<< HEAD
 	AutoFile( const String &path )
 	{
 		_file = T::createFile( path );
@@ -45,6 +46,31 @@ public:
 
 private:
 	IFile *_file;
+=======
+    AutoFile( const String &path )
+    {
+        _file = T::createFile( path );
+    }
+
+    ~AutoFile()
+    {
+        T::discardFile( _file );
+        _file = 0;
+    }
+
+    operator IFile &()
+    {
+        return *_file;
+    }
+
+    IFile *operator->()
+    {
+        return _file;
+    }
+
+private:
+    IFile *_file;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __AutoFile_h__

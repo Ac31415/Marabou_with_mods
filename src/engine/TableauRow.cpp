@@ -13,8 +13,13 @@
 
 **/
 
+<<<<<<< HEAD
 #include "MarabouError.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "TableauRow.h"
+
+#include "MarabouError.h"
 
 TableauRow::TableauRow( unsigned size )
     : _size( size )

@@ -32,7 +32,11 @@ PLCLemma::PLCLemma( const List<unsigned> &causingVars,
         _explanations = List<SparseUnsortedList>();
     else
     {
+<<<<<<< HEAD
         ASSERT( causingVars.size() ==  explanations.size() );
+=======
+        ASSERT( causingVars.size() == explanations.size() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         unsigned numOfExplanations = explanations.size();
 
@@ -58,7 +62,11 @@ PLCLemma::PLCLemma( const List<unsigned> &causingVars,
 PLCLemma::~PLCLemma()
 {
     if ( !_explanations.empty() )
+<<<<<<< HEAD
         for (  auto &expl : _explanations )
+=======
+        for ( auto &expl : _explanations )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             expl.clear();
 }
 

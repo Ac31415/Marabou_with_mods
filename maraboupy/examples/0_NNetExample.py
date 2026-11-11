@@ -20,17 +20,32 @@ import numpy as np
 # Path to Marabou folder if you did not export it
 
 # sys.path.append('/home/USER/git/Marabou')
+<<<<<<< HEAD
+=======
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 from maraboupy import Marabou
 from maraboupy.MarabouCore import StatisticsUnsignedAttribute
 
 # %%
 # Path to NNet file
+<<<<<<< HEAD
 nnetFile = "../../src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
+=======
+# nnetFile = "../../src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
+nnetFile = "/Users/wen-chungcheng/Marabou_with_mods/src/input_parsers/acas_example/ACASXU_run2a_1_1_tiny_2.nnet"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 # %%
 # Load the network from NNet file, and set a lower bound on first output variable
 net1 = Marabou.read_nnet(nnetFile)
+<<<<<<< HEAD
 net1.setLowerBound(net1.outputVars[0][0], .5)
+=======
+# print(net1.outputVars[0][0][0])
+# net1.setLowerBound(net1.outputVars[0][0], .5)
+net1.setLowerBound(net1.outputVars[0][0][0], .5)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 # %%
 # Solve Marabou query
@@ -59,4 +74,9 @@ outputsExpected = np.array([0.49999678, -0.18876659,  0.80778555, -2.76422264, -
 
 net2 = Marabou.read_nnet(nnetFile)
 outputsMarabou = net2.evaluateWithMarabou([inputs])
+<<<<<<< HEAD
 assert max(abs(outputsMarabou.flatten() - outputsExpected)) < 1e-8
+=======
+# assert max(abs(outputsMarabou.flatten() - outputsExpected)) < 1e-8
+assert max(abs(outputsMarabou[0].flatten() - outputsExpected)) < 1e-8
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

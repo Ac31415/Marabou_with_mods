@@ -20,10 +20,10 @@
 
 #include <list>
 
-template<class T>
-class List
+template <class T> class List
 {
     typedef std::list<T> Super;
+
 public:
     typedef typename Super::iterator iterator;
     typedef typename Super::const_iterator const_iterator;
@@ -35,7 +35,19 @@ public:
     {
     }
 
-    List<T>( const std::initializer_list<T> &initializerList ) : _container( initializerList )
+    List<T>( const std::initializer_list<T> &initializerList )
+        : _container( initializerList )
+    {
+    }
+
+    List<T>( unsigned size, T value )
+        : _container( size, value )
+    {
+    }
+
+    template <class InputIt>
+    List<T>( InputIt begin, InputIt end )
+        : _container( begin, end )
     {
     }
 
@@ -181,11 +193,18 @@ public:
         _container.pop_back();
     }
 
+<<<<<<< HEAD
 	template <class Predicate>
     void removeIf( Predicate p )
 	{
     	_container.remove_if( p );
 	}
+=======
+    template <class Predicate> void removeIf( Predicate p )
+    {
+        _container.remove_if( p );
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     bool operator==( const List<T> &other ) const
     {

@@ -16,8 +16,12 @@
 #ifndef __SoISearchStrategy_h__
 #define __SoISearchStrategy_h__
 
+<<<<<<< HEAD
 enum class SoISearchStrategy
 {
+=======
+enum class SoISearchStrategy {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // Flip the SoI cost term of a random ReLU,
     // accept the change with certain probability
     MCMC,

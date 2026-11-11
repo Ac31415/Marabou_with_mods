@@ -16,13 +16,21 @@
 #ifndef __SnCDivideStrategy_h__
 #define __SnCDivideStrategy_h__
 
+<<<<<<< HEAD
 enum class SnCDivideStrategy
 {
+=======
+enum class SnCDivideStrategy {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // Input splitting
     LargestInterval = 0,
 
     // Relu splitting
+<<<<<<< HEAD
     Polarity,      // Pick the ReLU with the polarity closest to 0 among the first K nodes
+=======
+    Polarity, // Pick the ReLU with the polarity closest to 0 among the first K nodes
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     EarliestReLU,
 
     Auto

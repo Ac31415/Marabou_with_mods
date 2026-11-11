@@ -44,7 +44,12 @@ double UNSATCertificateUtils::computeBound( unsigned var,
 
     Vector<double> explanationRowCombination( numberOfVariables, 0 );
     // Create linear combination of original rows implied from explanation
+<<<<<<< HEAD
     UNSATCertificateUtils::getExplanationRowCombination( var, explanation, explanationRowCombination, initialTableau, numberOfVariables );
+=======
+    UNSATCertificateUtils::getExplanationRowCombination(
+        var, explanation, explanationRowCombination, initialTableau, numberOfVariables );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Set the bound derived from the linear combination, using original bounds.
     for ( unsigned i = 0; i < numberOfVariables; ++i )
@@ -53,9 +58,19 @@ double UNSATCertificateUtils::computeBound( unsigned var,
         if ( !FloatUtils::isZero( temp ) )
         {
             if ( isUpper )
+<<<<<<< HEAD
                 temp *= FloatUtils::isPositive( explanationRowCombination[i] ) ? groundUpperBounds[i] : groundLowerBounds[i];
             else
                 temp *= FloatUtils::isPositive( explanationRowCombination[i] ) ? groundLowerBounds[i] : groundUpperBounds[i];
+=======
+                temp *= FloatUtils::isPositive( explanationRowCombination[i] )
+                          ? groundUpperBounds[i]
+                          : groundLowerBounds[i];
+            else
+                temp *= FloatUtils::isPositive( explanationRowCombination[i] )
+                          ? groundLowerBounds[i]
+                          : groundUpperBounds[i];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             if ( !FloatUtils::isZero( temp ) )
                 derivedBound += temp;
@@ -74,18 +89,32 @@ void UNSATCertificateUtils::getExplanationRowCombination( unsigned var,
     ASSERT( !explanation.empty() );
 
     SparseUnsortedList tableauRow( numberOfVariables );
+<<<<<<< HEAD
     explanationRowCombination = Vector<double> ( numberOfVariables, 0 );
 
     for ( const auto &entry : explanation )
     {
          if ( FloatUtils::isZero( entry._value ) )
              continue;
+=======
+    explanationRowCombination = Vector<double>( numberOfVariables, 0 );
+
+    for ( const auto &entry : explanation )
+    {
+        if ( FloatUtils::isZero( entry._value ) )
+            continue;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         initialTableau->getRow( entry._index, &tableauRow );
         for ( const auto &tableauEntry : tableauRow )
         {
             if ( !FloatUtils::isZero( tableauEntry._value ) )
+<<<<<<< HEAD
                 explanationRowCombination[tableauEntry._index] += entry._value * tableauEntry._value;
+=======
+                explanationRowCombination[tableauEntry._index] +=
+                    entry._value * tableauEntry._value;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -120,7 +149,12 @@ double UNSATCertificateUtils::computeCombinationUpperBound( const SparseUnsorted
         for ( const auto &tableauEntry : tableauRow )
         {
             if ( !FloatUtils::isZero( tableauEntry._value ) )
+<<<<<<< HEAD
                 explanationRowCombination[tableauEntry._index] += tableauEntry._value * entry._value;
+=======
+                explanationRowCombination[tableauEntry._index] +=
+                    tableauEntry._value * entry._value;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -133,7 +167,12 @@ double UNSATCertificateUtils::computeCombinationUpperBound( const SparseUnsorted
         temp = explanationRowCombination[i];
         if ( !FloatUtils::isZero( temp ) )
         {
+<<<<<<< HEAD
             temp *= FloatUtils::isPositive( explanationRowCombination[i] ) ? groundUpperBounds[i] : groundLowerBounds[i];
+=======
+            temp *= FloatUtils::isPositive( explanationRowCombination[i] ) ? groundUpperBounds[i]
+                                                                           : groundLowerBounds[i];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             if ( !FloatUtils::isZero( temp ) )
                 derivedBound += temp;
@@ -147,4 +186,7 @@ const Set<PiecewiseLinearFunctionType> UNSATCertificateUtils::getSupportedActiva
 {
     return { RELU, SIGN, ABSOLUTE_VALUE, MAX, DISJUNCTION };
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

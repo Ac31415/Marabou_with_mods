@@ -22,6 +22,7 @@
 class IFile;
 class String;
 
+<<<<<<< HEAD
 namespace T
 {
 	IFile *createFile( const String &path );
@@ -40,6 +41,25 @@ CXXTEST_SUPPLY_VOID( discardFile,        /* => T::Base_AllocateIrp */
 					 ( IFile *file ),  /* Prototype              */
 					 T::discardFile,        /* Name of real function  */
 					 ( file )            /* Parameter list         */ );
+=======
+namespace T {
+IFile *createFile( const String &path );
+void discardFile( IFile *file );
+} // namespace T
+
+CXXTEST_SUPPLY( createFile,             /* => T::Base_AllocateIrp */
+                IFile *,                /* Return type            */
+                createFile,             /* Name of mock member    */
+                ( const String &path ), /* Prototype              */
+                T::createFile,          /* Name of real function  */
+                ( path ) /* Parameter list         */ );
+
+CXXTEST_SUPPLY_VOID( discardFile,     /* => T::Base_AllocateIrp */
+                     discardFile,     /* Name of mock member    */
+                     ( IFile *file ), /* Prototype              */
+                     T::discardFile,  /* Name of real function  */
+                     ( file ) /* Parameter list         */ );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #endif // __T__FileFactory_h__
 

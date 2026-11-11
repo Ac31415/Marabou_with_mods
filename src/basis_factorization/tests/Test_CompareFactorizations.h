@@ -13,8 +13,11 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 #include "ForrestTomlinFactorization.h"
 #include "LUFactorization.h"
@@ -23,6 +26,11 @@
 #include "SparseFTFactorization.h"
 #include "SparseLUFactorization.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class MockForCompareFactorizations
 {
 public:
@@ -58,6 +66,7 @@ public:
         TS_ASSERT( sft = new SparseFTFactorization( 4, *oracle ) );
         TS_ASSERT( slu = new SparseLUFactorization( 4, *oracle ) );
 
+<<<<<<< HEAD
         double B[] =
             {
                 2, 0, 3, -4,
@@ -65,6 +74,14 @@ public:
                 -3, 4.5, 1, 1,
                 0, 0, 2, 2
             };
+=======
+        double B[] = {
+            2,  0,   3,  -4, //
+            0,  1,   10, 0,  //
+            -3, 4.5, 1,  1,  //
+            0,  0,   2,  2   //
+        };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         oracle->storeBasis( 4, B );
         ft->obtainFreshBasis();
@@ -149,10 +166,17 @@ public:
         }
 
         double basisAtThisPoint[] = {
+<<<<<<< HEAD
             2, -20, 64, -4,
             0, 2, 96, 0,
             -3, 24, -45, 1,
             0, 6, 14, 2,
+=======
+            2,  -20, 64,  -4, //
+            0,  2,   96,  0,  //
+            -3, 24,  -45, 1,  //
+            0,  6,   14,  2,  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         oracle->storeBasis( 4, basisAtThisPoint );

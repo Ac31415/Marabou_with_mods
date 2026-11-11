@@ -24,7 +24,11 @@ Contradiction::Contradiction( const Vector<double> &contradiction )
 
 Contradiction::Contradiction( unsigned var )
     : _var( var )
+<<<<<<< HEAD
     , _contradiction( )
+=======
+    , _contradiction()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
 }
 

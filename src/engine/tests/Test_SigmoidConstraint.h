@@ -13,12 +13,21 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
 #include "InputQuery.h"
 #include "MarabouError.h"
 #include "SigmoidConstraint.h"
 #include "MockTableau.h"
+=======
+#include "InputQuery.h"
+#include "MarabouError.h"
+#include "MockTableau.h"
+#include "SigmoidConstraint.h"
+
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <string.h>
 
 class MockForSigmoidConstraint
@@ -32,9 +41,16 @@ public:
 class TestSigmoidConstraint : public SigmoidConstraint
 {
 public:
+<<<<<<< HEAD
     TestSigmoidConstraint( unsigned b, unsigned f  )
         : SigmoidConstraint( b, f )
     {}
+=======
+    TestSigmoidConstraint( unsigned b, unsigned f )
+        : SigmoidConstraint( b, f )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 class MaxConstraintTestSuite : public CxxTest::TestSuite
@@ -78,7 +94,11 @@ public:
         TS_ASSERT( !sigmoid.constraintObsolete() );
 
         // eliminate variable b
+<<<<<<< HEAD
         sigmoid.eliminateVariable( b, 0 );  // 0 is dummy for the argument of fixedValue
+=======
+        sigmoid.eliminateVariable( b, 0 ); // 0 is dummy for the argument of fixedValue
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // sigmoid is obsolete now
         TS_ASSERT( sigmoid.constraintObsolete() );
@@ -98,7 +118,12 @@ public:
         TS_ASSERT( !sigmoid->constraintObsolete() );
 
         // duplicate constraint
+<<<<<<< HEAD
         SigmoidConstraint *sigmoid2 = dynamic_cast<SigmoidConstraint *>( sigmoid->duplicateConstraint() );
+=======
+        SigmoidConstraint *sigmoid2 =
+            dynamic_cast<SigmoidConstraint *>( sigmoid->duplicateConstraint() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_THROWS_NOTHING( participatingVariables = sigmoid2->getParticipatingVariables() );
         TS_ASSERT_EQUALS( participatingVariables.size(), 2U );
         auto it = participatingVariables.begin();
@@ -113,7 +138,11 @@ public:
         TS_ASSERT( !sigmoid2->participatingVariable( 5 ) );
 
         // eliminate variable b
+<<<<<<< HEAD
         sigmoid->eliminateVariable( b, 0 );  // 0 is dummy for the argument of fixedValue
+=======
+        sigmoid->eliminateVariable( b, 0 ); // 0 is dummy for the argument of fixedValue
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // sigmoid is obsolete now
         TS_ASSERT( sigmoid->constraintObsolete() );
@@ -185,7 +214,11 @@ public:
         ++it;
         TS_ASSERT_EQUALS( it->_type, Tightening::UB );
         TS_ASSERT_EQUALS( it->_variable, f );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( it->_value, 1- 0.26894142, 0.001 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( it->_value, 1 - 0.26894142, 0.001 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_sigmoid_notify_bounds_f()
@@ -219,7 +252,11 @@ public:
         ++it;
         TS_ASSERT_EQUALS( it->_type, Tightening::UB );
         TS_ASSERT_EQUALS( it->_variable, f );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( it->_value, 1- 0.26894142, 0.001 ) );
+=======
+        TS_ASSERT( FloatUtils::areEqual( it->_value, 1 - 0.26894142, 0.001 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_sigmoid_update_variable_index()
@@ -281,7 +318,11 @@ public:
             ++it;
             TS_ASSERT_EQUALS( it->_type, Tightening::UB );
             TS_ASSERT_EQUALS( it->_variable, new_f );
+<<<<<<< HEAD
             TS_ASSERT( FloatUtils::areEqual( it->_value, 1- 0.26894142, 0.001 ) );
+=======
+            TS_ASSERT( FloatUtils::areEqual( it->_value, 1 - 0.26894142, 0.001 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -321,7 +362,11 @@ public:
         unsigned f = 1;
 
         SigmoidConstraint sigmoid( b, f );
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         String serializedString = sigmoid.serializeToString();
 
         SigmoidConstraint serializedSigmooid( serializedString.ascii() );
@@ -344,10 +389,35 @@ public:
         SigmoidConstraint sigmoid2( b_2, f_2 );
         TS_ASSERT_EQUALS( sigmoid2.getB(), b_2 );
         TS_ASSERT_EQUALS( sigmoid2.getF(), f_2 );
+<<<<<<< HEAD
         
         // restore
         sigmoid1.restoreState( &sigmoid2 );
         TS_ASSERT_EQUALS( sigmoid1.getB(), b_2 );
         TS_ASSERT_EQUALS( sigmoid1.getF(), f_2 );        
+=======
+
+        // restore
+        sigmoid1.restoreState( &sigmoid2 );
+        TS_ASSERT_EQUALS( sigmoid1.getB(), b_2 );
+        TS_ASSERT_EQUALS( sigmoid1.getF(), f_2 );
+    }
+
+    void test_sigmoid_satisfied()
+    {
+        unsigned b1 = 0;
+        unsigned f1 = 1;
+
+        SigmoidConstraint sigmoid( b1, f1 );
+        MockTableau tableau;
+        sigmoid.registerTableau( &tableau );
+        tableau.setValue( b1, 1 );
+        tableau.setValue( f1, 1 );
+        TS_ASSERT( !sigmoid.satisfied() );
+
+        tableau.setValue( b1, 1 );
+        tableau.setValue( f1, 0.73105857863 );
+        TS_ASSERT( sigmoid.satisfied() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 };

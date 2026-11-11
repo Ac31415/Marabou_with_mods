@@ -12,10 +12,19 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include <Options.h>
 #include "UnsatCertificateNode.h"
 
 UnsatCertificateNode::UnsatCertificateNode( UnsatCertificateNode *parent, PiecewiseLinearCaseSplit split )
+=======
+#include "UnsatCertificateNode.h"
+
+#include <Options.h>
+
+UnsatCertificateNode::UnsatCertificateNode( UnsatCertificateNode *parent,
+                                            PiecewiseLinearCaseSplit split )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     : _parent( parent )
     , _contradiction( NULL )
     , _headSplit( std::move( split ) )
@@ -70,7 +79,11 @@ const PiecewiseLinearCaseSplit &UnsatCertificateNode::getSplit() const
     return _headSplit;
 }
 
+<<<<<<< HEAD
 const List<UnsatCertificateNode*> &UnsatCertificateNode::getChildren() const
+=======
+const List<UnsatCertificateNode *> &UnsatCertificateNode::getChildren() const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     return _children;
 }
@@ -86,7 +99,12 @@ void UnsatCertificateNode::addPLCLemma( std::shared_ptr<PLCLemma> &explanation )
 }
 
 
+<<<<<<< HEAD
 UnsatCertificateNode *UnsatCertificateNode::getChildBySplit( const PiecewiseLinearCaseSplit &split ) const
+=======
+UnsatCertificateNode *
+UnsatCertificateNode::getChildBySplit( const PiecewiseLinearCaseSplit &split ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( UnsatCertificateNode *child : _children )
     {

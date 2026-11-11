@@ -13,12 +13,17 @@
  **
  ** [[ Add lengthier description here ]]
  **/
+<<<<<<< HEAD
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include "MString.h"
 #include "MockErrno.h"
 #include "Vector.h"
+
+#include <cxxtest/TestSuite.h>
 
 class VectorTestSuite : public CxxTest::TestSuite
 {
@@ -297,10 +302,8 @@ public:
     {
         Vector<int> vector;
 
-        TS_ASSERT_THROWS_EQUALS( vector.first(),
-                                 const CommonError &e,
-                                 e.getCode(),
-                                 CommonError::VECTOR_OUT_OF_BOUNDS );
+        TS_ASSERT_THROWS_EQUALS(
+            vector.first(), const CommonError &e, e.getCode(), CommonError::VECTOR_OUT_OF_BOUNDS );
 
         vector.append( 1 );
         TS_ASSERT_EQUALS( vector.first(), 1 );
@@ -319,10 +322,8 @@ public:
     {
         Vector<int> vector;
 
-        TS_ASSERT_THROWS_EQUALS( vector.last(),
-                                 const CommonError &e,
-                                 e.getCode(),
-                                 CommonError::VECTOR_OUT_OF_BOUNDS );
+        TS_ASSERT_THROWS_EQUALS(
+            vector.last(), const CommonError &e, e.getCode(), CommonError::VECTOR_OUT_OF_BOUNDS );
 
         vector.append( 1 );
         TS_ASSERT_EQUALS( vector.last(), 1 );
@@ -466,7 +467,7 @@ public:
 
     void test_assignemnt()
     {
-        Vector<int> a,b;
+        Vector<int> a, b;
 
         a.append( 1 );
         a.append( 2 );

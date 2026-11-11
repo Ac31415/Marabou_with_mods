@@ -10,10 +10,13 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
 
  **/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-#include <cxxtest/TestSuite.h>
+ **/
 
 #include "InputQuery.h"
 #include "MockEngine.h"
@@ -23,6 +26,7 @@
 #include "ReluConstraint.h"
 #include "SmtCore.h"
 
+#include <cxxtest/TestSuite.h>
 #include <string.h>
 
 class MockForSmtCore
@@ -55,7 +59,7 @@ public:
             return NULL;
         }
 
-        void restoreState( const PiecewiseLinearConstraint */* state */ )
+        void restoreState( const PiecewiseLinearConstraint * /* state */ )
         {
         }
 
@@ -139,11 +143,19 @@ public:
             PiecewiseLinearCaseSplit dontCare;
             return dontCare;
         }
+<<<<<<< HEAD
 
         void updateVariableIndex( unsigned, unsigned )
         {
         }
 
+=======
+
+        void updateVariableIndex( unsigned, unsigned )
+        {
+        }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         void eliminateVariable( unsigned, double )
         {
         }
@@ -161,7 +173,20 @@ public:
         {
         }
 
-        void getAuxiliaryEquations( List<Equation> &/* newEquations */ ) const
+        void getAuxiliaryEquations( List<Equation> & /* newEquations */ ) const
+        {
+        }
+
+        String serializeToString() const
+        {
+            return "";
+        }
+
+        void initTighteningRow( const unsigned /*counterpart*/ )
+        {
+        }
+
+        void addTableauAuxVar( unsigned /*tableauAuxVar*/, unsigned /*constraintAuxVar*/ )
         {
         }
 
@@ -198,7 +223,13 @@ public:
 
         SmtCore smtCore( engine );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ) - 1; ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ) - 1;
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             smtCore.reportViolatedConstraint( &constraint1 );
             TS_ASSERT( !smtCore.needToSplit() );
@@ -243,7 +274,13 @@ public:
         constraint.nextSplits.append( split2 );
         constraint.nextSplits.append( split3 );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &constraint );
 
         engine->lastStoredState = NULL;
@@ -359,7 +396,13 @@ public:
         constraint.nextSplits.append( split2 );
         constraint.nextSplits.append( split3 );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &constraint );
 
         constraint.nextIsActive = false;
@@ -402,7 +445,13 @@ public:
         constraint.nextSplits.append( split1 );
         constraint.nextSplits.append( split2 );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &constraint );
 
         constraint.nextIsActive = true;
@@ -435,7 +484,13 @@ public:
         constraint2.nextSplits.append( split4 );
         constraint2.nextSplits.append( split5 );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &constraint2 );
 
         constraint2.nextIsActive = true;
@@ -482,7 +537,13 @@ public:
         split1.storeBoundTightening( bound1 );
         TS_ASSERT_THROWS_NOTHING( smtCore.recordImpliedValidSplit( split1 ) );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &relu1 );
 
         TS_ASSERT( smtCore.needToSplit() );
@@ -494,7 +555,13 @@ public:
         split2.storeBoundTightening( bound2 );
         TS_ASSERT_THROWS_NOTHING( smtCore.recordImpliedValidSplit( split2 ) );
 
+<<<<<<< HEAD
         for ( unsigned i = 0; i < ( unsigned ) Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD ); ++i )
+=======
+        for ( unsigned i = 0;
+              i < (unsigned)Options::get()->getInt( Options::CONSTRAINT_VIOLATION_THRESHOLD );
+              ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             smtCore.reportViolatedConstraint( &relu2 );
 
         TS_ASSERT( smtCore.needToSplit() );
@@ -510,13 +577,23 @@ public:
         // Examine the first stackEntry
         SmtStackEntry *stackEntry = *( smtState._stack.begin() );
         TS_ASSERT( stackEntry->_activeSplit == *( relu1.getCaseSplits().begin() ) );
+<<<<<<< HEAD
         TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) == *( ++relu1.getCaseSplits().begin() ) );
+=======
+        TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) ==
+                   *( ++relu1.getCaseSplits().begin() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( stackEntry->_impliedValidSplits.size() == 1 );
         TS_ASSERT( *( stackEntry->_impliedValidSplits.begin() ) == split2 );
         // Examine the second stackEntry
         stackEntry = *( ++smtState._stack.begin() );
         TS_ASSERT( stackEntry->_activeSplit == *( relu2.getCaseSplits().begin() ) );
+<<<<<<< HEAD
         TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) == *( ++relu2.getCaseSplits().begin() ) );
+=======
+        TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) ==
+                   *( ++relu2.getCaseSplits().begin() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( stackEntry->_impliedValidSplits.size() == 0 );
 
         clearSmtState( smtState );
@@ -531,7 +608,12 @@ public:
         // Examine the first stackEntry
         stackEntry = *( smtState._stack.begin() );
         TS_ASSERT( stackEntry->_activeSplit == *( relu1.getCaseSplits().begin() ) );
+<<<<<<< HEAD
         TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) == *( ++relu1.getCaseSplits().begin() ) );
+=======
+        TS_ASSERT( *( stackEntry->_alternativeSplits.begin() ) ==
+                   *( ++relu1.getCaseSplits().begin() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( stackEntry->_impliedValidSplits.size() == 1 );
         TS_ASSERT( *( stackEntry->_impliedValidSplits.begin() ) == split2 );
         // Examine the second stackEntry

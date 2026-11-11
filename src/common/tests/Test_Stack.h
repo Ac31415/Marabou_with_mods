@@ -13,12 +13,17 @@
  **
  ** [[ Add lengthier description here ]]
  **/
+<<<<<<< HEAD
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include "CommonError.h"
 #include "MockErrno.h"
 #include "Stack.h"
+
+#include <cxxtest/TestSuite.h>
 
 class StackTestSuite : public CxxTest::TestSuite
 {
@@ -74,15 +79,11 @@ public:
 
         TS_ASSERT( q.empty() );
 
-        TS_ASSERT_THROWS_EQUALS( q.top(),
-                                 const CommonError &e,
-                                 e.getCode(),
-                                 CommonError::STACK_IS_EMPTY );
+        TS_ASSERT_THROWS_EQUALS(
+            q.top(), const CommonError &e, e.getCode(), CommonError::STACK_IS_EMPTY );
 
-        TS_ASSERT_THROWS_EQUALS( q.pop(),
-                                 const CommonError &e,
-                                 e.getCode(),
-                                 CommonError::STACK_IS_EMPTY );
+        TS_ASSERT_THROWS_EQUALS(
+            q.pop(), const CommonError &e, e.getCode(), CommonError::STACK_IS_EMPTY );
     }
 };
 

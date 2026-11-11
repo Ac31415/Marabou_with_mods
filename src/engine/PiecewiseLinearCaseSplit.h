@@ -35,7 +35,11 @@ public:
       Store information regarding a new equation to be added.
     */
     void addEquation( const Equation &equation );
+<<<<<<< HEAD
   	const List<Equation> &getEquations() const;
+=======
+    const List<Equation> &getEquations() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Dump the case split - for debugging purposes.

@@ -2,7 +2,11 @@
 /*! \file Options.h
  ** \verbatim
  ** Top contributors (to current version):
+<<<<<<< HEAD
  **   Guy Katz
+=======
+ **   Guy Katz, Andrew Wu
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
  ** This file is part of the Marabou project.
  ** Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
  ** in the top-level source directory) and their institutional affiliations.
@@ -18,15 +22,26 @@
 
 #include "DivideStrategy.h"
 #include "LPSolverType.h"
+<<<<<<< HEAD
 #include "MString.h"
 #include "Map.h"
 #include "MILPSolverBoundTighteningType.h"
+=======
+#include "MILPSolverBoundTighteningType.h"
+#include "MString.h"
+#include "Map.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "OptionParser.h"
 #include "SnCDivideStrategy.h"
 #include "SoIInitializationStrategy.h"
 #include "SoISearchStrategy.h"
+<<<<<<< HEAD
 #include "SymbolicBoundTighteningType.h"
 
+=======
+#include "SoftmaxBoundType.h"
+#include "SymbolicBoundTighteningType.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "boost/program_options.hpp"
 
 /*
@@ -48,6 +63,12 @@ public:
         // Dump the bounds of each variable after preprocessing
         DUMP_BOUNDS,
 
+<<<<<<< HEAD
+=======
+        // Dump the topology of the network
+        DUMP_TOPOLOGY,
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // Help flag
         HELP,
 
@@ -65,6 +86,7 @@ public:
         // any of the thread finishes.
         PARALLEL_DEEPSOI,
 
+<<<<<<< HEAD
         // Export SAT assignment into a file, use EXPORT_ASSIGNMENT_FILE to specify the file (default: assignment.txt)
         EXPORT_ASSIGNMENT,
 
@@ -73,6 +95,23 @@ public:
 
         // Produce proofs of unsatisfiability and check them
         PRODUCE_PROOFS
+=======
+        // Export SAT assignment into a file, use EXPORT_ASSIGNMENT_FILE to specify the file
+        // (default: assignment.txt)
+        EXPORT_ASSIGNMENT,
+
+        // Import assignment for debugging purposes, use IMPORT_ASSIGNMENT_FILE to specify the file
+        // (default: assignment.txt)
+        DEBUG_ASSIGNMENT,
+
+        // Produce proofs of unsatisfiability and check them
+        PRODUCE_PROOFS,
+
+        // If the flag is false, the preprocessor will try to merge two
+        // logically-consecutive weighted sum layers into a single
+        // weighted sum layer, to reduce the number of variables
+        DO_NOT_MERGE_CONSECUTIVE_WEIGHTED_SUM_LAYERS,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     };
 
     enum IntOptions {
@@ -104,7 +143,11 @@ public:
         NUM_BLAS_THREADS,
     };
 
+<<<<<<< HEAD
     enum FloatOptions{
+=======
+    enum FloatOptions {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // DNC options
         TIMEOUT_FACTOR,
 
@@ -130,6 +173,10 @@ public:
         QUERY_DUMP_FILE,
         EXPORT_ASSIGNMENT_FILE_PATH,
         IMPORT_ASSIGNMENT_FILE_PATH,
+<<<<<<< HEAD
+=======
+        SOFTMAX_BOUND_TYPE,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // The strategy used for soi minimization
         SOI_SEARCH_STRATEGY,
@@ -137,8 +184,12 @@ public:
         SOI_INITIALIZATION_STRATEGY,
 
         // The procedure/solver for solving the LP
+<<<<<<< HEAD
         LP_SOLVER,
 
+=======
+        LP_SOLVER
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     };
 
     /*
@@ -170,6 +221,10 @@ public:
     SoIInitializationStrategy getSoIInitializationStrategy() const;
     SoISearchStrategy getSoISearchStrategy() const;
     LPSolverType getLPSolverType() const;
+<<<<<<< HEAD
+=======
+    SoftmaxBoundType getSoftmaxBoundType() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Retrieve the value of the various options, by type
@@ -215,6 +270,7 @@ private:
 };
 
 #endif // __Options_h__
+<<<<<<< HEAD
 
 //
 // Local Variables:
@@ -223,3 +279,5 @@ private:
 // c-basic-offset: 4
 // End:
 //
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

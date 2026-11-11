@@ -41,7 +41,11 @@ set(REGRESS_DIR "${PROJECT_SOURCE_DIR}/regress")
 set(ENGINE_DIR "${SRC_DIR}/engine")
 set(PYBIND11_DIR "${TOOLS_DIR}/pybind11-2.10.4")
 set(BOOST_DIR "${TOOLS_DIR}/boost_1_80_0")
+<<<<<<< HEAD
 set(ONNX_DIR "${TOOLS_DIR}/onnx-1.12.0")
+=======
+set(ONNX_DIR "${TOOLS_DIR}/onnx-1.15.0")
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 set(OPENBLAS_DEFAULT_DIR "${TOOLS_DIR}/OpenBLAS-0.3.19")
 if (NOT OPENBLAS_DIR)
     set(OPENBLAS_DIR ${OPENBLAS_DEFAULT_DIR})
@@ -79,13 +83,21 @@ endif()
 
 
 set(Boost_USE_DEBUG_RUNTIME FALSE)
+<<<<<<< HEAD
 find_package(Boost COMPONENTS program_options timer chrono thread)
+=======
+find_package(Boost 1.80.0 COMPONENTS program_options timer chrono thread)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 # Find boost
 if (NOT ${Boost_FOUND})
   # bash file that downloads and install boost 1_80_0, the name need to match
   # BOOST_DIR variable
   execute_process(COMMAND ${TOOLS_DIR}/download_boost.${SCRIPT_EXTENSION})
+<<<<<<< HEAD
   find_package(Boost REQUIRED COMPONENTS program_options timer chrono thread)
+=======
+  find_package(Boost 1.80.0 REQUIRED COMPONENTS program_options timer chrono thread)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 endif()
 set(LIBS_INCLUDES ${Boost_INCLUDE_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})

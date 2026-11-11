@@ -19,10 +19,17 @@
 #include "DeepPolyElement.h"
 #include "Layer.h"
 #include "MStringf.h"
+<<<<<<< HEAD
 #include "NLRError.h"
 #include <climits>
 
 #include "Map.h"
+=======
+#include "Map.h"
+#include "NLRError.h"
+
+#include <climits>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 namespace NLR {
 
@@ -32,6 +39,7 @@ public:
     DeepPolyMaxPoolElement( Layer *layer );
     ~DeepPolyMaxPoolElement();
 
+<<<<<<< HEAD
     void execute( const Map<unsigned, DeepPolyElement *>
                   &deepPolyElementsBefore );
 
@@ -43,6 +51,20 @@ public:
 
 private:
 
+=======
+    void execute( const Map<unsigned, DeepPolyElement *> &deepPolyElementsBefore );
+
+    void symbolicBoundInTermsOfPredecessor( const double *symbolicLb,
+                                            const double *symbolicUb,
+                                            double *symbolicLowerBias,
+                                            double *symbolicUpperBias,
+                                            double *symbolicLbInTermsOfPredecessor,
+                                            double *symbolicUbInTermsOfPredecessor,
+                                            unsigned targetLayerSize,
+                                            DeepPolyElement *predecessor );
+
+private:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     /*
       The index of the source variable used in the symbolic bounds.
     */

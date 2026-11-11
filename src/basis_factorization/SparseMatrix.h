@@ -21,7 +21,13 @@ class SparseUnsortedList;
 class SparseMatrix
 {
 public:
+<<<<<<< HEAD
     virtual ~SparseMatrix() {}
+=======
+    virtual ~SparseMatrix()
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Initialize the sparse matrix from a given dense matrix

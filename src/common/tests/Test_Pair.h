@@ -13,16 +13,20 @@
  **
  ** [[ Add lengthier description here ]]
  **/
+<<<<<<< HEAD
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include "MString.h"
 #include "Pair.h"
 
+#include <cxxtest/TestSuite.h>
+
 class PairTestSuite : public CxxTest::TestSuite
 {
 public:
-
     void test_pair()
     {
         Pair<int, String> p1;

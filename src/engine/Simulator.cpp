@@ -13,11 +13,20 @@
 
  **/
 
+<<<<<<< HEAD
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "Preprocessor.h"
 #include "MarabouError.h"
 #include "Simulator.h"
+=======
+#include "Simulator.h"
+
+#include "Debug.h"
+#include "FloatUtils.h"
+#include "MarabouError.h"
+#include "Preprocessor.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #ifdef _WIN32
 #include <time.h>
@@ -29,7 +38,13 @@ void Simulator::runSimulations( const InputQuery &inputQuery, unsigned numberOfS
     runSimulations( inputQuery, numberOfSimulations, seed );
 }
 
+<<<<<<< HEAD
 void Simulator::runSimulations( const InputQuery &inputQuery, unsigned numberOfSimulations, unsigned seed )
+=======
+void Simulator::runSimulations( const InputQuery &inputQuery,
+                                unsigned numberOfSimulations,
+                                unsigned seed )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     // Store the original query, so a fresh copy can be used in every simulation
     storeOriginalQuery( inputQuery );
@@ -59,10 +74,19 @@ void Simulator::storeOriginalQuery( const InputQuery &inputQuery )
     _originalQuery = *( Preprocessor().preprocess( _originalQuery, false ) );
 
     if ( _originalQuery.countInfiniteBounds() != 0 )
+<<<<<<< HEAD
         throw MarabouError( MarabouError::SIMULATOR_ERROR, "Preprocessed query has infinite bounds" );
 
     if ( _originalQuery.getNumInputVariables() == 0 )
         throw MarabouError( MarabouError::SIMULATOR_ERROR, "Preprocessed query has no input variables" );
+=======
+        throw MarabouError( MarabouError::SIMULATOR_ERROR,
+                            "Preprocessed query has infinite bounds" );
+
+    if ( _originalQuery.getNumInputVariables() == 0 )
+        throw MarabouError( MarabouError::SIMULATOR_ERROR,
+                            "Preprocessed query has no input variables" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void Simulator::runSingleSimulation()
@@ -75,7 +99,11 @@ void Simulator::runSingleSimulation()
         double lb = query.getLowerBound( input );
         double ub = query.getUpperBound( input );
 
+<<<<<<< HEAD
         double factor = ((double)rand()) / RAND_MAX;
+=======
+        double factor = ( (double)rand() ) / RAND_MAX;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         double value = lb + factor * ( ub - lb );
 
         query.setLowerBound( input, value );
@@ -95,10 +123,17 @@ void Simulator::runSingleSimulation()
         // Make sure that a value has been calculated for every variable
         ASSERT( !preprocessor.variableIsMerged( i ) );
         if ( !preprocessor.variableIsFixed( i ) )
+<<<<<<< HEAD
             throw MarabouError( MarabouError::SIMULATOR_ERROR, "Could not calculate an exact assignment" );
 
         ASSERT( FloatUtils::areEqual( query.getLowerBound( i ),
                                       query.getUpperBound( i ) ) );
+=======
+            throw MarabouError( MarabouError::SIMULATOR_ERROR,
+                                "Could not calculate an exact assignment" );
+
+        ASSERT( FloatUtils::areEqual( query.getLowerBound( i ), query.getUpperBound( i ) ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         result[i] = query.getLowerBound( i );
     }

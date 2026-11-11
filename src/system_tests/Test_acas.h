@@ -13,8 +13,11 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "AcasParser.h"
 #include "Engine.h"
 #include "FloatUtils.h"
@@ -23,10 +26,18 @@
 #include "MarabouError.h"
 #include "Preprocessor.h"
 
+<<<<<<< HEAD
 class AcasTestSuite : public CxxTest::TestSuite
 {
 public:
 
+=======
+#include <cxxtest/TestSuite.h>
+
+class AcasTestSuite : public CxxTest::TestSuite
+{
+public:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void setUp()
     {
     }
@@ -62,9 +73,16 @@ public:
         for ( unsigned i = 0; i < 5; ++i )
         {
             unsigned variable = acasParser.getOutputVariable( i );
+<<<<<<< HEAD
             double newError = FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
             if ( FloatUtils::gt( newError, maxError ) )
               maxError = newError;
+=======
+            double newError =
+                FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
+            if ( FloatUtils::gt( newError, maxError ) )
+                maxError = newError;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         TS_ASSERT( FloatUtils::lt( maxError, 0.00001 ) );
@@ -85,7 +103,11 @@ public:
         }
 
         Engine engine;
+<<<<<<< HEAD
         bool result = engine.processInputQuery( inputQuery ) ;
+=======
+        bool result = engine.processInputQuery( inputQuery );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( result );
 
         TS_ASSERT_THROWS_NOTHING( engine.solve() );
@@ -106,9 +128,16 @@ public:
         for ( unsigned i = 0; i < 5; ++i )
         {
             unsigned variable = acasParser.getOutputVariable( i );
+<<<<<<< HEAD
             double newError = FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
             if ( FloatUtils::gt( newError, maxError ) )
               maxError = newError;
+=======
+            double newError =
+                FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
+            if ( FloatUtils::gt( newError, maxError ) )
+                maxError = newError;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         TS_ASSERT( FloatUtils::lt( maxError, 0.00001 ) );
@@ -149,6 +178,7 @@ public:
         for ( unsigned i = 0; i < 5; ++i )
         {
             unsigned variable = acasParser.getOutputVariable( i );
+<<<<<<< HEAD
             double newError = FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
             if ( FloatUtils::gt( newError, maxError ) )
               maxError = newError;
@@ -156,6 +186,15 @@ public:
 
         TS_ASSERT( FloatUtils::lt( maxError, 0.00001 ) );
 
+=======
+            double newError =
+                FloatUtils::abs( outputs[i] - inputQuery.getSolutionValue( variable ) );
+            if ( FloatUtils::gt( newError, maxError ) )
+                maxError = newError;
+        }
+
+        TS_ASSERT( FloatUtils::lt( maxError, 0.00001 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 };
 

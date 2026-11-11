@@ -17,12 +17,21 @@
 #define __MILPFormulator_h__
 
 #include "GurobiWrapper.h"
+<<<<<<< HEAD
 #include "LayerOwner.h"
 #include "LPFormulator.h"
 
 #include <atomic>
 #include <boost/lockfree/queue.hpp>
 #include <boost/chrono.hpp>
+=======
+#include "LPFormulator.h"
+#include "LayerOwner.h"
+
+#include <atomic>
+#include <boost/chrono.hpp>
+#include <boost/lockfree/queue.hpp>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <climits>
 #include <mutex>
 
@@ -40,7 +49,12 @@ public:
     ~MILPFormulator();
 
     void optimizeBoundsWithMILPEncoding( const Map<unsigned, Layer *> &layers );
+<<<<<<< HEAD
     void optimizeBoundsOfOneLayerWithMILPEncoding( const Map<unsigned, Layer *> &layers, unsigned targetIndex );
+=======
+    void optimizeBoundsOfOneLayerWithMILPEncoding( const Map<unsigned, Layer *> &layers,
+                                                   unsigned targetIndex );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void optimizeBoundsWithIncrementalMILPEncoding( const Map<unsigned, Layer *> &layers );
 
     /*
@@ -75,8 +89,13 @@ private:
                             unsigned variable,
                             double &currentUb );
 
+<<<<<<< HEAD
     static void addLayerToModel( GurobiWrapper &gurobi, const Layer *layer,
                                  LayerOwner *layerOwner );
+=======
+    static void
+    addLayerToModel( GurobiWrapper &gurobi, const Layer *layer, LayerOwner *layerOwner );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     static void addReluLayerToMILPFormulation( GurobiWrapper &gurobi,
                                                const Layer *layer,
@@ -91,6 +110,7 @@ private:
       Optimize for the min/max value of variableName with respect to the constraints
       encoded in gurobi. If the query is infeasible, *infeasible is set to true.
     */
+<<<<<<< HEAD
     static double optimizeWithGurobi( GurobiWrapper &gurobi, MinOrMax minOrMax,
                                       String variableName, double cutoffValue,
                                       std::atomic_bool *infeasible = NULL );
@@ -104,6 +124,17 @@ private:
                           unsigned neuron,
                           unsigned variable,
                           double newLb );
+=======
+    static double optimizeWithGurobi( GurobiWrapper &gurobi,
+                                      MinOrMax minOrMax,
+                                      String variableName,
+                                      double cutoffValue,
+                                      std::atomic_bool *infeasible = NULL );
+
+    void storeUbIfNeeded( Layer *layer, unsigned neuron, unsigned variable, double newUb );
+
+    void storeLbIfNeeded( Layer *layer, unsigned neuron, unsigned variable, double newLb );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     bool layerRequiresMILPEncoding( const Layer *layer );
 

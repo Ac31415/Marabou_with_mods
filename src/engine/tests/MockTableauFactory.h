@@ -17,15 +17,19 @@
 #define __MockTableauFactory_h__
 
 #include "BoundManager.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MockTableau.h"
 #include "T/TableauFactory.h"
 
-class MockTableauFactory :
-	public T::Base_createTableau,
-	public T::Base_discardTableau
+class MockTableauFactory
+    : public T::Base_createTableau
+    , public T::Base_discardTableau
 {
 public:
+<<<<<<< HEAD
 	MockTableau mockTableau;
 
 	~MockTableauFactory()
@@ -47,6 +51,29 @@ public:
 		TS_ASSERT_EQUALS( tableau, &mockTableau );
 		mockTableau.mockDestructor();
 	}
+=======
+    MockTableau mockTableau;
+
+    ~MockTableauFactory()
+    {
+        if ( mockTableau.wasCreated )
+        {
+            TS_ASSERT( mockTableau.wasDiscarded );
+        }
+    }
+
+    ITableau *createTableau( IBoundManager & /*boundManager*/ )
+    {
+        mockTableau.mockConstructor();
+        return &mockTableau;
+    }
+
+    void discardTableau( ITableau *tableau )
+    {
+        TS_ASSERT_EQUALS( tableau, &mockTableau );
+        mockTableau.mockDestructor();
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __MockTableauFactory_h__

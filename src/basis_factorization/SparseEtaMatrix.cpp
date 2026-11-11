@@ -13,8 +13,14 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationError.h"
 #include "SparseEtaMatrix.h"
+=======
+#include "SparseEtaMatrix.h"
+
+#include "BasisFactorizationError.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 
 #include <cstdio>
@@ -129,8 +135,13 @@ void SparseEtaMatrix::toMatrix( double *A ) const
 {
     std::fill_n( A, _m * _m, 0.0 );
 
+<<<<<<< HEAD
 	for ( unsigned i = 0; i < _m; ++i )
 		A[i * _m + i] = 1;
+=======
+    for ( unsigned i = 0; i < _m; ++i )
+        A[i * _m + i] = 1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( const auto &entry : _sparseColumn )
         A[entry._index * _m + _columnIndex] = entry._value;

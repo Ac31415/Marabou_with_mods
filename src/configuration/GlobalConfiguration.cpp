@@ -15,15 +15,26 @@
 
 #include "DivideStrategy.h"
 #include "GlobalConfiguration.h"
+
+#include "DivideStrategy.h"
 #include "MString.h"
+
 #include <cstdio>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 // The exponential moving average is calculated as
 //     ema = current * alpha + previous * (1 - alpha)
 const double GlobalConfiguration::EXPONENTIAL_MOVING_AVERAGE_ALPHA = 0.5;
 
 // Whether to use SoI instead of Reluplex for local search for satisfying assignments
+<<<<<<< HEAD
 //to non-linear constraint.
+=======
+// to non-linear constraint.
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 bool GlobalConfiguration::USE_DEEPSOI_LOCAL_SEARCH = true;
 
 const double GlobalConfiguration::SCORE_BUMP_FOR_PL_CONSTRAINTS_NOT_IN_SOI = 5;
@@ -42,9 +53,17 @@ const double GlobalConfiguration::PIVOT_CHANGE_COLUMN_TOLERANCE = 0.000000001;
 const double GlobalConfiguration::PIVOT_ROW_AND_COLUMN_TOLERANCE = 0.01;
 const double GlobalConfiguration::ENTRY_ELIGIBILITY_TOLERANCE = 0.00000001;
 const double GlobalConfiguration::RATIO_CONSTRAINT_ADDITIVE_TOLERANCE = 0.0000001 * 0.3;
+<<<<<<< HEAD
 const double GlobalConfiguration::RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE = 0.001 * 0.0000001 * 0.3;
 const double GlobalConfiguration::HARRIS_RATIO_CONSTRAINT_ADDITIVE_TOLERANCE = 0.0000001 * 0.5;
 const double GlobalConfiguration::HARRIS_RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE = 0.001 * 0.0000001 * 0.5;
+=======
+const double GlobalConfiguration::RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE =
+    0.001 * 0.0000001 * 0.3;
+const double GlobalConfiguration::HARRIS_RATIO_CONSTRAINT_ADDITIVE_TOLERANCE = 0.0000001 * 0.5;
+const double GlobalConfiguration::HARRIS_RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE =
+    0.001 * 0.0000001 * 0.5;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 const double GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE = 0.0000001;
 const double GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE = 0.001 * 0.0000001;
 const double GlobalConfiguration::SPARSE_FORREST_TOMLIN_DIAGONAL_ELEMENT_TOLERANCE = 0.00001;
@@ -65,15 +84,27 @@ const unsigned GlobalConfiguration::SIMULATION_RANDOM_SEED = 1;
 
 const bool GlobalConfiguration::USE_HARRIS_RATIO_TEST = true;
 
+<<<<<<< HEAD
 const double GlobalConfiguration::SYMBOLIC_TIGHTENING_ROUNDING_CONSTANT = 0.00000005;
+=======
+const double GlobalConfiguration::SYMBOLIC_TIGHTENING_ROUNDING_CONSTANT = 0.00000000001;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 const double GlobalConfiguration::SIGMOID_CUTOFF_CONSTANT = 20;
 
 const bool GlobalConfiguration::PREPROCESS_INPUT_QUERY = true;
+<<<<<<< HEAD
 const bool GlobalConfiguration::PREPROCESSOR_ELIMINATE_VARIABLES = false;
 const bool GlobalConfiguration::PL_CONSTRAINTS_ADD_AUX_EQUATIONS_AFTER_PREPROCESSING = true;
 const double GlobalConfiguration::PREPROCESSOR_ALMOST_FIXED_THRESHOLD = 0.00001;
 const bool GlobalConfiguration::PREPROCESSOR_MERGE_CONSECUTIVE_WEIGHTED_SUMS = false;
+=======
+// const bool GlobalConfiguration::PREPROCESSOR_ELIMINATE_VARIABLES = true;
+const bool GlobalConfiguration::PREPROCESSOR_ELIMINATE_VARIABLES = false;
+const bool GlobalConfiguration::PL_CONSTRAINTS_ADD_AUX_EQUATIONS_AFTER_PREPROCESSING = true;
+const bool GlobalConfiguration::NL_CONSTRAINTS_ADD_AUX_EQUATIONS_AFTER_PREPROCESSING = true;
+const double GlobalConfiguration::PREPROCESSOR_ALMOST_FIXED_THRESHOLD = 0.00001;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 const unsigned GlobalConfiguration::PREPROCESSSING_MAX_TIGHTEING_ROUND = 1000;
 
@@ -87,10 +118,20 @@ const double GlobalConfiguration::PSE_GAMMA_UPDATE_TOLERANCE = 0.000000001;
 
 const double GlobalConfiguration::CONSTRAINT_COMPARISON_TOLERANCE = 0.00001;
 
+<<<<<<< HEAD
 const bool GlobalConfiguration::ONLY_AUX_INITIAL_BASIS = false;
 
 const GlobalConfiguration::ExplicitBasisBoundTighteningType GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_TYPE =
     GlobalConfiguration::COMPUTE_INVERTED_BASIS_MATRIX;
+=======
+const double GlobalConfiguration::SOFTMAX_LSE2_THRESHOLD = 0.6;
+
+const bool GlobalConfiguration::ONLY_AUX_INITIAL_BASIS = false;
+
+const GlobalConfiguration::ExplicitBasisBoundTighteningType
+    GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_TYPE =
+        GlobalConfiguration::COMPUTE_INVERTED_BASIS_MATRIX;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 const bool GlobalConfiguration::EXPLICIT_BOUND_TIGHTENING_UNTIL_SATURATION = false;
 const double GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT = 1e-6;
 
@@ -101,6 +142,7 @@ const GlobalConfiguration::BasisFactorizationType GlobalConfiguration::BASIS_FAC
 const unsigned GlobalConfiguration::POLARITY_CANDIDATES_THRESHOLD = 5;
 
 const unsigned GlobalConfiguration::DNC_DEPTH_THRESHOLD = 5;
+<<<<<<< HEAD
 
 const double GlobalConfiguration::MINIMAL_COEFFICIENT_FOR_TIGHTENING = 0.01;
 const double GlobalConfiguration::LEMMA_CERTIFICATION_TOLERANCE = 0.000001;
@@ -111,6 +153,18 @@ const unsigned GlobalConfiguration::GUROBI_NUMBER_OF_THREADS = 1;
 const bool GlobalConfiguration::GUROBI_LOGGING = false;
 #endif // ENABLE_GUROBI
 
+=======
+
+const double GlobalConfiguration::MINIMAL_COEFFICIENT_FOR_TIGHTENING = 0.01;
+const double GlobalConfiguration::LEMMA_CERTIFICATION_TOLERANCE = 0.000001;
+const bool GlobalConfiguration::WRITE_JSON_PROOF = false;
+
+#ifdef ENABLE_GUROBI
+const unsigned GlobalConfiguration::GUROBI_NUMBER_OF_THREADS = 1;
+const bool GlobalConfiguration::GUROBI_LOGGING = false;
+#endif // ENABLE_GUROBI
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 // Logging - note that it is enabled only in Debug mode
 const bool GlobalConfiguration::DNC_MANAGER_LOGGING = false;
 const bool GlobalConfiguration::ENGINE_LOGGING = false;
@@ -125,8 +179,13 @@ const bool GlobalConfiguration::GAUSSIAN_ELIMINATION_LOGGING = false;
 const bool GlobalConfiguration::QUERY_LOADER_LOGGING = false;
 const bool GlobalConfiguration::SYMBOLIC_BOUND_TIGHTENER_LOGGING = false;
 const bool GlobalConfiguration::NETWORK_LEVEL_REASONER_LOGGING = false;
+<<<<<<< HEAD
 const bool GlobalConfiguration::MPS_PARSER_LOGGING= false;
 const bool GlobalConfiguration::ONNX_PARSER_LOGGING= false;
+=======
+const bool GlobalConfiguration::MPS_PARSER_LOGGING = false;
+const bool GlobalConfiguration::ONNX_PARSER_LOGGING = false;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 const bool GlobalConfiguration::SOI_LOGGING = false;
 const bool GlobalConfiguration::SCORE_TRACKER_LOGGING = false;
 
@@ -141,6 +200,7 @@ void GlobalConfiguration::print()
     printf( "  DEFAULT_EPSILON_FOR_COMPARISONS: %.15lf\n", DEFAULT_EPSILON_FOR_COMPARISONS );
     printf( "  DEFAULT_DOUBLE_TO_STRING_PRECISION: %u\n", DEFAULT_DOUBLE_TO_STRING_PRECISION );
     printf( "  STATISTICS_PRINTING_FREQUENCY: %u\n", STATISTICS_PRINTING_FREQUENCY );
+<<<<<<< HEAD
     printf( "  BOUND_COMPARISON_ADDITIVE_TOLERANCE: %.15lf\n", BOUND_COMPARISON_ADDITIVE_TOLERANCE );
     printf( "  BOUND_COMPARISON_MULTIPLICATIVE_TOLERANCE: %.15lf\n", BOUND_COMPARISON_MULTIPLICATIVE_TOLERANCE );
     printf( "  PIVOT_CHANGE_COLUMN_TOLERANCE: %.15lf\n", PIVOT_CHANGE_COLUMN_TOLERANCE );
@@ -148,11 +208,30 @@ void GlobalConfiguration::print()
     printf( "  RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE: %.15lf\n", RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE );
     printf( "  BASIC_COSTS_ADDITIVE_TOLERANCE: %.15lf\n", BASIC_COSTS_ADDITIVE_TOLERANCE );
     printf( "  BASIC_COSTS_MULTIPLICATIVE_TOLERANCE: %.15lf\n", BASIC_COSTS_MULTIPLICATIVE_TOLERANCE );
+=======
+    printf( "  BOUND_COMPARISON_ADDITIVE_TOLERANCE: %.15lf\n",
+            BOUND_COMPARISON_ADDITIVE_TOLERANCE );
+    printf( "  BOUND_COMPARISON_MULTIPLICATIVE_TOLERANCE: %.15lf\n",
+            BOUND_COMPARISON_MULTIPLICATIVE_TOLERANCE );
+    printf( "  PIVOT_CHANGE_COLUMN_TOLERANCE: %.15lf\n", PIVOT_CHANGE_COLUMN_TOLERANCE );
+    printf( "  RATIO_CONSTRAINT_ADDITIVE_TOLERANCE: %.15lf\n",
+            RATIO_CONSTRAINT_ADDITIVE_TOLERANCE );
+    printf( "  RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE: %.15lf\n",
+            RATIO_CONSTRAINT_MULTIPLICATIVE_TOLERANCE );
+    printf( "  BASIC_COSTS_ADDITIVE_TOLERANCE: %.15lf\n", BASIC_COSTS_ADDITIVE_TOLERANCE );
+    printf( "  BASIC_COSTS_MULTIPLICATIVE_TOLERANCE: %.15lf\n",
+            BASIC_COSTS_MULTIPLICATIVE_TOLERANCE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     printf( "  DEGRADATION_CHECKING_FREQUENCY: %u\n", DEGRADATION_CHECKING_FREQUENCY );
     printf( "  DEGRADATION_THRESHOLD: %.15lf\n", DEGRADATION_THRESHOLD );
     printf( "  ACCEPTABLE_SIMPLEX_PIVOT_THRESHOLD: %.15lf\n", ACCEPTABLE_SIMPLEX_PIVOT_THRESHOLD );
     printf( "  USE_COLUMN_MERGING_EQUATIONS: %s\n", USE_COLUMN_MERGING_EQUATIONS ? "Yes" : "No" );
+<<<<<<< HEAD
     printf( "  GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD: %.15lf\n", GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD );
+=======
+    printf( "  GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD: %.15lf\n",
+            GAUSSIAN_ELIMINATION_PIVOT_SCALE_THRESHOLD );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     printf( "  MAX_SIMPLEX_PIVOT_SEARCH_ITERATIONS: %u\n", MAX_SIMPLEX_PIVOT_SEARCH_ITERATIONS );
     printf( "  BOUND_TIGHTING_ON_CONSTRAINT_MATRIX_FREQUENCY: %u\n",
             BOUND_TIGHTING_ON_CONSTRAINT_MATRIX_FREQUENCY );
@@ -160,7 +239,12 @@ void GlobalConfiguration::print()
     printf( "  USE_HARRIS_RATIO_TEST: %s\n", USE_HARRIS_RATIO_TEST ? "Yes" : "No" );
 
     printf( "  PREPROCESS_INPUT_QUERY: %s\n", PREPROCESS_INPUT_QUERY ? "Yes" : "No" );
+<<<<<<< HEAD
     printf( "  PREPROCESSOR_ELIMINATE_VARIABLES: %s\n", PREPROCESSOR_ELIMINATE_VARIABLES ? "Yes" : "No" );
+=======
+    printf( "  PREPROCESSOR_ELIMINATE_VARIABLES: %s\n",
+            PREPROCESSOR_ELIMINATE_VARIABLES ? "Yes" : "No" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     printf( "  PSE_ITERATIONS_BEFORE_RESET: %u\n", PSE_ITERATIONS_BEFORE_RESET );
     printf( "  PSE_GAMMA_ERROR_THRESHOLD: %.15lf\n", PSE_GAMMA_ERROR_THRESHOLD );
     printf( "  CONSTRAINT_COMPARISON_TOLERANCE: %.15lf\n", CONSTRAINT_COMPARISON_TOLERANCE );
@@ -181,7 +265,12 @@ void GlobalConfiguration::print()
         break;
     }
 
+<<<<<<< HEAD
     printf( "  EXPLICIT_BASIS_BOUND_TIGHTENING_INVERT_BASIS: %s\n", basisBoundTighteningType.ascii() );
+=======
+    printf( "  EXPLICIT_BASIS_BOUND_TIGHTENING_INVERT_BASIS: %s\n",
+            basisBoundTighteningType.ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     printf( "  EXPLICIT_BOUND_TIGHTENING_UNTIL_SATURATION: %s\n",
             EXPLICIT_BOUND_TIGHTENING_UNTIL_SATURATION ? "Yes" : "No" );
     printf( "  REFACTORIZATION_THRESHOLD: %u\n", REFACTORIZATION_THRESHOLD );

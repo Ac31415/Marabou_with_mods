@@ -23,8 +23,12 @@
 #include "SmtLibWriter.h"
 #include "UnsatCertificateUtils.h"
 
+<<<<<<< HEAD
 enum DelegationStatus : unsigned
 {
+=======
+enum DelegationStatus : unsigned {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     DONT_DELEGATE = 0,
     DELEGATE_DONT_SAVE = 1,
     DELEGATE_SAVE = 2
@@ -62,7 +66,11 @@ public:
     /*
       Returns the head split of a node
     */
+<<<<<<< HEAD
     const List<UnsatCertificateNode*> &getChildren() const;
+=======
+    const List<UnsatCertificateNode *> &getChildren() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Returns the list of PLC lemmas of the node
@@ -130,7 +138,11 @@ public:
     bool isValidNonLeaf() const;
 
 private:
+<<<<<<< HEAD
     List<UnsatCertificateNode*> _children;
+=======
+    List<UnsatCertificateNode *> _children;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     UnsatCertificateNode *_parent;
     List<std::shared_ptr<PLCLemma>> _PLCExplanations;
     Contradiction *_contradiction;

@@ -2,7 +2,11 @@
 /*! \file Preprocessor.h
  ** \verbatim
  ** Top contributors (to current version):
+<<<<<<< HEAD
  **   Guy Katz, Derek Huang, Shantanu Thakoor
+=======
+ **   Guy Katz, Derek Huang, Shantanu Thakoor, Andrew Wu
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
  ** This file is part of the Marabou project.
  ** Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
  ** in the top-level source directory) and their institutional affiliations.
@@ -18,6 +22,10 @@
 
 #include "Equation.h"
 #include "InputQuery.h"
+<<<<<<< HEAD
+=======
+#include "LinearExpression.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "List.h"
 #include "Map.h"
 #include "PiecewiseLinearConstraint.h"
@@ -33,7 +41,12 @@ public:
     /*
       Main method of this class: preprocess the input query
     */
+<<<<<<< HEAD
     std::unique_ptr<InputQuery> preprocess( const InputQuery &query, bool attemptVariableElimination = true );
+=======
+    std::unique_ptr<InputQuery> preprocess( const InputQuery &query,
+                                            bool attemptVariableElimination = true );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Have the preprocessor start reporting statistics.
@@ -57,8 +70,18 @@ public:
     */
     unsigned getNewIndex( unsigned oldIndex ) const;
 
-private:
+    /*
+      Given an inputQuery with all variable assignment other than ones for
+      variables corresponding to eliminated neurons, compute the full
+      assignment.
+    */
+    void setSolutionValuesOfEliminatedNeurons( InputQuery &inputQuery );
 
+private:
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void freeMemoryIfNeeded();
 
     inline double getLowerBound( unsigned var )
@@ -82,6 +105,15 @@ private:
     }
 
     /*
+<<<<<<< HEAD
+=======
+      Transform each equation so that any two addends have different variables
+      and no addends have zero coefficients
+    */
+    void removeRedundantAddendsInAllEquations();
+
+    /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Transform the piecewise linear constraints if needed. For instance, this
       will make sure all disjuncts in all disjunctions contain only bounds and
       no (in)equalities between variables.
@@ -103,6 +135,7 @@ private:
       Tighten bounds using the linear equations
     */
     bool processEquations();
+<<<<<<< HEAD
 
     /*
       Tighten the bounds using the piecewise linear and transcendental constraints
@@ -121,6 +154,26 @@ private:
     void collectFixedValues();
 
     /*
+=======
+
+    /*
+      Tighten the bounds using the piecewise linear and nonlinear constraints
+    */
+    bool processConstraints();
+
+    /*
+      If there exists an equation x = x', replace all instances of x with x'
+    */
+    bool processIdenticalVariables();
+
+    /*
+      Collect all variables whose lower and upper bounds are equal, or
+      which do not appear anywhere in the input query.
+    */
+    void collectFixedValues();
+
+    /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Separate the sets of merged and fixed variables. If x1 is merged into
       x2 and x2 is fixed, just mark x1 as fixed (instead of as merged).
     */
@@ -166,6 +219,17 @@ private:
     Map<unsigned, unsigned> _mergedVariables;
 
     /*
+<<<<<<< HEAD
+=======
+      Variables that have been eliminated due to the merge of weighted
+      sum layers. These variables are symbolically fixed (as a weighted
+      sum of other variables), not needed for solving, but need to be
+      tracked here for reconstruction of the full assignment.
+    */
+    Map<unsigned, LinearExpression> _unusedSymbolicallyFixedVariables;
+
+    /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Mapping of old variable indices to new varibale indices, if
       indices were changed during preprocessing.
     */

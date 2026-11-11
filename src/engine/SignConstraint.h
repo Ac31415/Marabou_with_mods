@@ -138,8 +138,12 @@ public:
       _f + 2/lb_b * _b + aux_ub = 1, 0 <= aux_ub <= 1 - lb_f - 2 * ub_b/lb_b
       _f - 2/ub_b * _b + aux2_lb = -1, -1 - ub_f + 2 * lb_b/ub_b  <= aux_lb <= 0
     */
+<<<<<<< HEAD
     void addAuxiliaryEquationsAfterPreprocessing( InputQuery
                                                   &inputQuery ) override;
+=======
+    void addAuxiliaryEquationsAfterPreprocessing( InputQuery &inputQuery ) override;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Preprocessing related functions, to inform that a variable has
@@ -188,8 +192,13 @@ public:
       Return the phase status corresponding to the values of the *input*
       variables in the given assignment.
     */
+<<<<<<< HEAD
     virtual PhaseStatus getPhaseStatusInAssignment( const Map<unsigned, double>
                                                     &assignment ) const override;
+=======
+    virtual PhaseStatus
+    getPhaseStatusInAssignment( const Map<unsigned, double> &assignment ) const override;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Returns string with shape: sign, _f, _b

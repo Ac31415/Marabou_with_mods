@@ -14,15 +14,24 @@
  **/
 
 #include "LinearExpression.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 #include "MStringf.h"
 
 LinearExpression::LinearExpression()
+<<<<<<< HEAD
   : _constant( 0 )
+=======
+    : _constant( 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
 }
 
 LinearExpression::LinearExpression( Map<unsigned, double> &addends )
+<<<<<<< HEAD
   : _addends( addends )
   , _constant( 0 )
 {
@@ -32,14 +41,28 @@ LinearExpression::LinearExpression( Map<unsigned, double> &addends,
                                     double constant )
   : _addends( addends )
   , _constant( constant )
+=======
+    : _addends( addends )
+    , _constant( 0 )
+{
+}
+
+LinearExpression::LinearExpression( Map<unsigned, double> &addends, double constant )
+    : _addends( addends )
+    , _constant( constant )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
 }
 
 bool LinearExpression::operator==( const LinearExpression &other ) const
 {
+<<<<<<< HEAD
     return
         ( _addends == other._addends ) &&
         ( _constant == other._constant );
+=======
+    return ( _addends == other._addends ) && ( _constant == other._constant );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 double LinearExpression::evaluate( const Map<unsigned, double> &assignment )
@@ -49,8 +72,15 @@ double LinearExpression::evaluate( const Map<unsigned, double> &assignment )
     {
         if ( FloatUtils::isZero( addend.second ) )
             continue;
+<<<<<<< HEAD
         else
             sum += addend.second * assignment[addend.first];
+=======
+        else if ( assignment.exists( addend.first ) )
+            sum += addend.second * assignment[addend.first];
+        else
+            return NAN;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     sum += _constant;
     return sum;

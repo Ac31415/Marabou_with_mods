@@ -19,12 +19,22 @@
 #include "CommonError.h"
 #include "List.h"
 #include "Set.h"
+<<<<<<< HEAD
 #include <unordered_map>
 
 template<class Key, class Value>
 class HashMap
 {
     typedef std::unordered_map<Key,Value> Super;
+=======
+
+#include <unordered_map>
+
+template <class Key, class Value> class HashMap
+{
+    typedef std::unordered_map<Key, Value> Super;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 public:
     typedef typename Super::iterator iterator;
     typedef typename Super::const_iterator const_iterator;
@@ -95,12 +105,20 @@ public:
         _container[key] = value;
     }
 
+<<<<<<< HEAD
     bool operator==( const HashMap<Key,Value> &other ) const
+=======
+    bool operator==( const HashMap<Key, Value> &other ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         return _container == other._container;
     }
 
+<<<<<<< HEAD
     bool operator!=( const HashMap<Key,Value> &other ) const
+=======
+    bool operator!=( const HashMap<Key, Value> &other ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         return _container != other._container;
     }

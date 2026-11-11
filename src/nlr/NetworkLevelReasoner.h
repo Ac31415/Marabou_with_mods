@@ -72,7 +72,11 @@ public:
     /*
       Perform an evaluation of the network for a specific input.
     */
+<<<<<<< HEAD
     void evaluate( double *input , double *output );
+=======
+    void evaluate( double *input, double *output );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Perform an evaluation of the network for the current input variable
@@ -83,7 +87,11 @@ public:
     /*
       Perform a simulation of the network for a specific input
     */
+<<<<<<< HEAD
    void simulate( Vector<Vector<double>> *input );
+=======
+    void simulate( Vector<Vector<double>> *input );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Bound propagation methods:
@@ -136,7 +144,11 @@ public:
     /*
       For debugging purposes: dump the network topology
     */
+<<<<<<< HEAD
     void dumpTopology() const;
+=======
+    void dumpTopology( bool dumpLayerDetails = true ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Duplicate the reasoner
@@ -161,6 +173,14 @@ public:
     void removeConstraintFromTopologicalOrder( PiecewiseLinearConstraint *constraint );
 
     /*
+<<<<<<< HEAD
+=======
+      Add an ecoding of all the affine layers as equations in the given InputQuery
+    */
+    void encodeAffineLayers( InputQuery &inputQuery );
+
+    /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Generate an input query from this NLR, according to the
       discovered network topology
     */
@@ -171,7 +191,14 @@ public:
       to reduce the total number of layers and variables in the
       network
     */
+<<<<<<< HEAD
     void mergeConsecutiveWSLayers();
+=======
+    unsigned mergeConsecutiveWSLayers( const Map<unsigned, double> &lowerBounds,
+                                       const Map<unsigned, double> &upperBounds,
+                                       const Set<unsigned> &varsInUnhandledConstraints,
+                                       Map<unsigned, LinearExpression> &eliminatedNeurons );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Print the bounds of variables layer by layer
@@ -199,17 +226,38 @@ private:
 
     List<PiecewiseLinearConstraint *> _constraintsInTopologicalOrder;
 
+<<<<<<< HEAD
     // Helper functions for generating an input query
     void generateInputQueryForLayer( InputQuery &inputQuery, const Layer &layer );
     void generateInputQueryForWeightedSumLayer( InputQuery &inputQuery, const Layer &layer );
+=======
+    // Map each neuron to a linear expression representing its weighted sum
+    void generateLinearExpressionForWeightedSumLayer(
+        Map<unsigned, LinearExpression> &variableToExpression,
+        const Layer &layer );
+
+    // Helper functions for generating an input query
+    void generateInputQueryForLayer( InputQuery &inputQuery, const Layer &layer );
+    void generateInputQueryForWeightedSumLayer( InputQuery &inputQuery, const Layer &layer );
+    void generateEquationsForWeightedSumLayer( List<Equation> &equations, const Layer &layer );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void generateInputQueryForReluLayer( InputQuery &inputQuery, const Layer &layer );
     void generateInputQueryForSigmoidLayer( InputQuery &inputQuery, const Layer &layer );
     void generateInputQueryForSignLayer( InputQuery &inputQuery, const Layer &layer );
     void generateInputQueryForAbsoluteValueLayer( InputQuery &inputQuery, const Layer &layer );
     void generateInputQueryForMaxLayer( InputQuery &inputQuery, const Layer &layer );
 
+<<<<<<< HEAD
     bool suitableForMerging( unsigned secondLayerIndex );
     void mergeWSLayers( unsigned secondLayerIndex );
+=======
+    bool suitableForMerging( unsigned secondLayerIndex,
+                             const Map<unsigned, double> &lowerBounds,
+                             const Map<unsigned, double> &upperBounds,
+                             const Set<unsigned> &varsInConstraintsUnhandledByNLR );
+    void mergeWSLayers( unsigned secondLayerIndex,
+                        Map<unsigned, LinearExpression> &eliminatedNeurons );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     double *multiplyWeights( const double *firstMatrix,
                              const double *secondMatrix,
                              unsigned inputDimension,

@@ -26,6 +26,7 @@
 #ifndef __IBoundManager_h__
 #define __IBoundManager_h__
 
+<<<<<<< HEAD
 #include <cstdint>
 #include "List.h"
 #include "Vector.h"
@@ -33,6 +34,15 @@
 
 enum BoundType : unsigned
 {
+=======
+#include "List.h"
+#include "PiecewiseLinearFunctionType.h"
+#include "Vector.h"
+
+#include <cstdint>
+
+enum BoundType : unsigned {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     LOWER = 0,
     UPPER = 1,
 };
@@ -45,9 +55,15 @@ class IRowBoundTightener;
 class IBoundManager
 {
 public:
+<<<<<<< HEAD
     const static constexpr unsigned NO_VARIABLE_FOUND = UINT32_MAX -1;
 
     virtual ~IBoundManager() {};
+=======
+    const static constexpr unsigned NO_VARIABLE_FOUND = UINT32_MAX - 1;
+
+    virtual ~IBoundManager(){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
        Registers a new variable, grows the BoundManager size and bound vectors,
@@ -87,8 +103,13 @@ public:
     /*
       Get pointers to latest bounds used for access by tableau and tighteners
      */
+<<<<<<< HEAD
     virtual const double * getLowerBounds() const = 0;
     virtual const double * getUpperBounds() const = 0;
+=======
+    virtual const double *getLowerBounds() const = 0;
+    virtual const double *getUpperBounds() const = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
      * Store and restore bounds after push/pop
@@ -122,26 +143,51 @@ public:
     virtual bool tightenLowerBound( unsigned variable, double value, const TableauRow &row ) = 0;
     virtual bool tightenUpperBound( unsigned variable, double value, const TableauRow &row ) = 0;
 
+<<<<<<< HEAD
     virtual bool tightenLowerBound( unsigned variable, double value, const SparseUnsortedList &row ) = 0;
     virtual bool tightenUpperBound( unsigned variable, double value, const SparseUnsortedList &row ) = 0;
+=======
+    virtual bool
+    tightenLowerBound( unsigned variable, double value, const SparseUnsortedList &row ) = 0;
+    virtual bool
+    tightenUpperBound( unsigned variable, double value, const SparseUnsortedList &row ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Add a lemma to the UNSATCertificateNode object
       Return true iff adding the lemma was successful
     */
+<<<<<<< HEAD
     virtual bool addLemmaExplanationAndTightenBound( unsigned var, double value, BoundType affectedVarBound,
                                                     const List<unsigned> &causingVars, BoundType causingVarBound,
                                                     PiecewiseLinearFunctionType constraintType ) = 0;
 
     /*
       Return the content of the object containing all explanations for variable bounds in the tableau
+=======
+    virtual bool
+    addLemmaExplanationAndTightenBound( unsigned var,
+                                        double value,
+                                        BoundType affectedVarBound,
+                                        const List<unsigned> &causingVars,
+                                        BoundType causingVarBound,
+                                        PiecewiseLinearFunctionType constraintType ) = 0;
+
+    /*
+      Return the content of the object containing all explanations for variable bounds in the
+      tableau
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     */
     virtual const BoundExplainer *getBoundExplainer() const = 0;
 
     /*
       Deep-copy the BoundExplainer object content
      */
+<<<<<<< HEAD
     virtual void copyBoundExplainerContent( const BoundExplainer* boundExplainer ) = 0;
+=======
+    virtual void copyBoundExplainerContent( const BoundExplainer *boundExplainer ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Initialize the boundExplainer
@@ -154,9 +200,17 @@ public:
     virtual void updateBoundExplanation( const TableauRow &row, bool isUpper, unsigned var ) = 0;
 
     /*
+<<<<<<< HEAD
       Given a row as SparseUnsortedList, updates the values of the bound explanations of a var according to the row
     */
     virtual void updateBoundExplanationSparse( const SparseUnsortedList &row, bool isUpper, unsigned var ) = 0;
+=======
+      Given a row as SparseUnsortedList, updates the values of the bound explanations of a var
+      according to the row
+    */
+    virtual void
+    updateBoundExplanationSparse( const SparseUnsortedList &row, bool isUpper, unsigned var ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Get the index of a variable with inconsistent bounds, if exists, or -1 otherwise

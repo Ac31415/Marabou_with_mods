@@ -13,10 +13,18 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "SparseUnsortedList.h"
+=======
+#include "SparseUnsortedList.h"
+
+#include "BasisFactorizationError.h"
+#include "Debug.h"
+#include "FloatUtils.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 SparseUnsortedList::SparseUnsortedList()
     : _size( 0 )
@@ -228,10 +236,18 @@ void SparseUnsortedList::mergeEntries( unsigned source, unsigned target )
 
     _list.erase( sourceIt );
     if ( FloatUtils::isZero( targetIt->_value ) )
+<<<<<<< HEAD
          _list.erase( targetIt );
 }
 
 List<SparseUnsortedList::Entry>::iterator SparseUnsortedList::erase( List<SparseUnsortedList::Entry>::iterator it )
+=======
+        _list.erase( targetIt );
+}
+
+List<SparseUnsortedList::Entry>::iterator
+SparseUnsortedList::erase( List<SparseUnsortedList::Entry>::iterator it )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     return _list.erase( it );
 }

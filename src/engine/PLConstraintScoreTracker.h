@@ -23,14 +23,23 @@
 
 #include <set>
 
+<<<<<<< HEAD
 #define SCORE_TRACKER_LOG(x, ...) LOG(GlobalConfiguration::SCORE_TRACKER_LOGGING, "PLConstraintScoreTracker: %s\n", x)
+=======
+#define SCORE_TRACKER_LOG( x, ... )                                                                \
+    LOG( GlobalConfiguration::SCORE_TRACKER_LOGGING, "PLConstraintScoreTracker: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 struct ScoreEntry
 {
     ScoreEntry( PiecewiseLinearConstraint *constraint, double score )
         : _constraint( constraint )
+<<<<<<< HEAD
         , _score( score )
     {};
+=======
+        , _score( score ){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     bool operator<( const ScoreEntry &other ) const
     {
@@ -64,8 +73,12 @@ public:
     /*
       Update the score of a constraint.
     */
+<<<<<<< HEAD
     virtual void updateScore( PiecewiseLinearConstraint *constraint,
                               double score ) = 0;
+=======
+    virtual void updateScore( PiecewiseLinearConstraint *constraint, double score ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Set the score of a constraint.
@@ -91,6 +104,7 @@ public:
     */
     inline double getScore( PiecewiseLinearConstraint *constraint )
     {
+<<<<<<< HEAD
         DEBUG({
                 ASSERT( _plConstraintToScore.exists( constraint ) );
                 ASSERT( _scores.find
@@ -98,6 +112,13 @@ public:
                                       _plConstraintToScore[constraint] ) ) !=
                         _scores.end() );
             });
+=======
+        DEBUG( {
+            ASSERT( _plConstraintToScore.exists( constraint ) );
+            ASSERT( _scores.find( ScoreEntry( constraint, _plConstraintToScore[constraint] ) ) !=
+                    _scores.end() );
+        } );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return _plConstraintToScore[constraint];
     }
 

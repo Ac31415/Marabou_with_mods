@@ -13,13 +13,25 @@ All rights reserved. See the file COPYING in the top-level source
 directory for licensing information.
 '''
 
+<<<<<<< HEAD
+=======
+import sys
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 from maraboupy import Marabou
 import numpy as np
 
 # %%
 # This network has inputs x0, x1, and was trained to create outputs that approximate
 # y0 = abs(x0) + abs(x1), y1 = x0^2 + x1^2
+<<<<<<< HEAD
 filename = "../../resources/tf/frozen_graph/fc1.pb"
+=======
+# filename = "../../resources/tf/frozen_graph/fc1.pb"
+filename = "/Users/wen-chungcheng/Marabou_with_mods/resources/tf/frozen_graph/fc1.pb"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 network = Marabou.read_tf(filename)
 
 # %%
@@ -27,7 +39,13 @@ network = Marabou.read_tf(filename)
 # The default chooses the placeholder operations as input and the last operation as output
 inputNames = ['Placeholder']
 outputName = 'y_out'
+<<<<<<< HEAD
 network = Marabou.read_tf(filename = filename, inputNames = inputNames, outputName = outputName)
+=======
+# network = Marabou.read_tf(filename = filename, inputNames = inputNames, outputName = outputName)
+network = Marabou.read_tf(filename = filename, inputNames = inputNames, outputNames = outputName)
+# network = Marabou.read_tf(filename = filename, inputNames = inputNames)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 # %%
 # Get the input and output variable numbers; [0] since first dimension is batch size
@@ -43,8 +61,17 @@ network.setUpperBound(inputVars[1], 10.0)
 
 # %%
 # Set output bounds on the second output variable
+<<<<<<< HEAD
 network.setLowerBound(outputVars[1], 194.0)
 network.setUpperBound(outputVars[1], 210.0)
+=======
+# network.setLowerBound(outputVars[1], 194.0)
+# print(outputVars)
+# network.setLowerBound(outputVars[0], 194.0)
+# network.setUpperBound(outputVars[1], 210.0)
+network.setLowerBound(outputVars[0][0], 194.0)
+network.setUpperBound(outputVars[0][1], 210.0)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 # %%
 # Call to C++ Marabou solver

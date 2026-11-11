@@ -13,7 +13,10 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "AcasParser.h"
 #include "Engine.h"
 #include "FloatUtils.h"
@@ -23,10 +26,18 @@
 #include "Preprocessor.h"
 #include "QueryLoader.h"
 
+<<<<<<< HEAD
 class wsEliminationTestSuite : public CxxTest::TestSuite
 {
 public:
 
+=======
+#include <cxxtest/TestSuite.h>
+
+class wsEliminationTestSuite : public CxxTest::TestSuite
+{
+public:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void setUp()
     {
     }
@@ -38,11 +49,19 @@ public:
     void test_nlr_to_query_and_back_1()
     {
         Engine engine;
+<<<<<<< HEAD
         InputQuery inputQuery = QueryLoader::loadQuery
             ( RESOURCES_DIR "/bnn_queries/smallBNN_original" );
 
         // Fix the input
         for ( unsigned inputVariable = 0; inputVariable  < 784; ++ inputVariable )
+=======
+        InputQuery inputQuery =
+            QueryLoader::loadQuery( RESOURCES_DIR "/bnn_queries/smallBNN_original" );
+
+        // Fix the input
+        for ( unsigned inputVariable = 0; inputVariable < 784; ++inputVariable )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             double pixel = 0.5;
 
@@ -71,11 +90,19 @@ public:
     void test_nlr_to_query_and_back_2()
     {
         Engine engine;
+<<<<<<< HEAD
         InputQuery inputQuery = QueryLoader::loadQuery
             ( RESOURCES_DIR "/bnn_queries/smallBNN_parsed" );
 
         // Fix the input
         for ( unsigned inputVariable = 0; inputVariable  < 784; ++ inputVariable )
+=======
+        InputQuery inputQuery =
+            QueryLoader::loadQuery( RESOURCES_DIR "/bnn_queries/smallBNN_parsed" );
+
+        // Fix the input
+        for ( unsigned inputVariable = 0; inputVariable < 784; ++inputVariable )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             double pixel = 0.5;
 
@@ -104,11 +131,19 @@ public:
     void test_nlr_to_query_and_back_3()
     {
         Engine engine;
+<<<<<<< HEAD
         InputQuery inputQuery = QueryLoader::loadQuery
             ( RESOURCES_DIR "/bnn_queries/smallBNN_original" );
 
         // Fix the input
         for ( unsigned inputVariable = 0; inputVariable  < 784; ++ inputVariable )
+=======
+        InputQuery inputQuery =
+            QueryLoader::loadQuery( RESOURCES_DIR "/bnn_queries/smallBNN_original" );
+
+        // Fix the input
+        for ( unsigned inputVariable = 0; inputVariable < 784; ++inputVariable )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             double pixel = 0.123;
 
@@ -137,11 +172,19 @@ public:
     void test_nlr_to_query_and_back_4()
     {
         Engine engine;
+<<<<<<< HEAD
         InputQuery inputQuery = QueryLoader::loadQuery
             ( RESOURCES_DIR "/bnn_queries/smallBNN_parsed" );
 
         // Fix the input
         for ( unsigned inputVariable = 0; inputVariable  < 784; ++ inputVariable )
+=======
+        InputQuery inputQuery =
+            QueryLoader::loadQuery( RESOURCES_DIR "/bnn_queries/smallBNN_parsed" );
+
+        // Fix the input
+        for ( unsigned inputVariable = 0; inputVariable < 784; ++inputVariable )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             double pixel = 0.123;
 

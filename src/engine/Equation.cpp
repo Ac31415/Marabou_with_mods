@@ -14,6 +14,7 @@
  **/
 
 #include "Equation.h"
+
 #include "FloatUtils.h"
 #include "MStringf.h"
 #include "Map.h"
@@ -89,10 +90,15 @@ void Equation::updateVariableIndex( unsigned oldVar, unsigned newVar )
 
 bool Equation::operator==( const Equation &other ) const
 {
+<<<<<<< HEAD
     return
         ( _addends == other._addends ) &&
         ( _scalar == other._scalar ) &&
         ( _type == other._type );
+=======
+    return ( _addends == other._addends ) && ( _scalar == other._scalar ) &&
+           ( _type == other._type );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool Equation::equivalent( const Equation &other ) const
@@ -141,6 +147,7 @@ void Equation::dump( String &output ) const
     case Equation::GE:
         output += String( " >= " );
         break;
+<<<<<<< HEAD
 
     case Equation::LE:
         output += String( " <= " );
@@ -222,12 +229,118 @@ void Equation::setCoefficient( unsigned variable, double newCoefficient)
     }
 
     addAddend(newCoefficient, variable);
+=======
+
+    case Equation::LE:
+        output += String( " <= " );
+        break;
+
+    case Equation::EQ:
+        output += String( " = " );
+        break;
+    }
+
+    output += Stringf( "%.2lf\n", _scalar );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
-//
-// Local Variables:
-// compile-command: "make -C ../.. "
-// tags-file-name: "../../TAGS"
-// c-basic-offset: 4
-// End:
-//
+bool Equation::isVariableMergingEquation( unsigned &x1, unsigned &x2 ) const
+{
+    if ( _addends.size() != 2 )
+        return false;
+
+    if ( _type != Equation::EQ )
+        return false;
+
+    if ( !FloatUtils::isZero( _scalar ) )
+        return false;
+
+    double coefficientOne = _addends.front()._coefficient;
+    double coefficientTwo = _addends.back()._coefficient;
+
+    if ( FloatUtils::isZero( coefficientOne ) || FloatUtils::isZero( coefficientTwo ) )
+        return false;
+
+    if ( FloatUtils::areEqual( coefficientOne, -coefficientTwo ) )
+    {
+        x1 = _addends.front()._variable;
+        x2 = _addends.back()._variable;
+        return true;
+    }
+
+    return false;
+}
+
+Set<unsigned> Equation::getParticipatingVariables() const
+{
+    Set<unsigned> result;
+    for ( const auto &addend : _addends )
+        result.insert( addend._variable );
+
+    return result;
+}
+
+List<unsigned> Equation::getListParticipatingVariables() const
+{
+    List<unsigned> result;
+    for ( const auto &addend : _addends )
+        result.append( addend._variable );
+
+    return result;
+}
+
+double Equation::getCoefficient( unsigned variable ) const
+{
+    for ( const auto &addend : _addends )
+    {
+        if ( addend._variable == variable )
+            return addend._coefficient;
+    }
+
+    return 0;
+}
+
+void Equation::setCoefficient( unsigned variable, double newCoefficient )
+{
+    for ( auto &addend : _addends )
+    {
+        if ( addend._variable == variable )
+        {
+            addend._coefficient = newCoefficient;
+            return;
+        }
+    }
+
+    addAddend( newCoefficient, variable );
+}
+
+void Equation::removeRedundantAddends()
+{
+    Map<unsigned, double> addends;
+    for ( auto &addend : _addends )
+    {
+        if ( addends.exists( addend._variable ) )
+            addends[addend._variable] += addend._coefficient;
+        else
+            addends[addend._variable] = addend._coefficient;
+    }
+
+    _addends.clear();
+    for ( const auto &pair : addends )
+    {
+        if ( !FloatUtils::isZero( pair.second ) )
+            addAddend( pair.second, pair.first );
+    }
+}
+
+bool Equation::containsRedundantAddends() const
+{
+    Set<unsigned> addends;
+    for ( auto &addend : _addends )
+    {
+        if ( addends.exists( addend._variable ) || FloatUtils::isZero( addend._coefficient ) )
+            return true;
+        addends.insert( addend._variable );
+    }
+    return false;
+}

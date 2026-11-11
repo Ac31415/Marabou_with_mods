@@ -19,6 +19,7 @@
 #ifndef __NetworkParser_h__
 #define __NetworkParser_h__
 
+<<<<<<< HEAD
 #include "Map.h"
 #include "List.h"
 #include "Vector.h"
@@ -31,11 +32,32 @@
 #include "SigmoidConstraint.h"
 #include "SignConstraint.h"
 #include "TranscendentalConstraint.h"
+=======
+#include "DisjunctionConstraint.h"
+#include "Equation.h"
+#include "InputQuery.h"
+#include "LeakyReluConstraint.h"
+#include "List.h"
+#include "Map.h"
+#include "MaxConstraint.h"
+#include "NonlinearConstraint.h"
+#include "PiecewiseLinearConstraint.h"
+#include "ReluConstraint.h"
+#include "SigmoidConstraint.h"
+#include "SignConstraint.h"
+#include "Vector.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <utility>
 
 typedef unsigned int Variable;
 
+<<<<<<< HEAD
 class NetworkParser {
+=======
+class NetworkParser
+{
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 private:
     unsigned int _numVars;
 
@@ -44,6 +66,7 @@ protected:
     List<Variable> _outputVars;
 
     Vector<Equation> _equationList;
+<<<<<<< HEAD
     List<ReluConstraint*> _reluList;
     List<SigmoidConstraint*> _sigmoidList;
     List<MaxConstraint*> _maxList;
@@ -54,18 +77,40 @@ protected:
 
     NetworkParser();
     void initNetwork();
+=======
+    List<ReluConstraint *> _reluList;
+    List<LeakyReluConstraint *> _leakyReluList;
+    List<SigmoidConstraint *> _sigmoidList;
+    List<MaxConstraint *> _maxList;
+    List<AbsoluteValueConstraint *> _absList;
+    List<SignConstraint *> _signList;
+    Map<Variable, float> _lowerBounds;
+    Map<Variable, float> _upperBounds;
+
+    NetworkParser();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     void addEquation( Equation &eq );
     void setLowerBound( Variable var, float value );
     void setUpperBound( Variable var, float value );
     void addRelu( Variable var1, Variable var2 );
+<<<<<<< HEAD
     void addSigmoid( Variable var1, Variable var2 );
+=======
+    void addLeakyRelu( Variable var1, Variable var2, float alpha );
+    void addSigmoid( Variable var1, Variable var2 );
+    void addTanh( Variable var1, Variable var2 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void addSignConstraint( Variable var1, Variable var2 );
     void addMaxConstraint( Variable maxVar, Set<Variable> elements );
     void addAbsConstraint( Variable var1, Variable var2 );
 
     Variable getNewVariable();
+<<<<<<< HEAD
     void getMarabouQuery( InputQuery& query );
+=======
+    void getMarabouQuery( InputQuery &query );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     int findEquationWithOutputVariable( Variable variable );
 };

@@ -17,8 +17,16 @@
 
 #ifdef ENABLE_OPENBLAS
 #include "cblas.h"
+<<<<<<< HEAD
 void matrixMultiplication( const double *matA, const double *matB, double *matC,
                            unsigned rowsA, unsigned columnsA,
+=======
+void matrixMultiplication( const double *matA,
+                           const double *matB,
+                           double *matC,
+                           unsigned rowsA,
+                           unsigned columnsA,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                            unsigned columnsB )
 {
     double alpha = 1;
@@ -27,12 +35,36 @@ void matrixMultiplication( const double *matA, const double *matB, double *matC,
     // See https://developer.apple.com/documentation/accelerate/1513282-cblas_dgemm?language=objc
     // for the documentation of cblas_dgemm.
 
+<<<<<<< HEAD
     cblas_dgemm( CblasRowMajor, CblasNoTrans, CblasNoTrans, rowsA, columnsB,
                  columnsA, alpha, matA, columnsA, matB, columnsB, beta, matC, columnsB);
 }
 #else
 void matrixMultiplication( const double *matA, const double *matB, double *matC,
                            unsigned rowsA, unsigned columnsA,
+=======
+    cblas_dgemm( CblasRowMajor,
+                 CblasNoTrans,
+                 CblasNoTrans,
+                 rowsA,
+                 columnsB,
+                 columnsA,
+                 alpha,
+                 matA,
+                 columnsA,
+                 matB,
+                 columnsB,
+                 beta,
+                 matC,
+                 columnsB );
+}
+#else
+void matrixMultiplication( const double *matA,
+                           const double *matB,
+                           double *matC,
+                           unsigned rowsA,
+                           unsigned columnsA,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                            unsigned columnsB )
 {
     for ( unsigned i = 0; i < rowsA; ++i )
@@ -41,8 +73,12 @@ void matrixMultiplication( const double *matA, const double *matB, double *matC,
         {
             for ( unsigned k = 0; k < columnsA; ++k )
             {
+<<<<<<< HEAD
                 matC[i * columnsB + j] += matA[i * columnsA + k]
                     * matB[k * columnsB + j];
+=======
+                matC[i * columnsB + j] += matA[i * columnsA + k] * matB[k * columnsB + j];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }

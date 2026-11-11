@@ -13,12 +13,20 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "GurobiWrapper.h"
 #include "IterativePropagator.h"
 #include "NetworkLevelReasoner.h"
 #include "ParallelSolver.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class MockForNetworkLevelReasoner
 {
 public:
@@ -27,7 +35,10 @@ public:
 class NetworkLevelReasonerTestSuite : public CxxTest::TestSuite
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void setUp()
     {
     }
@@ -41,9 +52,15 @@ public:
         NLR::NetworkLevelReasoner nlr;
         NLR::IterativePropagator mock = NLR::IterativePropagator( &nlr );
         unsigned numberOfWorkers = 4;
+<<<<<<< HEAD
         NLR::ParallelSolver::SolverQueue solvers ( numberOfWorkers );
         GurobiWrapper *gurobi = new GurobiWrapper();
         TS_ASSERT_THROWS_NOTHING( mock.enqueueSolver( solvers, gurobi) );
+=======
+        NLR::ParallelSolver::SolverQueue solvers( numberOfWorkers );
+        GurobiWrapper *gurobi = new GurobiWrapper();
+        TS_ASSERT_THROWS_NOTHING( mock.enqueueSolver( solvers, gurobi ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( !solvers.empty() );
         GurobiWrapper *gurobiPtr = NULL;
         TS_ASSERT_THROWS_NOTHING( solvers.pop( gurobiPtr ) );
@@ -56,11 +73,19 @@ public:
         NLR::NetworkLevelReasoner nlr;
         NLR::IterativePropagator mock = NLR::IterativePropagator( &nlr );
         unsigned numberOfWorkers = 4;
+<<<<<<< HEAD
         NLR::ParallelSolver::SolverQueue solvers ( numberOfWorkers );
         for ( unsigned i = 0; i < numberOfWorkers; ++i )
         {
             GurobiWrapper *gurobi = new GurobiWrapper();
             TS_ASSERT_THROWS_NOTHING( mock.enqueueSolver( solvers, gurobi) );
+=======
+        NLR::ParallelSolver::SolverQueue solvers( numberOfWorkers );
+        for ( unsigned i = 0; i < numberOfWorkers; ++i )
+        {
+            GurobiWrapper *gurobi = new GurobiWrapper();
+            TS_ASSERT_THROWS_NOTHING( mock.enqueueSolver( solvers, gurobi ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         TS_ASSERT( !solvers.empty() );
         TS_ASSERT_THROWS_NOTHING( mock.clearSolverQueue( solvers ) );

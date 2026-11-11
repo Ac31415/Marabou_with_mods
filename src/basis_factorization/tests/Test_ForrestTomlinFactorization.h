@@ -10,10 +10,13 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
 
 **/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-#include <cxxtest/TestSuite.h>
+**/
 
 #include "BasisFactorizationError.h"
 #include "EtaMatrix.h"
@@ -23,6 +26,8 @@
 #include "List.h"
 #include "MockColumnOracle.h"
 #include "MockErrno.h"
+
+#include <cxxtest/TestSuite.h>
 
 class MockForForrestTomlinFactorization
 {
@@ -63,10 +68,10 @@ public:
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         double basisMatrix[16] = {
-            1,   3, -2,  4,
-            1,   5, -1,  5,
-            1,   3, -3,  6,
-            -1, -3,  3, -8,
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -87,10 +92,10 @@ public:
              R4 := R4 + R1
 
           Matrix becomes:
-            1,   3, -2,  4,
-            0,   2,  1,  1,
-            0,   0, -1,  2,
-            0,   0,  1, -4,
+1,   3, -2,  4, //
+0,   2,  1,  1, //
+0,   0, -1,  2, //
+0,   0,  1, -4, //
 
           So L1 has the column (1, -1, -1, 1)
         */
@@ -102,10 +107,10 @@ public:
              R2 := 1/2 * R2
 
           Matrix becomes:
-            1,   3,   -2,   4,
-            0,   1,  1/2, 1/2,
-            0,   0,   -1,   2,
-            0,   0,    1,  -4,
+1,   3,   -2,   4, //
+0,   1,  1/2, 1/2, //
+0,   0,   -1,   2, //
+0,   0,    1,  -4, //
 
             So L2 has the column (0, 1/2, 0, 0)
         */
@@ -118,10 +123,10 @@ public:
              R4 := R4 + R3
 
           Matrix becomes:
-            1,   3,   -2,   4,
-            0,   1,  1/2, 1/2,
-            0,   0,    1,  -2,
-            0,   0,    0,  -2,
+1,   3,   -2,   4, //
+0,   1,  1/2, 1/2, //
+0,   0,    1,  -2, //
+0,   0,    0,  -2, //
 
             So L3 has the column (0, 0, -1, 1)
         */
@@ -133,10 +138,10 @@ public:
              R4 := -1/2 * R4
 
           Matrix becomes:
-            1,   3,   -2,   4,
-            0,   1,  1/2, 1/2,
-            0,   0,    1,  -2,
-            0,   0,    0,  1,
+1,   3,   -2,   4, //
+0,   1,  1/2, 1/2, //
+0,   0,    1,  -2, //
+0,   0,    0,  1, //
 
             So L4 has the column (0, 0, 0, -0.5)
         */
@@ -167,14 +172,14 @@ public:
         const List<LPElement *> *LP = ft->getLP();
         TS_ASSERT_EQUALS( LP->size(), 4U );
         auto lIt = LP->begin();
-        TS_ASSERT( (*lIt)->_eta );
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL4 );
+        TS_ASSERT( ( *lIt )->_eta );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL4 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL3 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL3 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL2 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL2 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL1 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL1 );
 
         TS_ASSERT_THROWS_NOTHING( delete ft );
     }
@@ -186,10 +191,10 @@ public:
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         double basisMatrix[16] = {
-            1,   4,  -2,  4,
-            -2, -6,  -1,  5,
-            1,   3,  -3,  6,
-            -1, -3,   3, -8,
+            1,  4,  -2, 4,  //
+            -2, -6, -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -207,10 +212,10 @@ public:
              R1 <-> R2
 
           Matrix becomes:
-            -2, -6,  -1,  5,
-            1,   4,  -2,  4,
-            1,   3,  -3,  6,
-            -1, -3,   3, -8,
+-2, -6,  -1,  5, //
+1,   4,  -2,  4, //
+1,   3,  -3,  6, //
+-1, -3,   3, -8, //
 
         */
         std::pair<unsigned, unsigned> P1pair( 0, 1 );
@@ -223,10 +228,10 @@ public:
              R4 := R4 - 1/2 R1
 
           Matrix becomes:
-            1,   3,  1/2,  -2.5,
-            0,   1, -5/2,  13/2,
-            0,   0, -7/2,  17/2,
-            0,   0,  7/2, -21/2,
+1,   3,  1/2,  -2.5, //
+0,   1, -5/2,  13/2, //
+0,   0, -7/2,  17/2, //
+0,   0,  7/2, -21/2, //
 
             So L2 has the column (-1/2, 1/2, 1/2, -1/2)
         */
@@ -238,10 +243,10 @@ public:
              R2 := 1 * R2
 
           Matrix becomes:
-            1,   3,  1/2,  -2.5,
-            0,   1, -5/2,  13/2,
-            0,   0, -7/2,  17/2,
-            0,   0,  7/2, -21/2,
+1,   3,  1/2,  -2.5, //
+0,   1, -5/2,  13/2, //
+0,   0, -7/2,  17/2, //
+0,   0,  7/2, -21/2, //
 
             So L3 has the column (0, 1, 0, 0)
         */
@@ -254,14 +259,14 @@ public:
              R4 := R4 + R3
 
           Matrix becomes:
-            1,   3,  1/2,  -2.5,
-            0,   1, -5/2,  13/2,
-            0,   0,    1, -17/7,
-            0,   0,    0,    -2,
+1,   3,  1/2,  -2.5, //
+0,   1, -5/2,  13/2, //
+0,   0,    1, -17/7, //
+0,   0,    0,    -2, //
 
             So L3 has the column (0, 0, -2/7, 1)
         */
-        double expectedL4Col[] = { 0, 0, -2.0/7, 1 };
+        double expectedL4Col[] = { 0, 0, -2.0 / 7, 1 };
         EtaMatrix expectedL4( 4, 2, expectedL4Col );
 
         /*
@@ -269,10 +274,10 @@ public:
              R4 := -1/2 * R4
 
           Matrix becomes:
-            1,   3,  1/2,  -2.5,
-            0,   1, -5/2,  13/2,
-            0,   0,    1, -17/7,
-            0,   0,    0,     1,
+1,   3,  1/2,  -2.5, //
+0,   1, -5/2,  13/2, //
+0,   0,    1, -17/7, //
+0,   0,    0,     1, //
 
             So L3 has the column (0, 0, 0, 1/3)
         */
@@ -280,7 +285,7 @@ public:
         EtaMatrix expectedL5( 4, 3, expectedL5Col );
 
         // The upper traingular matrix discovered gives us the Us
-        double expectedU4Col[] = { -2.5, 6.5, -17.0/7, 1 };
+        double expectedU4Col[] = { -2.5, 6.5, -17.0 / 7, 1 };
         EtaMatrix expectedU4( 4, 3, expectedU4Col );
 
         double expectedU3Col[] = { 0.5, -2.5, 1, 0 };
@@ -302,16 +307,16 @@ public:
         const List<LPElement *> *LP = ft->getLP();
         TS_ASSERT_EQUALS( LP->size(), 5U );
         auto lIt = LP->begin();
-        TS_ASSERT( (*lIt)->_eta );
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL5 );
+        TS_ASSERT( ( *lIt )->_eta );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL5 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL4 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL4 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL3 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL3 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL2 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL2 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_pair), P1pair );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_pair ), P1pair );
 
         TS_ASSERT_THROWS_NOTHING( delete ft );
     }
@@ -323,10 +328,10 @@ public:
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         double basisMatrix[16] = {
-            1,   3, -2,  4,
-            1,   5, -1,  5,
-            1,   3, -3,  6,
-            -1, -3,  3, -8,
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -454,10 +459,10 @@ public:
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         double basisMatrix[16] = {
-            1,   3, -2,  4,
-            1,   5, -1,  5,
-            1,   3, -3,  6,
-            -1, -3,  3, -8,
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -600,10 +605,10 @@ public:
         //     | 1   3 -3  6 |
         //     | -1 -3  3 -8 |
         double basisMatrix[16] = {
-            1,   3, -2,  4,
-            1,   5, -1,  5,
-            1,   3, -3,  6,
-            -1, -3,  3, -8,
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -740,14 +745,14 @@ public:
         const List<LPElement *> *LP = ft->getLP();
         TS_ASSERT_EQUALS( LP->size(), 4U );
         auto lIt = LP->begin();
-        TS_ASSERT( (*lIt)->_eta );
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL4 );
+        TS_ASSERT( ( *lIt )->_eta );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL4 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL3 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL3 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL2 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL2 );
         ++lIt;
-        TS_ASSERT_EQUALS( *((*lIt)->_eta), expectedL1 );
+        TS_ASSERT_EQUALS( *( ( *lIt )->_eta ), expectedL1 );
 
         double expectedU4Col[] = { 14, -6, 3, 1 };
         EtaMatrix expectedU4( 4, 3, expectedU4Col );
@@ -787,6 +792,7 @@ public:
 
         auto it = A->begin();
 
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( (*it)->_row, 1U );
         TS_ASSERT_EQUALS( (*it)->_column, 2U );
         TS_ASSERT( FloatUtils::areEqual( (*it)->_value, -0.5 ) );
@@ -800,6 +806,21 @@ public:
         TS_ASSERT_EQUALS( (*it)->_row, 1U );
         TS_ASSERT_EQUALS( (*it)->_column, 1U );
         TS_ASSERT( FloatUtils::areEqual( (*it)->_value, 0.5 ) );
+=======
+        TS_ASSERT_EQUALS( ( *it )->_row, 1U );
+        TS_ASSERT_EQUALS( ( *it )->_column, 2U );
+        TS_ASSERT( FloatUtils::areEqual( ( *it )->_value, -0.5 ) );
+
+        ++it;
+        TS_ASSERT_EQUALS( ( *it )->_row, 1U );
+        TS_ASSERT_EQUALS( ( *it )->_column, 3U );
+        TS_ASSERT( FloatUtils::areEqual( ( *it )->_value, -1.5 ) );
+
+        ++it;
+        TS_ASSERT_EQUALS( ( *it )->_row, 1U );
+        TS_ASSERT_EQUALS( ( *it )->_column, 1U );
+        TS_ASSERT( FloatUtils::areEqual( ( *it )->_value, 0.5 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( delete ft );
     }
@@ -811,10 +832,17 @@ public:
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         double basisMatrix[16] = {
+<<<<<<< HEAD
             1,   3, -2,  4,
             1,   5, -1,  5,
             1,   3, -3,  6,
             -1, -3,  3, -8,
+=======
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -854,6 +882,7 @@ public:
         ForrestTomlinFactorization *ft = NULL;
 
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
+<<<<<<< HEAD
 
         // B = | 1   3 -2  4 |
         //     | 1   5 -1  5 |
@@ -866,6 +895,20 @@ public:
             -1, -3,  3, -8,
         };
 
+=======
+
+        // B = | 1   3 -2  4 |
+        //     | 1   5 -1  5 |
+        //     | 1   3 -3  6 |
+        //     | -1 -3  3 -8 |
+        double basisMatrix[16] = {
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
+        };
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         oracle->storeBasis( 4, basisMatrix );
         ft->obtainFreshBasis();
 
@@ -874,6 +917,7 @@ public:
         TS_ASSERT_THROWS_NOTHING( basis = ft->getBasis() );
         for ( unsigned i = 0; i < 16; ++i )
             TS_ASSERT( FloatUtils::areEqual( basisMatrix[i], basis[i] ) );
+<<<<<<< HEAD
 
         // E1 = | 1 -4     |
         //      |    2     |
@@ -882,16 +926,33 @@ public:
         double a1[] = { -4, 2, 0, 3 };
         ft->updateToAdjacentBasis( 1, a1, NULL );
 
+=======
+
+        // E1 = | 1 -4     |
+        //      |    2     |
+        //      |    0 1   |
+        //      | 0  3 0 1 |
+        double a1[] = { -4, 2, 0, 3 };
+        ft->updateToAdjacentBasis( 1, a1, NULL );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // B * E1 = | 1   14 -2  4 |
         //          | 1   21 -1  5 |
         //          | 1   20 -3  6 |
         //          | -1 -26  3 -8 |
 
         double expectedB[16] = {
+<<<<<<< HEAD
             1,   14, -2,  4,
             1,   21, -1,  5,
             1,   20, -3,  6,
             -1, -26,  3, -8,
+=======
+            1,  14,  -2, 4,  //
+            1,  21,  -1, 5,  //
+            1,  20,  -3, 6,  //
+            -1, -26, 3,  -8, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         oracle->storeBasis( 4, expectedB );
@@ -908,11 +969,19 @@ public:
 
         TS_ASSERT_THROWS_NOTHING( delete ft );
     }
+<<<<<<< HEAD
 
     void test_invert_basis()
     {
         ForrestTomlinFactorization *ft = NULL;
 
+=======
+
+    void test_invert_basis()
+    {
+        ForrestTomlinFactorization *ft = NULL;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( ft = new ForrestTomlinFactorization( 4, *oracle ) );
 
         // B = | 1   3 -2  4 |
@@ -920,10 +989,17 @@ public:
         //     | 1   3 -3  6 |
         //     | -1 -3  3 -8 |
         double basisMatrix[16] = {
+<<<<<<< HEAD
             1,   3, -2,  4,
             1,   5, -1,  5,
             1,   3, -3,  6,
             -1, -3,  3, -8,
+=======
+            1,  3,  -2, 4,  //
+            1,  5,  -1, 5,  //
+            1,  3,  -3, 6,  //
+            -1, -3, 3,  -8, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         oracle->storeBasis( 4, basisMatrix );
@@ -934,10 +1010,17 @@ public:
         //        |  1    0    -2   -1 |
         //        |  0    0  -1/2 -1/2 |
         double expectedInvB1[] = {
+<<<<<<< HEAD
                 6, -3.0/2, -23.0/4, -9.0/4,
                 -1, 1.0/2, 5.0/4, 3.0/4,
                 1, 0, -2, -1,
                 0, 0, -1.0/2, -1.0/2,
+=======
+            6,  -3.0 / 2, -23.0 / 4, -9.0 / 4, //
+            -1, 1.0 / 2,  5.0 / 4,   3.0 / 4,  //
+            1,  0,        -2,        -1,       //
+            0,  0,        -1.0 / 2,  -1.0 / 2, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         double invB[16];
@@ -959,10 +1042,17 @@ public:
         //          | -1 -26  3 -8 |
 
         double expectedB[16] = {
+<<<<<<< HEAD
             1,   14, -2,  4,
             1,   21, -1,  5,
             1,   20, -3,  6,
             -1, -26,  3, -8,
+=======
+            1,  14,  -2, 4,  //
+            1,  21,  -1, 5,  //
+            1,  20,  -3, 6,  //
+            -1, -26, 3,  -8, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         oracle->storeBasis( 4, expectedB );
@@ -973,6 +1063,7 @@ public:
         //        |  3/2 -3/4 -19/8 -13/8 |
 
         double expectedInvB2[] = {
+<<<<<<< HEAD
             4, -1.0/2, -13.0/4, -3.0/4,
             -1.0/2, 1.0/4, 5.0/8, 3.0/8,
             1, 0, -2, -1,
@@ -983,6 +1074,19 @@ public:
                                  const BasisFactorizationError &e,
                                  e.getCode(),
                                  BasisFactorizationError::CANT_INVERT_BASIS_BECAUSE_BASIS_ISNT_AVAILABLE );
+=======
+            4,        -1.0 / 2, -13.0 / 4, -3.0 / 4,  //
+            -1.0 / 2, 1.0 / 4,  5.0 / 8,   3.0 / 8,   //
+            1,        0,        -2,        -1,        //
+            3.0 / 2,  -3.0 / 4, -19.0 / 8, -13.0 / 8, //
+        };
+
+        TS_ASSERT_THROWS_EQUALS(
+            ft->invertBasis( invB ),
+            const BasisFactorizationError &e,
+            e.getCode(),
+            BasisFactorizationError::CANT_INVERT_BASIS_BECAUSE_BASIS_ISNT_AVAILABLE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( ft->makeExplicitBasisAvailable() );
 

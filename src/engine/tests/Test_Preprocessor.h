@@ -14,18 +14,27 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+#include "DisjunctionConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InfeasibleQueryException.h"
 #include "InputQuery.h"
+#include "MarabouError.h"
 #include "MaxConstraint.h"
 #include "MockErrno.h"
 #include "Preprocessor.h"
 #include "ReluConstraint.h"
+<<<<<<< HEAD
 #include "MarabouError.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
+#include <cxxtest/TestSuite.h>
 #include <string.h>
 
 class MockForPreprocessor
@@ -104,7 +113,7 @@ public:
         TS_ASSERT_EQUALS( processed.getLowerBound( 0 ), 0 );
         TS_ASSERT_EQUALS( processed.getUpperBound( 0 ), 13 );
         TS_ASSERT_EQUALS( processed.getLowerBound( 2 ), -10 );
-		TS_ASSERT_EQUALS( processed.getUpperBound( 2 ), 3 );
+        TS_ASSERT_EQUALS( processed.getUpperBound( 2 ), 3 );
 
         inputQuery.setLowerBound( 0, FloatUtils::negativeInfinity() );
         inputQuery.setUpperBound( 0, 15 );
@@ -169,10 +178,11 @@ public:
         // x2.ub = -10 + x0.ub + x1.ub = -10 + 5 -2 = -7
         // x2 = [0, -7] -> throw error
 
-        TS_ASSERT_THROWS( Preprocessor().preprocess( inputQuery ), const InfeasibleQueryException &e );
+        TS_ASSERT_THROWS( Preprocessor().preprocess( inputQuery ),
+                          const InfeasibleQueryException &e );
 
         InputQuery inputQuery2;
-		inputQuery2.setNumberOfVariables( 5 );
+        inputQuery2.setNumberOfVariables( 5 );
         inputQuery2.setLowerBound( 1, 0 );
         inputQuery2.setUpperBound( 1, 1 );
         inputQuery2.setLowerBound( 2, 2 );
@@ -254,7 +264,12 @@ public:
         TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 1 ), 0 ) );
         TS_ASSERT( FloatUtils::areEqual( processed.getUpperBound( 1 ), 10 ) );
 
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 0 ), FloatUtils::negativeInfinity() ) ); //
+=======
+        TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 0 ),
+                                         FloatUtils::negativeInfinity() ) ); //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( FloatUtils::areEqual( processed.getUpperBound( 0 ), 10 ) );
 
         // x2 = Max( x3, x4 )
@@ -269,7 +284,12 @@ public:
         // x4.ub = 13
         TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 2 ), 5 ) );
         TS_ASSERT( FloatUtils::areEqual( processed.getUpperBound( 2 ), 13 ) );
+<<<<<<< HEAD
         TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 3 ), FloatUtils::negativeInfinity() ) );
+=======
+        TS_ASSERT(
+            FloatUtils::areEqual( processed.getLowerBound( 3 ), FloatUtils::negativeInfinity() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT( FloatUtils::areEqual( processed.getUpperBound( 3 ), 10 ) );
         TS_ASSERT( FloatUtils::areEqual( processed.getLowerBound( 4 ), 4 ) );
         TS_ASSERT( FloatUtils::areEqual( processed.getUpperBound( 4 ), 13 ) );
@@ -375,7 +395,11 @@ public:
         inputQuery.setUpperBound( 3, 5 );
         inputQuery.setLowerBound( 4, 0 ); // unused
         inputQuery.setUpperBound( 4, 10 );
+<<<<<<< HEAD
         inputQuery.setLowerBound( 5, 0 );  // unused
+=======
+        inputQuery.setLowerBound( 5, 0 ); // unused
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.setUpperBound( 5, 10 );
         inputQuery.setLowerBound( 6, 5 ); // fxied
         inputQuery.setUpperBound( 6, 5 );
@@ -469,14 +493,23 @@ public:
         equation4.setScalar( -0.341 );
         inputQuery.addEquation( equation4 );
 
+<<<<<<< HEAD
         inputQuery.addTranscendentalConstraint( new SigmoidConstraint(2, 4) );
         inputQuery.addTranscendentalConstraint( new SigmoidConstraint(3, 5) );
+=======
+        inputQuery.addNonlinearConstraint( new SigmoidConstraint( 2, 4 ) );
+        inputQuery.addNonlinearConstraint( new SigmoidConstraint( 3, 5 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         InputQuery processed = *( Preprocessor().preprocess( inputQuery, true ) );
 
         // All equations and varaibles should have been eliminated
         TS_ASSERT_EQUALS( processed.getEquations().size(), 0U );
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( processed.getTranscendentalConstraints().size(), 0U );
+=======
+        TS_ASSERT_EQUALS( processed.getNonlinearConstraints().size(), 0U );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_EQUALS( processed.getNumberOfVariables(), 0U );
     }
 
@@ -538,7 +571,11 @@ public:
 
         // 2x0 - 2x1 = 0
         Equation equation1;
+<<<<<<< HEAD
         equation1.addAddend(  2, 0 );
+=======
+        equation1.addAddend( 2, 0 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         equation1.addAddend( -2, 1 );
         equation1.setScalar( 0 );
         inputQuery.addEquation( equation1 );
@@ -581,10 +618,17 @@ public:
         TS_ASSERT_EQUALS( addend->_variable, 1U );
         TS_ASSERT_EQUALS( preprocessedEquation._scalar, 1.0 );
 
+<<<<<<< HEAD
         for ( const auto &plConstraint: processed.getPiecewiseLinearConstraints() )
         {
             TS_ASSERT( plConstraint->participatingVariable( 0 ));
             TS_ASSERT( plConstraint->participatingVariable( 2 ));
+=======
+        for ( const auto &plConstraint : processed.getPiecewiseLinearConstraints() )
+        {
+            TS_ASSERT( plConstraint->participatingVariable( 0 ) );
+            TS_ASSERT( plConstraint->participatingVariable( 2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -695,37 +739,61 @@ public:
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 8 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 16 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 5 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 9 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 13 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         eq_eq = new Equation();
         eq_eq->addAddend( 1, 17 );
         eq_eq->setScalar( 0 );
+<<<<<<< HEAD
         inputQuery.addEquation( *eq_eq);
+=======
+        inputQuery.addEquation( *eq_eq );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         delete eq_eq;
 
         InputQuery processed = *( Preprocessor().preprocess( inputQuery ) );
@@ -843,8 +911,13 @@ public:
         // Specify activation functions
         SigmoidConstraint *sigmoid1 = new SigmoidConstraint( 2, 4 );
         SigmoidConstraint *sigmoid2 = new SigmoidConstraint( 3, 5 );
+<<<<<<< HEAD
         inputQuery.addTranscendentalConstraint( sigmoid1 );
         inputQuery.addTranscendentalConstraint( sigmoid2 );
+=======
+        inputQuery.addNonlinearConstraint( sigmoid1 );
+        inputQuery.addNonlinearConstraint( sigmoid2 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sigmoid1->notifyLowerBound( 4, 0 );
         sigmoid2->notifyLowerBound( 5, 0 );
         sigmoid1->notifyUpperBound( 4, 1 );
@@ -910,8 +983,12 @@ public:
         // x0 - x2 - aux4 = 0 will be added to the processed ipq.
 
         InputQuery processed;
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( processed = *( Preprocessor().
                                                  preprocess( ipq ) ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( processed = *( Preprocessor().preprocess( ipq ) ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Four more variables are added.
         TS_ASSERT_EQUALS( processed.getNumberOfVariables(), 7u );
@@ -934,10 +1011,101 @@ public:
             TS_ASSERT( processed.getEquations().exists( eq ) );
         }
     }
+<<<<<<< HEAD
+=======
+
+    void test_preprocessor_with_input_bounds_in_disjunction()
+    {
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 1 );
+        ipq.markInputVariable( 0, 0 );
+
+        PiecewiseLinearCaseSplit cs1;
+        cs1.storeBoundTightening( Tightening( 0, -1, Tightening::LB ) );
+        cs1.storeBoundTightening( Tightening( 0, 3, Tightening::UB ) );
+
+        PiecewiseLinearCaseSplit cs2;
+        cs2.storeBoundTightening( Tightening( 0, -4, Tightening::LB ) );
+        cs2.storeBoundTightening( Tightening( 0, 2, Tightening::UB ) );
+
+        List<PiecewiseLinearCaseSplit> caseSplits = { cs1, cs2 };
+        DisjunctionConstraint *disj = new DisjunctionConstraint( caseSplits );
+        ipq.addPiecewiseLinearConstraint( disj );
+
+        InputQuery processed;
+        TS_ASSERT_THROWS_NOTHING( processed = *( Preprocessor().preprocess( ipq ) ) );
+
+        TS_ASSERT_EQUALS( processed.getLowerBound( 0 ), -4 );
+        TS_ASSERT_EQUALS( processed.getUpperBound( 0 ), 3 );
+    }
+
+    void test_set_solution_for_eliminated_neurons()
+    {
+        InputQuery ipq;
+        ipq.setNumberOfVariables( 6 );
+        {
+            // x2 = x0 + x1 + 1
+            Equation eq;
+            eq.setScalar( -1 );
+            eq.addAddend( 1, 0 );
+            eq.addAddend( 1, 1 );
+            eq.addAddend( -1, 2 );
+            ipq.addEquation( eq );
+        }
+        {
+            // x3 = x0 + x1
+            Equation eq;
+            eq.setScalar( 0 );
+            eq.addAddend( 1, 0 );
+            eq.addAddend( 1, 1 );
+            eq.addAddend( -1, 3 );
+            ipq.addEquation( eq );
+        }
+        {
+            // x4 = x2 + x3
+            Equation eq;
+            eq.setScalar( 0 );
+            eq.addAddend( 1, 2 );
+            eq.addAddend( 1, 3 );
+            eq.addAddend( -1, 4 );
+            ipq.addEquation( eq );
+        }
+        {
+            // x5 = x2 + x3
+            Equation eq;
+            eq.setScalar( 0 );
+            eq.addAddend( 1, 2 );
+            eq.addAddend( 1, 3 );
+            eq.addAddend( -1, 5 );
+            ipq.addEquation( eq );
+        }
+        ipq.markInputVariable( 0, 0 );
+        ipq.markInputVariable( 1, 1 );
+
+        Preprocessor preprocessor;
+        auto preprocessedQuery = preprocessor.preprocess( ipq, true );
+        TS_ASSERT_EQUALS( preprocessedQuery->getNumberOfVariables(), 4u );
+
+        ipq.setSolutionValue( 0, 1 );
+        ipq.setSolutionValue( 1, 2 );
+        ipq.setSolutionValue( 2, 1000 );
+        ipq.setSolutionValue( 3, 1000 );
+        ipq.setSolutionValue( 4, 1000 );
+        ipq.setSolutionValue( 5, 1000 );
+
+        // This should only update variable 2 and 3
+        TS_ASSERT_THROWS_NOTHING( preprocessor.setSolutionValuesOfEliminatedNeurons( ipq ) );
+        TS_ASSERT_EQUALS( ipq.getSolutionValue( 2 ), 4 );
+        TS_ASSERT_EQUALS( ipq.getSolutionValue( 3 ), 3 );
+        TS_ASSERT_EQUALS( ipq.getSolutionValue( 4 ), 1000 );
+        TS_ASSERT_EQUALS( ipq.getSolutionValue( 5 ), 1000 );
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     void test_todo()
     {
-        TS_TRACE( "In test_variable_elimination, test something about updated bounds and updated PL constraints" );
+        TS_TRACE( "In test_variable_elimination, test something about updated bounds and updated "
+                  "PL constraints" );
     }
 };
 

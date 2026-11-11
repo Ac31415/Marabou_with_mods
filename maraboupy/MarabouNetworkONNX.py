@@ -4,6 +4,10 @@ Top contributors (to current version):
     - Haoze Wu
     - Teruhiro Tagomori
     - Tobey Shim
+<<<<<<< HEAD
+=======
+    - Idan Refaeli
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 This file is part of the Marabou project.
 Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
@@ -13,6 +17,7 @@ directory for licensing information.
 
 MarabouNetworkONNX represents neural networks with piecewise linear constraints derived from the ONNX format
 '''
+<<<<<<< HEAD
 import numpy as np
 import onnx
 import onnxruntime
@@ -28,17 +33,37 @@ import os
 import re
 
 class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
+=======
+import onnx
+import onnxruntime
+from maraboupy.MarabouNetwork import MarabouNetwork
+from maraboupy.parsers.ONNXParser import ONNXParser
+import os
+<<<<<<< HEAD
+=======
+from copy import copy
+# from onnx.reference.ops._op_list import Split_18, Unsqueeze_1
+
+from onnx.reference.ops._op_list import Split_13, Unsqueeze_1
+>>>>>>> b595a53 (Marabou built successfully on mac. able to run the encoding scripts)
+
+class MarabouNetworkONNX(MarabouNetwork):
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     """Constructs a MarabouNetworkONNX object from an ONNX file
 
     Args:
         filename (str): Path to the ONNX file
         inputNames: (list of str, optional): List of node names corresponding to inputs
         outputNames: (list of str, optional): List of node names corresponding to outputs
+<<<<<<< HEAD
         vnnlibFilename (str): Optional argument of filename to vnnlib file containing a property
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     Returns:
         :class:`~maraboupy.Marabou.marabouNetworkONNX.marabouNetworkONNX`
     """
+<<<<<<< HEAD
     def __init__(self, filename, inputNames=None, outputNames=None, reindexOutputVars=True, vnnlibFilename=None):
         super().__init__()
         self.readONNX(filename, inputNames, outputNames, reindexOutputVars=reindexOutputVars, vnnlibFilename=vnnlibFilename)
@@ -126,6 +151,64 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
 
         if vnnlibFilename:
             self.loadPropertyWithVnnlib(vnnlibFilename)
+=======
+    def __init__(self, filename, inputNames=None, outputNames=None, reindexOutputVars=False):
+        super().__init__()
+        self.readONNX(filename, inputNames, outputNames, reindexOutputVars)
+
+    def readONNX(self, filename, inputNames=None, outputNames=None, reindexOutputVars=True, preserveExistingConstraints=False):
+        if not preserveExistingConstraints:
+            self.clear()
+
+        self.filename = filename
+        self.graph = onnx.load(filename).graph
+
+        # Setup input node names
+        if inputNames is not None:
+            # Check that input are in the graph
+            for name in inputNames:
+                if not len([nde for nde in self.graph.node if name in nde.input]):
+                    raise RuntimeError("Input %s not found in graph!" % name)
+            self.inputNames = inputNames
+        else:
+            # Get default inputs if no names are provided
+            assert len(self.graph.input) >= 1
+            initNames = [node.name for node in self.graph.initializer]
+            self.inputNames = [inp.name for inp in self.graph.input if inp.name not in initNames]
+
+        # Setup output node names
+        if outputNames is not None:
+            if isinstance(outputNames, str):
+                outputNames = [outputNames]
+
+            # Check that outputs are in the graph
+            for name in outputNames:
+                if not len([nde for nde in self.graph.node if name in nde.output]):
+                    raise RuntimeError("Output %s not found in graph!" % name)
+            self.outputNames = outputNames
+        else:
+            # Get all outputs if no names are provided
+            assert len(self.graph.output) >= 1
+            initNames = [node.name for node in self.graph.initializer]
+            self.outputNames = [out.name for out in self.graph.output if out.name not in initNames]
+
+        ONNXParser.parse(self, self.graph, self.inputNames, self.outputNames, reindexOutputVars=reindexOutputVars)
+
+    def getNode(self, nodeName):
+        """Find the node in the graph corresponding to the given name
+
+        Args:
+            nodeName (str): Name of node to find in graph
+
+        Returns:
+            (str): ONNX node named nodeName
+
+        :meta private:
+        """
+        nodes = [node for node in self.graph.node if nodeName in node.output]
+        assert len(nodes) == 1
+        return nodes[0]
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     def splitNetworkAtNode(self, nodeName, networkNamePreSplit=None,
                            networkNamePostSplit=None):
@@ -168,6 +251,11 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         self.outputNames = [outputName]
         return True
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def processGraph(self):
         """Processes the ONNX graph to produce Marabou equations
 
@@ -253,6 +341,13 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
             self.flatten(node)
         elif node.op_type == "Transpose":
             self.transpose(node)
+<<<<<<< HEAD
+=======
+        elif node.op_type == 'Unsqueeze':
+            self.unsqueeze(node)
+        elif node.op_type == 'Squeeze':
+            self.squeeze(node)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         elif node.op_type == "BatchNormalization":
             self.batchNorm(node, makeEquations)
         elif node.op_type == 'Concat':
@@ -279,6 +374,13 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
             self.resizeEquations(node, makeEquations)
         elif node.op_type == 'Tanh':
             self.tanhEquations(node, makeEquations)
+<<<<<<< HEAD
+=======
+        elif node.op_type == 'LeakyRelu':
+            self.leakyReluEquations(node, makeEquations)
+        elif node.op_type == 'Softmax':
+            self.softmaxEquations(node, makeEquations)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         elif node.op_type == 'Sub':
             self.subEquations(node, makeEquations)
         else:
@@ -437,7 +539,11 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         reshapeVals = self.constantMap[inputName2]
         self.shapeMap[nodeName] = list(np.zeros(self.shapeMap[inputName1]).reshape(reshapeVals).shape)
         if inputName1 in self.varMap:
+<<<<<<< HEAD
             self.varMap[nodeName] = self.varMap[inputName1].reshape(reshapeVals)
+=======
+            self.varMap[nodeName] = copy(self.varMap[inputName1]).reshape(reshapeVals)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         elif inputName1 in self.constantMap:
             self.constantMap[nodeName] = self.constantMap[inputName1].reshape(reshapeVals)
 
@@ -498,6 +604,55 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         elif inputName in self.constantMap:
             self.constantMap[nodeName] = np.transpose(self.constantMap[inputName], perm)
 
+<<<<<<< HEAD
+=======
+    def unsqueeze(self, node):
+        """Function representing unsqueeze
+
+        Args:
+            node (node): ONNX node representing unsqueeze operation
+
+        :meta private:
+        """
+        nodeName = node.output[0]
+        inputName = node.input[0]
+        axes = self.constantMap[node.input[1]]
+
+        if inputName in self.varMap:
+            output_data = Unsqueeze_1.eval(self.varMap[inputName], axes=axes)
+            self.shapeMap[nodeName] = output_data.shape
+            self.varMap[nodeName] = output_data
+        else:
+            output_data = Unsqueeze_1.eval(self.constantMap[inputName], axes=axes)
+            self.shapeMap[nodeName] = output_data.shape
+            self.constantMap[nodeName] = output_data
+
+
+    def squeeze(self, node):
+        """Function representing squeeze
+
+        Args:
+            node (node): ONNX node representing squeeze operation
+
+        :meta private:
+        """
+        nodeName = node.output[0]
+        inputName, axisName = node.input
+
+        axis = self.constantMap[axisName]
+
+        axis_ = copy(axis)
+        if inputName in self.varMap:
+            vars = copy(self.varMap[inputName])
+            for i in range(len(axis)):
+                vars = np.squeeze(vars, axis_[i])
+                for j in range(len(axis))[i+1:]:
+                    axis_[j] -= 1
+            self.varMap[nodeName] = vars
+            self.shapeMap[nodeName] = vars.shape
+        return
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def batchNorm(self, node, makeEquations):
         """Function to generate equations for a BatchNormalization
 
@@ -541,8 +696,13 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                 # To know this computation,
                 # refer to https://github.com/onnx/onnx/blob/master/docs/Operators.md#batchnormalization.
                 e = MarabouUtils.Equation()
+<<<<<<< HEAD
                 e.addAddend(-1, outputVars[i][j])
                 e.addAddend(1 / np.sqrt(input_variances[i] + epsilon) * scales[i], inputVars[i][j])
+=======
+                e.addAddend(1 / np.sqrt(input_variances[i] + epsilon) * scales[i], inputVars[i][j])
+                e.addAddend(-1, outputVars[i][j])
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 e.setScalar(input_means[i] / np.sqrt(input_variances[i] + epsilon) * scales[i] - biases[i])
                 self.addEquation(e)
 
@@ -587,6 +747,50 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                                 maxVars.add(inVars[0][k][di][dj])
                     self.addMaxConstraint(maxVars, outVars[0][k][i][j])
 
+<<<<<<< HEAD
+=======
+    def softmaxEquations(self, node, makeEquations):
+        """Function to generate constraints for softmax
+
+        Args:
+        node (node): ONNX node representing the softmax operation
+        makeEquations (bool): True if we need to create new variables and maxpool constraints
+
+        :meta private:
+        """
+        nodeName = node.output[0]
+
+        # Extract attributes and define shape
+        inputShape = self.shapeMap[node.input[0]]
+        for attr in node.attribute:
+            if attr.name == 'axis':
+                axis = get_attribute_value(attr)
+
+        self.shapeMap[nodeName] = inputShape
+
+        if not makeEquations:
+            return
+
+        inVars = self.varMap[node.input[0]]
+        outVars = self.makeNewVariables(nodeName)
+
+        if len(inputShape) == 2 and inputShape[0] == 1:
+            self.addSoftmaxConstraint(list(np.array(inVars).flatten()), list(np.array(outVars).flatten()))
+        else:
+            axis = ( len(inputShape) + axis ) % len(inputShape)
+            perm = []
+            for i, s in enumerate(inputShape):
+                if i == axis:
+                    continue
+                perm.append(i)
+            perm.append(axis)
+
+            inVarsReshaped = np.transpose(inVars, perm).reshape(-1, inputShape[axis])
+            outVarsReshaped = np.transpose(outVars, perm).reshape(-1, inputShape[axis])
+            for i in range(inVarsReshaped.shape[0]):
+                self.addSoftmaxConstraint(inVarsReshaped[i], outVarsReshaped[i])
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def convEquations(self, node, makeEquations):
         """Function to generate equations for a 2D convolution
 
@@ -678,7 +882,15 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         nodeName = node.output[0]
 
         # Get inputs
+<<<<<<< HEAD
         inputName1, inputName2, inputName3 = node.input
+=======
+        if len(node.input) == 3:
+            inputName1, inputName2, inputName3 = node.input
+        else:
+            inputName1, inputName2 = node.input
+            inputName3 = None
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         shape1 = self.shapeMap[inputName1]
         shape2 = self.shapeMap[inputName2]
 
@@ -710,14 +922,24 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         # Assume that first input is variables, second is Matrix for MatMul, and third is bias addition
         input1 = self.varMap[inputName1]
         input2 = self.constantMap[inputName2]
+<<<<<<< HEAD
         input3 = self.constantMap[inputName3]
+=======
+        if inputName3:
+            input3 = self.constantMap[inputName3]
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         # Transpose inputs
         if transA:
             input1 = np.transpose(input1)
         if transB:
             input2 = np.transpose(input2)
+<<<<<<< HEAD
         input3 = np.broadcast_to(input3, outShape)
+=======
+        if inputName3:
+            input3 = np.broadcast_to(input3, outShape)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         assert shape1[-1] == shape2[0]
         assert shape1[0] == outShape[0]
@@ -734,9 +956,19 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
 
                 # Put output variable as the last addend last
                 e.addAddend(-1, outputVariables[i][j])
+<<<<<<< HEAD
                 e.setScalar(-input3[i][j]*beta)
                 self.addEquation(e)
 
+=======
+                if inputName3:
+                    e.setScalar(-input3[i][j]*beta)
+                else:
+                    e.setScalar(0)
+                self.addEquation(e)
+
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def matMulEquations(self, node, makeEquations):
         """Function to generate equations corresponding to matrix multiplication
 
@@ -752,8 +984,24 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         inputName1, inputName2 = node.input
         shape1 = self.shapeMap[inputName1]
         shape2 = self.shapeMap[inputName2]
+<<<<<<< HEAD
         assert shape1[-1] == shape2[0]
         self.shapeMap[nodeName] = shape1[:-1] + shape2[1:]
+=======
+        if len(shape1) > 2 and shape1[0] == 1:
+            shape1 = shape1[1:]
+        elif len(shape1) == 1:
+            # Broadcast first input to make sure the first input is a matrix
+            shape1 = [1] + shape1
+
+        if len(shape2) > 2 and shape2[0] == 1:
+            shape2 = shape2[1:]
+        a = np.zeros(shape1)
+        b = np.zeros(shape2)
+        c = np.matmul(a, b)
+        outshape = c.shape
+        self.shapeMap[nodeName] = outshape
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if not makeEquations:
             return
 
@@ -770,6 +1018,7 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         else:
             input2 = self.varMap[inputName2]
 
+<<<<<<< HEAD
         # Broadcast first input to make sure the first input is a matrix
         if len(shape1) == 1:
             shape1 = [1] + shape1
@@ -777,6 +1026,10 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
 
         # Assume that at least one input is a constant (We cannot represent variable products with linear equations)
         assert firstInputConstant or secondInputConstant
+=======
+        input1 = input1.reshape(shape1)
+        input2 = input2.reshape(shape2)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         # If both inputs are constant, than the output is constant as well, and we don't need new variables or equations
         if firstInputConstant and secondInputConstant:
@@ -786,6 +1039,7 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         # Create new variables
         outputVariables = self.makeNewVariables(nodeName)
 
+<<<<<<< HEAD
         # Pad the output if needed (matrix-matrix multiplication)
         if len(outputVariables.shape) == 1 and len(shape2) > 1:
             outputVariables = outputVariables.reshape([1, outputVariables.shape[0]])
@@ -801,11 +1055,57 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                             e.addAddend(input1[i][k], input2[k][j])
                         else:
                             e.addAddend(input2[k][j], input1[i][k])
+=======
+        if not firstInputConstant and not secondInputConstant:
+            # bi-linear constraints
+            self.addBilinearConstraints(shape1, shape2, input1, input2, outputVariables)
+        else:
+            # Generate equations
+            for i in range(shape1[0]):
+                # Differentiate between matrix-vector multiplication and matrix-matrix multiplication
+                if len(shape2)>1:
+                    for j in range(shape2[1]):
+                        e = MarabouUtils.Equation()
+                        for k in range(shape1[1]):
+                            if firstInputConstant:
+                                e.addAddend(input1[i][k], input2[k][j])
+                            else:
+                                e.addAddend(input2[k][j], input1[i][k])
+
+                        # Put output variable as the last addend last
+                        e.addAddend(-1, outputVariables[i][j])
+                        e.setScalar(0.0)
+                        self.addEquation(e)
+                else:
+                    e = MarabouUtils.Equation()
+                    for k in range(shape1[1]):
+                        if firstInputConstant:
+                            e.addAddend(input1[i][k], input2[k])
+                        else:
+                            e.addAddend(input2[k], input1[i][k])
+
+                    # Put output variable as the last addend last
+                    e.addAddend(-1, outputVariables[i])
+                    e.setScalar(0.0)
+                    self.addEquation(e)
+
+    def addBilinearConstraints(self, shape1, shape2, input1, input2, outputVariables):
+        # Generate equations
+        if len(shape2) == 2:
+            for i in range(shape1[0]):
+                for j in range(shape2[1]):
+                    e = MarabouUtils.Equation()
+                    for k in range(shape1[1]):
+                        v = self.getNewVariable()
+                        self.addBilinear(input1[i][k], input2[k][j], v)
+                        e.addAddend(1, v)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
                     # Put output variable as the last addend last
                     e.addAddend(-1, outputVariables[i][j])
                     e.setScalar(0.0)
                     self.addEquation(e)
+<<<<<<< HEAD
             else:
                 e = MarabouUtils.Equation()
                 for k in range(shape1[1]):
@@ -818,6 +1118,25 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                 e.addAddend(-1, outputVariables[i])
                 e.setScalar(0.0)
                 self.addEquation(e)
+=======
+        elif len(shape2) == 3:
+            assert(shape1[0] == shape2[0])
+            for l in range(shape1[0]):
+                for i in range(shape1[1]):
+                    for j in range(shape2[2]):
+                        e = MarabouUtils.Equation()
+                        for k in range(shape1[2]):
+                            v = self.getNewVariable()
+                            self.addBilinear(input1[l][i][k], input2[l][k][j], v)
+                            e.addAddend(1, v)
+
+                        # Put output variable as the last addend last
+                        e.addAddend(-1, outputVariables[l][i][j])
+                        e.setScalar(0.0)
+                        self.addEquation(e)
+        else:
+            raise RuntimeError(f"Unsupported shape in matMul tensor: {shape2}")
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     def concatEquations(self, node):
         """Function to generate equations corresponding to concat
@@ -861,15 +1180,24 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                 split = get_attribute_value(attr)
 
         inputName = node.input[0]
+<<<<<<< HEAD
         inputVars = torch.from_numpy(self.varMap[inputName]) # rely on torch since split opereation of numpy behaves differently from that of onnx
         inputVars = inputVars.split(split, axis) # tuple
+=======
+        # inputVars = Split_18.eval(self.varMap[inputName], split=split, axis=axis)
+        inputVars = Split_13.eval(self.varMap[inputName], split=split, axis=axis)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         assert len(inputVars) == len(node.output)
 
         # Set a shape of target output
         for i in range(len(node.output)):
             if node.output[i] == nodeName:
+<<<<<<< HEAD
                 self.shapeMap[node.output[i]] = inputVars[i].numpy().shape
+=======
+                self.shapeMap[node.output[i]] = inputVars[i].shape
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 break
 
         if not makeEquations:
@@ -883,8 +1211,13 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                 for j in range(len(reshapedInputVars)):
                     # Add equation
                     e = MarabouUtils.Equation()
+<<<<<<< HEAD
                     e.addAddend(-1, outputVars[j])
                     e.addAddend(1, reshapedInputVars[j])
+=======
+                    e.addAddend(1, reshapedInputVars[j])
+                    e.addAddend(-1, outputVars[j])
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     e.setScalar(0)
                     self.addEquation(e)
                 break
@@ -957,8 +1290,13 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
                 for k in range(outputShape[3]):
                     # Add equation
                     e = MarabouUtils.Equation()
+<<<<<<< HEAD
                     e.addAddend(-1, outputVars[0][i][j][k])
                     e.addAddend(1, inputVars[0][i][int(j / 2)][int(k / 2)])
+=======
+                    e.addAddend(1, inputVars[0][i][int(j / 2)][int(k / 2)])
+                    e.addAddend(-1, outputVars[0][i][j][k])
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     e.setScalar(0)
                     self.addEquation(e)
 
@@ -1085,7 +1423,11 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         # If we changed one equation for every input variable, then
         # we don't need any new equations
         if numEquationsChanged == len(varInput):
+<<<<<<< HEAD
             self.varMap[nodeName] = varInput
+=======
+            self.varMap[nodeName] = copy(varInput).reshape(outShape)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         else:
             # Otherwise, assert no equations were changed, and we need to create new equations
             assert numEquationsChanged == 0
@@ -1123,6 +1465,31 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         for f in outputVars:
             self.setLowerBound(f, 0.0)
 
+<<<<<<< HEAD
+=======
+    def leakyReluEquations(self, node, makeEquations):
+        """Function to generate equations corresponding to pointwise LeakyRelu
+        Args:
+            node (node): ONNX node representing the LeakyRelu operation
+            makeEquations (bool): True if we need to create new variables and add new LeakyRelus
+        :meta private:
+        """
+        nodeName = node.output[0]
+        inputName = node.input[0]
+        self.shapeMap[nodeName] = self.shapeMap[inputName]
+        if not makeEquations:
+            return
+
+        # Get variables
+        inputVars = self.varMap[inputName].reshape(-1)
+        outputVars = self.makeNewVariables(nodeName).reshape(-1)
+        assert len(inputVars) == len(outputVars)
+
+        # Generate equations
+        for i in range(len(inputVars)):
+            self.addLeakyRelu(inputVars[i], outputVars[i], 0.1)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def subEquations(self, node, makeEquations):
         """Function to generate equations corresponding to subtraction
 
@@ -1281,10 +1648,35 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
         for i, variables in enumerate(self.reluList):
             self.reluList[i] = tuple([self.reassignVariable(var, numInVars, outVars, newOutVars) for var in variables])
 
+<<<<<<< HEAD
+=======
+        # Adjust relu list
+        for i, variables in enumerate(self.leakyReluList):
+            self.leakyReluList[i] = tuple([self.reassignVariable(var, numInVars, outVars, newOutVars) for var in variables])
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         # Adjust sigmoid list
         for i, variables in enumerate(self.sigmoidList):
             self.sigmoidList[i] = tuple([self.reassignVariable(var, numInVars, outVars, newOutVars) for var in variables])
 
+<<<<<<< HEAD
+=======
+        # Adjust bilinear list
+        for i, variables in enumerate(self.bilinearList):
+            self.bilinearList[i] = tuple([self.reassignVariable(var, numInVars, outVars, newOutVars) for var in variables])
+
+        # Adjust softmax list
+        for i, (inputs, outputs) in enumerate(self.softmaxList):
+            newInputs = []
+            for var in inputs:
+                newInputs.append(self.reassignVariable(var, numInVars, outVars, newOutVars))
+            newOutputs = []
+            for var in outputs:
+                newOutputs.append(self.reassignVariable(var, numInVars, outVars, newOutVars))
+
+            self.softmaxList[i] = (newInputs, newOutputs)
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         # Adjust max pool list
         for i, (elements, outVar) in enumerate(self.maxList):
             newOutVar = self.reassignVariable(outVar, numInVars, outVars, newOutVars)
@@ -1311,6 +1703,10 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
 
         self.outputVars = [self.varMap[outputName] for outputName in self.outputNames]
 
+<<<<<<< HEAD
+=======
+>>>>>>> b595a53 (Marabou built successfully on mac. able to run the encoding scripts)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def evaluateWithoutMarabou(self, inputValues):
         """Try to evaluate the network with the given inputs using ONNX
 
@@ -1351,6 +1747,7 @@ class MarabouNetworkONNX(MarabouNetwork.MarabouNetwork):
             else:
                 raise NotImplementedError("Inputs to network expected to be of type 'float', not %s" % onnxType)
             input_dict[inputName] = inputValues[i].reshape(self.inputVars[i].shape).astype(inputType)
+<<<<<<< HEAD
         return sess.run(self.outputNames, input_dict)
 
     def loadPropertyWithVnnlib(self, vnnlibFilename):
@@ -1757,3 +2154,6 @@ def make_tree(content):
 
     return req(1)[0]
 
+=======
+        return sess.run(self.outputNames, input_dict)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

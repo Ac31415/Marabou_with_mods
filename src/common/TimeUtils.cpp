@@ -13,13 +13,15 @@
 
 **/
 
-#include "MStringf.h"
 #include "TimeUtils.h"
+
+#include "MStringf.h"
 
 struct timespec TimeUtils::sampleMicro()
 {
     struct timespec now;
 #ifdef _WIN32
+<<<<<<< HEAD
 	LARGE_INTEGER count;
 
 	if ( gFirstTime )
@@ -34,14 +36,31 @@ struct timespec TimeUtils::sampleMicro()
 	QueryPerformanceCounter( &count );
 	now.tv_sec = count.QuadPart / gCountsPerSec.QuadPart;
 	now.tv_nsec = ( ( count.QuadPart % gCountsPerSec.QuadPart ) * static_cast<long>( 1000000000 ) ) / gCountsPerSec.QuadPart;
+=======
+    LARGE_INTEGER count;
+
+    if ( gFirstTime )
+    {
+        gFirstTime = 0;
+
+        if ( 0 == QueryPerformanceFrequency( &gCountsPerSec ) )
+        {
+            gCountsPerSec.QuadPart = 0;
+        }
+    }
+    QueryPerformanceCounter( &count );
+    now.tv_sec = count.QuadPart / gCountsPerSec.QuadPart;
+    now.tv_nsec =
+        ( ( count.QuadPart % gCountsPerSec.QuadPart ) * static_cast<long>( 1000000000 ) ) /
+        gCountsPerSec.QuadPart;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #else
     clock_gettime( CLOCK_MONOTONIC, &now );
 #endif
     return now;
 }
 
-unsigned long long TimeUtils::timePassed( const struct timespec &then,
-                                          const struct timespec &now )
+unsigned long long TimeUtils::timePassed( const struct timespec &then, const struct timespec &now )
 {
     enum {
         MICROSECONDS_IN_SECOND = 1000000,
@@ -57,9 +76,14 @@ unsigned long long TimeUtils::timePassed( const struct timespec &then,
 String TimeUtils::now()
 {
     time_t secondsSinceEpoch = time( NULL );
+<<<<<<< HEAD
     struct tm *formattedTime = localtime( &secondsSinceEpoch);
+=======
+    struct tm *formattedTime = localtime( &secondsSinceEpoch );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-    return Stringf( "%02u:%02u:%02u", formattedTime->tm_hour, formattedTime->tm_min, formattedTime->tm_sec );
+    return Stringf(
+        "%02u:%02u:%02u", formattedTime->tm_hour, formattedTime->tm_min, formattedTime->tm_sec );
 }
 
 //

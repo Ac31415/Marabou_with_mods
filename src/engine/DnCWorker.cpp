@@ -13,6 +13,7 @@
 
  **/
 
+<<<<<<< HEAD
 #include "Debug.h"
 #include "SnCDivideStrategy.h"
 #include "DnCWorker.h"
@@ -23,6 +24,19 @@
 #include "MStringf.h"
 #include "PiecewiseLinearCaseSplit.h"
 #include "PolarityBasedDivider.h"
+=======
+#include "DnCWorker.h"
+
+#include "Debug.h"
+#include "EngineState.h"
+#include "IEngine.h"
+#include "LargestIntervalDivider.h"
+#include "MStringf.h"
+#include "MarabouError.h"
+#include "PiecewiseLinearCaseSplit.h"
+#include "PolarityBasedDivider.h"
+#include "SnCDivideStrategy.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "SubQuery.h"
 #include "TableauStateStorageLevel.h"
 
@@ -31,12 +45,25 @@
 #include <cmath>
 #include <thread>
 
+<<<<<<< HEAD
 DnCWorker::DnCWorker( WorkerQueue *workload, std::shared_ptr<IEngine> engine,
                       std::atomic_int &numUnsolvedSubQueries,
                       std::atomic_bool &shouldQuitSolving,
                       unsigned threadId, unsigned onlineDivides,
                       float timeoutFactor, SnCDivideStrategy divideStrategy,
                       unsigned verbosity, bool parallelDeepSoI )
+=======
+DnCWorker::DnCWorker( WorkerQueue *workload,
+                      std::shared_ptr<IEngine> engine,
+                      std::atomic_int &numUnsolvedSubQueries,
+                      std::atomic_bool &shouldQuitSolving,
+                      unsigned threadId,
+                      unsigned onlineDivides,
+                      float timeoutFactor,
+                      SnCDivideStrategy divideStrategy,
+                      unsigned verbosity,
+                      bool parallelDeepSoI )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     : _workload( workload )
     , _engine( engine )
     , _numUnsolvedSubQueries( &numUnsolvedSubQueries )
@@ -53,14 +80,19 @@ DnCWorker::DnCWorker( WorkerQueue *workload, std::shared_ptr<IEngine> engine,
     if ( !_parallelDeepSoI )
     {
         _initialState = std::make_shared<EngineState>();
+<<<<<<< HEAD
         _engine->storeState( *_initialState,
                              TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+=======
+        _engine->storeState( *_initialState, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
 void DnCWorker::setQueryDivider( SnCDivideStrategy divideStrategy )
 {
     if ( divideStrategy == SnCDivideStrategy::Polarity )
+<<<<<<< HEAD
         _queryDivider = std::unique_ptr<QueryDivider>
             ( new PolarityBasedDivider( _engine ) );
     else
@@ -68,6 +100,14 @@ void DnCWorker::setQueryDivider( SnCDivideStrategy divideStrategy )
         const List<unsigned> &inputVariables = _engine->getInputVariables();
         _queryDivider = std::unique_ptr<LargestIntervalDivider>
             ( new LargestIntervalDivider( inputVariables ) );
+=======
+        _queryDivider = std::unique_ptr<QueryDivider>( new PolarityBasedDivider( _engine ) );
+    else
+    {
+        const List<unsigned> &inputVariables = _engine->getInputVariables();
+        _queryDivider =
+            std::unique_ptr<LargestIntervalDivider>( new LargestIntervalDivider( inputVariables ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -129,8 +169,14 @@ void DnCWorker::popOneSubQueryAndSolve( bool restoreTreeStates )
             // If TIMEOUT, split the current input region and add the
             // new subQueries to the current queue
             SubQueries subQueries;
+<<<<<<< HEAD
             unsigned newTimeout = ( depth >= GlobalConfiguration::DNC_DEPTH_THRESHOLD - 1 ?
                                     0 : ( unsigned ) timeoutInSeconds * _timeoutFactor );
+=======
+            unsigned newTimeout = ( depth >= GlobalConfiguration::DNC_DEPTH_THRESHOLD - 1
+                                        ? 0
+                                        : (unsigned)timeoutInSeconds * _timeoutFactor );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             unsigned numNewSubQueries = pow( 2, _onlineDivides );
             std::vector<std::unique_ptr<SmtState>> newSmtStates;
             if ( restoreTreeStates )
@@ -138,14 +184,23 @@ void DnCWorker::popOneSubQueryAndSolve( bool restoreTreeStates )
                 // create |numNewSubQueries| copies of the current SmtState
                 for ( unsigned i = 0; i < numNewSubQueries; ++i )
                 {
+<<<<<<< HEAD
                     newSmtStates.push_back( std::unique_ptr<SmtState>
                                             ( new SmtState() ) );
+=======
+                    newSmtStates.push_back( std::unique_ptr<SmtState>( new SmtState() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                     _engine->storeSmtState( *( newSmtStates[i] ) );
                 }
             }
 
+<<<<<<< HEAD
             _queryDivider->createSubQueries( numNewSubQueries, queryId, depth,
                                              *split, newTimeout, subQueries );
+=======
+            _queryDivider->createSubQueries(
+                numNewSubQueries, queryId, depth, *split, newTimeout, subQueries );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             unsigned i = 0;
             for ( auto &newSubQuery : subQueries )
@@ -209,8 +264,15 @@ void DnCWorker::popOneSubQueryAndSolve( bool restoreTreeStates )
 
 void DnCWorker::printProgress( String queryId, IEngine::ExitCode result ) const
 {
+<<<<<<< HEAD
     printf( "Worker %d: Query %s %s, %d tasks remaining\n", _threadId,
             queryId.ascii(), exitCodeToString( result ).ascii(),
+=======
+    printf( "Worker %d: Query %s %s, %d tasks remaining\n",
+            _threadId,
+            queryId.ascii(),
+            exitCodeToString( result ).ascii(),
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             _numUnsolvedSubQueries->load() );
 }
 

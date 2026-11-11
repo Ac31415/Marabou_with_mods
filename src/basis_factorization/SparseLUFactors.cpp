@@ -13,11 +13,19 @@
 
  **/
 
+<<<<<<< HEAD
+=======
+#include "SparseLUFactors.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "MString.h"
+<<<<<<< HEAD
 #include "SparseLUFactors.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 SparseLUFactors::SparseLUFactors( unsigned m )
     : _m( m )
@@ -36,6 +44,7 @@ SparseLUFactors::SparseLUFactors( unsigned m )
 {
     _F = new SparseUnsortedArrays();
     if ( !_F )
+<<<<<<< HEAD
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "SparseLUFactors::F" );
 
     _V = new SparseUnsortedArrays();
@@ -65,6 +74,45 @@ SparseLUFactors::SparseLUFactors( unsigned m )
     _workVector = new double[m];
     if ( !_workVector )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "SparseLUFactors::workVector" );
+=======
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::F" );
+
+    _V = new SparseUnsortedArrays();
+    if ( !_V )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::V" );
+
+    _Ft = new SparseUnsortedArrays();
+    if ( !_Ft )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::Ft" );
+
+    _Vt = new SparseUnsortedArrays();
+    if ( !_Vt )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::Vt" );
+
+    _vDiagonalElements = new double[m];
+    if ( !_vDiagonalElements )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::vDiagonalElements" );
+
+    _z = new double[m];
+    if ( !_z )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::z" );
+
+    _workMatrix = new double[m * m];
+    if ( !_workMatrix )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::workMatrix" );
+
+    _workVector = new double[m];
+    if ( !_workVector )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactors::workVector" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 SparseLUFactors::~SparseLUFactors()
@@ -130,17 +178,28 @@ void SparseLUFactors::dump() const
 
     printf( "\tDumping product F*V:\n" );
 
+<<<<<<< HEAD
     double *result = new double[_m*_m];
+=======
+    double *result = new double[_m * _m];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     std::fill_n( result, _m * _m, 0.0 );
     for ( unsigned i = 0; i < _m; ++i )
     {
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             result[i*_m + j] = 0;
             for ( unsigned k = 0; k < _m; ++k )
             {
                 result[i*_m + j] += ( i == k ? 1.0 : _F->get( i, k ) ) * _V->get( k, j );
+=======
+            result[i * _m + j] = 0;
+            for ( unsigned k = 0; k < _m; ++k )
+            {
+                result[i * _m + j] += ( i == k ? 1.0 : _F->get( i, k ) ) * _V->get( k, j );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }
@@ -150,7 +209,11 @@ void SparseLUFactors::dump() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%8.2lf ", result[i*_m + j] );
+=======
+            printf( "%8.2lf ", result[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
@@ -216,7 +279,11 @@ void SparseLUFactors::fForwardTransformation( const double *y, double *x ) const
       elements in F, i.e. F has a diagonal of 1s.
     */
 
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     const PermutationMatrix *p = ( _usePForF ) ? &_PForF : &_P;
     double xElement;
@@ -264,7 +331,11 @@ void SparseLUFactors::fBackwardTransformation( const double *y, double *x ) cons
       elements in F, i.e. F has a diagonal of 1s.
     */
 
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     const PermutationMatrix *p = ( _usePForF ) ? &_PForF : &_P;
     double xElement;
@@ -318,7 +389,11 @@ void SparseLUFactors::vForwardTransformation( const double *y, double *x ) const
     const SparseUnsortedArray::Entry *entry;
     unsigned nnz;
 
+<<<<<<< HEAD
     memcpy( _workVector, y, sizeof(double) * _m );
+=======
+    memcpy( _workVector, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( int uRow = _m - 1; uRow >= 0; --uRow )
     {
@@ -376,7 +451,11 @@ void SparseLUFactors::vBackwardTransformation( const double *y, double *x ) cons
     const SparseUnsortedArray::Entry *entry;
     unsigned nnz;
 
+<<<<<<< HEAD
     memcpy( _workVector, y, sizeof(double) * _m );
+=======
+    memcpy( _workVector, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( unsigned utIndex = 0; utIndex < _m; ++utIndex )
     {
@@ -457,7 +536,11 @@ void SparseLUFactors::invertBasis( double *result )
     // Initialize _workMatrix to the identity
     std::fill_n( _workMatrix, _m * _m, 0 );
     for ( unsigned i = 0; i < _m; ++i )
+<<<<<<< HEAD
         _workMatrix[i*_m + i] = 1;
+=======
+        _workMatrix[i * _m + i] = 1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     SparseUnsortedArray::Entry entry;
 
@@ -482,7 +565,11 @@ void SparseLUFactors::invertBasis( double *result )
             if ( lRow > lColumn )
             {
                 for ( unsigned i = 0; i <= lColumn; ++i )
+<<<<<<< HEAD
                     _workMatrix[lRow*_m + i] += _workMatrix[lColumn*_m + i] * ( - entry._value );
+=======
+                    _workMatrix[lRow * _m + i] += _workMatrix[lColumn * _m + i] * ( -entry._value );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }
@@ -499,8 +586,12 @@ void SparseLUFactors::invertBasis( double *result )
         unsigned vColumn = _Q._rowOrdering[uColumn];
         const SparseUnsortedArray *sparseColumn = _Vt->getRow( vColumn );
 
+<<<<<<< HEAD
         double invUDiagonalEntry =
             1 / sparseColumn->get( _P._columnOrdering[uColumn] );
+=======
+        double invUDiagonalEntry = 1 / sparseColumn->get( _P._columnOrdering[uColumn] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         for ( unsigned i = 0; i < sparseColumn->getNnz(); ++i )
         {
@@ -512,6 +603,7 @@ void SparseLUFactors::invertBasis( double *result )
             {
                 double multiplier = ( -entry._value * invUDiagonalEntry );
                 for ( unsigned i = 0; i < _m; ++i )
+<<<<<<< HEAD
                     _workMatrix[uRow*_m + i] += _workMatrix[uColumn*_m +i] * multiplier;
             }
 
@@ -519,6 +611,14 @@ void SparseLUFactors::invertBasis( double *result )
 
         for ( unsigned i = 0; i < _m; ++i )
             _workMatrix[uColumn*_m + i] *= invUDiagonalEntry;
+=======
+                    _workMatrix[uRow * _m + i] += _workMatrix[uColumn * _m + i] * multiplier;
+            }
+        }
+
+        for ( unsigned i = 0; i < _m; ++i )
+            _workMatrix[uColumn * _m + i] *= invUDiagonalEntry;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     /*
@@ -535,7 +635,11 @@ void SparseLUFactors::invertBasis( double *result )
             invLURow = _Q._columnOrdering[i];
             invLUColumn = _P._rowOrdering[j];
 
+<<<<<<< HEAD
             result[i*_m + j] = _workMatrix[invLURow*_m + invLUColumn];
+=======
+            result[i * _m + j] = _workMatrix[invLURow * _m + invLUColumn];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 }
@@ -554,7 +658,11 @@ void SparseLUFactors::storeToOther( SparseLUFactors *other ) const
     _P.storeToOther( &other->_P );
     _Q.storeToOther( &other->_Q );
 
+<<<<<<< HEAD
     memcpy( other->_vDiagonalElements, _vDiagonalElements, sizeof(double) * _m );
+=======
+    memcpy( other->_vDiagonalElements, _vDiagonalElements, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     other->_usePForF = false;
 }

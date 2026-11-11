@@ -32,8 +32,12 @@ DeepPolyElement::DeepPolyElement()
     , _work2SymbolicLb( NULL )
     , _work2SymbolicUb( NULL )
     , _workSymbolicLowerBias( NULL )
+<<<<<<< HEAD
     , _workSymbolicUpperBias( NULL )
 {};
+=======
+    , _workSymbolicUpperBias( NULL ){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 unsigned DeepPolyElement::getSize() const
 {
@@ -45,6 +49,14 @@ unsigned DeepPolyElement::getLayerIndex() const
     return _layerIndex;
 }
 
+<<<<<<< HEAD
+=======
+Layer::Type DeepPolyElement::getLayerType() const
+{
+    return _layer->getLayerType();
+}
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 bool DeepPolyElement::hasPredecessor()
 {
     return !_layer->getSourceLayers().empty();

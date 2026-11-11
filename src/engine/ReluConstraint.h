@@ -162,6 +162,7 @@ public:
       Dump the current state of the constraint.
     */
     void dump( String &output ) const override;
+<<<<<<< HEAD
 
     /*
       For preprocessing: get any auxiliary equations that this
@@ -179,6 +180,86 @@ public:
     {
         return true;
     }
+=======
+
+    /*
+      For preprocessing: get any auxiliary equations that this
+      constraint would like to add to the equation pool. In the ReLU
+      case, this is an equation of the form aux = f - b, where aux is
+      non-negative. This way, case splits will be bound
+      update of the aux variables.
+    */
+    void transformToUseAuxVariables( InputQuery &inputQuery ) override;
+
+    /*
+      Whether the constraint can contribute the SoI cost function.
+    */
+    virtual inline bool supportSoI() const override
+    {
+        return true;
+    }
+
+    /*
+      Ask the piecewise linear constraint to add its cost term corresponding to
+      the given phase to the cost function. The cost term for ReLU is:
+        _f - _b for the active phase
+        _f      for the inactive phase
+    */
+    virtual void getCostFunctionComponent( LinearExpression &cost,
+                                           PhaseStatus phase ) const override;
+
+    /*
+      Return the phase status corresponding to the values of the *input*
+      variables in the given assignment.
+    */
+    virtual PhaseStatus
+    getPhaseStatusInAssignment( const Map<unsigned, double> &assignment ) const override;
+
+    /*
+      Returns string with shape: relu, _f, _b
+    */
+    String serializeToString() const override;
+
+    /*
+      Get the index of the B and F variables.
+    */
+    unsigned getB() const;
+    unsigned getF() const;
+
+    /*
+      Check if the aux variable is in use and retrieve it
+    */
+    bool auxVariableInUse() const;
+    unsigned getAux() const;
+
+    bool supportPolarity() const override;
+
+    /*
+      Return the polarity of this ReLU, which computes how symmetric
+      the bound of the input to this ReLU is with respect to 0.
+      Let LB be the lowerbound, and UB be the upperbound.
+      If LB >= 0, polarity is 1.
+      If UB <= 0, polarity is -1.
+      If LB < 0, and UB > 0, polarity is ( LB + UB ) / (UB - LB).
+
+      We divide the sum by the width of the interval so that the polarity is
+      always between -1 and 1. The closer it is to 0, the more symmetric the
+      bound is.
+    */
+    double computePolarity() const;
+
+    /*
+      Update the preferred direction for fixing and handling case split
+    */
+    void updateDirection() override;
+
+
+    PhaseStatus getDirection() const;
+
+    void updateScoreBasedOnPolarity() override;
+
+    const List<unsigned> getNativeAuxVars() const override;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Ask the piecewise linear constraint to add its cost term corresponding to

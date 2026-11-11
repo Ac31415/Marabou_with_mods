@@ -34,7 +34,10 @@
 
 class AbsoluteValueConstraint : public PiecewiseLinearConstraint
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 public:
     /*
       The f variable is the absolute value of the b variable:
@@ -61,8 +64,13 @@ public:
     /*
       Register/unregister the constraint with a talbeau.
      */
+<<<<<<< HEAD
     void registerAsWatcher( ITableau *tableau) override;
     void unregisterAsWatcher( ITableau *tableau) override;
+=======
+    void registerAsWatcher( ITableau *tableau ) override;
+    void unregisterAsWatcher( ITableau *tableau ) override;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       These callbacks are invoked when a watched variable's value
@@ -184,14 +192,20 @@ public:
       Return the phase status corresponding to the values of the *input*
       variables in the given assignment.
     */
+<<<<<<< HEAD
     virtual PhaseStatus getPhaseStatusInAssignment( const Map<unsigned, double>
                                                     &assignment ) const override;
+=======
+    virtual PhaseStatus
+    getPhaseStatusInAssignment( const Map<unsigned, double> &assignment ) const override;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Returns string with shape: absoluteValue,_f,_b
      */
     String serializeToString() const override;
 
+<<<<<<< HEAD
     inline unsigned getB() const { return _b; };
 
     inline unsigned getF() const { return _f; };
@@ -202,6 +216,34 @@ public:
     inline unsigned getNegAux() const { return _negAux; };
 
     const List<unsigned> getNativeAuxVars() const override;
+=======
+    inline unsigned getB() const
+    {
+        return _b;
+    };
+
+    inline unsigned getF() const
+    {
+        return _f;
+    };
+
+    inline bool auxVariablesInUse() const
+    {
+        return _auxVarsInUse;
+    };
+
+    inline unsigned getPosAux() const
+    {
+        return _posAux;
+    };
+    inline unsigned getNegAux() const
+    {
+        return _negAux;
+    };
+
+    const List<unsigned> getNativeAuxVars() const override;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 private:
     /*
       The variables that make up this constraint; _f = | _b |.
@@ -254,4 +296,7 @@ private:
 };
 
 #endif // __AbsoluteValueConstraint_h__
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

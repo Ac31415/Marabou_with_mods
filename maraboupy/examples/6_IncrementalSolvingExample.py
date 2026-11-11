@@ -13,6 +13,13 @@ directory for licensing information.
 '''
 
 
+<<<<<<< HEAD
+=======
+import sys
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 # Supress warnings caused by tensorflow
 import warnings
 warnings.filterwarnings('ignore', category = DeprecationWarning)

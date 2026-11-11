@@ -39,17 +39,29 @@
 #ifndef __BoundManager_h__
 #define __BoundManager_h__
 
+<<<<<<< HEAD
 #include "context/cdo.h"
 #include "context/context.h"
 #include "IBoundManager.h"
 #include "IRowBoundTightener.h"
 #include "ITableau.h"
 #include "IEngine.h"
+=======
+#include "IBoundManager.h"
+#include "IEngine.h"
+#include "IRowBoundTightener.h"
+#include "ITableau.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "List.h"
 #include "PlcLemma.h"
 #include "Tightening.h"
 #include "UnsatCertificateNode.h"
 #include "Vector.h"
+<<<<<<< HEAD
+=======
+#include "context/cdo.h"
+#include "context/context.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class ITableau;
 class IEngine;
@@ -98,8 +110,13 @@ public:
     /*
       Get pointers to latest bounds used for access by tableau and tighteners
      */
+<<<<<<< HEAD
     const double * getLowerBounds() const;
     const double * getUpperBounds() const;
+=======
+    const double *getLowerBounds() const;
+    const double *getUpperBounds() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
        Store and restore local bounds after context advances/backtracks.
@@ -145,7 +162,12 @@ public:
     void registerRowBoundTightener( IRowBoundTightener *ptrRowBoundTightener );
 
     /*
+<<<<<<< HEAD
       Return the content of the object containing all explanations for variable bounds in the tableau.
+=======
+      Return the content of the object containing all explanations for variable bounds in the
+      tableau.
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     */
     const BoundExplainer *getBoundExplainer() const;
 
@@ -165,7 +187,12 @@ public:
     void updateBoundExplanation( const TableauRow &row, bool isUpper, unsigned var );
 
     /*
+<<<<<<< HEAD
       Given a row as SparseUnsortedList, updates the values of the bound explanations of a var according to the row
+=======
+      Given a row as SparseUnsortedList, updates the values of the bound explanations of a var
+      according to the row
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     */
     void updateBoundExplanationSparse( const SparseUnsortedList &row, bool isUpper, unsigned var );
 
@@ -182,12 +209,20 @@ public:
     /*
       Artificially update an explanation, without using the recursive rule
     */
+<<<<<<< HEAD
     void setExplanation( const SparseUnsortedList &explanation, unsigned var,  bool isUpper ) const;
+=======
+    void setExplanation( const SparseUnsortedList &explanation, unsigned var, bool isUpper ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Register Engine pointer for callbacks
     */
+<<<<<<< HEAD
     void registerEngine( IEngine *engine);
+=======
+    void registerEngine( IEngine *engine );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Get the index of a variable with inconsistent bounds, if exists, or -1 otherwise
@@ -218,15 +253,24 @@ private:
     CVC4::context::Context &_context;
     unsigned _size;
     unsigned _allocated;
+<<<<<<< HEAD
     ITableau *_tableau; // Used only by callbacks
+=======
+    ITableau *_tableau;                     // Used only by callbacks
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     IRowBoundTightener *_rowBoundTightener; // Used only by callbacks
     IEngine *_engine;
 
     CVC4::context::CDO<bool> _consistentBounds;
     Tightening _firstInconsistentTightening;
 
+<<<<<<< HEAD
     double * _lowerBounds;
     double * _upperBounds;
+=======
+    double *_lowerBounds;
+    double *_upperBounds;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     Vector<CVC4::context::CDO<double> *> _storedLowerBounds;
     Vector<CVC4::context::CDO<double> *> _storedUpperBounds;
@@ -253,9 +297,18 @@ private:
     /*
       Adds a lemma to the UNSATCertificateNode object
      */
+<<<<<<< HEAD
     bool addLemmaExplanationAndTightenBound( unsigned var, double value, BoundType affectedVarBound,
                                             const List<unsigned> &causingVars, BoundType causingVarBound,
                                             PiecewiseLinearFunctionType constraintType );
+=======
+    bool addLemmaExplanationAndTightenBound( unsigned var,
+                                             double value,
+                                             BoundType affectedVarBound,
+                                             const List<unsigned> &causingVars,
+                                             BoundType causingVarBound,
+                                             PiecewiseLinearFunctionType constraintType );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Explainer of all bounds

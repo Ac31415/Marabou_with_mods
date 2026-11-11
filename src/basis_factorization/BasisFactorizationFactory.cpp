@@ -13,14 +13,16 @@
 
  **/
 
-#include "BasisFactorizationError.h"
 #include "BasisFactorizationFactory.h"
+
+#include "BasisFactorizationError.h"
 #include "ForrestTomlinFactorization.h"
 #include "GlobalConfiguration.h"
 #include "LUFactorization.h"
 #include "SparseFTFactorization.h"
 #include "SparseLUFactorization.h"
 
+<<<<<<< HEAD
 IBasisFactorization *BasisFactorizationFactory::createBasisFactorization( unsigned basisSize, const IBasisFactorization::BasisColumnOracle &basisColumnOracle )
 {
     // LU
@@ -30,6 +32,18 @@ IBasisFactorization *BasisFactorizationFactory::createBasisFactorization( unsign
 
     // Sparse LU
     if ( GlobalConfiguration::BASIS_FACTORIZATION_TYPE ==
+=======
+IBasisFactorization *BasisFactorizationFactory::createBasisFactorization(
+    unsigned basisSize,
+    const IBasisFactorization::BasisColumnOracle &basisColumnOracle )
+{
+    // LU
+    if ( GlobalConfiguration::BASIS_FACTORIZATION_TYPE == GlobalConfiguration::LU_FACTORIZATION )
+        return new LUFactorization( basisSize, basisColumnOracle );
+
+    // Sparse LU
+    if ( GlobalConfiguration::BASIS_FACTORIZATION_TYPE ==
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
          GlobalConfiguration::SPARSE_LU_FACTORIZATION )
         return new SparseLUFactorization( basisSize, basisColumnOracle );
 

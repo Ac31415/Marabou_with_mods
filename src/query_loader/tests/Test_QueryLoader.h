@@ -13,8 +13,11 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "AutoFile.h"
 #include "Equation.h"
 #include "InputQuery.h"
@@ -23,6 +26,11 @@
 #include "ReluConstraint.h"
 #include "T/unistd.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 const String QUERY_TEST_FILE( "QueryTest.txt" );
 
 class MockForQueryLoader
@@ -30,7 +38,11 @@ class MockForQueryLoader
     , public T::Base_stat
 {
 public:
+<<<<<<< HEAD
     int stat( const char */* path */, StructStat */* buf */ )
+=======
+    int stat( const char * /* path */, StructStat * /* buf */ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         // 0 means file exists
         return 0;
@@ -111,8 +123,13 @@ public:
         inputQuery.addEquation( equation3 );
 
         // Sigmoid Constraints
+<<<<<<< HEAD
         inputQuery.addTranscendentalConstraint( new SigmoidConstraint( 5, 7 ) );
         inputQuery.addTranscendentalConstraint( new SigmoidConstraint( 6, 8 ) );
+=======
+        inputQuery.addNonlinearConstraint( new SigmoidConstraint( 5, 7 ) );
+        inputQuery.addNonlinearConstraint( new SigmoidConstraint( 6, 8 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Fifth equation, second hidden layer to output
         Equation equation4;
@@ -164,6 +181,7 @@ public:
         constraint2 = (ReluConstraint *)*it2;
         TS_ASSERT( constraint->serializeToString() == constraint2->serializeToString() );
 
+<<<<<<< HEAD
         // Transcendental Constraints unchanged
         TS_ASSERT( inputQuery.getTranscendentalConstraints().size() == 2U );
         TS_ASSERT( inputQuery2.getTranscendentalConstraints().size() == 2U );
@@ -177,6 +195,21 @@ public:
         tsConstraint = (SigmoidConstraint *)*tsIt;
         tsConstraint2 = (SigmoidConstraint *)*tsIt2;
         TS_ASSERT( tsConstraint->serializeToString() == tsConstraint2->serializeToString() );
+=======
+        // Nonlinear Constraints unchanged
+        TS_ASSERT( inputQuery.getNonlinearConstraints().size() == 2U );
+        TS_ASSERT( inputQuery2.getNonlinearConstraints().size() == 2U );
+        auto tsIt = inputQuery.getNonlinearConstraints().begin();
+        SigmoidConstraint *nlConstraint = (SigmoidConstraint *)*tsIt;
+        auto tsIt2 = inputQuery2.getNonlinearConstraints().begin();
+        SigmoidConstraint *nlConstraint2 = (SigmoidConstraint *)*tsIt2;
+        TS_ASSERT( nlConstraint->serializeToString() == nlConstraint2->serializeToString() );
+        ++tsIt;
+        ++tsIt2;
+        nlConstraint = (SigmoidConstraint *)*tsIt;
+        nlConstraint2 = (SigmoidConstraint *)*tsIt2;
+        TS_ASSERT( nlConstraint->serializeToString() == nlConstraint2->serializeToString() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 };
 

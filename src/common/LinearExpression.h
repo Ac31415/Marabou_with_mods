@@ -17,8 +17,13 @@
 #define __LinearExpression_h__
 
 #include "FloatUtils.h"
+<<<<<<< HEAD
 #include "Map.h"
 #include "MStringf.h"
+=======
+#include "MStringf.h"
+#include "Map.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 /*
    A class representing a single linear expression.
@@ -30,7 +35,10 @@
 class LinearExpression
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     LinearExpression();
     LinearExpression( Map<unsigned, double> &addends );
     LinearExpression( Map<unsigned, double> &addends, double constant );

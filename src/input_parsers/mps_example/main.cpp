@@ -18,13 +18,21 @@
 #include "Engine.h"
 #include "InputQuery.h"
 #include "MpsParser.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <cstdio>
 
 int main( int argc, char *argv[] )
 {
     if ( argc != 2 )
     {
+<<<<<<< HEAD
         printf( "Error: please provide an mps file\n");
+=======
+        printf( "Error: please provide an mps file\n" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return 0;
     }
 

@@ -13,8 +13,11 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "InputQuery.h"
 #include "MarabouError.h"
 #include "MockErrno.h"
@@ -22,10 +25,17 @@
 #include "PiecewiseLinearCaseSplit.h"
 #include "SignConstraint.h"
 
+<<<<<<< HEAD
 #include <string.h>
 
 class MockForSignConstraint
     : public MockErrno
+=======
+#include <cxxtest/TestSuite.h>
+#include <string.h>
+
+class MockForSignConstraint : public MockErrno
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
 public:
 };
@@ -38,7 +48,12 @@ class TestSignConstraint : public SignConstraint
 public:
     TestSignConstraint( unsigned b, unsigned f )
         : SignConstraint( b, f )
+<<<<<<< HEAD
     {}
+=======
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     using PiecewiseLinearConstraint::getPhaseStatus;
 };
@@ -239,16 +254,24 @@ public:
     }
 
     // Return true only if the 2 bounds match and there are no equations
+<<<<<<< HEAD
     bool isPositiveSplit( unsigned b, unsigned f,
                           List<PiecewiseLinearCaseSplit>::iterator &split )
+=======
+    bool isPositiveSplit( unsigned b, unsigned f, List<PiecewiseLinearCaseSplit>::iterator &split )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         List<Tightening> bounds = split->getBoundTightenings();
 
         auto bound = bounds.begin();
         Tightening bound1 = *bound;
 
+<<<<<<< HEAD
         if ( ( bound1._variable != b ) ||
              ( bound1._value != 0.0 ) ||
+=======
+        if ( ( bound1._variable != b ) || ( bound1._value != 0.0 ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
              ( bound1._type != Tightening::LB ) )
             return false;
 
@@ -258,8 +281,12 @@ public:
         ++bound;
         Tightening bound2 = *bound;
 
+<<<<<<< HEAD
         if ( ( bound2._variable != f ) ||
              ( bound2._value != 1 ) ||
+=======
+        if ( ( bound2._variable != f ) || ( bound2._value != 1 ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
              ( bound2._type != Tightening::LB ) )
             return false;
 
@@ -270,16 +297,24 @@ public:
     }
 
     // Return true only if the 2 bounds match and there are no equations
+<<<<<<< HEAD
     bool isNegativeSplit( unsigned b, unsigned f,
                           List<PiecewiseLinearCaseSplit>::iterator &split )
+=======
+    bool isNegativeSplit( unsigned b, unsigned f, List<PiecewiseLinearCaseSplit>::iterator &split )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         List<Tightening> bounds = split->getBoundTightenings();
 
         auto bound = bounds.begin();
         Tightening bound1 = *bound;
 
+<<<<<<< HEAD
         if ( ( bound1._variable != b ) ||
              ( bound1._value != 0.0 ) ||
+=======
+        if ( ( bound1._variable != b ) || ( bound1._value != 0.0 ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
              ( bound1._type != Tightening::UB ) )
             return false;
 
@@ -289,8 +324,12 @@ public:
         ++bound;
         Tightening bound2 = *bound;
 
+<<<<<<< HEAD
         if ( ( bound2._variable != f ) ||
              ( bound2._value != -1 ) ||
+=======
+        if ( ( bound2._variable != f ) || ( bound2._value != -1 ) ||
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
              ( bound2._type != Tightening::UB ) )
             return false;
 
@@ -347,7 +386,11 @@ public:
         TS_ASSERT_EQUALS( splits.size(), 2U );
 
 
+<<<<<<< HEAD
         sign.registerBoundManager( boundManager  );
+=======
+        sign.registerBoundManager( boundManager );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sign.notifyLowerBound( 1, 0 );
         TS_ASSERT_THROWS_EQUALS( splits = sign.getCaseSplits(),
                                  const MarabouError &e,
@@ -357,7 +400,11 @@ public:
         sign.unregisterAsWatcher( &tableau );
 
         sign = SignConstraint( b, f );
+<<<<<<< HEAD
         sign.registerBoundManager( boundManager  );
+=======
+        sign.registerBoundManager( boundManager );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sign.registerAsWatcher( &tableau );
 
         splits = sign.getCaseSplits();
@@ -378,14 +425,23 @@ public:
         unsigned f = 4;
 
         MockTableau tableau;
+<<<<<<< HEAD
         IBoundManager *boundManager = &tableau.getBoundManager();;
+=======
+        IBoundManager *boundManager = &tableau.getBoundManager();
+        ;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         boundManager->initialize( 5 );
 
         SignConstraint sign( b, f );
 
         sign.registerAsWatcher( &tableau );
 
+<<<<<<< HEAD
         sign.registerBoundManager( boundManager  );
+=======
+        sign.registerBoundManager( boundManager );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         List<PiecewiseLinearCaseSplit> splits = sign.getCaseSplits();
         TS_ASSERT_EQUALS( splits.size(), 2U );
@@ -401,7 +457,11 @@ public:
         sign = SignConstraint( b, f );
 
         sign.registerAsWatcher( &tableau );
+<<<<<<< HEAD
         sign.registerBoundManager( boundManager  );
+=======
+        sign.registerBoundManager( boundManager );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         splits = sign.getCaseSplits();
         TS_ASSERT_EQUALS( splits.size(), 2U );
 
@@ -420,7 +480,12 @@ public:
         unsigned f = 4;
 
         MockTableau tableau;
+<<<<<<< HEAD
         IBoundManager *boundManager = &tableau.getBoundManager();;
+=======
+        IBoundManager *boundManager = &tableau.getBoundManager();
+        ;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         boundManager->initialize( 5 );
 
         // Upper bounds
@@ -819,7 +884,10 @@ public:
 
             entailedTightenings2.clear();
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     SignConstraint prepareSign( unsigned b, unsigned f, IBoundManager *boundManager )
     {
@@ -965,7 +1033,10 @@ public:
                 tightenings.clear();
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_serialize_and_unserialize()
@@ -980,8 +1051,12 @@ public:
         String originalSerialized = originalSign.serializeToString();
         SignConstraint recoveredSign( originalSerialized );
 
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( originalSign.serializeToString(),
                           recoveredSign.serializeToString() );
+=======
+        TS_ASSERT_EQUALS( originalSign.serializeToString(), recoveredSign.serializeToString() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_polarity()
@@ -1048,6 +1123,7 @@ public:
         Context context;
         SignConstraint *sign1 = new SignConstraint( 4, 6 );
 
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( sign1->getContext(), static_cast<Context*>( nullptr ) );
         TS_ASSERT_EQUALS( sign1->getActiveStatusCDO(), static_cast<CDO<bool>*>( nullptr ) );
         TS_ASSERT_EQUALS( sign1->getPhaseStatusCDO(), static_cast<CDO<PhaseStatus>*>( nullptr ) );
@@ -1057,6 +1133,19 @@ public:
         TS_ASSERT_DIFFERS( sign1->getActiveStatusCDO(), static_cast<CDO<bool>*>( nullptr ) );
         TS_ASSERT_DIFFERS( sign1->getPhaseStatusCDO(), static_cast<CDO<PhaseStatus>*>( nullptr ) );
         TS_ASSERT_DIFFERS( sign1->getInfeasibleCasesCDList(), static_cast<CDList<PhaseStatus>*>( nullptr ) );
+=======
+        TS_ASSERT_EQUALS( sign1->getContext(), static_cast<Context *>( nullptr ) );
+        TS_ASSERT_EQUALS( sign1->getActiveStatusCDO(), static_cast<CDO<bool> *>( nullptr ) );
+        TS_ASSERT_EQUALS( sign1->getPhaseStatusCDO(), static_cast<CDO<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_EQUALS( sign1->getInfeasibleCasesCDList(),
+                          static_cast<CDList<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_THROWS_NOTHING( sign1->initializeCDOs( &context ) );
+        TS_ASSERT_EQUALS( sign1->getContext(), &context );
+        TS_ASSERT_DIFFERS( sign1->getActiveStatusCDO(), static_cast<CDO<bool> *>( nullptr ) );
+        TS_ASSERT_DIFFERS( sign1->getPhaseStatusCDO(), static_cast<CDO<PhaseStatus> *>( nullptr ) );
+        TS_ASSERT_DIFFERS( sign1->getInfeasibleCasesCDList(),
+                           static_cast<CDList<PhaseStatus> *>( nullptr ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         bool active = false;
         TS_ASSERT_THROWS_NOTHING( active = sign1->isActive() );
@@ -1132,7 +1221,12 @@ public:
         // The sign is fixed, do not add cost term.
         SignConstraint sign1 = SignConstraint( b, f );
         MockTableau tableau;
+<<<<<<< HEAD
         IBoundManager *boundManager = &tableau.getBoundManager();;
+=======
+        IBoundManager *boundManager = &tableau.getBoundManager();
+        ;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         boundManager->initialize( 6 );
         sign1.registerBoundManager( boundManager );
 
@@ -1214,7 +1308,12 @@ public:
 
         SignConstraint sign = SignConstraint( b, f );
         MockTableau tableau;
+<<<<<<< HEAD
         IBoundManager *boundManager = &tableau.getBoundManager();;
+=======
+        IBoundManager *boundManager = &tableau.getBoundManager();
+        ;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sign.registerBoundManager( boundManager );
 
         tableau.setValue( b, 1.5 );
@@ -1222,12 +1321,19 @@ public:
 
         Map<unsigned, double> assignment;
         assignment[0] = -1;
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( sign.getPhaseStatusInAssignment( assignment ),
                           SIGN_PHASE_NEGATIVE );
 
         assignment[0] = 15;
         TS_ASSERT_EQUALS( sign.getPhaseStatusInAssignment( assignment ),
                           SIGN_PHASE_POSITIVE );
+=======
+        TS_ASSERT_EQUALS( sign.getPhaseStatusInAssignment( assignment ), SIGN_PHASE_NEGATIVE );
+
+        assignment[0] = 15;
+        TS_ASSERT_EQUALS( sign.getPhaseStatusInAssignment( assignment ), SIGN_PHASE_POSITIVE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_add_auxiliary_equations()
@@ -1248,8 +1354,12 @@ public:
         query.setLowerBound( 6, -1 );
         query.setLowerBound( 6, 1 );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( sign.addAuxiliaryEquationsAfterPreprocessing
                                   ( query ) );
+=======
+        TS_ASSERT_THROWS_NOTHING( sign.addAuxiliaryEquationsAfterPreprocessing( query ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         const List<Equation> &equations( query.getEquations() );
 
@@ -1278,7 +1388,11 @@ public:
 
         TS_ASSERT_EQUALS( eq._scalar, 1 );
 
+<<<<<<< HEAD
         eq = *(++ equations.begin());
+=======
+        eq = *( ++equations.begin() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_EQUALS( eq._addends.size(), 3U );
 

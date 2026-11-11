@@ -16,21 +16,40 @@
 #ifndef __DnCWorker_h__
 #define __DnCWorker_h__
 
+<<<<<<< HEAD
 #include "SnCDivideStrategy.h"
 #include "Engine.h"
 #include "PiecewiseLinearCaseSplit.h"
 #include "QueryDivider.h"
+=======
+#include "Engine.h"
+#include "PiecewiseLinearCaseSplit.h"
+#include "QueryDivider.h"
+#include "SnCDivideStrategy.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include <atomic>
 
 class DnCWorker
 {
 public:
+<<<<<<< HEAD
     DnCWorker( WorkerQueue *workload, std::shared_ptr<IEngine> engine,
                std::atomic_int &numUnsolvedSubqueries,
                std::atomic_bool &shouldQuitSolving, unsigned threadId,
                unsigned onlineDivides, float timeoutFactor,
                SnCDivideStrategy divideStrategy, unsigned verbosity,
+=======
+    DnCWorker( WorkerQueue *workload,
+               std::shared_ptr<IEngine> engine,
+               std::atomic_int &numUnsolvedSubqueries,
+               std::atomic_bool &shouldQuitSolving,
+               unsigned threadId,
+               unsigned onlineDivides,
+               float timeoutFactor,
+               SnCDivideStrategy divideStrategy,
+               unsigned verbosity,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                bool parallelDeepSoI );
 
     /*

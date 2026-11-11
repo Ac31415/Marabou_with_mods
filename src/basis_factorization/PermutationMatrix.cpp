@@ -13,9 +13,17 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "PermutationMatrix.h"
+=======
+#include "PermutationMatrix.h"
+
+#include "BasisFactorizationError.h"
+#include "Debug.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -77,8 +85,13 @@ PermutationMatrix &PermutationMatrix::operator=( const PermutationMatrix &other 
         _columnOrdering = new unsigned[_m];
     }
 
+<<<<<<< HEAD
     memcpy( _rowOrdering, other._rowOrdering, sizeof(unsigned) * _m );
     memcpy( _columnOrdering, other._columnOrdering, sizeof(unsigned) * _m );
+=======
+    memcpy( _rowOrdering, other._rowOrdering, sizeof( unsigned ) * _m );
+    memcpy( _columnOrdering, other._columnOrdering, sizeof( unsigned ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     return *this;
 }
@@ -182,8 +195,13 @@ void PermutationMatrix::storeToOther( PermutationMatrix *other ) const
 {
     ASSERT( _m == other->_m );
 
+<<<<<<< HEAD
     memcpy( other->_rowOrdering, _rowOrdering, sizeof(unsigned) * _m );
     memcpy( other->_columnOrdering, _columnOrdering, sizeof(unsigned) * _m );
+=======
+    memcpy( other->_rowOrdering, _rowOrdering, sizeof( unsigned ) * _m );
+    memcpy( other->_columnOrdering, _columnOrdering, sizeof( unsigned ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 //

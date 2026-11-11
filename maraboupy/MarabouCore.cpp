@@ -26,12 +26,20 @@
 #include <fcntl.h>
 #include "MarabouMain.h"
 #include "AcasParser.h"
+<<<<<<< HEAD
+=======
+#include "BilinearConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "CommonError.h"
 #include "DnCManager.h"
 #include "DisjunctionConstraint.h"
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "InputQuery.h"
+<<<<<<< HEAD
+=======
+#include "LeakyReluConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MarabouError.h"
 #include "InputParserError.h"
 #include "MString.h"
@@ -39,6 +47,7 @@
 #include "Options.h"
 #include "PiecewiseLinearConstraint.h"
 #include "PropertyParser.h"
+<<<<<<< HEAD
 #include "QueryLoader.h"
 #include "ReluConstraint.h"
 #include "Set.h"
@@ -46,6 +55,18 @@
 #include "SigmoidConstraint.h"
 #include "SignConstraint.h"
 #include "TranscendentalConstraint.h"
+=======
+#include "VnnLibParser.h"
+#include "QueryLoader.h"
+#include "ReluConstraint.h"
+#include "RoundConstraint.h"
+#include "Set.h"
+#include "SoftmaxConstraint.h"
+#include "SnCDivideStrategy.h"
+#include "SigmoidConstraint.h"
+#include "SignConstraint.h"
+#include "NonlinearConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #ifdef _WIN32
 #define STDOUT_FILENO 1
@@ -101,14 +122,43 @@ void restoreOutputStream(int outputStream)
     close(outputStream);
 }
 
+<<<<<<< HEAD
+=======
+void addClipConstraint( InputQuery& ipq, unsigned var1, unsigned var2, double floor, double ceiling ){
+    ipq.addClipConstraint( var1, var2, floor, ceiling );
+}
+
+void addLeakyReluConstraint(InputQuery& ipq, unsigned var1, unsigned var2, double slope){
+    PiecewiseLinearConstraint* r = new LeakyReluConstraint(var1, var2, slope);
+    ipq.addPiecewiseLinearConstraint(r);
+}
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 void addReluConstraint(InputQuery& ipq, unsigned var1, unsigned var2){
     PiecewiseLinearConstraint* r = new ReluConstraint(var1, var2);
     ipq.addPiecewiseLinearConstraint(r);
 }
 
+<<<<<<< HEAD
 void addSigmoidConstraint(InputQuery& ipq, unsigned var1, unsigned var2){
     TranscendentalConstraint* s = new SigmoidConstraint(var1, var2);
     ipq.addTranscendentalConstraint(s);
+=======
+void addRoundConstraint(InputQuery& ipq, unsigned var1, unsigned var2){
+    NonlinearConstraint* r = new RoundConstraint(var1, var2);
+    ipq.addNonlinearConstraint(r);
+}
+
+void addBilinearConstraint(InputQuery& ipq, unsigned var1, unsigned var2,
+                           unsigned var3){
+    NonlinearConstraint* r = new BilinearConstraint(var1, var2, var3);
+    ipq.addNonlinearConstraint(r);
+}
+
+void addSigmoidConstraint(InputQuery& ipq, unsigned var1, unsigned var2){
+    NonlinearConstraint* s = new SigmoidConstraint(var1, var2);
+    ipq.addNonlinearConstraint(s);
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void addSignConstraint(InputQuery& ipq, unsigned var1, unsigned var2){
@@ -124,6 +174,23 @@ void addMaxConstraint(InputQuery& ipq, std::set<unsigned> elements, unsigned v){
     ipq.addPiecewiseLinearConstraint(m);
 }
 
+<<<<<<< HEAD
+=======
+void addSoftmaxConstraint( InputQuery& ipq, std::list<unsigned> inputs,
+                           std::list<unsigned> outputs ){
+    Vector<unsigned> inputList;
+    for ( const auto &e :inputs )
+        inputList.append(e);
+
+    Vector<unsigned> outputList;
+    for ( const auto &e :outputs )
+        outputList.append(e);
+
+    SoftmaxConstraint *s = new SoftmaxConstraint(inputList, outputList);
+    ipq.addNonlinearConstraint(s);
+}
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 void addAbsConstraint(InputQuery& ipq, unsigned b, unsigned f){
     ipq.addPiecewiseLinearConstraint(new AbsoluteValueConstraint(b, f));
 }
@@ -134,7 +201,18 @@ void loadProperty(InputQuery &inputQuery, std::string propertyFilePath)
     if ( propertyFilePath != "" )
     {
         printf( "Property: %s\n", propertyFilePathM.ascii() );
+<<<<<<< HEAD
         PropertyParser().parse( propertyFilePathM, inputQuery );
+=======
+        if ( propertyFilePathM.endsWith( ".vnnlib" ) )
+        {
+            VnnLibParser().parse( propertyFilePathM, inputQuery );
+        }
+        else
+        {
+            PropertyParser().parse( propertyFilePathM, inputQuery );
+        }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     else
         printf( "Property: None\n" );
@@ -145,17 +223,31 @@ bool createInputQuery(InputQuery &inputQuery, std::string networkFilePath, std::
     AcasParser* acasParser = new AcasParser( String(networkFilePath) );
     acasParser->generateQuery( inputQuery );
 
+<<<<<<< HEAD
     bool success = inputQuery.constructNetworkLevelReasoner();
     if ( success )
       printf("Successfully created a network level reasoner.\n");
     else
       printf("Warning: network level reasoner construction failed.\n");
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     String propertyFilePathM = String(propertyFilePath);
     if ( propertyFilePath != "" )
       {
         printf( "Property: %s\n", propertyFilePathM.ascii() );
+<<<<<<< HEAD
         PropertyParser().parse( propertyFilePathM, inputQuery );
+=======
+          if ( propertyFilePathM.endsWith( ".vnnlib" ) )
+          {
+              VnnLibParser().parse( propertyFilePathM, inputQuery );
+          }
+          else
+          {
+              PropertyParser().parse( propertyFilePathM, inputQuery );
+          }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       }
     else
       printf( "Property: None\n" );
@@ -410,7 +502,11 @@ std::tuple<std::string, std::map<int, double>, Statistics>
         }
     }
     catch(const MarabouError &e){
+<<<<<<< HEAD
         printf( "Caught a MarabouError. Code: %u. Message: %s\n", e.getCode(), e.getUserMessage() );
+=======
+        fprintf( stderr, "Caught a MarabouError. Code: %u. Message: %s\n", e.getCode(), e.getUserMessage() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return std::make_tuple
             ("ERROR",
              ret, retStats);
@@ -564,6 +660,30 @@ PYBIND11_MODULE(MarabouCore, m) {
             :class:`~maraboupy.MarabouCore.InputQuery`
         )pbdoc",
         py::arg("filename"));
+<<<<<<< HEAD
+=======
+    m.def("addClipConstraint", &addClipConstraint, R"pbdoc(
+        Add a Clip constraint to the InputQuery
+
+        Args:
+            inputQuery (:class:`~maraboupy.MarabouCore.InputQuery`): Marabou input query to be solved
+            var1 (int): Input variable to Clip constraint
+            var2 (int): Output variable to Clip constraint
+            lb (double): Floor
+            ub (double): Ceiling
+        )pbdoc",
+          py::arg("inputQuery"), py::arg("var1"), py::arg("var2"), py::arg("floor"), py::arg("ceiling"));
+    m.def("addLeakyReluConstraint", &addLeakyReluConstraint, R"pbdoc(
+        Add a LeakyRelu constraint to the InputQuery
+
+        Args:
+            inputQuery (:class:`~maraboupy.MarabouCore.InputQuery`): Marabou input query to be solved
+            var1 (int): Input variable to Leaky ReLU constraint
+            var2 (int): Output variable to Leaky ReLU constraint
+            slope (float): Slope of the Leaky ReLU constraint
+        )pbdoc",
+          py::arg("inputQuery"), py::arg("var1"), py::arg("var2"), py::arg("slope"));
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     m.def("addReluConstraint", &addReluConstraint, R"pbdoc(
         Add a Relu constraint to the InputQuery
 
@@ -573,6 +693,27 @@ PYBIND11_MODULE(MarabouCore, m) {
             var2 (int): Output variable to Relu constraint
         )pbdoc",
         py::arg("inputQuery"), py::arg("var1"), py::arg("var2"));
+<<<<<<< HEAD
+=======
+    m.def("addRoundConstraint", &addRoundConstraint, R"pbdoc(
+        Add a Round constraint to the InputQuery
+
+        Args:
+            inputQuery (:class:`~maraboupy.MarabouCore.InputQuery`): Marabou input query to be solved
+            var1 (int): Input variable to round constraint
+            var2 (int): Output variable to round constraint
+        )pbdoc",
+          py::arg("inputQuery"), py::arg("var1"), py::arg("var2"));
+    m.def("addBilinearConstraint", &addBilinearConstraint, R"pbdoc(
+        Add a Bilinear constraint to the InputQuery
+        Args:
+            inputQuery (:class:`~maraboupy.MarabouCore.InputQuery`): Marabou input query to be solved
+            var1 (int): Input variable to Bilinear constraint
+            var2 (int): Input variable to Bilinear constraint
+            var3 (int): Output variable to Bilinear constraint
+        )pbdoc",
+          py::arg("inputQuery"), py::arg("var1"), py::arg("var2"), py::arg("var3"));
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     m.def("addSigmoidConstraint", &addSigmoidConstraint, R"pbdoc(
         Add a Sigmoid constraint to the InputQuery
 
@@ -600,6 +741,17 @@ PYBIND11_MODULE(MarabouCore, m) {
             v (int): Output variable from max constraint
         )pbdoc",
         py::arg("inputQuery"), py::arg("elements"), py::arg("v"));
+<<<<<<< HEAD
+=======
+    m.def("addSoftmaxConstraint", &addSoftmaxConstraint, R"pbdoc(
+        Add a Softmax constraint to the InputQuery
+        Args:
+            inputQuery (:class:`~maraboupy.MarabouCore.InputQuery`): Marabou input query to be solved
+            inputs (list of int): Input variables to softmax constraint
+            outputs (list of int): Output variables from softmax constraint
+        )pbdoc",
+          py::arg("inputQuery"), py::arg("inputs"), py::arg("outputs"));
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     m.def("addAbsConstraint", &addAbsConstraint, R"pbdoc(
         Add an Abs constraint to the InputQuery
 

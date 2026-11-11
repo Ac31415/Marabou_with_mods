@@ -2,6 +2,10 @@
 (declare-const Y_0 Real)
 
 (assert (>= (- X_0 1) 1))
+<<<<<<< HEAD
 (assert (<= X_0 1))
+=======
+(assert (<= X_0 3))
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 (assert (>= Y_0 0))

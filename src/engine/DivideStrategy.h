@@ -16,6 +16,7 @@
 #ifndef __DivideStrategy_h__
 #define __DivideStrategy_h__
 
+<<<<<<< HEAD
 enum class DivideStrategy
 {
     // Relu splitting
@@ -25,6 +26,17 @@ enum class DivideStrategy
     LargestInterval, // Pick the largest interval every K split steps, use ReLUViolation in other steps
     PseudoImpact, // The pseudo-impact heuristic associated with SoI.
     Auto, // See decideBranchingHeursitics() in Engine.h
+=======
+enum class DivideStrategy {
+    // Relu splitting
+    Polarity = 0,    // Pick the ReLU with the polarity closest to 0 among the first K nodes
+    EarliestReLU,    // Pick a ReLU that appears in the earliest layer
+    ReLUViolation,   // Pick the ReLU that has been violated for the most times
+    LargestInterval, // Pick the largest interval every K split steps, use ReLUViolation in other
+                     // steps
+    PseudoImpact,    // The pseudo-impact heuristic associated with SoI.
+    Auto,            // See decideBranchingHeursitics() in Engine.h
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __DivideStrategy_h__

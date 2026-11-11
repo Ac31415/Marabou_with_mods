@@ -17,9 +17,15 @@
 #define __Marabou_h__
 
 #include "AcasParser.h"
+<<<<<<< HEAD
 #include "OnnxParser.h"
 #include "Engine.h"
 #include "InputQuery.h"
+=======
+#include "Engine.h"
+#include "InputQuery.h"
+#include "OnnxParser.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class Marabou
 {

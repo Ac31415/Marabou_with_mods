@@ -19,7 +19,11 @@
 
 #include "InputQuery.h"
 
+<<<<<<< HEAD
 #define QL_LOG(x, ...) LOG(GlobalConfiguration::QUERY_LOADER_LOGGING, "QueryLoader: %s\n", x )
+=======
+#define QL_LOG( x, ... ) LOG( GlobalConfiguration::QUERY_LOADER_LOGGING, "QueryLoader: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class QueryLoader
 {

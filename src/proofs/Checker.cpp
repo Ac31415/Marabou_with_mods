@@ -29,7 +29,11 @@ Checker::Checker( const UnsatCertificateNode *root,
     , _delegationCounter( 0 )
 {
     for ( auto constraint : problemConstraints )
+<<<<<<< HEAD
       constraint->setPhaseStatus( PHASE_NOT_FIXED );
+=======
+        constraint->setPhaseStatus( PHASE_NOT_FIXED );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool Checker::check()
@@ -51,7 +55,13 @@ bool Checker::checkNode( const UnsatCertificateNode *node )
         auto &temp = tightening._type == Tightening::UB ? _groundUpperBounds : _groundLowerBounds;
         temp[tightening._variable] = tightening._value;
 
+<<<<<<< HEAD
         tightening._type == Tightening::UB ? _upperBoundChanges.top().insert( tightening._variable ) : _lowerBoundChanges.top().insert( tightening._variable );
+=======
+        tightening._type == Tightening::UB
+            ? _upperBoundChanges.top().insert( tightening._variable )
+            : _lowerBoundChanges.top().insert( tightening._variable );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     // Check all PLC bound propagations
@@ -63,7 +73,12 @@ bool Checker::checkNode( const UnsatCertificateNode *node )
         writeToFile();
 
     // Skip if leaf has the SAT solution, or if was marked to delegate
+<<<<<<< HEAD
     if ( node->getSATSolutionFlag() || node->getDelegationStatus() != DelegationStatus::DONT_DELEGATE )
+=======
+    if ( node->getSATSolutionFlag() ||
+         node->getDelegationStatus() != DelegationStatus::DONT_DELEGATE )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return true;
 
     // Check if it is a leaf, and if so use contradiction to check
@@ -87,7 +102,12 @@ bool Checker::checkNode( const UnsatCertificateNode *node )
     for ( const auto &child : node->getChildren() )
         childrenSplits.append( child->getSplit() );
 
+<<<<<<< HEAD
     PiecewiseLinearConstraint *childrenSplitConstraint = getCorrespondingConstraint( childrenSplits );
+=======
+    PiecewiseLinearConstraint *childrenSplitConstraint =
+        getCorrespondingConstraint( childrenSplits );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     if ( !checkSingleVarSplits( childrenSplits ) && !childrenSplitConstraint )
         return false;
@@ -104,10 +124,19 @@ bool Checker::checkNode( const UnsatCertificateNode *node )
     if ( childrenSplitConstraint )
         childrenSplitConstraint->setPhaseStatus( PHASE_NOT_FIXED );
 
+<<<<<<< HEAD
     if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::DISJUNCTION )
     {
         for ( const auto &child : node->getChildren() )
             ( ( DisjunctionConstraint * )childrenSplitConstraint )->addFeasibleDisjunct( child->getSplit() );
+=======
+    if ( childrenSplitConstraint &&
+         childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::DISJUNCTION )
+    {
+        for ( const auto &child : node->getChildren() )
+            ( (DisjunctionConstraint *)childrenSplitConstraint )
+                ->addFeasibleDisjunct( child->getSplit() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     // Revert only bounds that where changed during checking the current node
@@ -123,25 +152,50 @@ bool Checker::checkNode( const UnsatCertificateNode *node )
     return answer;
 }
 
+<<<<<<< HEAD
 void Checker::fixChildSplitPhase( UnsatCertificateNode *child,  PiecewiseLinearConstraint *childrenSplitConstraint )
 {
     if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::RELU )
     {
         List<Tightening> tightenings = child->getSplit().getBoundTightenings();
         if ( tightenings.front()._type == Tightening::LB || tightenings.back()._type == Tightening::LB  )
+=======
+void Checker::fixChildSplitPhase( UnsatCertificateNode *child,
+                                  PiecewiseLinearConstraint *childrenSplitConstraint )
+{
+    if ( childrenSplitConstraint &&
+         childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::RELU )
+    {
+        List<Tightening> tightenings = child->getSplit().getBoundTightenings();
+        if ( tightenings.front()._type == Tightening::LB ||
+             tightenings.back()._type == Tightening::LB )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             childrenSplitConstraint->setPhaseStatus( RELU_PHASE_ACTIVE );
         else
             childrenSplitConstraint->setPhaseStatus( RELU_PHASE_INACTIVE );
     }
+<<<<<<< HEAD
     else if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::SIGN )
     {
         List<Tightening> tightenings = child->getSplit().getBoundTightenings();
         if ( tightenings.front()._type == Tightening::LB  )
+=======
+    else if ( childrenSplitConstraint &&
+              childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::SIGN )
+    {
+        List<Tightening> tightenings = child->getSplit().getBoundTightenings();
+        if ( tightenings.front()._type == Tightening::LB )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             childrenSplitConstraint->setPhaseStatus( SIGN_PHASE_POSITIVE );
         else
             childrenSplitConstraint->setPhaseStatus( SIGN_PHASE_NEGATIVE );
     }
+<<<<<<< HEAD
     else if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::ABSOLUTE_VALUE )
+=======
+    else if ( childrenSplitConstraint &&
+              childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::ABSOLUTE_VALUE )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         List<Tightening> tightenings = child->getSplit().getBoundTightenings();
         if ( tightenings.front()._type == Tightening::LB )
@@ -149,19 +203,36 @@ void Checker::fixChildSplitPhase( UnsatCertificateNode *child,  PiecewiseLinearC
         else
             childrenSplitConstraint->setPhaseStatus( ABS_PHASE_NEGATIVE );
     }
+<<<<<<< HEAD
     else if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::MAX )
+=======
+    else if ( childrenSplitConstraint &&
+              childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::MAX )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         List<Tightening> tightenings = child->getSplit().getBoundTightenings();
         if ( tightenings.size() == 2 )
             childrenSplitConstraint->setPhaseStatus( MAX_PHASE_ELIMINATED );
         else
         {
+<<<<<<< HEAD
             PhaseStatus phase = ( ( MaxConstraint * )childrenSplitConstraint )->variableToPhase( tightenings.back()._variable );
             childrenSplitConstraint->setPhaseStatus( phase );
         }
     }
     else if ( childrenSplitConstraint && childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::DISJUNCTION )
         ( ( DisjunctionConstraint * )childrenSplitConstraint )->removeFeasibleDisjunct( child->getSplit() );
+=======
+            PhaseStatus phase = ( (MaxConstraint *)childrenSplitConstraint )
+                                    ->variableToPhase( tightenings.back()._variable );
+            childrenSplitConstraint->setPhaseStatus( phase );
+        }
+    }
+    else if ( childrenSplitConstraint &&
+              childrenSplitConstraint->getType() == PiecewiseLinearFunctionType::DISJUNCTION )
+        ( (DisjunctionConstraint *)childrenSplitConstraint )
+            ->removeFeasibleDisjunct( child->getSplit() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool Checker::checkContradiction( const UnsatCertificateNode *node ) const
@@ -172,10 +243,23 @@ bool Checker::checkContradiction( const UnsatCertificateNode *node ) const
     if ( contradiction.empty() )
     {
         unsigned infeasibleVar = node->getContradiction()->getVar();
+<<<<<<< HEAD
         return FloatUtils::isNegative( _groundUpperBounds[infeasibleVar] - _groundLowerBounds[infeasibleVar] );
     }
 
     double contradictionUpperBound = UNSATCertificateUtils::computeCombinationUpperBound( contradiction, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
+=======
+        return FloatUtils::isNegative( _groundUpperBounds[infeasibleVar] -
+                                       _groundLowerBounds[infeasibleVar] );
+    }
+
+    double contradictionUpperBound =
+        UNSATCertificateUtils::computeCombinationUpperBound( contradiction,
+                                                             _initialTableau,
+                                                             _groundUpperBounds.data(),
+                                                             _groundLowerBounds.data(),
+                                                             _groundUpperBounds.size() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     return FloatUtils::isNegative( contradictionUpperBound );
 }
@@ -189,7 +273,13 @@ bool Checker::checkAllPLCExplanations( const UnsatCertificateNode *node, double 
     {
         PiecewiseLinearConstraint *matchedConstraint = NULL;
         BoundType affectedVarBound = plcLemma->getAffectedVarBound();
+<<<<<<< HEAD
         double explainedBound = affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+        double explainedBound = affectedVarBound == BoundType::UPPER
+                                  ? FloatUtils::infinity()
+                                  : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         const List<unsigned> causingVars = plcLemma->getCausingVars();
         unsigned affectedVar = plcLemma->getAffectedVar();
         List<unsigned> participatingVars;
@@ -205,7 +295,11 @@ bool Checker::checkAllPLCExplanations( const UnsatCertificateNode *node, double 
             // If the constraint is max, then lemma variables might have been eliminated
             if ( constraint->getType() == MAX )
             {
+<<<<<<< HEAD
                 MaxConstraint *maxConstraint = ( MaxConstraint * ) constraint;
+=======
+                MaxConstraint *maxConstraint = (MaxConstraint *)constraint;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 for ( auto const &element : maxConstraint->getEliminatedElements() )
                 {
                     participatingVars.append( element );
@@ -236,23 +330,51 @@ bool Checker::checkAllPLCExplanations( const UnsatCertificateNode *node, double 
         // If so, update the ground bounds and continue
 
         auto &temp = affectedVarBound == BoundType::UPPER ? _groundUpperBounds : _groundLowerBounds;
+<<<<<<< HEAD
         bool isTighter = affectedVarBound == BoundType::UPPER ? FloatUtils::lt( explainedBound, temp[affectedVar] ) : FloatUtils::gt( explainedBound, temp[affectedVar] );
+=======
+        bool isTighter = affectedVarBound == BoundType::UPPER
+                           ? FloatUtils::lt( explainedBound, temp[affectedVar] )
+                           : FloatUtils::gt( explainedBound, temp[affectedVar] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if ( isTighter )
         {
             temp[affectedVar] = explainedBound;
             ASSERT( !_upperBoundChanges.empty() && !_lowerBoundChanges.empty() );
+<<<<<<< HEAD
             affectedVarBound == BoundType::UPPER ? _upperBoundChanges.top().insert( affectedVar ) : _lowerBoundChanges.top().insert( affectedVar );
+=======
+            affectedVarBound == BoundType::UPPER ? _upperBoundChanges.top().insert( affectedVar )
+                                                 : _lowerBoundChanges.top().insert( affectedVar );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
     return true;
 }
 
+<<<<<<< HEAD
 double Checker::explainBound( unsigned var, bool isUpper, const SparseUnsortedList &explanation ) const
 {
     return UNSATCertificateUtils::computeBound( var, isUpper, explanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
 }
 
 PiecewiseLinearConstraint *Checker::getCorrespondingConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+=======
+double
+Checker::explainBound( unsigned var, bool isUpper, const SparseUnsortedList &explanation ) const
+{
+    return UNSATCertificateUtils::computeBound( var,
+                                                isUpper,
+                                                explanation,
+                                                _initialTableau,
+                                                _groundUpperBounds.data(),
+                                                _groundLowerBounds.data(),
+                                                _groundUpperBounds.size() );
+}
+
+PiecewiseLinearConstraint *
+Checker::getCorrespondingConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     PiecewiseLinearConstraint *constraint = getCorrespondingReluConstraint( splits );
     if ( !constraint )
@@ -289,10 +411,17 @@ void Checker::writeToFile()
 
         // Fix correct size
         if ( !tableauRow.getSize() && !tableauRow.empty() )
+<<<<<<< HEAD
         for ( auto it = tableauRow.begin(); it != tableauRow.end(); ++it )
             tableauRow.incrementSize();
 
         SmtLibWriter::addTableauRow( tableauRow , leafInstance );
+=======
+            for ( auto it = tableauRow.begin(); it != tableauRow.end(); ++it )
+                tableauRow.incrementSize();
+
+        SmtLibWriter::addTableauRow( tableauRow, leafInstance );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     for ( auto &constraint : _problemConstraints )
@@ -319,7 +448,11 @@ void Checker::writeToFile()
         }
         else if ( constraint->getType() == MAX )
         {
+<<<<<<< HEAD
             MaxConstraint *maxConstraint = ( MaxConstraint * ) constraint;
+=======
+            MaxConstraint *maxConstraint = (MaxConstraint *)constraint;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             Set<unsigned> elements = maxConstraint->getParticipatingElements();
             double info = 0;
@@ -332,6 +465,7 @@ void Checker::writeToFile()
                 for ( const auto &element : maxConstraint->getParticipatingVariables() )
                     elements.erase( element );
 
+<<<<<<< HEAD
             SmtLibWriter::addMaxConstraint( constraint->getParticipatingVariables().back(), elements, constraint->getPhaseStatus(), info ,leafInstance );
         }
         else if ( constraint->getType() == DISJUNCTION )
@@ -340,6 +474,21 @@ void Checker::writeToFile()
 
     SmtLibWriter::addFooter( leafInstance );
     File file ( "delegated" + std::to_string( _delegationCounter ) + ".smtlib" );
+=======
+            SmtLibWriter::addMaxConstraint( constraint->getParticipatingVariables().back(),
+                                            elements,
+                                            constraint->getPhaseStatus(),
+                                            info,
+                                            leafInstance );
+        }
+        else if ( constraint->getType() == DISJUNCTION )
+            SmtLibWriter::addDisjunctionConstraint(
+                ( (DisjunctionConstraint *)constraint )->getFeasibleDisjuncts(), leafInstance );
+    }
+
+    SmtLibWriter::addFooter( leafInstance );
+    File file( "delegated" + std::to_string( _delegationCounter ) + ".smtlib" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     SmtLibWriter::writeInstanceToFile( file, leafInstance );
 
     ++_delegationCounter;
@@ -361,11 +510,21 @@ bool Checker::checkSingleVarSplits( const List<PiecewiseLinearCaseSplit> &splits
     auto &frontSplitOnlyTightening = frontSplitTightenings.front();
     auto &backSplitOnlyTightening = backSplitTightenings.front();
 
+<<<<<<< HEAD
     // Check that cases are of the same var and bound, where the for one the bound is UB, and for the other is LB
     if ( frontSplitOnlyTightening._variable != backSplitOnlyTightening._variable )
         return false;
 
     if ( FloatUtils::areDisequal( frontSplitOnlyTightening._value, backSplitOnlyTightening._value ) )
+=======
+    // Check that cases are of the same var and bound, where the for one the bound is UB, and for
+    // the other is LB
+    if ( frontSplitOnlyTightening._variable != backSplitOnlyTightening._variable )
+        return false;
+
+    if ( FloatUtils::areDisequal( frontSplitOnlyTightening._value,
+                                  backSplitOnlyTightening._value ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return false;
 
     if ( frontSplitOnlyTightening._type == backSplitOnlyTightening._type )
@@ -374,7 +533,12 @@ bool Checker::checkSingleVarSplits( const List<PiecewiseLinearCaseSplit> &splits
     return true;
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *Checker::getCorrespondingReluConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+=======
+PiecewiseLinearConstraint *
+Checker::getCorrespondingReluConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( splits.size() != 2 )
         return NULL;
@@ -383,8 +547,17 @@ PiecewiseLinearConstraint *Checker::getCorrespondingReluConstraint( const List<P
     auto secondSplitTightenings = splits.back().getBoundTightenings();
 
     // Find the LB tightening, its var is b
+<<<<<<< HEAD
     auto &activeSplit = firstSplitTightenings.front()._type == Tightening::LB ? firstSplitTightenings : secondSplitTightenings;
     auto &inactiveSplit = firstSplitTightenings.front()._type == Tightening::LB ? secondSplitTightenings : firstSplitTightenings;
+=======
+    auto &activeSplit = firstSplitTightenings.front()._type == Tightening::LB
+                          ? firstSplitTightenings
+                          : secondSplitTightenings;
+    auto &inactiveSplit = firstSplitTightenings.front()._type == Tightening::LB
+                            ? secondSplitTightenings
+                            : firstSplitTightenings;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     unsigned b = activeSplit.front()._variable;
     unsigned aux = activeSplit.back()._variable;
@@ -394,7 +567,14 @@ PiecewiseLinearConstraint *Checker::getCorrespondingReluConstraint( const List<P
     if ( ( activeSplit.size() != 2 && activeSplit.size() != 1 ) || inactiveSplit.size() != 2 )
         return NULL;
 
+<<<<<<< HEAD
     if ( FloatUtils::areDisequal( inactiveSplit.back()._value, 0.0 ) || FloatUtils::areDisequal( inactiveSplit.front()._value, 0.0 ) || FloatUtils::areDisequal( activeSplit.back()._value, 0.0 ) || FloatUtils::areDisequal( activeSplit.front()._value, 0.0 ) )
+=======
+    if ( FloatUtils::areDisequal( inactiveSplit.back()._value, 0.0 ) ||
+         FloatUtils::areDisequal( inactiveSplit.front()._value, 0.0 ) ||
+         FloatUtils::areDisequal( activeSplit.back()._value, 0.0 ) ||
+         FloatUtils::areDisequal( activeSplit.front()._value, 0.0 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return NULL;
 
     // Check that f = b + aux corresponds to a problem constraints
@@ -402,7 +582,13 @@ PiecewiseLinearConstraint *Checker::getCorrespondingReluConstraint( const List<P
     for ( auto &constraint : _problemConstraints )
     {
         auto constraintVars = constraint->getParticipatingVariables();
+<<<<<<< HEAD
         if ( constraint->getType() == PiecewiseLinearFunctionType::RELU && constraintVars.front() == b && constraintVars.exists( f ) && ( activeSplit.size() == 1 || constraintVars.back() == aux ) )
+=======
+        if ( constraint->getType() == PiecewiseLinearFunctionType::RELU &&
+             constraintVars.front() == b && constraintVars.exists( f ) &&
+             ( activeSplit.size() == 1 || constraintVars.back() == aux ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             correspondingConstraint = constraint;
     }
 
@@ -410,7 +596,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingReluConstraint( const List<P
     return correspondingConstraint;
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *Checker::getCorrespondingSignConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+=======
+PiecewiseLinearConstraint *
+Checker::getCorrespondingSignConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( splits.size() != 2 )
         return NULL;
@@ -419,17 +610,40 @@ PiecewiseLinearConstraint *Checker::getCorrespondingSignConstraint( const List<P
     auto secondSplitTightenings = splits.back().getBoundTightenings();
 
     // Find an LB tightening, it marks the positive split
+<<<<<<< HEAD
     auto &positiveSplit = firstSplitTightenings.front()._type == Tightening::LB ? firstSplitTightenings : secondSplitTightenings;
     auto &negativeSplit = firstSplitTightenings.front()._type == Tightening::LB ? secondSplitTightenings : firstSplitTightenings;
+=======
+    auto &positiveSplit = firstSplitTightenings.front()._type == Tightening::LB
+                            ? firstSplitTightenings
+                            : secondSplitTightenings;
+    auto &negativeSplit = firstSplitTightenings.front()._type == Tightening::LB
+                            ? secondSplitTightenings
+                            : firstSplitTightenings;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     unsigned b = positiveSplit.back()._variable;
     unsigned f = positiveSplit.front()._variable;
 
     // Check details of both constraints - value and types
+<<<<<<< HEAD
     if ( positiveSplit.size() != 2 || negativeSplit.size() != 2 || positiveSplit.back()._type != Tightening::LB || positiveSplit.front()._type != Tightening::LB || negativeSplit.back()._type != Tightening::UB || negativeSplit.front()._type != Tightening::UB )
         return NULL;
 
     if ( FloatUtils::areDisequal( negativeSplit.back()._value, -1.0 ) || FloatUtils::areDisequal( negativeSplit.front()._value, 0.0 ) ||  FloatUtils::areDisequal(positiveSplit.back()._value, 1.0 ) || FloatUtils::areDisequal( positiveSplit.front()._value, 0.0 ))
+=======
+    if ( positiveSplit.size() != 2 || negativeSplit.size() != 2 ||
+         positiveSplit.back()._type != Tightening::LB ||
+         positiveSplit.front()._type != Tightening::LB ||
+         negativeSplit.back()._type != Tightening::UB ||
+         negativeSplit.front()._type != Tightening::UB )
+        return NULL;
+
+    if ( FloatUtils::areDisequal( negativeSplit.back()._value, -1.0 ) ||
+         FloatUtils::areDisequal( negativeSplit.front()._value, 0.0 ) ||
+         FloatUtils::areDisequal( positiveSplit.back()._value, 1.0 ) ||
+         FloatUtils::areDisequal( positiveSplit.front()._value, 0.0 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return NULL;
 
     // Check that f=sign(b) corresponds to a problem constraints
@@ -437,7 +651,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingSignConstraint( const List<P
     for ( auto &constraint : _problemConstraints )
     {
         auto constraintVars = constraint->getParticipatingVariables();
+<<<<<<< HEAD
         if ( constraint->getType() == PiecewiseLinearFunctionType::SIGN && constraintVars.back() == b && constraintVars.front() == f  )
+=======
+        if ( constraint->getType() == PiecewiseLinearFunctionType::SIGN &&
+             constraintVars.back() == b && constraintVars.front() == f )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             correspondingConstraint = constraint;
     }
 
@@ -445,7 +664,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingSignConstraint( const List<P
     return correspondingConstraint;
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *Checker::getCorrespondingAbsConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+=======
+PiecewiseLinearConstraint *
+Checker::getCorrespondingAbsConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( splits.size() != 2 )
         return NULL;
@@ -454,18 +678,41 @@ PiecewiseLinearConstraint *Checker::getCorrespondingAbsConstraint( const List<Pi
     auto secondSplitTightenings = splits.back().getBoundTightenings();
 
     // Find an LB tightening, it marks the positive split
+<<<<<<< HEAD
     auto &positiveSplit = firstSplitTightenings.front()._type == Tightening::LB ? firstSplitTightenings : secondSplitTightenings;
     auto &negativeSplit = firstSplitTightenings.front()._type == Tightening::LB ? secondSplitTightenings : firstSplitTightenings;
+=======
+    auto &positiveSplit = firstSplitTightenings.front()._type == Tightening::LB
+                            ? firstSplitTightenings
+                            : secondSplitTightenings;
+    auto &negativeSplit = firstSplitTightenings.front()._type == Tightening::LB
+                            ? secondSplitTightenings
+                            : firstSplitTightenings;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     unsigned b = positiveSplit.front()._variable;
     unsigned posAux = positiveSplit.back()._variable;
 
     unsigned negAux = negativeSplit.back()._variable;
     // Check details of both constraints - value and types
+<<<<<<< HEAD
     if ( positiveSplit.size() != 2 || negativeSplit.size() != 2 || positiveSplit.back()._type != Tightening::UB || positiveSplit.front()._type != Tightening::LB || negativeSplit.back()._type != Tightening::UB || negativeSplit.front()._type != Tightening::UB )
         return NULL;
 
     if ( FloatUtils::areDisequal( negativeSplit.back()._value, 0.0 ) || FloatUtils::areDisequal( negativeSplit.front()._value, 0.0 ) || FloatUtils::areDisequal(positiveSplit.back()._value, 0.0 ) || FloatUtils::areDisequal( positiveSplit.front()._value, 0.0 ) )
+=======
+    if ( positiveSplit.size() != 2 || negativeSplit.size() != 2 ||
+         positiveSplit.back()._type != Tightening::UB ||
+         positiveSplit.front()._type != Tightening::LB ||
+         negativeSplit.back()._type != Tightening::UB ||
+         negativeSplit.front()._type != Tightening::UB )
+        return NULL;
+
+    if ( FloatUtils::areDisequal( negativeSplit.back()._value, 0.0 ) ||
+         FloatUtils::areDisequal( negativeSplit.front()._value, 0.0 ) ||
+         FloatUtils::areDisequal( positiveSplit.back()._value, 0.0 ) ||
+         FloatUtils::areDisequal( positiveSplit.front()._value, 0.0 ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return NULL;
 
     // Check that f=sign(b) corresponds to a problem constraints
@@ -473,7 +720,13 @@ PiecewiseLinearConstraint *Checker::getCorrespondingAbsConstraint( const List<Pi
     for ( auto &constraint : _problemConstraints )
     {
         auto constraintVars = constraint->getParticipatingVariables();
+<<<<<<< HEAD
         if ( constraint->getType() == PiecewiseLinearFunctionType::ABSOLUTE_VALUE && constraintVars.front() == b && constraintVars.back() == negAux && constraintVars.exists( posAux )  )
+=======
+        if ( constraint->getType() == PiecewiseLinearFunctionType::ABSOLUTE_VALUE &&
+             constraintVars.front() == b && constraintVars.back() == negAux &&
+             constraintVars.exists( posAux ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             correspondingConstraint = constraint;
     }
 
@@ -481,7 +734,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingAbsConstraint( const List<Pi
     return correspondingConstraint;
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *Checker::getCorrespondingMaxConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+=======
+PiecewiseLinearConstraint *
+Checker::getCorrespondingMaxConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( auto &constraint : _problemConstraints )
     {
@@ -490,6 +748,7 @@ PiecewiseLinearConstraint *Checker::getCorrespondingMaxConstraint( const List<Pi
 
         bool constraintMatched = true;
 
+<<<<<<< HEAD
         // When checking, it is possible that the problem constraints already eliminated elements that appear in the proof
         List<PiecewiseLinearCaseSplit> constraintSplits = constraint->getCaseSplits();
         MaxConstraint *maxConstraint = ( MaxConstraint * ) constraint;
@@ -497,6 +756,17 @@ PiecewiseLinearConstraint *Checker::getCorrespondingMaxConstraint( const List<Pi
         {
             PiecewiseLinearCaseSplit eliminatedElementCaseSplit;
             eliminatedElementCaseSplit.storeBoundTightening( Tightening( element, 0, Tightening::UB ) );
+=======
+        // When checking, it is possible that the problem constraints already eliminated elements
+        // that appear in the proof
+        List<PiecewiseLinearCaseSplit> constraintSplits = constraint->getCaseSplits();
+        MaxConstraint *maxConstraint = (MaxConstraint *)constraint;
+        for ( auto const &element : maxConstraint->getEliminatedElements() )
+        {
+            PiecewiseLinearCaseSplit eliminatedElementCaseSplit;
+            eliminatedElementCaseSplit.storeBoundTightening(
+                Tightening( element, 0, Tightening::UB ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             constraintSplits.append( eliminatedElementCaseSplit );
         }
 
@@ -505,10 +775,20 @@ PiecewiseLinearConstraint *Checker::getCorrespondingMaxConstraint( const List<Pi
                 constraintMatched = false;
 
         // Case corresponding to MAX_PHASE_ELIMINATED
+<<<<<<< HEAD
         if ( splits.size() == 2 && splits.back().getBoundTightenings().size() == 1 && splits.front().getBoundTightenings().size() == 1 &&
             splits.back().getBoundTightenings().back()._variable == splits.front().getBoundTightenings().back()._variable &&
             splits.back().getBoundTightenings().back()._variable == maxConstraint->getF() &&
             splits.back().getBoundTightenings().back()._type != splits.front().getBoundTightenings().back()._type )
+=======
+        if ( splits.size() == 2 && splits.back().getBoundTightenings().size() == 1 &&
+             splits.front().getBoundTightenings().size() == 1 &&
+             splits.back().getBoundTightenings().back()._variable ==
+                 splits.front().getBoundTightenings().back()._variable &&
+             splits.back().getBoundTightenings().back()._variable == maxConstraint->getF() &&
+             splits.back().getBoundTightenings().back()._type !=
+                 splits.front().getBoundTightenings().back()._type )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             return constraint;
 
         if ( constraintMatched )
@@ -517,7 +797,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingMaxConstraint( const List<Pi
     return NULL;
 }
 
+<<<<<<< HEAD
 PiecewiseLinearConstraint *Checker::getCorrespondingDisjunctionConstraint( const List<PiecewiseLinearCaseSplit> & splits )
+=======
+PiecewiseLinearConstraint *
+Checker::getCorrespondingDisjunctionConstraint( const List<PiecewiseLinearCaseSplit> &splits )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( auto &constraint : _problemConstraints )
     {
@@ -526,7 +811,12 @@ PiecewiseLinearConstraint *Checker::getCorrespondingDisjunctionConstraint( const
 
         bool constraintMatched = true;
 
+<<<<<<< HEAD
         // constraintMatched will remain true iff the splits list is the same as the list of disjuncts (up to order)
+=======
+        // constraintMatched will remain true iff the splits list is the same as the list of
+        // disjuncts (up to order)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for ( const auto &split : constraint->getCaseSplits() )
             if ( !splits.exists( split ) )
                 constraintMatched = false;
@@ -541,7 +831,13 @@ PiecewiseLinearConstraint *Checker::getCorrespondingDisjunctionConstraint( const
     return NULL;
 }
 
+<<<<<<< HEAD
 double Checker::checkReluLemma( const PLCLemma &expl, PiecewiseLinearConstraint &constraint, double epsilon )
+=======
+double Checker::checkReluLemma( const PLCLemma &expl,
+                                PiecewiseLinearConstraint &constraint,
+                                double epsilon )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( constraint.getType() == RELU && expl.getConstraintType() == RELU && epsilon > 0 );
     ASSERT( expl.getCausingVars().size() == 1 );
@@ -554,7 +850,18 @@ double Checker::checkReluLemma( const PLCLemma &expl, PiecewiseLinearConstraint 
     BoundType affectedVarBound = expl.getAffectedVarBound();
     ASSERT( explanations.size() == 1 );
 
+<<<<<<< HEAD
     double explainedBound = UNSATCertificateUtils::computeBound( causingVar, causingVarBound == BoundType::UPPER, explanations.back(), _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
+=======
+    double explainedBound =
+        UNSATCertificateUtils::computeBound( causingVar,
+                                             causingVarBound == BoundType::UPPER,
+                                             explanations.back(),
+                                             _initialTableau,
+                                             _groundUpperBounds.data(),
+                                             _groundLowerBounds.data(),
+                                             _groundUpperBounds.size() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     List<unsigned> constraintVars = constraint.getParticipatingVariables();
     ASSERT( constraintVars.size() == 3 );
@@ -565,6 +872,7 @@ double Checker::checkReluLemma( const PLCLemma &expl, PiecewiseLinearConstraint 
     unsigned aux = conVec[2];
 
     // If explanation is phase fixing, mark it
+<<<<<<< HEAD
     if ( ( affectedVarBound == BoundType::LOWER && affectedVar == f && FloatUtils::isPositive( bound ) ) || ( affectedVarBound == BoundType::UPPER && affectedVar == aux && FloatUtils::isZero( bound ) ) )
         constraint.setPhaseStatus( RELU_PHASE_ACTIVE );
     else if ( ( affectedVarBound == BoundType::LOWER && affectedVar == aux && FloatUtils::isPositive( bound ) ) || ( affectedVarBound == BoundType::UPPER && affectedVar == f && FloatUtils::isZero( bound ) ) )
@@ -617,6 +925,89 @@ double Checker::checkReluLemma( const PLCLemma &expl, PiecewiseLinearConstraint 
 }
 
 double Checker::checkSignLemma( const PLCLemma &expl, PiecewiseLinearConstraint &constraint, double epsilon )
+=======
+    if ( ( affectedVarBound == BoundType::LOWER && affectedVar == f &&
+           FloatUtils::isPositive( bound ) ) ||
+         ( affectedVarBound == BoundType::UPPER && affectedVar == aux &&
+           FloatUtils::isZero( bound ) ) )
+        constraint.setPhaseStatus( RELU_PHASE_ACTIVE );
+    else if ( ( affectedVarBound == BoundType::LOWER && affectedVar == aux &&
+                FloatUtils::isPositive( bound ) ) ||
+              ( affectedVarBound == BoundType::UPPER && affectedVar == f &&
+                FloatUtils::isZero( bound ) ) )
+        constraint.setPhaseStatus( RELU_PHASE_INACTIVE );
+
+    // Make sure the explanation is explained using a ReLU bound tightening. Cases are matching each
+    // rule in ReluConstraint.cpp We allow explained bound to be tighter than the ones recorded
+    // (since an explanation can explain tighter bounds), and an epsilon sized error is tolerated.
+
+    // If lb of b is non negative, then ub of aux is 0
+    if ( causingVar == b && causingVarBound == BoundType::LOWER && affectedVar == aux &&
+         affectedVarBound == BoundType::UPPER &&
+         !FloatUtils::isNegative( explainedBound + epsilon ) )
+        return 0;
+
+    // If lb of f is positive, then ub if aux is 0
+    else if ( causingVar == f && causingVarBound == BoundType::LOWER && affectedVar == aux &&
+              affectedVarBound == BoundType::UPPER &&
+              FloatUtils::isPositive( explainedBound + epsilon ) )
+        return 0;
+
+    // If lb of b is negative x, then ub of aux is -x
+    else if ( causingVar == b && causingVarBound == BoundType::LOWER && affectedVar == aux &&
+              affectedVarBound == BoundType::UPPER &&
+              FloatUtils::isNegative( explainedBound - epsilon ) )
+        return -explainedBound;
+
+    // If lb of aux is positive, then ub of f is 0
+    else if ( causingVar == aux && causingVarBound == BoundType::LOWER && affectedVar == f &&
+              affectedVarBound == BoundType::UPPER &&
+              FloatUtils::isPositive( explainedBound + epsilon ) )
+        return 0;
+
+    // If lb of f is negative, then it is 0
+    else if ( causingVar == f && causingVarBound == BoundType::LOWER && affectedVar == f &&
+              affectedVarBound == BoundType::LOWER &&
+              FloatUtils::isNegative( explainedBound - epsilon ) )
+        return 0;
+
+    // Propagate ub from f to b
+    else if ( causingVar == f && causingVarBound == BoundType::UPPER && affectedVar == b &&
+              affectedVarBound == BoundType::UPPER )
+        return explainedBound;
+
+    // If ub of b is non positive, then ub of f is 0
+    else if ( causingVar == b && causingVarBound == BoundType::UPPER && affectedVar == f &&
+              affectedVarBound == BoundType::UPPER &&
+              !FloatUtils::isPositive( explainedBound - epsilon ) )
+        return 0;
+
+    // If ub of b is non positive x, then lb of aux is -x
+    else if ( causingVar == b && causingVarBound == BoundType::UPPER && affectedVar == aux &&
+              affectedVarBound == BoundType::LOWER &&
+              !FloatUtils::isPositive( explainedBound - epsilon ) )
+        return -explainedBound;
+
+    // If ub of b is positive, then propagate to f ( positivity of explained bound is not checked
+    // since negative explained ub can always explain positive bound )
+    else if ( causingVar == b && causingVarBound == BoundType::UPPER && affectedVar == f &&
+              affectedVarBound == BoundType::UPPER &&
+              FloatUtils::isPositive( explainedBound + epsilon ) )
+        return explainedBound;
+
+    // If ub of aux is x, then lb of b is -x
+    else if ( causingVar == aux && causingVarBound == BoundType::UPPER && affectedVar == b &&
+              affectedVarBound == BoundType::LOWER )
+        return -explainedBound;
+
+    return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                : FloatUtils::negativeInfinity();
+}
+
+double Checker::checkSignLemma( const PLCLemma &expl,
+                                PiecewiseLinearConstraint &constraint,
+                                double epsilon )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( constraint.getType() == SIGN && expl.getConstraintType() == SIGN && epsilon > 0 );
     ASSERT( expl.getCausingVars().size() == 1 );
@@ -629,14 +1020,28 @@ double Checker::checkSignLemma( const PLCLemma &expl, PiecewiseLinearConstraint 
     BoundType affectedVarBound = expl.getAffectedVarBound();
     ASSERT( explanations.size() == 1 );
 
+<<<<<<< HEAD
     double explainedBound = UNSATCertificateUtils::computeBound( causingVar, causingVarBound == BoundType::UPPER, explanations.front(), _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
     List<unsigned> constraintVars = constraint.getParticipatingVariables();
     ASSERT(constraintVars.size() == 2 );
+=======
+    double explainedBound =
+        UNSATCertificateUtils::computeBound( causingVar,
+                                             causingVarBound == BoundType::UPPER,
+                                             explanations.front(),
+                                             _initialTableau,
+                                             _groundUpperBounds.data(),
+                                             _groundLowerBounds.data(),
+                                             _groundUpperBounds.size() );
+    List<unsigned> constraintVars = constraint.getParticipatingVariables();
+    ASSERT( constraintVars.size() == 2 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     unsigned b = constraintVars.front();
     unsigned f = constraintVars.back();
 
     // Any explanation is phase fixing
+<<<<<<< HEAD
     if ( ( affectedVarBound == BoundType::LOWER && affectedVar == f && FloatUtils::gt( bound, -1 ) ) || ( affectedVarBound == BoundType::LOWER && affectedVar == b && !FloatUtils::isNegative( bound ) ) )
         constraint.setPhaseStatus( SIGN_PHASE_POSITIVE );
     else if ( ( affectedVarBound == BoundType::UPPER && affectedVar == f && FloatUtils::gt( bound, 1 ) ) || ( affectedVarBound == BoundType::UPPER && affectedVar == b && FloatUtils::isNegative( bound ) ) )
@@ -673,6 +1078,66 @@ double Checker::checkSignLemma( const PLCLemma &expl, PiecewiseLinearConstraint 
 }
 
 double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &constraint, double epsilon )
+=======
+    if ( ( affectedVarBound == BoundType::LOWER && affectedVar == f &&
+           FloatUtils::gt( bound, -1 ) ) ||
+         ( affectedVarBound == BoundType::LOWER && affectedVar == b &&
+           !FloatUtils::isNegative( bound ) ) )
+        constraint.setPhaseStatus( SIGN_PHASE_POSITIVE );
+    else if ( ( affectedVarBound == BoundType::UPPER && affectedVar == f &&
+                FloatUtils::gt( bound, 1 ) ) ||
+              ( affectedVarBound == BoundType::UPPER && affectedVar == b &&
+                FloatUtils::isNegative( bound ) ) )
+        constraint.setPhaseStatus( SIGN_PHASE_NEGATIVE );
+
+    // Make sure the explanation is explained using a sign bound tightening. Cases are matching each
+    // rule in SignConstraint.cpp We allow explained bound to be tighter than the ones recorded
+    // (since an explanation can explain tighter bounds), and an epsilon sized error is tolerated.
+
+    // If lb of f is > -1, then lb of f is 1
+    if ( causingVar == f && causingVarBound == BoundType::LOWER && affectedVar == f &&
+         affectedVarBound == BoundType::LOWER && FloatUtils::areEqual( bound, 1 ) &&
+         FloatUtils::gte( explainedBound + epsilon, -1 ) )
+        return 1;
+
+    // If lb of f is > -1, then lb of b is 0
+    else if ( causingVar == f && causingVarBound == BoundType::LOWER && affectedVar == b &&
+              affectedVarBound == BoundType::LOWER && FloatUtils::isZero( bound ) &&
+              FloatUtils::gte( explainedBound + epsilon, -1 ) )
+        return 0;
+
+    // If lb of b is non negative, then lb of f is 1
+    else if ( causingVar == b && causingVarBound == BoundType::LOWER && affectedVar == f &&
+              affectedVarBound == BoundType::LOWER && FloatUtils::areEqual( bound, 1 ) &&
+              !FloatUtils::isNegative( explainedBound + epsilon ) )
+        return 1;
+
+    // If ub of f is < 1, then ub of f is -1
+    else if ( causingVar == f && causingVarBound == BoundType::UPPER && affectedVar == f &&
+              affectedVarBound == BoundType::UPPER && FloatUtils::areEqual( bound, -1 ) &&
+              FloatUtils::lte( explainedBound - epsilon, 1 ) )
+        return -1;
+
+    // If ub of f is < 1, then ub of b is 0
+    else if ( causingVar == f && causingVarBound == BoundType::UPPER && affectedVar == b &&
+              affectedVarBound == BoundType::UPPER && FloatUtils::isZero( bound ) &&
+              FloatUtils::lte( explainedBound - epsilon, 1 ) )
+        return 0;
+
+    // If ub of b is negative, then ub of f is -1
+    else if ( causingVar == b && causingVarBound == BoundType::UPPER && affectedVar == f &&
+              affectedVarBound == BoundType::UPPER && FloatUtils::areEqual( bound, -1 ) &&
+              FloatUtils::isNegative( explainedBound - epsilon ) )
+        return -1;
+
+    return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                : FloatUtils::negativeInfinity();
+}
+
+double Checker::checkAbsLemma( const PLCLemma &expl,
+                               PiecewiseLinearConstraint &constraint,
+                               double epsilon )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( constraint.getType() == ABSOLUTE_VALUE && expl.getConstraintType() == ABSOLUTE_VALUE );
     ASSERT( expl.getCausingVars().size() == 2 || expl.getCausingVars().size() == 1 );
@@ -682,7 +1147,11 @@ double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
     unsigned affectedVar = expl.getAffectedVar();
     double bound = expl.getBound();
     List<unsigned> constraintVars = constraint.getParticipatingVariables();
+<<<<<<< HEAD
     ASSERT(constraintVars.size() == 4 );
+=======
+    ASSERT( constraintVars.size() == 4 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     Vector<unsigned> conVec( constraintVars.begin(), constraintVars.end() );
     unsigned b = conVec[0];
@@ -690,8 +1159,14 @@ double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
     unsigned pos = conVec[2];
     unsigned neg = conVec[3];
 
+<<<<<<< HEAD
     // Make sure the explanation is explained using an absolute value bound tightening. Cases are matching each rule in AbsolutValueConstraint.cpp
     // We allow explained bound to be tighter than the ones recorded (since an explanation can explain tighter bounds)
+=======
+    // Make sure the explanation is explained using an absolute value bound tightening. Cases are
+    // matching each rule in AbsolutValueConstraint.cpp We allow explained bound to be tighter than
+    // the ones recorded (since an explanation can explain tighter bounds)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     if ( expl.getCausingVars().size() == 2 )
     {
@@ -704,6 +1179,7 @@ double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
         // Case of a non phase-fixing lemma
         if ( firstCausingVar == secondCausingVar )
         {
+<<<<<<< HEAD
             double explainedUpperBound = UNSATCertificateUtils::computeBound( firstCausingVar, BoundType::UPPER, firstExplanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
             double explainedLowerBound = UNSATCertificateUtils::computeBound( secondCausingVar, BoundType::LOWER, secondExplanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
 
@@ -712,26 +1188,84 @@ double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
                 return FloatUtils::max( explainedUpperBound, -explainedLowerBound );
 
             return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+            double explainedUpperBound =
+                UNSATCertificateUtils::computeBound( firstCausingVar,
+                                                     BoundType::UPPER,
+                                                     firstExplanation,
+                                                     _initialTableau,
+                                                     _groundUpperBounds.data(),
+                                                     _groundLowerBounds.data(),
+                                                     _groundUpperBounds.size() );
+            double explainedLowerBound =
+                UNSATCertificateUtils::computeBound( secondCausingVar,
+                                                     BoundType::LOWER,
+                                                     secondExplanation,
+                                                     _initialTableau,
+                                                     _groundUpperBounds.data(),
+                                                     _groundLowerBounds.data(),
+                                                     _groundUpperBounds.size() );
+
+            // b is always the causing var, affecting the ub of f
+            if ( affectedVar == f && firstCausingVar == b && affectedVarBound == BoundType::UPPER &&
+                 bound > 0 )
+                return FloatUtils::max( explainedUpperBound, -explainedLowerBound );
+
+            return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                        : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         // Cases of a phase-fixing lemma
         else
         {
             ASSERT( firstCausingVar == b && secondCausingVar == f );
+<<<<<<< HEAD
             double explainedBBound = UNSATCertificateUtils::computeBound( firstCausingVar, causingVarBound == BoundType::UPPER, firstExplanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
             double explainedFBound = UNSATCertificateUtils::computeBound( secondCausingVar, BoundType::LOWER, secondExplanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
 
             if ( affectedVar == neg && causingVarBound == BoundType::UPPER && explainedFBound > explainedBBound - epsilon && bound == 0 )
+=======
+            double explainedBBound =
+                UNSATCertificateUtils::computeBound( firstCausingVar,
+                                                     causingVarBound == BoundType::UPPER,
+                                                     firstExplanation,
+                                                     _initialTableau,
+                                                     _groundUpperBounds.data(),
+                                                     _groundLowerBounds.data(),
+                                                     _groundUpperBounds.size() );
+            double explainedFBound =
+                UNSATCertificateUtils::computeBound( secondCausingVar,
+                                                     BoundType::LOWER,
+                                                     secondExplanation,
+                                                     _initialTableau,
+                                                     _groundUpperBounds.data(),
+                                                     _groundLowerBounds.data(),
+                                                     _groundUpperBounds.size() );
+
+            if ( affectedVar == neg && causingVarBound == BoundType::UPPER &&
+                 explainedFBound > explainedBBound - epsilon && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             {
                 constraint.setPhaseStatus( ABS_PHASE_NEGATIVE );
                 return 0;
             }
+<<<<<<< HEAD
             else if ( affectedVar == pos && causingVarBound == BoundType::LOWER && explainedFBound > -explainedBBound - epsilon && bound == 0 )
+=======
+            else if ( affectedVar == pos && causingVarBound == BoundType::LOWER &&
+                      explainedFBound > -explainedBBound - epsilon && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             {
                 constraint.setPhaseStatus( ABS_PHASE_POSITIVE );
                 return 0;
             }
 
+<<<<<<< HEAD
             return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+            return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                        : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -739,36 +1273,74 @@ double Checker::checkAbsLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
     const List<SparseUnsortedList> &explanation = expl.getExplanations();
     unsigned causingVar = expl.getCausingVars().front();
 
+<<<<<<< HEAD
     double explainedBound = UNSATCertificateUtils::computeBound( causingVar, causingVarBound == BoundType::UPPER, explanation.front(), _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
 
     if ( affectedVar == pos && causingVar == b && causingVarBound == BoundType::LOWER && !FloatUtils::isNegative( explainedBound + epsilon ) && bound == 0 )
+=======
+    double explainedBound =
+        UNSATCertificateUtils::computeBound( causingVar,
+                                             causingVarBound == BoundType::UPPER,
+                                             explanation.front(),
+                                             _initialTableau,
+                                             _groundUpperBounds.data(),
+                                             _groundLowerBounds.data(),
+                                             _groundUpperBounds.size() );
+
+    if ( affectedVar == pos && causingVar == b && causingVarBound == BoundType::LOWER &&
+         !FloatUtils::isNegative( explainedBound + epsilon ) && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         constraint.setPhaseStatus( ABS_PHASE_POSITIVE );
         return 0;
     }
+<<<<<<< HEAD
     else if ( affectedVar == neg && causingVar == b && causingVarBound == BoundType::UPPER && !FloatUtils::isPositive( explainedBound - epsilon ) && bound == 0 )
+=======
+    else if ( affectedVar == neg && causingVar == b && causingVarBound == BoundType::UPPER &&
+              !FloatUtils::isPositive( explainedBound - epsilon ) && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         constraint.setPhaseStatus( ABS_PHASE_NEGATIVE );
         return 0;
     }
+<<<<<<< HEAD
     else if ( affectedVar == neg && causingVar == pos && causingVarBound == BoundType::LOWER && FloatUtils::isPositive( explainedBound + epsilon ) && bound == 0 )
+=======
+    else if ( affectedVar == neg && causingVar == pos && causingVarBound == BoundType::LOWER &&
+              FloatUtils::isPositive( explainedBound + epsilon ) && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         constraint.setPhaseStatus( ABS_PHASE_NEGATIVE );
         return 0;
     }
+<<<<<<< HEAD
     else if ( affectedVar == pos && causingVar == neg && causingVarBound == BoundType::LOWER && FloatUtils::isPositive( explainedBound + epsilon ) && bound == 0 )
+=======
+    else if ( affectedVar == pos && causingVar == neg && causingVarBound == BoundType::LOWER &&
+              FloatUtils::isPositive( explainedBound + epsilon ) && bound == 0 )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         constraint.setPhaseStatus( ABS_PHASE_POSITIVE );
         return 0;
     }
 
+<<<<<<< HEAD
     return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+    return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 double Checker::checkMaxLemma( const PLCLemma &expl, PiecewiseLinearConstraint &constraint )
 {
     ASSERT( constraint.getType() == MAX && expl.getConstraintType() == MAX );
+<<<<<<< HEAD
     MaxConstraint *maxConstraint =  ( MaxConstraint * ) &constraint;
+=======
+    MaxConstraint *maxConstraint = (MaxConstraint *)&constraint;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     double maxBound = maxConstraint->getMaxValueOfEliminatedPhases();
     const List<unsigned> causingVars = expl.getCausingVars();
@@ -776,16 +1348,26 @@ double Checker::checkMaxLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
     const List<SparseUnsortedList> &allExplanations = expl.getExplanations();
     BoundType causingVarBound = expl.getCausingVarBound();
     BoundType affectedVarBound = expl.getAffectedVarBound();
+<<<<<<< HEAD
     double explainedBound = affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+    double explainedBound = affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                                 : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     unsigned f = maxConstraint->getF();
 
     Set<unsigned> constraintElements = maxConstraint->getParticipatingElements();
+<<<<<<< HEAD
     for( const auto &var : causingVars )
+=======
+    for ( const auto &var : causingVars )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if ( !constraintElements.exists( var ) )
             return explainedBound;
 
 
+<<<<<<< HEAD
     // Only tightening type is of the form f = element, for some element with the maximal upper bound
     unsigned counter = 0;
 
@@ -796,12 +1378,40 @@ double Checker::checkMaxLemma( const PLCLemma &expl, PiecewiseLinearConstraint &
     for( const auto &explanation : allExplanations )
     {
         explainedBound = UNSATCertificateUtils::computeBound( causingVarsVec[counter], BoundType::UPPER, explanation, _initialTableau, _groundUpperBounds.data(), _groundLowerBounds.data(), _groundUpperBounds.size() );
+=======
+    // Only tightening type is of the form f = element, for some element with the maximal upper
+    // bound
+    unsigned counter = 0;
+
+    Vector<unsigned> causingVarsVec = Vector<unsigned>( 0 );
+    for ( const auto &var : causingVars )
+        causingVarsVec.append( var );
+
+    for ( const auto &explanation : allExplanations )
+    {
+        explainedBound = UNSATCertificateUtils::computeBound( causingVarsVec[counter],
+                                                              BoundType::UPPER,
+                                                              explanation,
+                                                              _initialTableau,
+                                                              _groundUpperBounds.data(),
+                                                              _groundLowerBounds.data(),
+                                                              _groundUpperBounds.size() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         maxBound = FloatUtils::max( maxBound, explainedBound );
         ++counter;
     }
 
+<<<<<<< HEAD
     if ( causingVarBound == BoundType::UPPER && affectedVar == f && affectedVarBound == BoundType::UPPER )
         return maxBound;
 
     return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity() : FloatUtils::negativeInfinity();
+=======
+    if ( causingVarBound == BoundType::UPPER && affectedVar == f &&
+         affectedVarBound == BoundType::UPPER )
+        return maxBound;
+
+    return affectedVarBound == BoundType::UPPER ? FloatUtils::infinity()
+                                                : FloatUtils::negativeInfinity();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }

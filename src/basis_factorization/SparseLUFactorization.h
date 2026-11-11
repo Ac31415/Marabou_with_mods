@@ -21,7 +21,12 @@
 #include "SparseGaussianEliminator.h"
 #include "SparseLUFactors.h"
 
+<<<<<<< HEAD
 #define BASIS_FACTORIZATION_LOG( x, ... ) LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "SparseLUFactorization: %s\n", x )
+=======
+#define BASIS_FACTORIZATION_LOG( x, ... )                                                          \
+    LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "SparseLUFactorization: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class EtaMatrix;
 class LPElement;
@@ -92,10 +97,17 @@ public:
     void storeFactorization( IBasisFactorization *other );
     void restoreFactorization( const IBasisFactorization *other );
 
+<<<<<<< HEAD
 	/*
       Ask the basis factorization to obtain a fresh basis
       (through the previously-provided oracle).
 	*/
+=======
+    /*
+      Ask the basis factorization to obtain a fresh basis
+      (through the previously-provided oracle).
+    */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void obtainFreshBasis();
 
     /*
@@ -122,7 +134,11 @@ public:
     /*
       Getter functions for the various factorization components.
     */
+<<<<<<< HEAD
 	const List<EtaMatrix *> getEtas() const;
+=======
+    const List<EtaMatrix *> getEtas() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Debug
@@ -168,7 +184,11 @@ private:
 
     /*
       Factorize the stored _B matrix into LU form.
+<<<<<<< HEAD
 	*/
+=======
+    */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void factorizeBasis();
 
     /*
@@ -180,7 +200,11 @@ private:
     /*
       Clear a previous factorization.
     */
+<<<<<<< HEAD
 	void clearFactorization();
+=======
+    void clearFactorization();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __SparseLUFactorization_h__

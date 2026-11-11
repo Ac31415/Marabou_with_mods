@@ -85,6 +85,26 @@ public:
      Set the coefficient of a variable
     */
     void setCoefficient( unsigned variable, double newCoefficient );
+<<<<<<< HEAD
+=======
+
+    /*
+      Transform the equation so that any two addends have different variables
+      and no addends have zero coefficients
+
+      CAUTION: the method is rather inefficient so try to avoid invoking this
+      if possible.
+    */
+    void removeRedundantAddends();
+
+    /*
+      Returns true if two addends have the same variables or some addend
+      has zero coefficients
+
+      NOTE: for debug only
+    */
+    bool containsRedundantAddends() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     List<Addend> _addends;
     double _scalar;

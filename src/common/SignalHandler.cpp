@@ -15,6 +15,10 @@
 **/
 
 #include "SignalHandler.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <cstring>
 #include <signal.h>
 
@@ -36,20 +40,30 @@ void SignalHandler::registerClient( Signalable *client )
 
 void SignalHandler::initialize()
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #ifdef _WIN32
     signal( SIGINT, got_signal );
     signal( SIGTERM, got_signal );
     signal( SIGABRT, got_signal );
 #else
     struct sigaction sa;
+<<<<<<< HEAD
     memset( &sa, 0, sizeof(sa) );
+=======
+    memset( &sa, 0, sizeof( sa ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     sa.sa_handler = got_signal;
     sigfillset( &sa.sa_mask );
     sigaction( SIGQUIT, &sa, NULL );
     sigaction( SIGTERM, &sa, NULL );
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void SignalHandler::signalReceived( unsigned /* signalNumber */ )

@@ -10,18 +10,27 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
 
  **/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-#include <cstdio>
+ **/
 
 #include "BerkeleyParser.h"
 #include "Engine.h"
 #include "FloatUtils.h"
 #include "GlobalConfiguration.h"
 #include "InputQuery.h"
-#include "Preprocessor.h"
 #include "MarabouError.h"
+#include "Preprocessor.h"
+<<<<<<< HEAD
+#include "MarabouError.h"
+=======
+
+#include <cstdio>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 int main()
 {

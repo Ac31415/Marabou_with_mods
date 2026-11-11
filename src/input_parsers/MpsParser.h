@@ -20,7 +20,11 @@
 #include "Map.h"
 #include "Set.h"
 
+<<<<<<< HEAD
 #define MPS_LOG(x, ...) LOG(GlobalConfiguration::MPS_PARSER_LOGGING, "MpsParser: %s\n", x)
+=======
+#define MPS_LOG( x, ... ) LOG( GlobalConfiguration::MPS_PARSER_LOGGING, "MpsParser: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class InputQuery;
 class String;

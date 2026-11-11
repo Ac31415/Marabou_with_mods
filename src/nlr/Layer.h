@@ -44,7 +44,15 @@ public:
         ABSOLUTE_VALUE,
         MAX,
         SIGN,
+<<<<<<< HEAD
         SIGMOID,
+=======
+        LEAKY_RELU,
+        SIGMOID,
+        ROUND,
+        SOFTMAX,
+        BILINEAR,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     };
 
     /*
@@ -68,6 +76,7 @@ public:
     */
     void reduceIndexFromAllMaps( unsigned startIndex );
 
+<<<<<<< HEAD
     void setWeight( unsigned sourceLayer,
                     unsigned sourceNeuron,
                     unsigned targetNeuron,
@@ -75,6 +84,11 @@ public:
     double getWeight( unsigned sourceLayer,
                       unsigned sourceNeuron,
                       unsigned targetNeuron ) const;
+=======
+    void
+    setWeight( unsigned sourceLayer, unsigned sourceNeuron, unsigned targetNeuron, double weight );
+    double getWeight( unsigned sourceLayer, unsigned sourceNeuron, unsigned targetNeuron ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     double *getWeights( unsigned sourceLayerIndex ) const;
     double *getPositiveWeights( unsigned sourceLayerIndex ) const;
     double *getNegativeWeights( unsigned sourceLayerIndex ) const;
@@ -83,9 +97,13 @@ public:
     double getBias( unsigned neuron ) const;
     double *getBiases() const;
 
+<<<<<<< HEAD
     void addActivationSource( unsigned sourceLayer,
                               unsigned sourceNeuron,
                               unsigned targetNeuron );
+=======
+    void addActivationSource( unsigned sourceLayer, unsigned sourceNeuron, unsigned targetNeuron );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     List<NeuronIndex> getActivationSources( unsigned neuron ) const;
 
     void setNeuronVariable( unsigned neuron, unsigned variable );
@@ -109,9 +127,15 @@ public:
     /*
       Set/get the simulations, or compute it from source layers
     */
+<<<<<<< HEAD
    void setSimulations( const Vector<Vector<double>> *values );
    void computeSimulations();
    const Vector<Vector<double>> *getSimulations() const;
+=======
+    void setSimulations( const Vector<Vector<double>> *values );
+    void computeSimulations();
+    const Vector<Vector<double>> *getSimulations() const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Bound related functionality: grab the current bounds from the
@@ -125,6 +149,18 @@ public:
     double *getLbs() const;
     double *getUbs() const;
 
+<<<<<<< HEAD
+=======
+    void setAlpha( double alpha )
+    {
+        _alpha = alpha;
+    }
+    double getAlpha() const
+    {
+        return _alpha;
+    }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void obtainCurrentBounds( const InputQuery &inputQuery );
     void obtainCurrentBounds();
     void computeSymbolicBounds();
@@ -151,7 +187,12 @@ public:
     void dump() const;
     static String typeToString( Type type );
     bool operator==( const Layer &layer ) const;
+<<<<<<< HEAD
     bool compareWeights( const Map<unsigned, double *> &map, const Map<unsigned, double *> &mapOfOtherLayer ) const;
+=======
+    bool compareWeights( const Map<unsigned, double *> &map,
+                         const Map<unsigned, double *> &mapOfOtherLayer ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 private:
     unsigned _layerIndex;
@@ -189,6 +230,14 @@ private:
     double *_symbolicLbOfUb;
     double *_symbolicUbOfUb;
 
+<<<<<<< HEAD
+=======
+    // A field variable to store parameter value. Right now it is only used to store the slope of
+    // leaky relus. Moving forward, we should keep a parameter map (e.g., Map<String, void *>)
+    // to store layer-specific information like "weights" and "alpha".
+    double _alpha = 0;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void allocateMemory();
     void freeMemoryIfNeeded();
 
@@ -219,9 +268,14 @@ private:
     double getSymbolicLbOfUb( unsigned neuron ) const;
     double getSymbolicUbOfUb( unsigned neuron ) const;
 
+<<<<<<< HEAD
     void adjustWeightMapIndexing( Map<unsigned, double *> &map,
                                   unsigned indexToStart );
     };
+=======
+    void adjustWeightMapIndexing( Map<unsigned, double *> &map, unsigned indexToStart );
+};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 } // namespace NLR
 

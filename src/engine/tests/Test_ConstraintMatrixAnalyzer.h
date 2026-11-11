@@ -13,13 +13,17 @@
  **
  ** [[ Add lengthier description here ]]
  **/
+<<<<<<< HEAD
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #include "ConstraintMatrixAnalyzer.h"
 
-#include <string.h>
 #include <cstdio>
+#include <cxxtest/TestSuite.h>
+#include <string.h>
 
 class MockForConstraintMatrixAnalyzer
 {
@@ -29,17 +33,17 @@ public:
 class ConstraintMatrixAnalyzerTestSuite : public CxxTest::TestSuite
 {
 public:
-	MockForConstraintMatrixAnalyzer *mock;
+    MockForConstraintMatrixAnalyzer *mock;
 
-	void setUp()
-	{
-		TS_ASSERT( mock = new MockForConstraintMatrixAnalyzer );
-	}
+    void setUp()
+    {
+        TS_ASSERT( mock = new MockForConstraintMatrixAnalyzer );
+    }
 
-	void tearDown()
-	{
-		TS_ASSERT_THROWS_NOTHING( delete mock );
-	}
+    void tearDown()
+    {
+        TS_ASSERT_THROWS_NOTHING( delete mock );
+    }
 
     bool sameColumns( List<unsigned> a, Set<unsigned> b )
     {
@@ -59,9 +63,9 @@ public:
 
         {
             double A1[] = {
-                1, 0, 0, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 0, 0, 1, 0,
+                1, 0, 0, 0, 0, //
+                0, 0, 1, 0, 0, //
+                0, 0, 0, 1, 0, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
@@ -73,9 +77,9 @@ public:
 
         {
             double A1[] = {
-                1, 0, 0, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 1, 0, 1, 0,
+                1, 0, 0, 0, 0, //
+                0, 0, 1, 0, 0, //
+                0, 1, 0, 1, 0, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
@@ -84,20 +88,26 @@ public:
 
             Set<unsigned> expectedColumns1( { 0, 1, 2 } );
             Set<unsigned> expectedColumns2( { 0, 2, 3 } );
+<<<<<<< HEAD
             TS_ASSERT( sameColumns( analyzer.getIndependentColumns(), expectedColumns1 )
                        ||
                        sameColumns( analyzer.getIndependentColumns(), expectedColumns2 )
                        );
+=======
+            TS_ASSERT( sameColumns( analyzer.getIndependentColumns(), expectedColumns1 ) ||
+                       sameColumns( analyzer.getIndependentColumns(), expectedColumns2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         {
             double A1[] = {
-                1, 0, 0, 0, 0,
-                1, 0, 0, 0, 0,
-                0, 1, 0, 2, 0,
+                1, 0, 0, 0, 0, //
+                1, 0, 0, 0, 0, //
+                0, 1, 0, 2, 0, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
+<<<<<<< HEAD
 
             Set<unsigned> expectedRows( { 1 } );
             TS_ASSERT_EQUALS( analyzer.getRedundantRows(), expectedRows );
@@ -108,13 +118,23 @@ public:
                        ||
                        sameColumns( analyzer.getIndependentColumns(), expectedColumns2 )
                        );
+=======
+
+            Set<unsigned> expectedRows( { 1 } );
+            TS_ASSERT_EQUALS( analyzer.getRedundantRows(), expectedRows );
+
+            Set<unsigned> expectedColumns1( { 0, 1 } );
+            Set<unsigned> expectedColumns2( { 0, 3 } );
+            TS_ASSERT( sameColumns( analyzer.getIndependentColumns(), expectedColumns1 ) ||
+                       sameColumns( analyzer.getIndependentColumns(), expectedColumns2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         {
             double A1[] = {
-                1, 1, 0, 1, 0,
-                0, 0, 3, 0, 0,
-                2, 2, 0, 0, 0,
+                1, 1, 0, 1, 0, //
+                0, 0, 3, 0, 0, //
+                2, 2, 0, 0, 0, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
@@ -123,17 +143,22 @@ public:
 
             Set<unsigned> expectedColumns1( { 0, 2, 3 } );
             Set<unsigned> expectedColumns2( { 1, 2, 3 } );
+<<<<<<< HEAD
             TS_ASSERT( sameColumns( analyzer.getIndependentColumns(), expectedColumns1 )
                        ||
                        sameColumns( analyzer.getIndependentColumns(), expectedColumns2 )
                        );
+=======
+            TS_ASSERT( sameColumns( analyzer.getIndependentColumns(), expectedColumns1 ) ||
+                       sameColumns( analyzer.getIndependentColumns(), expectedColumns2 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         {
             double A1[] = {
-                15, 3,  0, 1, 0,
-                0 , 0, -1, 1, 4,
-                15, 3, -1, 2, 4,
+                15, 3, 0,  1, 0, //
+                0,  0, -1, 1, 4, //
+                15, 3, -1, 2, 4, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
@@ -152,9 +177,9 @@ public:
 
         {
             double A1[] = {
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, //
+                0, 0, 0, 0, 0, //
+                0, 0, 0, 0, 0, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
@@ -166,15 +191,19 @@ public:
 
         {
             double A1[] = {
-                0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0,
-                0, 2, 3, 14, 1,
+                0, 0, 0, 0,  0, //
+                0, 0, 0, 0,  0, //
+                0, 2, 3, 14, 1, //
             };
 
             TS_ASSERT_THROWS_NOTHING( analyzer.analyze( A1, 3, 5 ) );
 
+<<<<<<< HEAD
             TS_ASSERT_EQUALS( analyzer.getRedundantRows(),
                               Set<unsigned>( { 0, 1 } ) );
+=======
+            TS_ASSERT_EQUALS( analyzer.getRedundantRows(), Set<unsigned>( { 0, 1 } ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             List<unsigned> columns = analyzer.getIndependentColumns();
             TS_ASSERT_EQUALS( columns.size(), 1U );

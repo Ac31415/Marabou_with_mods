@@ -13,17 +13,31 @@
 
  **/
 
+<<<<<<< HEAD
+=======
+#include "SparseFTFactorization.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "GlobalConfiguration.h"
 #include "MalformedBasisException.h"
+<<<<<<< HEAD
 #include "SparseFTFactorization.h"
 
 SparseFTFactorization::SparseFTFactorization( unsigned m, const BasisColumnOracle &basisColumnOracle )
     : IBasisFactorization( basisColumnOracle )
     , _B( m )
 	, _m( m )
+=======
+
+SparseFTFactorization::SparseFTFactorization( unsigned m,
+                                              const BasisColumnOracle &basisColumnOracle )
+    : IBasisFactorization( basisColumnOracle )
+    , _B( m )
+    , _m( m )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     , _sparseLUFactors( m )
     , _sparseGaussianEliminator( m )
     , _statistics( NULL )
@@ -34,6 +48,7 @@ SparseFTFactorization::SparseFTFactorization( unsigned m, const BasisColumnOracl
 {
     _z1 = new double[m];
     if ( !_z1 )
+<<<<<<< HEAD
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "SparseFTFactorization::z1" );
 
     _z2 = new double[m];
@@ -47,6 +62,25 @@ SparseFTFactorization::SparseFTFactorization( unsigned m, const BasisColumnOracl
     _z4 = new double[m];
     if ( !_z4 )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "SparseFTFactorization::z4" );
+=======
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseFTFactorization::z1" );
+
+    _z2 = new double[m];
+    if ( !_z2 )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseFTFactorization::z2" );
+
+    _z3 = new double[m];
+    if ( !_z3 )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseFTFactorization::z3" );
+
+    _z4 = new double[m];
+    if ( !_z4 )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseFTFactorization::z4" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 SparseFTFactorization::~SparseFTFactorization()
@@ -96,7 +130,11 @@ const SparseMatrix *SparseFTFactorization::getSparseBasis() const
 }
 
 void SparseFTFactorization::updateToAdjacentBasis( unsigned columnIndex,
+<<<<<<< HEAD
                                                    const double */* changeColumn */,
+=======
+                                                   const double * /* changeColumn */,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                                    const double *newColumn )
 {
     // q = columnIndex
@@ -183,8 +221,13 @@ void SparseFTFactorization::updateToAdjacentBasis( unsigned columnIndex,
     for ( unsigned i = uColumnIndex; i < lastNonZeroEntryInU; ++i )
     {
         // Rows move upwards, columns move to the left
+<<<<<<< HEAD
         _sparseLUFactors._P._columnOrdering[i] = _sparseLUFactors._P._columnOrdering[i+1];
         _sparseLUFactors._Q._rowOrdering[i] = _sparseLUFactors._Q._rowOrdering[i+1];
+=======
+        _sparseLUFactors._P._columnOrdering[i] = _sparseLUFactors._P._columnOrdering[i + 1];
+        _sparseLUFactors._Q._rowOrdering[i] = _sparseLUFactors._Q._rowOrdering[i + 1];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Adjsut the transposed permutations, also
         _sparseLUFactors._P._rowOrdering[_sparseLUFactors._P._columnOrdering[i]] = i;
@@ -278,10 +321,15 @@ void SparseFTFactorization::updateToAdjacentBasis( unsigned columnIndex,
     }
 
     if ( -GlobalConfiguration::SPARSE_FORREST_TOMLIN_DIAGONAL_ELEMENT_TOLERANCE <
+<<<<<<< HEAD
          _z3[columnIndex]
          &&
          _z3[columnIndex] <
          GlobalConfiguration::SPARSE_FORREST_TOMLIN_DIAGONAL_ELEMENT_TOLERANCE )
+=======
+             _z3[columnIndex] &&
+         _z3[columnIndex] < GlobalConfiguration::SPARSE_FORREST_TOMLIN_DIAGONAL_ELEMENT_TOLERANCE )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         obtainFreshBasis();
         return;
@@ -441,7 +489,11 @@ void SparseFTFactorization::hForwardTransformation( const double *y, double *x )
       Eliminate etas one by one.
     */
 
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( const auto &eta : _etas )
     {
@@ -463,6 +515,7 @@ void SparseFTFactorization::hBackwardTransformation( const double *y, double *x 
       Eliminate etas one by one.
     */
 
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
 
     for ( auto eta = _etas.rbegin(); eta != _etas.rend(); ++eta )
@@ -471,6 +524,16 @@ void SparseFTFactorization::hBackwardTransformation( const double *y, double *x 
         double pivotValue = x[pivotIndex];
 
         for ( const auto &entry : (*eta)->_sparseColumn )
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+
+    for ( auto eta = _etas.rbegin(); eta != _etas.rend(); ++eta )
+    {
+        unsigned pivotIndex = ( *eta )->_columnIndex;
+        double pivotValue = x[pivotIndex];
+
+        for ( const auto &entry : ( *eta )->_sparseColumn )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             unsigned entryIndex = entry._index;
             double value = entry._value;
@@ -498,7 +561,11 @@ void SparseFTFactorization::dumpExplicitBasis() const
     // Start with F
     _sparseLUFactors._F->toDense( result );
     for ( unsigned i = 0; i < _m; ++i )
+<<<<<<< HEAD
         result[i*_m + i] = 1;
+=======
+        result[i * _m + i] = 1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Go eta by eta
     for ( const auto &eta : _etas )
@@ -510,15 +577,26 @@ void SparseFTFactorization::dumpExplicitBasis() const
         {
             for ( unsigned j = 0; j < _m; ++j )
             {
+<<<<<<< HEAD
                 temp[i*_m + j] = 0;
                 for ( unsigned k = 0; k < _m; ++k )
                 {
                     temp[i*_m + j] += ( result[i*_m + k] * toMultiply[j*_m + k] );
+=======
+                temp[i * _m + j] = 0;
+                for ( unsigned k = 0; k < _m; ++k )
+                {
+                    temp[i * _m + j] += ( result[i * _m + k] * toMultiply[j * _m + k] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
             }
         }
 
+<<<<<<< HEAD
         memcpy( result, temp, sizeof(double) * _m * _m );
+=======
+        memcpy( result, temp, sizeof( double ) * _m * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     // End with V
@@ -528,6 +606,7 @@ void SparseFTFactorization::dumpExplicitBasis() const
     {
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             temp[i*_m + j] = 0;
             for ( unsigned k = 0; k < _m; ++k )
             {
@@ -536,6 +615,16 @@ void SparseFTFactorization::dumpExplicitBasis() const
         }
     }
     memcpy( result, temp, sizeof(double) * _m * _m );
+=======
+            temp[i * _m + j] = 0;
+            for ( unsigned k = 0; k < _m; ++k )
+            {
+                temp[i * _m + j] += ( result[i * _m + k] * toMultiply[k * _m + j] );
+            }
+        }
+    }
+    memcpy( result, temp, sizeof( double ) * _m * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Print out the result
     printf( "SparseFTFactorization dumping explicit basis:\n" );
@@ -544,7 +633,11 @@ void SparseFTFactorization::dumpExplicitBasis() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%5.2lf ", result[i*_m + j] );
+=======
+            printf( "%5.2lf ", result[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         printf( "\n" );

@@ -13,11 +13,19 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationFactory.h"
 #include "CSRMatrix.h"
 #include "MarabouError.h"
 #include "SparseUnsortedList.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "TableauState.h"
+
+#include "BasisFactorizationFactory.h"
+#include "CSRMatrix.h"
+#include "MarabouError.h"
+#include "SparseUnsortedList.h"
 
 TableauState::TableauState()
     : _A( NULL )
@@ -135,7 +143,13 @@ TableauState::~TableauState()
     }
 }
 
+<<<<<<< HEAD
 void TableauState::setDimensions( unsigned m, unsigned n, const IBasisFactorization::BasisColumnOracle &oracle )
+=======
+void TableauState::setDimensions( unsigned m,
+                                  unsigned n,
+                                  const IBasisFactorization::BasisColumnOracle &oracle )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     _m = m;
     _n = n;
@@ -152,7 +166,12 @@ void TableauState::setDimensions( unsigned m, unsigned n, const IBasisFactorizat
     {
         _sparseColumnsOfA[i] = new SparseUnsortedList;
         if ( !_sparseColumnsOfA[i] )
+<<<<<<< HEAD
             throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::sparseColumnsOfA[i]" );
+=======
+            throw MarabouError( MarabouError::ALLOCATION_FAILED,
+                                "TableauState::sparseColumnsOfA[i]" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     _sparseRowsOfA = new SparseUnsortedList *[m];
@@ -166,7 +185,11 @@ void TableauState::setDimensions( unsigned m, unsigned n, const IBasisFactorizat
             throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::sparseRowsOfA[i]" );
     }
 
+<<<<<<< HEAD
     _denseA = new double[m*n];
+=======
+    _denseA = new double[m * n];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( !_denseA )
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::denseA" );
 
@@ -186,7 +209,7 @@ void TableauState::setDimensions( unsigned m, unsigned n, const IBasisFactorizat
     if ( !_basicAssignment )
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::assignment" );
 
-    _nonBasicAssignment = new double[n-m];
+    _nonBasicAssignment = new double[n - m];
     if ( !_nonBasicAssignment )
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::nonBasicAssignment" );
 
@@ -194,9 +217,14 @@ void TableauState::setDimensions( unsigned m, unsigned n, const IBasisFactorizat
     if ( !_basicIndexToVariable )
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::basicIndexToVariable" );
 
-    _nonBasicIndexToVariable = new unsigned[n-m];
+    _nonBasicIndexToVariable = new unsigned[n - m];
     if ( !_nonBasicIndexToVariable )
+<<<<<<< HEAD
         throw MarabouError( MarabouError::ALLOCATION_FAILED, "TableauState::nonBasicIndexToVariable" );
+=======
+        throw MarabouError( MarabouError::ALLOCATION_FAILED,
+                            "TableauState::nonBasicIndexToVariable" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     _variableToIndex = new unsigned[n];
     if ( !_variableToIndex )

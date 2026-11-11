@@ -10,14 +10,20 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
+
+**/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 **/
 
-#include <cxxtest/TestSuite.h>
-
+#include "GlobalConfiguration.h"
 #include "MockTableau.h"
 #include "GlobalConfiguration.h"
 #include "RowBoundTightener.h"
+
+#include <cxxtest/TestSuite.h>
 
 class MockForRowBoundTightener
 {
@@ -95,19 +101,38 @@ public:
         TS_ASSERT_EQUALS( tightenings.size(), 2U );
 
         auto lower = tightenings.begin();
+<<<<<<< HEAD
         while ( ( lower != tightenings.end() ) && !( ( lower->_variable == 0 ) && ( lower->_type == Tightening::LB ) ) )
+=======
+        while ( ( lower != tightenings.end() ) &&
+                !( ( lower->_variable == 0 ) && ( lower->_type == Tightening::LB ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             ++lower;
         TS_ASSERT( lower != tightenings.end() );
 
         auto upper = tightenings.begin();
+<<<<<<< HEAD
         while ( ( upper != tightenings.end() ) && !( ( upper->_variable == 0 ) && ( upper->_type == Tightening::UB ) ) )
+=======
+        while ( ( upper != tightenings.end() ) &&
+                !( ( upper->_variable == 0 ) && ( upper->_type == Tightening::UB ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             ++upper;
         TS_ASSERT( upper != tightenings.end() );
 
         // LB -> 1 - 10 - 4 -100
         // UB -> 1 - 5 + 6 + 100
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( lower->_value, -113 - GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
         TS_ASSERT_EQUALS( upper->_value, 102 + GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+=======
+        TS_ASSERT_EQUALS(
+            lower->_value,
+            -113 - GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+        TS_ASSERT_EQUALS(
+            upper->_value,
+            102 + GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_pivot_row_just_upper_tightend()
@@ -118,7 +143,10 @@ public:
         tightener.setBoundsPointers( tableau->getBoundManager().getLowerBounds(),
                                      tableau->getBoundManager().getUpperBounds() );
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Current bounds:
         //    0  <= x0 <= 0
@@ -159,7 +187,12 @@ public:
         TS_ASSERT_THROWS_NOTHING( tightener.getRowTightenings( tightenings ) );
 
         auto upper = tightenings.begin();
+<<<<<<< HEAD
         while ( ( upper != tightenings.end() ) && !( ( upper->_variable == 0 ) && ( upper->_type == Tightening::UB ) ) )
+=======
+        while ( ( upper != tightenings.end() ) &&
+                !( ( upper->_variable == 0 ) && ( upper->_type == Tightening::UB ) ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             ++upper;
         TS_ASSERT( upper != tightenings.end() );
 
@@ -167,7 +200,13 @@ public:
         TS_ASSERT_EQUALS( upper->_type, Tightening::UB );
 
         // Lower: 1 - 10 - 4, Upper: 1 - 5 + 6
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( upper->_value, 2 + GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+=======
+        TS_ASSERT_EQUALS(
+            upper->_value,
+            2 + GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_pivot_row__just_lower_tightend()
@@ -179,6 +218,7 @@ public:
                                      tableau->getBoundManager().getUpperBounds() );
 
 
+<<<<<<< HEAD
 
         TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 0, -200 ) );
         TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 0, 0 ) );
@@ -191,6 +231,19 @@ public:
         TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 4, 0) );
         TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 4, 0 ) );
 
+=======
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 0, -200 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 0, 0 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 1, 5 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 1, 10 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 2, -2 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 2, 3 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 3, -5 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 3, 5 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 4, 0 ) );
+        TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 4, 0 ) );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_THROWS_NOTHING( tightener.setDimensions() );
 
         TableauRow row( 3 );
@@ -220,7 +273,13 @@ public:
         TS_ASSERT_EQUALS( lower._type, Tightening::LB );
 
         // Lower: 1 - 10 - 4, Lower: 1 - 5 + 6
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( lower._value, -13 - GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+=======
+        TS_ASSERT_EQUALS(
+            lower._value,
+            -13 - GlobalConfiguration::EXPLICIT_BASIS_BOUND_TIGHTENING_ROUNDING_CONSTANT );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_pivot_row__nothing_tightened()
@@ -272,7 +331,11 @@ public:
         tightener.setBoundsPointers( tableau->getBoundManager().getLowerBounds(),
                                      tableau->getBoundManager().getUpperBounds() );
 
+<<<<<<< HEAD
         TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 0, 0) );
+=======
+        TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 0, 0 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 0, 3 ) );
         TS_ASSERT_THROWS_NOTHING( tableau->setLowerBound( 1, -1 ) );
         TS_ASSERT_THROWS_NOTHING( tableau->setUpperBound( 1, 2 ) );
@@ -319,8 +382,19 @@ public:
         TS_ASSERT_THROWS_NOTHING( tightener.getRowTightenings( tightenings ) );
         TS_ASSERT_EQUALS( tightenings.size(), 2U );
 
+<<<<<<< HEAD
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 0U, 1.0, Tightening::UB ) ), tightenings.end());
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 1U, 1.5, Tightening::LB ) ), tightenings.end());
+=======
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 0U, 1.0, Tightening::UB ) ),
+                           tightenings.end() );
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 1U, 1.5, Tightening::LB ) ),
+                           tightenings.end() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void test_examine_constraint_matrix_multiple_equations()
@@ -367,8 +441,13 @@ public:
         */
 
         double A[] = {
+<<<<<<< HEAD
             1, -2, 0, 1, 2,
             0, -2, 1, 0, 0,
+=======
+            1, -2, 0, 1, 2, //
+            0, -2, 1, 0, 0, //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         double b[] = { 1, -2 };
@@ -386,10 +465,29 @@ public:
         TS_ASSERT_THROWS_NOTHING( tightener.getRowTightenings( tightenings ) );
         TS_ASSERT_EQUALS( tightenings.size(), 4U );
 
+<<<<<<< HEAD
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 0U, 1.0, Tightening::UB ) ), tightenings.end());
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 1U, 1.5, Tightening::LB ) ), tightenings.end());
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 2U, 1.0, Tightening::LB ) ), tightenings.end());
         TS_ASSERT_DIFFERS( std::find( tightenings.begin(), tightenings.end(), Tightening( 2U, 2.0, Tightening::UB ) ), tightenings.end());
 
+=======
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 0U, 1.0, Tightening::UB ) ),
+                           tightenings.end() );
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 1U, 1.5, Tightening::LB ) ),
+                           tightenings.end() );
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 2U, 1.0, Tightening::LB ) ),
+                           tightenings.end() );
+        TS_ASSERT_DIFFERS( std::find( tightenings.begin(),
+                                      tightenings.end(),
+                                      Tightening( 2U, 2.0, Tightening::UB ) ),
+                           tightenings.end() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 };

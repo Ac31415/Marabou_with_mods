@@ -15,6 +15,7 @@
 
 #include "ConstraintMatrixAnalyzer.h"
 
+<<<<<<< HEAD
 namespace T
 {
 	IConstraintMatrixAnalyzer *createConstraintMatrixAnalyzer()
@@ -27,6 +28,19 @@ namespace T
 		delete constraintMatrixAnalyzer;
 	}
 }
+=======
+namespace T {
+IConstraintMatrixAnalyzer *createConstraintMatrixAnalyzer()
+{
+    return new ConstraintMatrixAnalyzer();
+}
+
+void discardConstraintMatrixAnalyzer( IConstraintMatrixAnalyzer *constraintMatrixAnalyzer )
+{
+    delete constraintMatrixAnalyzer;
+}
+} // namespace T
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 //
 // Local Variables:

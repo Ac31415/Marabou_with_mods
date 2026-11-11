@@ -12,19 +12,28 @@
  ** [[ Add lengthier description here ]]
 
 **/
+<<<<<<< HEAD:src/system_tests/Test_relu.h
 
 #include <cxxtest/TestSuite.h>
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
 
 #include "Engine.h"
 #include "InputQuery.h"
 #include "FloatUtils.h"
 #include "ReluConstraint.h"
 
+<<<<<<< HEAD:src/system_tests/Test_relu.h
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
 
 class ReluTestSuite : public CxxTest::TestSuite
 {
 public:
     void setUp()
+<<<<<<< HEAD:src/system_tests/Test_relu.h
     {
     }
 
@@ -32,6 +41,15 @@ public:
     {
     }
 
+=======
+    {
+    }
+
+    void tearDown()
+    {
+    }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
     void test_relu_1()
     {
         double large = 1000;
@@ -98,6 +116,7 @@ public:
         TS_ASSERT_THROWS_NOTHING( engine.solve() );
 
         engine.extractSolution( inputQuery );
+<<<<<<< HEAD:src/system_tests/Test_relu.h
 
         bool correctSolution = true;
         // Sanity test
@@ -118,6 +137,28 @@ public:
         if ( !FloatUtils::areEqual( value_x3, value_x1f + value_x2f ) )
             correctSolution = false;
 
+=======
+
+        bool correctSolution = true;
+        // Sanity test
+
+        double value_x0 = inputQuery.getSolutionValue( 0 );
+        double value_x1b = inputQuery.getSolutionValue( 1 );
+        double value_x1f = inputQuery.getSolutionValue( 2 );
+        double value_x2b = inputQuery.getSolutionValue( 3 );
+        double value_x2f = inputQuery.getSolutionValue( 4 );
+        double value_x3 = inputQuery.getSolutionValue( 5 );
+
+        if ( !FloatUtils::areEqual( value_x0, value_x1b ) )
+            correctSolution = false;
+
+        if ( !FloatUtils::areEqual( value_x0, -value_x2b ) )
+            correctSolution = false;
+
+        if ( !FloatUtils::areEqual( value_x3, value_x1f + value_x2f ) )
+            correctSolution = false;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
         if ( FloatUtils::lt( value_x0, 0 ) || FloatUtils::gt( value_x0, 1 ) ||
              FloatUtils::lt( value_x1f, 0 ) || FloatUtils::lt( value_x2f, 0 ) ||
              FloatUtils::lt( value_x3, 0.5 ) || FloatUtils::gt( value_x3, 1 ) )
@@ -128,6 +169,7 @@ public:
         if ( FloatUtils::isPositive( value_x1f ) && !FloatUtils::areEqual( value_x1b, value_x1f ) )
         {
             correctSolution = false;
+<<<<<<< HEAD:src/system_tests/Test_relu.h
         }
 
         if ( FloatUtils::isPositive( value_x2f ) && !FloatUtils::areEqual( value_x2b, value_x2f ) )
@@ -135,6 +177,15 @@ public:
             correctSolution = false;
         }
 
+=======
+        }
+
+        if ( FloatUtils::isPositive( value_x2f ) && !FloatUtils::areEqual( value_x2b, value_x2f ) )
+        {
+            correctSolution = false;
+        }
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
         TS_ASSERT( correctSolution );
     }
 
@@ -177,7 +228,11 @@ public:
         Engine engine;
         TS_ASSERT_THROWS_NOTHING( engine.processInputQuery( inputQuery ) );
 
+<<<<<<< HEAD:src/system_tests/Test_relu.h
         TS_ASSERT_THROWS_NOTHING ( engine.solve() );
+=======
+        TS_ASSERT_THROWS_NOTHING( engine.solve() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390:regress/relu_feasible_1.h
 
 
         engine.extractSolution( inputQuery );

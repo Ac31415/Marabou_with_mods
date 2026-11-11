@@ -13,6 +13,11 @@
 
  **/
 
+<<<<<<< HEAD
+=======
+#include "NetworkLevelReasoner.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "AbsoluteValueConstraint.h"
 #include "Debug.h"
 #include "FloatUtils.h"
@@ -26,12 +31,23 @@
 #include "MatrixMultiplication.h"
 #include "MaxConstraint.h"
 #include "NLRError.h"
+<<<<<<< HEAD
 #include "NetworkLevelReasoner.h"
 #include "Options.h"
 #include "ReluConstraint.h"
 #include "SignConstraint.h"
 #include <cstring>
 
+=======
+#include "Options.h"
+#include "ReluConstraint.h"
+#include "SignConstraint.h"
+
+#include <cstring>
+
+#define NLR_LOG( x, ... ) LOG( GlobalConfiguration::NETWORK_LEVEL_REASONER_LOGGING, "NLR: %s\n", x )
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 namespace NLR {
 
 NetworkLevelReasoner::NetworkLevelReasoner()
@@ -67,7 +83,12 @@ void NetworkLevelReasoner::addLayer( unsigned layerIndex, Layer::Type type, unsi
 
 void NetworkLevelReasoner::addLayerDependency( unsigned sourceLayer, unsigned targetLayer )
 {
+<<<<<<< HEAD
     _layerIndexToLayer[targetLayer]->addSourceLayer( sourceLayer, _layerIndexToLayer[sourceLayer]->getSize() );
+=======
+    _layerIndexToLayer[targetLayer]->addSourceLayer( sourceLayer,
+                                                     _layerIndexToLayer[sourceLayer]->getSize() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void NetworkLevelReasoner::setWeight( unsigned sourceLayer,
@@ -76,8 +97,12 @@ void NetworkLevelReasoner::setWeight( unsigned sourceLayer,
                                       unsigned targetNeuron,
                                       double weight )
 {
+<<<<<<< HEAD
     _layerIndexToLayer[targetLayer]->setWeight
         ( sourceLayer, sourceNeuron, targetNeuron, weight );
+=======
+    _layerIndexToLayer[targetLayer]->setWeight( sourceLayer, sourceNeuron, targetNeuron, weight );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void NetworkLevelReasoner::setBias( unsigned layer, unsigned neuron, double bias )
@@ -110,6 +135,7 @@ void NetworkLevelReasoner::evaluate( double *input, double *output )
         _layerIndexToLayer[i]->computeAssignment();
 
     const Layer *outputLayer = _layerIndexToLayer[_layerIndexToLayer.size() - 1];
+<<<<<<< HEAD
     memcpy( output,
             outputLayer->getAssignment(),
             sizeof(double) * outputLayer->getSize() );
@@ -117,6 +143,12 @@ void NetworkLevelReasoner::evaluate( double *input, double *output )
 
 void NetworkLevelReasoner::concretizeInputAssignment( Map<unsigned, double>
                                                       &assignment )
+=======
+    memcpy( output, outputLayer->getAssignment(), sizeof( double ) * outputLayer->getSize() );
+}
+
+void NetworkLevelReasoner::concretizeInputAssignment( Map<unsigned, double> &assignment )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     Layer *inputLayer = _layerIndexToLayer[0];
     ASSERT( inputLayer->getLayerType() == Layer::INPUT );
@@ -125,7 +157,11 @@ void NetworkLevelReasoner::concretizeInputAssignment( Map<unsigned, double>
     ASSERT( inputLayerSize > 0 );
 
     double *input = new double[inputLayerSize];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // First obtain the input assignment from the _tableau
     for ( unsigned index = 0; index < inputLayerSize; ++index )
     {
@@ -141,7 +177,11 @@ void NetworkLevelReasoner::concretizeInputAssignment( Map<unsigned, double>
     }
 
     _layerIndexToLayer[0]->setAssignment( input );
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // Evaluate layers iteratively and store the results in "assignment"
     for ( unsigned i = 1; i < _layerIndexToLayer.size(); ++i )
     {
@@ -195,8 +235,12 @@ void NetworkLevelReasoner::symbolicBoundPropagation()
 void NetworkLevelReasoner::deepPolyPropagation()
 {
     if ( _deepPolyAnalysis == nullptr )
+<<<<<<< HEAD
         _deepPolyAnalysis = std::unique_ptr<DeepPolyAnalysis>
             ( new DeepPolyAnalysis( this ) );
+=======
+        _deepPolyAnalysis = std::unique_ptr<DeepPolyAnalysis>( new DeepPolyAnalysis( this ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     _deepPolyAnalysis->run();
 }
 
@@ -323,12 +367,17 @@ void NetworkLevelReasoner::eliminateVariable( unsigned variable, double value )
         layer.second->eliminateVariable( variable, value );
 }
 
+<<<<<<< HEAD
 
 void NetworkLevelReasoner::dumpTopology() const
+=======
+void NetworkLevelReasoner::dumpTopology( bool dumpLayerDetails ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     printf( "Number of layers: %u. Sizes:\n", _layerIndexToLayer.size() );
     for ( unsigned i = 0; i < _layerIndexToLayer.size(); ++i )
     {
+<<<<<<< HEAD
         printf( "\tLayer %u: %u \t[%s]", i, _layerIndexToLayer[i]->getSize(), Layer::typeToString( _layerIndexToLayer[i]->getLayerType() ).ascii() );
         printf("\tSource layers:");
         for ( const auto &sourceLayer : _layerIndexToLayer[i]->getSourceLayers() )
@@ -337,6 +386,20 @@ void NetworkLevelReasoner::dumpTopology() const
     }
     for ( const auto &layer : _layerIndexToLayer )
         layer.second->dump();
+=======
+        printf( "\tLayer %u: %u \t[%s]",
+                i,
+                _layerIndexToLayer[i]->getSize(),
+                Layer::typeToString( _layerIndexToLayer[i]->getLayerType() ).ascii() );
+        printf( "\tSource layers:" );
+        for ( const auto &sourceLayer : _layerIndexToLayer[i]->getSourceLayers() )
+            printf( " %u", sourceLayer.first );
+        printf( "\n" );
+    }
+    if ( dumpLayerDetails )
+        for ( const auto &layer : _layerIndexToLayer )
+            layer.second->dump();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 unsigned NetworkLevelReasoner::getNumberOfLayers() const
@@ -354,12 +417,27 @@ void NetworkLevelReasoner::addConstraintInTopologicalOrder( PiecewiseLinearConst
     _constraintsInTopologicalOrder.append( constraint );
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::removeConstraintFromTopologicalOrder( PiecewiseLinearConstraint *constraint )
+=======
+void NetworkLevelReasoner::removeConstraintFromTopologicalOrder(
+    PiecewiseLinearConstraint *constraint )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( _constraintsInTopologicalOrder.exists( constraint ) )
         _constraintsInTopologicalOrder.erase( constraint );
 }
 
+<<<<<<< HEAD
+=======
+void NetworkLevelReasoner::encodeAffineLayers( InputQuery &inputQuery )
+{
+    for ( const auto &pair : _layerIndexToLayer )
+        if ( pair.second->getLayerType() == Layer::WEIGHTED_SUM )
+            generateInputQueryForWeightedSumLayer( inputQuery, pair.second );
+}
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 InputQuery NetworkLevelReasoner::generateInputQuery()
 {
     InputQuery result;
@@ -401,7 +479,10 @@ InputQuery NetworkLevelReasoner::generateInputQuery()
         }
     }
 
+<<<<<<< HEAD
     result.constructNetworkLevelReasoner();
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     return result;
 }
 
@@ -418,8 +499,12 @@ void NetworkLevelReasoner::reindexNeurons()
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForLayer( InputQuery &inputQuery,
                                                        const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForLayer( InputQuery &inputQuery, const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     switch ( layer.getLayerType() )
     {
@@ -457,51 +542,97 @@ void NetworkLevelReasoner::generateInputQueryForLayer( InputQuery &inputQuery,
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForReluLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForReluLayer( InputQuery &inputQuery,
+                                                           const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
         NeuronIndex sourceIndex = *layer.getActivationSources( i ).begin();
         const Layer *sourceLayer = _layerIndexToLayer[sourceIndex._layer];
+<<<<<<< HEAD
         ReluConstraint *relu = new ReluConstraint( sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+=======
+        ReluConstraint *relu = new ReluConstraint(
+            sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.addPiecewiseLinearConstraint( relu );
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForSigmoidLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForSigmoidLayer( InputQuery &inputQuery,
+                                                              const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
         NeuronIndex sourceIndex = *layer.getActivationSources( i ).begin();
         const Layer *sourceLayer = _layerIndexToLayer[sourceIndex._layer];
+<<<<<<< HEAD
         SigmoidConstraint *sigmoid = new SigmoidConstraint( sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
         inputQuery.addTranscendentalConstraint( sigmoid );
     }
 }
 
 void NetworkLevelReasoner::generateInputQueryForSignLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+        SigmoidConstraint *sigmoid = new SigmoidConstraint(
+            sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+        inputQuery.addNonlinearConstraint( sigmoid );
+    }
+}
+
+void NetworkLevelReasoner::generateInputQueryForSignLayer( InputQuery &inputQuery,
+                                                           const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
         NeuronIndex sourceIndex = *layer.getActivationSources( i ).begin();
         const Layer *sourceLayer = _layerIndexToLayer[sourceIndex._layer];
+<<<<<<< HEAD
         SignConstraint *sign = new SignConstraint( sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+=======
+        SignConstraint *sign = new SignConstraint(
+            sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.addPiecewiseLinearConstraint( sign );
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForAbsoluteValueLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForAbsoluteValueLayer( InputQuery &inputQuery,
+                                                                    const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
         NeuronIndex sourceIndex = *layer.getActivationSources( i ).begin();
         const Layer *sourceLayer = _layerIndexToLayer[sourceIndex._layer];
+<<<<<<< HEAD
         AbsoluteValueConstraint *absoluteValue = new AbsoluteValueConstraint( sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+=======
+        AbsoluteValueConstraint *absoluteValue = new AbsoluteValueConstraint(
+            sourceLayer->neuronToVariable( sourceIndex._neuron ), layer.neuronToVariable( i ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.addPiecewiseLinearConstraint( absoluteValue );
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForMaxLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForMaxLayer( InputQuery &inputQuery,
+                                                          const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
@@ -512,13 +643,22 @@ void NetworkLevelReasoner::generateInputQueryForMaxLayer( InputQuery &inputQuery
             elements.insert( sourceLayer->neuronToVariable( source._neuron ) );
         }
 
+<<<<<<< HEAD
         MaxConstraint *max = new MaxConstraint( layer.neuronToVariable( i ),
                                                 elements );
+=======
+        MaxConstraint *max = new MaxConstraint( layer.neuronToVariable( i ), elements );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.addPiecewiseLinearConstraint( max );
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::generateInputQueryForWeightedSumLayer( InputQuery &inputQuery, const Layer &layer )
+=======
+void NetworkLevelReasoner::generateInputQueryForWeightedSumLayer( InputQuery &inputQuery,
+                                                                  const Layer &layer )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     for ( unsigned i = 0; i < layer.getSize(); ++i )
     {
@@ -533,19 +673,64 @@ void NetworkLevelReasoner::generateInputQueryForWeightedSumLayer( InputQuery &in
             for ( unsigned j = 0; j < sourceLayer->getSize(); ++j )
             {
                 double coefficient = layer.getWeight( sourceLayer->getLayerIndex(), j, i );
+<<<<<<< HEAD
                 eq.addAddend( coefficient, sourceLayer->neuronToVariable( j ) );
             }
         }
 
+=======
+                if ( !FloatUtils::isZero( coefficient ) )
+                    eq.addAddend( coefficient, sourceLayer->neuronToVariable( j ) );
+            }
+        }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         inputQuery.addEquation( eq );
     }
 }
 
+<<<<<<< HEAD
 void NetworkLevelReasoner::mergeConsecutiveWSLayers()
+=======
+void NetworkLevelReasoner::generateLinearExpressionForWeightedSumLayer(
+    Map<unsigned, LinearExpression> &variableToExpression,
+    const Layer &layer )
+{
+    ASSERT( layer.getLayerType() == Layer::WEIGHTED_SUM );
+    for ( unsigned i = 0; i < layer.getSize(); ++i )
+    {
+        LinearExpression exp;
+        exp._constant = layer.getBias( i );
+        for ( const auto &it : layer.getSourceLayers() )
+        {
+            const Layer *sourceLayer = _layerIndexToLayer[it.first];
+            for ( unsigned j = 0; j < sourceLayer->getSize(); ++j )
+            {
+                double coefficient = layer.getWeight( sourceLayer->getLayerIndex(), j, i );
+                if ( !FloatUtils::isZero( coefficient ) )
+                {
+                    unsigned var = sourceLayer->neuronToVariable( j );
+                    if ( exp._addends.exists( var ) )
+                        exp._addends[var] += coefficient;
+                    else
+                        exp._addends[var] = coefficient;
+                }
+            }
+        }
+        variableToExpression[layer.neuronToVariable( i )] = exp;
+    }
+}
+
+unsigned
+NetworkLevelReasoner::mergeConsecutiveWSLayers( const Map<unsigned, double> &lowerBounds,
+                                                const Map<unsigned, double> &upperBounds,
+                                                const Set<unsigned> &varsInUnhandledConstraints,
+                                                Map<unsigned, LinearExpression> &eliminatedNeurons )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     // Iterate over all layers, except the input layer
     unsigned layer = 1;
 
+<<<<<<< HEAD
     while ( layer < _layerIndexToLayer.size() )
     {
         if ( suitableForMerging( layer ) )
@@ -557,6 +742,33 @@ void NetworkLevelReasoner::mergeConsecutiveWSLayers()
 
 bool NetworkLevelReasoner::suitableForMerging( unsigned secondLayerIndex )
 {
+=======
+    unsigned numberOfMergedLayers = 0;
+    while ( layer < _layerIndexToLayer.size() )
+    {
+        if ( suitableForMerging( layer, lowerBounds, upperBounds, varsInUnhandledConstraints ) )
+        {
+            NLR_LOG( Stringf( "Merging layer %u with its predecessor...", layer ).ascii() );
+            mergeWSLayers( layer, eliminatedNeurons );
+            ++numberOfMergedLayers;
+            NLR_LOG( Stringf( "Merging layer %u with its predecessor - done", layer ).ascii() );
+        }
+        else
+            ++layer;
+    }
+    return numberOfMergedLayers;
+}
+
+bool NetworkLevelReasoner::suitableForMerging(
+    unsigned secondLayerIndex,
+    const Map<unsigned, double> &lowerBounds,
+    const Map<unsigned, double> &upperBounds,
+    const Set<unsigned> &varsInConstraintsUnhandledByNLR )
+{
+    NLR_LOG( Stringf( "Checking whether layer %u is suitable for merging...", secondLayerIndex )
+                 .ascii() );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     /*
       The given layer index is a candidate layer. We now check whether
       it is an eligible second WS layer that can be merged with its
@@ -581,11 +793,17 @@ bool NetworkLevelReasoner::suitableForMerging( unsigned secondLayerIndex )
         return false;
 
     // First layer should not feed into any other layer
+<<<<<<< HEAD
     for ( unsigned i = secondLayerIndex + 1; i < getNumberOfLayers(); ++i )
+=======
+    unsigned count = 0;
+    for ( unsigned i = 0; i < getNumberOfLayers(); ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         const Layer *layer = _layerIndexToLayer[i];
 
         if ( layer->getSourceLayers().exists( firstLayerIndex ) )
+<<<<<<< HEAD
             return false;
     }
 
@@ -593,6 +811,30 @@ bool NetworkLevelReasoner::suitableForMerging( unsigned secondLayerIndex )
 }
 
 void NetworkLevelReasoner::mergeWSLayers( unsigned secondLayerIndex )
+=======
+            ++count;
+    }
+    if ( count > 1 )
+        return false;
+
+    // If there are bounds on the predecessor layer or if
+    // the predecessor layer participates in any constraints
+    // (equations, piecewise-linear constraints, nonlinear-constraints)
+    // unaccounted for in the NLR cannot merge
+    for ( unsigned i = 0; i < firstLayer->getSize(); ++i )
+    {
+        unsigned variable = firstLayer->neuronToVariable( i );
+        if ( ( lowerBounds.exists( variable ) && FloatUtils::isFinite( lowerBounds[variable] ) ) ||
+             ( upperBounds.exists( variable ) && FloatUtils::isFinite( upperBounds[variable] ) ) ||
+             varsInConstraintsUnhandledByNLR.exists( variable ) )
+            return false;
+    }
+    return true;
+}
+
+void NetworkLevelReasoner::mergeWSLayers( unsigned secondLayerIndex,
+                                          Map<unsigned, LinearExpression> &eliminatedNeurons )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     Layer *secondLayer = _layerIndexToLayer[secondLayerIndex];
     unsigned firstLayerIndex = secondLayer->getSourceLayers().begin()->first;
@@ -612,21 +854,34 @@ void NetworkLevelReasoner::mergeWSLayers( unsigned secondLayerIndex )
         // Compute new weights
         const double *firstLayerMatrix = firstLayer->getWeightMatrix( previousToFirstLayerIndex );
         const double *secondLayerMatrix = secondLayer->getWeightMatrix( firstLayerIndex );
+<<<<<<< HEAD
         double *newWeightMatrix = multiplyWeights( firstLayerMatrix,
                                                    secondLayerMatrix,
                                                    inputDimension,
                                                    middleDimension,
                                                    outputDimension );
+=======
+        double *newWeightMatrix = multiplyWeights(
+            firstLayerMatrix, secondLayerMatrix, inputDimension, middleDimension, outputDimension );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         // Update bias for second layer
         for ( unsigned targetNeuron = 0; targetNeuron < secondLayer->getSize(); ++targetNeuron )
         {
             double newBias = secondLayer->getBias( targetNeuron );
+<<<<<<< HEAD
             for ( unsigned sourceNeuron = 0;
                   sourceNeuron < firstLayer->getSize();
                   ++sourceNeuron )
             {
                 newBias += ( firstLayer->getBias( sourceNeuron ) *
                              secondLayer->getWeight( firstLayerIndex, sourceNeuron, targetNeuron ) );
+=======
+            for ( unsigned sourceNeuron = 0; sourceNeuron < firstLayer->getSize(); ++sourceNeuron )
+            {
+                newBias +=
+                    ( firstLayer->getBias( sourceNeuron ) *
+                      secondLayer->getWeight( firstLayerIndex, sourceNeuron, targetNeuron ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
 
             secondLayer->setBias( targetNeuron, newBias );
@@ -639,10 +894,15 @@ void NetworkLevelReasoner::mergeWSLayers( unsigned secondLayerIndex )
             for ( unsigned targetNeuron = 0; targetNeuron < outputDimension; ++targetNeuron )
             {
                 double weight = newWeightMatrix[sourceNeuron * outputDimension + targetNeuron];
+<<<<<<< HEAD
                 secondLayer->setWeight( previousToFirstLayerIndex,
                                         sourceNeuron,
                                         targetNeuron,
                                         weight );
+=======
+                secondLayer->setWeight(
+                    previousToFirstLayerIndex, sourceNeuron, targetNeuron, weight );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
         delete[] newWeightMatrix;
@@ -651,6 +911,11 @@ void NetworkLevelReasoner::mergeWSLayers( unsigned secondLayerIndex )
     // Remove the first layer from second layer's sources
     secondLayer->removeSourceLayer( firstLayerIndex );
 
+<<<<<<< HEAD
+=======
+    generateLinearExpressionForWeightedSumLayer( eliminatedNeurons, firstLayer );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // Finally, remove the first layer from the map and delete it
     _layerIndexToLayer.erase( firstLayerIndex );
     delete firstLayer;
@@ -669,12 +934,17 @@ double *NetworkLevelReasoner::multiplyWeights( const double *firstMatrix,
 {
     double *newMatrix = new double[inputDimension * outputDimension];
     std::fill_n( newMatrix, inputDimension * outputDimension, 0 );
+<<<<<<< HEAD
     matrixMultiplication( firstMatrix,
                           secondMatrix,
                           newMatrix,
                           inputDimension,
                           middleDimension,
                           outputDimension );
+=======
+    matrixMultiplication(
+        firstMatrix, secondMatrix, newMatrix, inputDimension, middleDimension, outputDimension );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     return newMatrix;
 }
 

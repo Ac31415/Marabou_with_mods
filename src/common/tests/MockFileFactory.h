@@ -20,6 +20,7 @@
 #include "MockFile.h"
 #include "T/FileFactory.h"
 
+<<<<<<< HEAD
 class MockFileFactory :
 	public T::Base_createFile,
 	public T::Base_discardFile
@@ -44,6 +45,32 @@ public:
 	void discardFile( IFile *file )
 	{
 		TS_ASSERT_EQUALS( file, &mockFile );
+=======
+class MockFileFactory
+    : public T::Base_createFile
+    , public T::Base_discardFile
+{
+public:
+    MockFile mockFile;
+
+    ~MockFileFactory()
+    {
+        if ( mockFile.wasCreated )
+        {
+            TS_ASSERT( mockFile.wasDiscarded );
+        }
+    }
+
+    IFile *createFile( const String &path )
+    {
+        mockFile.mockConstructor( path );
+        return &mockFile;
+    }
+
+    void discardFile( IFile *file )
+    {
+        TS_ASSERT_EQUALS( file, &mockFile );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         mockFile.mockDestructor();
     }
 };

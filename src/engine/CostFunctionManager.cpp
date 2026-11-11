@@ -14,6 +14,7 @@
  **/
 
 #include "CostFunctionManager.h"
+
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "ITableau.h"
@@ -117,8 +118,12 @@ void CostFunctionManager::computeCostFunction( const Map<unsigned, double> &heur
     computeReducedCosts();
 }
 
+<<<<<<< HEAD
 void CostFunctionManager::computeGivenCostFunction( const Map<unsigned, double>
                                                     &heuristicCost )
+=======
+void CostFunctionManager::computeGivenCostFunction( const Map<unsigned, double> &heuristicCost )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     /*
       The heuristic cost may include variables that are basic and variables
@@ -155,6 +160,7 @@ void CostFunctionManager::computeGivenCostFunction( const Map<unsigned, double>
     _costFunctionStatus = ICostFunctionManager::COST_FUNCTION_JUST_COMPUTED;
 }
 
+<<<<<<< HEAD
 double CostFunctionManager::computeGivenCostFunctionDirectly( const Map<unsigned, double>
                                                               &heuristicCost )
 {
@@ -164,6 +170,17 @@ double CostFunctionManager::computeGivenCostFunctionDirectly( const Map<unsigned
             double value = _tableau->getValue( pair.first );
             cost += pair.second * value;
         }
+=======
+double
+CostFunctionManager::computeGivenCostFunctionDirectly( const Map<unsigned, double> &heuristicCost )
+{
+    double cost = 0;
+    for ( const auto &pair : heuristicCost )
+    {
+        double value = _tableau->getValue( pair.first );
+        cost += pair.second * value;
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     return cost;
 }
 
@@ -218,10 +235,16 @@ void CostFunctionManager::adjustBasicCostAccuracy()
         if ( _basicCosts[i] < 0 )
         {
             lb = _tableau->getLowerBound( variable );
+<<<<<<< HEAD
             relaxedLb =
                 lb -
                 ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
                   GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE * FloatUtils::abs( lb ) );
+=======
+            relaxedLb = lb - ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
+                               GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE *
+                                   FloatUtils::abs( lb ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             // Current basic cost is negative, assignment should be too small
             if ( assignment >= relaxedLb )
@@ -233,10 +256,16 @@ void CostFunctionManager::adjustBasicCostAccuracy()
         else if ( _basicCosts[i] > 0 )
         {
             ub = _tableau->getUpperBound( variable );
+<<<<<<< HEAD
             relaxedUb =
                 ub +
                 ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
                   GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE * FloatUtils::abs( ub ) );
+=======
+            relaxedUb = ub + ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
+                               GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE *
+                                   FloatUtils::abs( ub ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
             // Current basic cost is positive, assignment should be too large
             if ( assignment <= relaxedUb )
@@ -252,7 +281,10 @@ void CostFunctionManager::adjustBasicCostAccuracy()
               1 or -1, but apparently this leads to cycling.
             */
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     if ( needToRecompute )
@@ -274,10 +306,16 @@ void CostFunctionManager::computeBasicOOBCosts()
         assignment = _tableau->getBasicAssignment( i );
 
         lb = _tableau->getLowerBound( variable );
+<<<<<<< HEAD
         relaxedLb =
             lb -
             ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
               GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE * FloatUtils::abs( lb ) );
+=======
+        relaxedLb = lb - ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
+                           GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE *
+                               FloatUtils::abs( lb ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( assignment < relaxedLb )
         {
@@ -286,10 +324,16 @@ void CostFunctionManager::computeBasicOOBCosts()
         }
 
         ub = _tableau->getUpperBound( variable );
+<<<<<<< HEAD
         relaxedUb =
             ub +
             ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
               GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE * FloatUtils::abs( ub ) );
+=======
+        relaxedUb = ub + ( GlobalConfiguration::BASIC_COSTS_ADDITIVE_TOLERANCE +
+                           GlobalConfiguration::BASIC_COSTS_MULTIPLICATIVE_TOLERANCE *
+                               FloatUtils::abs( ub ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( assignment > relaxedUb )
         {
@@ -358,8 +402,12 @@ double CostFunctionManager::updateCostFunctionForPivot( unsigned enteringVariabl
                                                         unsigned leavingVariableIndex,
                                                         double pivotElement,
                                                         const TableauRow *pivotRow,
+<<<<<<< HEAD
                                                         const double *changeColumn
                                                         )
+=======
+                                                        const double *changeColumn )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     /*
       This method is invoked when the non-basic _enteringVariable and
@@ -403,7 +451,7 @@ double CostFunctionManager::updateCostFunctionForPivot( unsigned enteringVariabl
     for ( unsigned i = 0; i < _n - _m; ++i )
     {
         if ( i != enteringVariableIndex )
-            _costFunction[i] -= (*pivotRow)[i] * _costFunction[enteringVariableIndex];
+            _costFunction[i] -= ( *pivotRow )[i] * _costFunction[enteringVariableIndex];
     }
 
     /*
@@ -439,6 +487,7 @@ double CostFunctionManager::getBasicCost( unsigned basicIndex ) const
     return _basicCosts[basicIndex];
 }
 
+<<<<<<< HEAD
 const SparseUnsortedList* CostFunctionManager::createRowOfCostFunction() const
 {
     SparseUnsortedList* costRow = new SparseUnsortedList( 0 );
@@ -446,6 +495,18 @@ const SparseUnsortedList* CostFunctionManager::createRowOfCostFunction() const
         if ( !FloatUtils::isZero( _basicCosts[i] ) )
         {
             costRow->append( _tableau->basicIndexToVariable( i ), -_basicCosts[i] ); //Minus sign since we are used to think about basics in lhs (while the row has all variables in rhs).
+=======
+const SparseUnsortedList *CostFunctionManager::createRowOfCostFunction() const
+{
+    SparseUnsortedList *costRow = new SparseUnsortedList( 0 );
+    for ( unsigned i = 0; i < _m; ++i )
+        if ( !FloatUtils::isZero( _basicCosts[i] ) )
+        {
+            costRow->append( _tableau->basicIndexToVariable( i ),
+                             -_basicCosts[i] ); // Minus sign since we are used to think about
+                                                // basics in lhs (while the row has all variables in
+                                                // rhs).
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             costRow->incrementSize();
         }
 

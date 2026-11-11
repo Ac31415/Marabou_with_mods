@@ -19,11 +19,18 @@
 /*
   MILP solver bound tightening options
 */
+<<<<<<< HEAD
 enum class SymbolicBoundTighteningType
 {
      SYMBOLIC_BOUND_TIGHTENING = 0,
      DEEP_POLY = 1,
      NONE = 2,
+=======
+enum class SymbolicBoundTighteningType {
+    SYMBOLIC_BOUND_TIGHTENING = 0,
+    DEEP_POLY = 1,
+    NONE = 2,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __SymbolicBoundTighteningType_h__

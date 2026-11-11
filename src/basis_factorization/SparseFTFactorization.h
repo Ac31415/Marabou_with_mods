@@ -23,7 +23,12 @@
 #include "SparseLUFactors.h"
 #include "Statistics.h"
 
+<<<<<<< HEAD
 #define SFTF_FACTORIZATION_LOG( x, ... ) LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "SparseFTFactorization: %s\n", x )
+=======
+#define SFTF_FACTORIZATION_LOG( x, ... )                                                           \
+    LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "SparseFTFactorization: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 /*
   This class performs a sparse FT factorization of a given matrix.
@@ -77,10 +82,17 @@ public:
     void storeFactorization( IBasisFactorization *other );
     void restoreFactorization( const IBasisFactorization *other );
 
+<<<<<<< HEAD
 	/*
       Ask the basis factorization to obtain a fresh basis
       (through the previously-provided oracle).
 	*/
+=======
+    /*
+      Ask the basis factorization to obtain a fresh basis
+      (through the previously-provided oracle).
+    */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void obtainFreshBasis();
 
     /*
@@ -157,7 +169,11 @@ private:
 
     /*
       Factorize the stored _B matrix into LU form.
+<<<<<<< HEAD
 	*/
+=======
+    */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     void factorizeBasis();
 
     /*
@@ -174,7 +190,11 @@ private:
     /*
       Clear a previous factorization.
     */
+<<<<<<< HEAD
 	void clearFactorization();
+=======
+    void clearFactorization();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Have the Basis Factoriaztion object start reporting statistics.

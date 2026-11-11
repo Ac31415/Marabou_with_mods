@@ -17,8 +17,13 @@
 #define __SumOfInfeasibilitiesManager_h__
 
 #include "GlobalConfiguration.h"
+<<<<<<< HEAD
 #include "InputQuery.h"
 #include "ITableau.h"
+=======
+#include "ITableau.h"
+#include "InputQuery.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "LinearExpression.h"
 #include "List.h"
 #include "NetworkLevelReasoner.h"
@@ -26,18 +31,27 @@
 #include "SoIInitializationStrategy.h"
 #include "SoISearchStrategy.h"
 #include "Statistics.h"
+<<<<<<< HEAD
 #include "Vector.h"
 
 #include "T/stdlib.h"
+=======
+#include "T/stdlib.h"
+#include "Vector.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #define SOI_LOG( x, ... ) LOG( GlobalConfiguration::SOI_LOGGING, "SoIManager: %s\n", x )
 
 class SumOfInfeasibilitiesManager
 {
 public:
+<<<<<<< HEAD
 
     SumOfInfeasibilitiesManager( const InputQuery &inputQuery, const ITableau
                                  &tableau );
+=======
+    SumOfInfeasibilitiesManager( const InputQuery &inputQuery, const ITableau &tableau );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Returns the actual current phase pattern from _currentPhasePattern
@@ -98,8 +112,12 @@ public:
     // might be fixed due to additional tightening.
     // In that case, we remove the cost term for that piecewise linear constraint
     // from the heuristic cost.
+<<<<<<< HEAD
     void removeCostComponentFromHeuristicCost( PiecewiseLinearConstraint
                                                *constraint );
+=======
+    void removeCostComponentFromHeuristicCost( PiecewiseLinearConstraint *constraint );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Obtain the current variable assignment from the Tableau.
@@ -109,12 +127,20 @@ public:
     void setStatistics( Statistics *statistics );
 
     /* For debug use */
+<<<<<<< HEAD
     void setPhaseStatusInLastAcceptedPhasePattern( PiecewiseLinearConstraint
                                                    *constraint,
                                                    PhaseStatus phase );
 
     void setPhaseStatusInCurrentPhasePattern( PiecewiseLinearConstraint
                                               *constraint, PhaseStatus phase );
+=======
+    void setPhaseStatusInLastAcceptedPhasePattern( PiecewiseLinearConstraint *constraint,
+                                                   PhaseStatus phase );
+
+    void setPhaseStatusInCurrentPhasePattern( PiecewiseLinearConstraint *constraint,
+                                              PhaseStatus phase );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 
 private:
@@ -205,8 +231,14 @@ private:
       Note that the phase can be negative, which means the current phase is
       (locally) optimal.
     */
+<<<<<<< HEAD
     void getCostReduction( PiecewiseLinearConstraint *plConstraint, double
                            &reducedCost, PhaseStatus &phaseOfReducedCost ) const;
+=======
+    void getCostReduction( PiecewiseLinearConstraint *plConstraint,
+                           double &reducedCost,
+                           PhaseStatus &phaseOfReducedCost ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __SumOfInfeasibilitiesManager_h__

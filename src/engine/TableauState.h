@@ -37,11 +37,17 @@ class TableauState
       - The current indexing
       - The current basis
     */
+
 public:
     TableauState();
     ~TableauState();
 
+<<<<<<< HEAD
     void setDimensions( unsigned m, unsigned n, const IBasisFactorization::BasisColumnOracle &oracle );
+=======
+    void
+    setDimensions( unsigned m, unsigned n, const IBasisFactorization::BasisColumnOracle &oracle );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Just create the bounds array.

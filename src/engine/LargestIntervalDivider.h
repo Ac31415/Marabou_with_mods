@@ -29,8 +29,12 @@ public:
     void createSubQueries( unsigned numNewSubQueries,
                            const String queryIdPrefix,
                            const unsigned previousDepth,
+<<<<<<< HEAD
                            const PiecewiseLinearCaseSplit
                            &previousSplit,
+=======
+                           const PiecewiseLinearCaseSplit &previousSplit,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                            const unsigned timeoutInSeconds,
                            SubQueries &subQueries );
 
@@ -44,7 +48,10 @@ private:
       All input variables of the network
     */
     const List<unsigned> _inputVariables;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __LargestIntervalDivider_h__

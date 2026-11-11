@@ -26,6 +26,7 @@ class IBasisFactorization
     /*
       This is the interfact class for a basis factorization.
     */
+
 public:
     /*
       A callback for obtaining columns of the basis matrix
@@ -33,7 +34,13 @@ public:
     class BasisColumnOracle
     {
     public:
+<<<<<<< HEAD
         virtual ~BasisColumnOracle() {}
+=======
+        virtual ~BasisColumnOracle()
+        {
+        }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         virtual void getColumnOfBasis( unsigned column, double *result ) const = 0;
         virtual void getColumnOfBasis( unsigned column, SparseUnsortedList *result ) const = 0;
         virtual void getSparseBasis( SparseColumnsOfBasis &basis ) const = 0;
@@ -44,7 +51,9 @@ public:
     {
     }
 
-    virtual ~IBasisFactorization() {}
+    virtual ~IBasisFactorization()
+    {
+    }
 
     /*
       Inform the basis factorization that the basis has been changed
@@ -79,10 +88,17 @@ public:
     virtual void storeFactorization( IBasisFactorization *other ) = 0;
     virtual void restoreFactorization( const IBasisFactorization *other ) = 0;
 
+<<<<<<< HEAD
 	/*
       Ask the basis factorization to obtain a fresh basis
       (through the previously-provided oracle).
 	*/
+=======
+    /*
+      Ask the basis factorization to obtain a fresh basis
+      (through the previously-provided oracle).
+    */
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     virtual void obtainFreshBasis() = 0;
 
     /*
@@ -109,7 +125,11 @@ public:
     /*
       Have the Basis Factoriaztion object start reporting statistics.
     */
+<<<<<<< HEAD
     virtual void setStatistics( Statistics * ) {};
+=======
+    virtual void setStatistics( Statistics * ){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       For debugging

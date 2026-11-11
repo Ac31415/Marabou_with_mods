@@ -13,6 +13,7 @@
 
 **/
 
+<<<<<<< HEAD
 #include "FloatUtils.h"
 #include "MarabouError.h"
 #include "Options.h"
@@ -24,16 +25,35 @@ SumOfInfeasibilitiesManager::SumOfInfeasibilitiesManager( const InputQuery
                                                           &inputQuery,
                                                           const ITableau
                                                           &tableau )
+=======
+#include "SumOfInfeasibilitiesManager.h"
+
+#include "FloatUtils.h"
+#include "MarabouError.h"
+#include "Options.h"
+#include "Set.h"
+
+SumOfInfeasibilitiesManager::SumOfInfeasibilitiesManager( const InputQuery &inputQuery,
+                                                          const ITableau &tableau )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     : _plConstraints( inputQuery.getPiecewiseLinearConstraints() )
     , _networkLevelReasoner( inputQuery.getNetworkLevelReasoner() )
     , _numberOfVariables( inputQuery.getNumberOfVariables() )
     , _tableau( tableau )
     , _initializationStrategy( Options::get()->getSoIInitializationStrategy() )
     , _searchStrategy( Options::get()->getSoISearchStrategy() )
+<<<<<<< HEAD
     , _probabilityDensityParameter( Options::get()->getFloat
                                     ( Options::PROBABILITY_DENSITY_PARAMETER ) )
     , _statistics( NULL )
 {}
+=======
+    , _probabilityDensityParameter(
+          Options::get()->getFloat( Options::PROBABILITY_DENSITY_PARAMETER ) )
+    , _statistics( NULL )
+{
+}
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 void SumOfInfeasibilitiesManager::resetPhasePattern()
 {
@@ -54,9 +74,14 @@ LinearExpression SumOfInfeasibilitiesManager::getCurrentSoIPhasePattern() const
     if ( _statistics )
     {
         struct timespec end = TimeUtils::sampleMicro();
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_GETTING_SOI_PHASE_PATTERN_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_GETTING_SOI_PHASE_PATTERN_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     return cost;
 }
@@ -72,9 +97,14 @@ LinearExpression SumOfInfeasibilitiesManager::getLastAcceptedSoIPhasePattern() c
     if ( _statistics )
     {
         struct timespec end = TimeUtils::sampleMicro();
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_GETTING_SOI_PHASE_PATTERN_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_GETTING_SOI_PHASE_PATTERN_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     return cost;
 }
@@ -85,6 +115,7 @@ void SumOfInfeasibilitiesManager::initializePhasePattern()
 
     resetPhasePattern();
 
+<<<<<<< HEAD
     if ( _initializationStrategy == SoIInitializationStrategy::INPUT_ASSIGNMENT
          && _networkLevelReasoner )
     {
@@ -93,13 +124,26 @@ void SumOfInfeasibilitiesManager::initializePhasePattern()
     else if ( _initializationStrategy
               == SoIInitializationStrategy::CURRENT_ASSIGNMENT
               || !_networkLevelReasoner )
+=======
+    if ( _initializationStrategy == SoIInitializationStrategy::INPUT_ASSIGNMENT &&
+         _networkLevelReasoner )
+    {
+        initializePhasePatternWithCurrentInputAssignment();
+    }
+    else if ( _initializationStrategy == SoIInitializationStrategy::CURRENT_ASSIGNMENT ||
+              !_networkLevelReasoner )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         initializePhasePatternWithCurrentAssignment();
     }
     else
     {
+<<<<<<< HEAD
         throw MarabouError
             ( MarabouError::UNABLE_TO_INITIALIZATION_PHASE_PATTERN );
+=======
+        throw MarabouError( MarabouError::UNABLE_TO_INITIALIZATION_PHASE_PATTERN );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     // Store constraints participating in the SoI
@@ -112,9 +156,14 @@ void SumOfInfeasibilitiesManager::initializePhasePattern()
     if ( _statistics )
     {
         struct timespec end = TimeUtils::sampleMicro();
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -133,8 +182,12 @@ void SumOfInfeasibilitiesManager::initializePhasePatternWithCurrentInputAssignme
     for ( const auto &plConstraint : _plConstraints )
     {
         ASSERT( !_currentPhasePattern.exists( plConstraint ) );
+<<<<<<< HEAD
         if ( plConstraint->supportSoI() &&
              plConstraint->isActive() && !plConstraint->phaseFixed() )
+=======
+        if ( plConstraint->supportSoI() && plConstraint->isActive() && !plConstraint->phaseFixed() )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             // Set the phase status corresponding to the current assignment.
             _currentPhasePattern[plConstraint] =
@@ -150,8 +203,12 @@ void SumOfInfeasibilitiesManager::initializePhasePatternWithCurrentAssignment()
     for ( const auto &plConstraint : _plConstraints )
     {
         ASSERT( !_currentPhasePattern.exists( plConstraint ) );
+<<<<<<< HEAD
         if ( plConstraint->supportSoI() && plConstraint->isActive()
              && !plConstraint->phaseFixed() )
+=======
+        if ( plConstraint->supportSoI() && plConstraint->isActive() && !plConstraint->phaseFixed() )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             // Set the phase status corresponding to the current assignment.
             _currentPhasePattern[plConstraint] =
@@ -182,17 +239,24 @@ void SumOfInfeasibilitiesManager::proposePhasePatternUpdate()
     if ( _statistics )
     {
         struct timespec end = TimeUtils::sampleMicro();
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::NUM_PROPOSED_PHASE_PATTERN_UPDATE );
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::NUM_PROPOSED_PHASE_PATTERN_UPDATE );
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
 void SumOfInfeasibilitiesManager::proposePhasePatternUpdateRandomly()
 {
     SOI_LOG( "Proposing phase pattern update randomly..." );
+<<<<<<< HEAD
     DEBUG({
             // _plConstraintsInCurrentPhasePattern should contain the same
             // plConstraints in _currentPhasePattern
@@ -208,6 +272,19 @@ void SumOfInfeasibilitiesManager::proposePhasePatternUpdateRandomly()
                        _plConstraintsInCurrentPhasePattern.size();
     PiecewiseLinearConstraint *plConstraintToUpdate =
         _plConstraintsInCurrentPhasePattern[index];
+=======
+    DEBUG( {
+        // _plConstraintsInCurrentPhasePattern should contain the same
+        // plConstraints in _currentPhasePattern
+        ASSERT( _plConstraintsInCurrentPhasePattern.size() == _currentPhasePattern.size() );
+        for ( const auto &pair : _currentPhasePattern )
+            ASSERT( _plConstraintsInCurrentPhasePattern.exists( pair.first ) );
+    } );
+
+    // First, pick a pl constraint whose cost component we will update.
+    unsigned index = (unsigned)T::rand() % _plConstraintsInCurrentPhasePattern.size();
+    PiecewiseLinearConstraint *plConstraintToUpdate = _plConstraintsInCurrentPhasePattern[index];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Next, pick an alternative phase.
     PhaseStatus currentPhase = _currentPhasePattern[plConstraintToUpdate];
@@ -221,7 +298,11 @@ void SumOfInfeasibilitiesManager::proposePhasePatternUpdateRandomly()
     else
     {
         auto it = allPhases.begin();
+<<<<<<< HEAD
         unsigned index =  ( unsigned ) T::rand() % allPhases.size();
+=======
+        unsigned index = (unsigned)T::rand() % allPhases.size();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         while ( index > 0 )
         {
             ++it;
@@ -269,8 +350,13 @@ void SumOfInfeasibilitiesManager::proposePhasePatternUpdateWalksat()
     SOI_LOG( "Proposing phase pattern update with Walksat-based strategy - done" );
 }
 
+<<<<<<< HEAD
 bool SumOfInfeasibilitiesManager::decideToAcceptCurrentProposal
 ( double costOfCurrentPhasePattern, double costOfProposedPhasePattern )
+=======
+bool SumOfInfeasibilitiesManager::decideToAcceptCurrentProposal( double costOfCurrentPhasePattern,
+                                                                 double costOfProposedPhasePattern )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( costOfProposedPhasePattern < costOfCurrentPhasePattern )
         return true;
@@ -279,9 +365,14 @@ bool SumOfInfeasibilitiesManager::decideToAcceptCurrentProposal
         // The smaller the difference between the proposed phase pattern and the
         // current phase pattern, the more likely to accept the proposal.
         double prob = exp( -_probabilityDensityParameter *
+<<<<<<< HEAD
                            ( costOfProposedPhasePattern -
                              costOfCurrentPhasePattern ) );
         return ( (double) T::rand() / RAND_MAX ) < prob;
+=======
+                           ( costOfProposedPhasePattern - costOfCurrentPhasePattern ) );
+        return ( (double)T::rand() / RAND_MAX ) < prob;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -294,12 +385,19 @@ void SumOfInfeasibilitiesManager::acceptCurrentPhasePattern()
 
     if ( _statistics )
     {
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::NUM_ACCEPTED_PHASE_PATTERN_UPDATE );
         struct timespec end = TimeUtils::sampleMicro();
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::NUM_ACCEPTED_PHASE_PATTERN_UPDATE );
+        struct timespec end = TimeUtils::sampleMicro();
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_UPDATING_SOI_PHASE_PATTERN_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -317,8 +415,13 @@ void SumOfInfeasibilitiesManager::updateCurrentPhasePatternForSatisfiedPLConstra
     }
 }
 
+<<<<<<< HEAD
 void SumOfInfeasibilitiesManager::removeCostComponentFromHeuristicCost
 ( PiecewiseLinearConstraint *constraint )
+=======
+void SumOfInfeasibilitiesManager::removeCostComponentFromHeuristicCost(
+    PiecewiseLinearConstraint *constraint )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( _currentPhasePattern.exists( constraint ) )
     {
@@ -340,9 +443,14 @@ void SumOfInfeasibilitiesManager::obtainCurrentAssignment()
     if ( _statistics )
     {
         struct timespec end = TimeUtils::sampleMicro();
+<<<<<<< HEAD
         _statistics->incLongAttribute
             ( Statistics::TOTAL_TIME_OBTAIN_CURRENT_ASSIGNMENT_MICRO,
               TimeUtils::timePassed( start, end ) );
+=======
+        _statistics->incLongAttribute( Statistics::TOTAL_TIME_OBTAIN_CURRENT_ASSIGNMENT_MICRO,
+                                       TimeUtils::timePassed( start, end ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -351,26 +459,44 @@ void SumOfInfeasibilitiesManager::setStatistics( Statistics *statistics )
     _statistics = statistics;
 }
 
+<<<<<<< HEAD
 void SumOfInfeasibilitiesManager::setPhaseStatusInLastAcceptedPhasePattern
 ( PiecewiseLinearConstraint *constraint, PhaseStatus phase )
+=======
+void SumOfInfeasibilitiesManager::setPhaseStatusInLastAcceptedPhasePattern(
+    PiecewiseLinearConstraint *constraint,
+    PhaseStatus phase )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( _lastAcceptedPhasePattern.exists( constraint ) &&
             _plConstraintsInCurrentPhasePattern.exists( constraint ) );
     _lastAcceptedPhasePattern[constraint] = phase;
 }
 
+<<<<<<< HEAD
 void SumOfInfeasibilitiesManager::setPhaseStatusInCurrentPhasePattern
 ( PiecewiseLinearConstraint *constraint, PhaseStatus phase )
+=======
+void SumOfInfeasibilitiesManager::setPhaseStatusInCurrentPhasePattern(
+    PiecewiseLinearConstraint *constraint,
+    PhaseStatus phase )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( _currentPhasePattern.exists( constraint ) &&
             _plConstraintsInCurrentPhasePattern.exists( constraint ) );
     _currentPhasePattern[constraint] = phase;
 }
 
+<<<<<<< HEAD
 void SumOfInfeasibilitiesManager::getCostReduction( PiecewiseLinearConstraint *
                                                     plConstraint, double
                                                     &reducedCost, PhaseStatus
                                                     &phaseOfReducedCost ) const
+=======
+void SumOfInfeasibilitiesManager::getCostReduction( PiecewiseLinearConstraint *plConstraint,
+                                                    double &reducedCost,
+                                                    PhaseStatus &phaseOfReducedCost ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( _currentPhasePattern.exists( plConstraint ) );
     SOI_LOG( "Computing reduced cost for the current constraint..." );
@@ -380,8 +506,12 @@ void SumOfInfeasibilitiesManager::getCostReduction( PiecewiseLinearConstraint *
     List<PhaseStatus> allPhases = plConstraint->getAllCases();
     allPhases.erase( currentPhase );
     ASSERT( allPhases.size() > 0 ); // Otherwise, the constraint must be fixed.
+<<<<<<< HEAD
     SOI_LOG( Stringf( "Number of alternative phases: %u", allPhases.size() ).
              ascii() );
+=======
+    SOI_LOG( Stringf( "Number of alternative phases: %u", allPhases.size() ).ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Compute the violation of the plConstraint w.r.t. the current assignment
     // and the current cost component.
@@ -399,17 +529,29 @@ void SumOfInfeasibilitiesManager::getCostReduction( PiecewiseLinearConstraint *
         plConstraint->getCostFunctionComponent( otherCostComponent, phase );
         double otherCost = otherCostComponent.evaluate( _currentAssignment );
         double currentReducedCost = currentCost - otherCost;
+<<<<<<< HEAD
         SOI_LOG( Stringf( "Reduced cost of phase %u: %.2f",
                           currentReducedCost, phase ).ascii() );
+=======
+        SOI_LOG( Stringf( "Reduced cost of phase %u: %.2f", currentReducedCost, phase ).ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if ( FloatUtils::lt( currentReducedCost, reducedCost ) )
         {
             reducedCost = currentReducedCost;
             phaseOfReducedCost = phase;
         }
     }
+<<<<<<< HEAD
     ASSERT( reducedCost != FloatUtils::infinity() &&
             phaseOfReducedCost != PHASE_NOT_FIXED );
     SOI_LOG( Stringf( "Largest reduced cost is %.2f and achieved with phase status %u",
                       reducedCost, phaseOfReducedCost ).ascii() );
+=======
+    ASSERT( reducedCost != FloatUtils::infinity() && phaseOfReducedCost != PHASE_NOT_FIXED );
+    SOI_LOG( Stringf( "Largest reduced cost is %.2f and achieved with phase status %u",
+                      reducedCost,
+                      phaseOfReducedCost )
+                 .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     SOI_LOG( "Computing reduced cost for the current constraint - done" );
 }

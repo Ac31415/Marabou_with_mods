@@ -22,22 +22,37 @@ class ITableau;
 class IBoundManager;
 class ISelector;
 
+<<<<<<< HEAD
 namespace T
 {
     ITableau *createTableau( IBoundManager &BoundManager );
     void discardTableau( ITableau *tableau );
 }
+=======
+namespace T {
+ITableau *createTableau( IBoundManager &BoundManager );
+void discardTableau( ITableau *tableau );
+} // namespace T
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 CXXTEST_SUPPLY( createTableau,
                 ITableau *,
                 createTableau,
+<<<<<<< HEAD
                 ( IBoundManager &boundManager ),
+=======
+                ( IBoundManager & boundManager ),
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 T::createTableau,
                 ( boundManager ) );
 
 CXXTEST_SUPPLY_VOID( discardTableau,
                      discardTableau,
+<<<<<<< HEAD
                      ( ITableau *tableau ),
+=======
+                     ( ITableau * tableau ),
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                      T::discardTableau,
                      ( tableau ) );
 

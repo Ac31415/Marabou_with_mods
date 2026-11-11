@@ -21,39 +21,43 @@
 class MockProjectedSteepestEdgeRule : public IProjectedSteepestEdgeRule
 {
 public:
-	MockProjectedSteepestEdgeRule()
-	{
-		wasCreated = false;
-		wasDiscarded = false;
+    MockProjectedSteepestEdgeRule()
+    {
+        wasCreated = false;
+        wasDiscarded = false;
     }
 
     ~MockProjectedSteepestEdgeRule()
     {
     }
 
-	bool wasCreated;
-	bool wasDiscarded;
+    bool wasCreated;
+    bool wasDiscarded;
 
-	void mockConstructor()
-	{
-		TS_ASSERT( !wasCreated );
-		wasCreated = true;
-	}
+    void mockConstructor()
+    {
+        TS_ASSERT( !wasCreated );
+        wasCreated = true;
+    }
 
-	void mockDestructor()
-	{
-		TS_ASSERT( wasCreated );
-		TS_ASSERT( !wasDiscarded );
-		wasDiscarded = true;
-	}
+    void mockDestructor()
+    {
+        TS_ASSERT( wasCreated );
+        TS_ASSERT( !wasDiscarded );
+        wasDiscarded = true;
+    }
 
     void initialize( const ITableau & )
     {
     }
 
+<<<<<<< HEAD
     bool select( ITableau &,
                  const List<unsigned> &,
                  const Set<unsigned> & )
+=======
+    bool select( ITableau &, const List<unsigned> &, const Set<unsigned> & )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         return true;
     }

@@ -21,7 +21,12 @@
 #include "LUFactors.h"
 #include "List.h"
 
+<<<<<<< HEAD
 #define LU_FACTORIZATION_LOG( x, ... ) LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "LUFactorization: %s\n", x )
+=======
+#define LU_FACTORIZATION_LOG( x, ... )                                                             \
+    LOG( GlobalConfiguration::BASIS_FACTORIZATION_LOGGING, "LUFactorization: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class EtaMatrix;
 class LPElement;
@@ -50,7 +55,11 @@ public:
     */
     void updateToAdjacentBasis( unsigned columnIndex,
                                 const double *changeColumn,
+<<<<<<< HEAD
                                 const double */* newColumn */ );
+=======
+                                const double * /* newColumn */ );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Perform a forward transformation, i.e. find x such that x = inv(B) * y,
@@ -97,6 +106,7 @@ public:
     void storeFactorization( IBasisFactorization *other );
     void restoreFactorization( const IBasisFactorization *other );
 
+<<<<<<< HEAD
 	/*
       Factorize the stored _B matrix into LU form.
 	*/
@@ -107,13 +117,28 @@ public:
       (through the previously-provided oracle).
 	*/
     void obtainFreshBasis();
+=======
+    /*
+      Factorize the stored _B matrix into LU form.
+    */
+    void factorizeBasis();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
-	/*
+    /*
+      Ask the basis factorization to obtain a fresh basis
+      (through the previously-provided oracle).
+    */
+    void obtainFreshBasis();
+
+    /*
+<<<<<<< HEAD
+=======
       Swap two rows of a matrix.
     */
     void rowSwap( unsigned rowOne, unsigned rowTwo, double *matrix );
 
     /*
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
       Return true iff the basis matrix B0 is explicitly available.
     */
     bool explicitBasisAvailable() const;
@@ -143,9 +168,14 @@ public:
     /*
       Getter functions for the various factorization components.
     */
-	const double *getU() const;
-	const List<LPElement *> getLP() const;
-	const List<EtaMatrix *> getEtas() const;
+    const double *getU() const;
+    const List<LPElement *> getLP() const;
+    const List<EtaMatrix *> getEtas() const;
+
+    /*
+      Debug
+    */
+    void dump() const;
 
     /*
       Debug
@@ -156,7 +186,11 @@ private:
     /*
       The Basis matrix.
     */
+<<<<<<< HEAD
 	double *_B;
+=======
+    double *_B;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       The dimension of the basis matrix.
@@ -186,7 +220,11 @@ private:
     /*
       Clear a previous factorization.
     */
+<<<<<<< HEAD
 	void clearFactorization();
+=======
+    void clearFactorization();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __LUFactorization_h__

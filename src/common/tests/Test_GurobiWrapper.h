@@ -14,13 +14,21 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 #include "GurobiWrapper.h"
 #include "MString.h"
 #include "MockErrno.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class GurobiWrapperTestSuite : public CxxTest::TestSuite
 {
 public:
@@ -82,6 +90,7 @@ public:
 #endif // ENABLE_GUROBI
     }
 };
+<<<<<<< HEAD
 
 //
 // Local Variables:
@@ -90,3 +99,5 @@ public:
 // c-basic-offset: 4
 // End:
 //
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

@@ -16,9 +16,15 @@
 #ifndef __Tableau_h__
 #define __Tableau_h__
 
+<<<<<<< HEAD
 #include "IBoundManager.h"
 #include "GurobiWrapper.h"
 #include "IBasisFactorization.h"
+=======
+#include "GurobiWrapper.h"
+#include "IBasisFactorization.h"
+#include "IBoundManager.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "ITableau.h"
 #include "LPSolverType.h"
 #include "MString.h"
@@ -36,7 +42,13 @@ class ICostFunctionManager;
 class PiecewiseLinearCaseSplit;
 class TableauState;
 
+<<<<<<< HEAD
 class Tableau : public ITableau, public IBasisFactorization::BasisColumnOracle
+=======
+class Tableau
+    : public ITableau
+    , public IBasisFactorization::BasisColumnOracle
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
 public:
     Tableau( IBoundManager &boundManager );
@@ -169,7 +181,14 @@ public:
     /*
       Get BoundManager reference
      */
+<<<<<<< HEAD
     IBoundManager &getBoundManager() const { return _boundManager; }
+=======
+    IBoundManager &getBoundManager() const
+    {
+        return _boundManager;
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Returns whether any variable's bounds are invalid.
@@ -453,7 +472,14 @@ public:
 
       The inverse coefficient is just 1/c.
     */
+<<<<<<< HEAD
     bool areLinearlyDependent( unsigned x1, unsigned x2, double &coefficient, double &inverseCoefficient );
+=======
+    bool areLinearlyDependent( unsigned x1,
+                               unsigned x2,
+                               double &coefficient,
+                               double &inverseCoefficient );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       When we start merging columns, variables effectively get renamed.
@@ -475,6 +501,10 @@ public:
     */
     void tightenUpperBoundNaively( unsigned variable, double value );
     void tightenLowerBoundNaively( unsigned variable, double value );
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 private:
     /*
       Variable watchers
@@ -496,8 +526,13 @@ private:
     /*
        Direct pointers to _boundManager arrays to avoid multiple dereferencing.
      */
+<<<<<<< HEAD
     const double * _lowerBounds;
     const double * _upperBounds;
+=======
+    const double *_lowerBounds;
+    const double *_upperBounds;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       The dimensions of matrix A

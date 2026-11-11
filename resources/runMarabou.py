@@ -66,23 +66,38 @@ def createQuery(args):
         return None, None
 
     if  args.prop != None:
+<<<<<<< HEAD
         query = network.getMarabouQuery()
+=======
+        query = network.getInputQuery()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         MarabouCore.loadProperty(query, args.prop)
         return query, network
 
     if args.dataset == 'mnist':
         encode_mnist_linf(network, args.index, args.epsilon, args.target_label)
+<<<<<<< HEAD
         return network.getMarabouQuery(), network
     elif args.dataset == 'cifar10':
         encode_cifar10_linf(network, args.index, args.epsilon, args.target_label)
         return network.getMarabouQuery(), network
+=======
+        return network.getInputQuery(), network
+    elif args.dataset == 'cifar10':
+        encode_cifar10_linf(network, args.index, args.epsilon, args.target_label)
+        return network.getInputQuery(), network
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     else:
         """
         ENCODE YOUR CUSTOMIZED PROPERTY HERE!
         """
         print("No property encoded!")
 
+<<<<<<< HEAD
         return network.getMarabouQuery(), network
+=======
+        return network.getInputQuery(), network
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 def encode_mnist_linf(network, index, epsilon, target_label):
     from tensorflow.keras.datasets import mnist
@@ -95,7 +110,11 @@ def encode_mnist_linf(network, index, epsilon, target_label):
     if target_label == -1:
         print("No output constraint!")
     else:
+<<<<<<< HEAD
         outputVars = network.outputVars.flatten()
+=======
+        outputVars = network.outputVars[0].flatten()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for i in range(10):
             if i != target_label:
                 network.addInequality([outputVars[i],
@@ -129,8 +148,13 @@ def encode_cifar10_linf(network, index, epsilon, target_label):
             network.setUpperBound(i, ub[i])
         for i in range(10):
             if i != target_label:
+<<<<<<< HEAD
                 network.addInequality([network.outputVars[0][i],
                                        network.outputVars[0][target_label]],
+=======
+                network.addInequality([network.outputVars[0][0][i],
+                                       network.outputVars[0][0][target_label]],
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                       [1, -1], 0)
     return
 

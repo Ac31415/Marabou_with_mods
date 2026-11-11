@@ -13,10 +13,18 @@
 
  **/
 
+<<<<<<< HEAD
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "LUFactors.h"
+=======
+#include "LUFactors.h"
+
+#include "BasisFactorizationError.h"
+#include "Debug.h"
+#include "FloatUtils.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MString.h"
 
 LUFactors::LUFactors( unsigned m )
@@ -28,11 +36,19 @@ LUFactors::LUFactors( unsigned m )
     , _z( NULL )
     , _workMatrix( NULL )
 {
+<<<<<<< HEAD
     _F = new double[m*m];
     if ( !_F )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "LUFactors::F" );
 
     _V = new double[m*m];
+=======
+    _F = new double[m * m];
+    if ( !_F )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "LUFactors::F" );
+
+    _V = new double[m * m];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( !_V )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "LUFactors::V" );
 
@@ -40,9 +56,16 @@ LUFactors::LUFactors( unsigned m )
     if ( !_z )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "LUFactors::z" );
 
+<<<<<<< HEAD
     _workMatrix = new double[m*m];
     if ( !_workMatrix )
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "LUFactors::workMatrix" );
+=======
+    _workMatrix = new double[m * m];
+    if ( !_workMatrix )
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "LUFactors::workMatrix" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 LUFactors::~LUFactors()
@@ -82,7 +105,11 @@ void LUFactors::dump() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%8.2lf ", _F[i*_m + j] );
+=======
+            printf( "%8.2lf ", _F[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
@@ -93,24 +120,39 @@ void LUFactors::dump() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%8.2lf ", _V[i*_m + j] );
+=======
+            printf( "%8.2lf ", _V[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
 
     printf( "\tDumping product F*V:\n" );
 
+<<<<<<< HEAD
     double *result = new double[_m*_m];
+=======
+    double *result = new double[_m * _m];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     std::fill_n( result, _m * _m, 0.0 );
     for ( unsigned i = 0; i < _m; ++i )
     {
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             result[i*_m + j] = 0;
             for ( unsigned k = 0; k < _m; ++k )
             {
                 result[i*_m + j] += _F[i*_m + k] * _V[k*_m + j];
+=======
+            result[i * _m + j] = 0;
+            for ( unsigned k = 0; k < _m; ++k )
+            {
+                result[i * _m + j] += _F[i * _m + k] * _V[k * _m + j];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }
@@ -120,7 +162,11 @@ void LUFactors::dump() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%8.2lf ", result[i*_m + j] );
+=======
+            printf( "%8.2lf ", result[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
@@ -134,7 +180,11 @@ void LUFactors::dump() const
         for ( unsigned j = 0; j < _m; ++j )
         {
             unsigned uCol = _Q._rowOrdering[j];
+<<<<<<< HEAD
             printf( "%8.2lf ", _V[uRow*_m + uCol] );
+=======
+            printf( "%8.2lf ", _V[uRow * _m + uCol] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
@@ -148,7 +198,11 @@ void LUFactors::dump() const
         for ( unsigned j = 0; j < _m; ++j )
         {
             unsigned lCol = _P._columnOrdering[j];
+<<<<<<< HEAD
             printf( "%8.2lf ", _F[lRow*_m + lCol] );
+=======
+            printf( "%8.2lf ", _F[lRow * _m + lCol] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         printf( "\n" );
     }
@@ -179,7 +233,11 @@ void LUFactors::fForwardTransformation( const double *y, double *x ) const
       for j = P._rowOrdering[i]. Also observe that the diagonal elements
       of L remain diagonal elements in F, i.e. F has a diagonal of 1s.
     */
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( unsigned lColumn = 0; lColumn < _m; ++lColumn )
     {
@@ -194,7 +252,11 @@ void LUFactors::fForwardTransformation( const double *y, double *x ) const
         for ( unsigned lRow = lColumn + 1; lRow < _m; ++lRow )
         {
             unsigned fRow = _P._columnOrdering[lRow];
+<<<<<<< HEAD
             x[fRow] -= ( _F[fRow*_m + fColumn] * x[fColumn] );
+=======
+            x[fRow] -= ( _F[fRow * _m + fColumn] * x[fColumn] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 }
@@ -223,7 +285,11 @@ void LUFactors::fBackwardTransformation( const double *y, double *x ) const
       of L remain diagonal elements in F, i.e. F has a diagonal of 1s.
     */
 
+<<<<<<< HEAD
     memcpy( x, y, sizeof(double) * _m );
+=======
+    memcpy( x, y, sizeof( double ) * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     for ( int lRow = _m - 1; lRow >= 0; --lRow )
     {
@@ -238,7 +304,11 @@ void LUFactors::fBackwardTransformation( const double *y, double *x ) const
         for ( int lColumn = lRow - 1; lColumn >= 0; --lColumn )
         {
             unsigned fColumn = _P._columnOrdering[lColumn];
+<<<<<<< HEAD
             x[fColumn] -= ( _F[fRow*_m + fColumn] * x[fRow] );
+=======
+            x[fColumn] -= ( _F[fRow * _m + fColumn] * x[fRow] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 }
@@ -273,13 +343,21 @@ void LUFactors::vForwardTransformation( const double *y, double *x ) const
         for ( unsigned uColumn = uRow + 1; uColumn < _m; ++uColumn )
         {
             unsigned vColumn = _Q._rowOrdering[uColumn];
+<<<<<<< HEAD
             x[xBeingSolved] -= ( _V[vRow*_m + vColumn] * x[vColumn] );
+=======
+            x[xBeingSolved] -= ( _V[vRow * _m + vColumn] * x[vColumn] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         if ( FloatUtils::isZero( x[xBeingSolved] ) )
             x[xBeingSolved] = 0.0;
         else
+<<<<<<< HEAD
             x[xBeingSolved] *= ( 1.0 / _V[vRow*_m + _Q._rowOrdering[uRow]] );
+=======
+            x[xBeingSolved] *= ( 1.0 / _V[vRow * _m + _Q._rowOrdering[uRow]] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -313,13 +391,21 @@ void LUFactors::vBackwardTransformation( const double *y, double *x ) const
         for ( unsigned uRow = 0; uRow < uColumn; ++uRow )
         {
             unsigned vRow = _P._columnOrdering[uRow];
+<<<<<<< HEAD
             x[xBeingSolved] -= ( _V[vRow*_m + vColumn] * x[vRow] );
+=======
+            x[xBeingSolved] -= ( _V[vRow * _m + vColumn] * x[vRow] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         if ( FloatUtils::isZero( x[xBeingSolved] ) )
             x[xBeingSolved] = 0.0;
         else
+<<<<<<< HEAD
             x[xBeingSolved] *= ( 1.0 / _V[ _P._columnOrdering[uColumn]*_m + vColumn] );
+=======
+            x[xBeingSolved] *= ( 1.0 / _V[_P._columnOrdering[uColumn] * _m + vColumn] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -370,7 +456,11 @@ void LUFactors::invertBasis( double *result )
     // Initialize _workMatrix to the identity
     std::fill_n( _workMatrix, _m * _m, 0 );
     for ( unsigned i = 0; i < _m; ++i )
+<<<<<<< HEAD
         _workMatrix[i*_m + i] = 1;
+=======
+        _workMatrix[i * _m + i] = 1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Step 1: Multiply I on the left by inv(L) using
@@ -383,10 +473,17 @@ void LUFactors::invertBasis( double *result )
     {
         for ( unsigned lRow = lColumn + 1; lRow < _m; ++lRow )
         {
+<<<<<<< HEAD
             double multiplier = -_F[_P._columnOrdering[lRow]*_m + _P._columnOrdering[lColumn]];
 
             for ( unsigned i = 0; i <= lColumn; ++i )
                 _workMatrix[lRow*_m + i] += _workMatrix[lColumn*_m + i] * multiplier;
+=======
+            double multiplier = -_F[_P._columnOrdering[lRow] * _m + _P._columnOrdering[lColumn]];
+
+            for ( unsigned i = 0; i <= lColumn; ++i )
+                _workMatrix[lRow * _m + i] += _workMatrix[lColumn * _m + i] * multiplier;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 
@@ -400,6 +497,7 @@ void LUFactors::invertBasis( double *result )
     for ( int uColumn = _m - 1; uColumn >= 0; --uColumn )
     {
         double invUDiagonalEntry =
+<<<<<<< HEAD
             1 / _V[_P._columnOrdering[uColumn]*_m + _Q._rowOrdering[uColumn]];
 
         for ( int uRow = 0; uRow < uColumn; ++uRow )
@@ -412,6 +510,21 @@ void LUFactors::invertBasis( double *result )
 
         for ( unsigned i = 0; i < _m; ++i )
             _workMatrix[uColumn*_m + i] *= invUDiagonalEntry;
+=======
+            1 / _V[_P._columnOrdering[uColumn] * _m + _Q._rowOrdering[uColumn]];
+
+        for ( int uRow = 0; uRow < uColumn; ++uRow )
+        {
+            double multiplier =
+                -_V[_P._columnOrdering[uRow] * _m + _Q._rowOrdering[uColumn]] * invUDiagonalEntry;
+
+            for ( unsigned i = 0; i < _m; ++i )
+                _workMatrix[uRow * _m + i] += _workMatrix[uColumn * _m + i] * multiplier;
+        }
+
+        for ( unsigned i = 0; i < _m; ++i )
+            _workMatrix[uColumn * _m + i] *= invUDiagonalEntry;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     /*
@@ -428,7 +541,11 @@ void LUFactors::invertBasis( double *result )
             invLURow = _Q._columnOrdering[i];
             invLUColumn = _P._rowOrdering[j];
 
+<<<<<<< HEAD
             result[i*_m + j] = _workMatrix[invLURow*_m + invLUColumn];
+=======
+            result[i * _m + j] = _workMatrix[invLURow * _m + invLUColumn];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
     }
 }
@@ -437,8 +554,13 @@ void LUFactors::storeToOther( LUFactors *other ) const
 {
     ASSERT( _m == other->_m );
 
+<<<<<<< HEAD
     memcpy( other->_F, _F, sizeof(double) * _m * _m );
     memcpy( other->_V, _V, sizeof(double) * _m * _m );
+=======
+    memcpy( other->_F, _F, sizeof( double ) * _m * _m );
+    memcpy( other->_V, _V, sizeof( double ) * _m * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     _P.storeToOther( &other->_P );
     _Q.storeToOther( &other->_Q );

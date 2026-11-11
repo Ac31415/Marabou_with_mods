@@ -28,13 +28,22 @@
 #ifndef __DisjunctionConstraint_h__
 #define __DisjunctionConstraint_h__
 
+<<<<<<< HEAD
 #include "Vector.h"
 #include "PiecewiseLinearConstraint.h"
+=======
+#include "PiecewiseLinearConstraint.h"
+#include "Vector.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class DisjunctionConstraint : public PiecewiseLinearConstraint
 {
 public:
+<<<<<<< HEAD
     ~DisjunctionConstraint() {};
+=======
+    ~DisjunctionConstraint(){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     DisjunctionConstraint( const List<PiecewiseLinearCaseSplit> &disjuncts );
     DisjunctionConstraint( const Vector<PiecewiseLinearCaseSplit> &disjuncts );
     DisjunctionConstraint( const String &serializedDisjunction );
@@ -153,7 +162,11 @@ public:
 
     virtual bool supportVariableElimination() const override
     {
+<<<<<<< HEAD
       return false;
+=======
+        return false;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     /*
@@ -224,7 +237,11 @@ private:
     */
     void updateFeasibleDisjuncts();
     bool disjunctIsFeasible( unsigned ind ) const;
+<<<<<<< HEAD
     bool caseSplitIsFeasible( const PiecewiseLinearCaseSplit & caseSplit ) const;
+=======
+    bool caseSplitIsFeasible( const PiecewiseLinearCaseSplit &caseSplit ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     inline PhaseStatus indToPhaseStatus( unsigned ind ) const
     {
@@ -233,11 +250,25 @@ private:
 
     inline unsigned phaseStatusToInd( PhaseStatus phase ) const
     {
+<<<<<<< HEAD
         //ASSERT( phase != PHASE_NOT_FIXED );
+=======
+        // ASSERT( phase != PHASE_NOT_FIXED );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return static_cast<unsigned>( phase ) - 1;
     }
 
     void addTableauAuxVar( unsigned tableauAuxVar, unsigned constraintAuxVar ) override;
+<<<<<<< HEAD
+=======
+
+    /*
+      Get the minimal lower bound and maximal upper bound for the given variable,
+      across all disjuncts. If some disjunct does not contain a bound, return infinity.
+    */
+    double getMinLowerBound( unsigned int var ) const;
+    double getMaxUpperBound( unsigned int var ) const;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __DisjunctionConstraint_h__

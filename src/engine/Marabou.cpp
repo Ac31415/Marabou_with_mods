@@ -14,6 +14,7 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include "AcasParser.h"
 #include "AutoFile.h"
 #include "GlobalConfiguration.h"
@@ -25,6 +26,21 @@
 #include "PropertyParser.h"
 #include "MarabouError.h"
 #include "QueryLoader.h"
+=======
+#include "Marabou.h"
+
+#include "AcasParser.h"
+#include "AutoFile.h"
+#include "File.h"
+#include "GlobalConfiguration.h"
+#include "MStringf.h"
+#include "MarabouError.h"
+#include "OnnxParser.h"
+#include "Options.h"
+#include "PropertyParser.h"
+#include "QueryLoader.h"
+#include "VnnLibParser.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #ifdef _WIN32
 #undef ERROR
@@ -64,7 +80,11 @@ void Marabou::run()
     unsigned long long totalElapsed = TimeUtils::timePassed( start, end );
     displayResults( totalElapsed );
 
+<<<<<<< HEAD
     if( Options::get()->getBool( Options::EXPORT_ASSIGNMENT ) )
+=======
+    if ( Options::get()->getBool( Options::EXPORT_ASSIGNMENT ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         exportAssignment();
 }
 
@@ -78,13 +98,21 @@ void Marabou::prepareInputQuery()
         */
         if ( !File::exists( inputQueryFilePath ) )
         {
+<<<<<<< HEAD
             printf( "Error: the specified inputQuery file (%s) doesn't exist!\n", inputQueryFilePath.ascii() );
+=======
+            printf( "Error: the specified inputQuery file (%s) doesn't exist!\n",
+                    inputQueryFilePath.ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             throw MarabouError( MarabouError::FILE_DOESNT_EXIST, inputQueryFilePath.ascii() );
         }
 
         printf( "InputQuery: %s\n", inputQueryFilePath.ascii() );
         _inputQuery = QueryLoader::loadQuery( inputQueryFilePath );
+<<<<<<< HEAD
         _inputQuery.constructNetworkLevelReasoner();
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
     else
     {
@@ -101,12 +129,21 @@ void Marabou::prepareInputQuery()
 
         if ( !File::exists( networkFilePath ) )
         {
+<<<<<<< HEAD
             printf( "Error: the specified network file (%s) doesn't exist!\n", networkFilePath.ascii() );
+=======
+            printf( "Error: the specified network file (%s) doesn't exist!\n",
+                    networkFilePath.ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             throw MarabouError( MarabouError::FILE_DOESNT_EXIST, networkFilePath.ascii() );
         }
         printf( "Network: %s\n", networkFilePath.ascii() );
 
+<<<<<<< HEAD
         if ( ((String) networkFilePath).endsWith( ".onnx" ) )
+=======
+        if ( ( (String)networkFilePath ).endsWith( ".onnx" ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             _onnxParser = new OnnxParser( networkFilePath );
             _onnxParser->generateQuery( _inputQuery );
@@ -117,8 +154,11 @@ void Marabou::prepareInputQuery()
             _acasParser->generateQuery( _inputQuery );
         }
 
+<<<<<<< HEAD
         _inputQuery.constructNetworkLevelReasoner();
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         /*
           Step 2: extract the property in question
         */
@@ -126,7 +166,18 @@ void Marabou::prepareInputQuery()
         if ( propertyFilePath != "" )
         {
             printf( "Property: %s\n", propertyFilePath.ascii() );
+<<<<<<< HEAD
             PropertyParser().parse( propertyFilePath, _inputQuery );
+=======
+            if ( propertyFilePath.endsWith( ".vnnlib" ) )
+            {
+                VnnLibParser().parse( propertyFilePath, _inputQuery );
+            }
+            else
+            {
+                PropertyParser().parse( propertyFilePath, _inputQuery );
+            }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
         else
             printf( "Property: None\n" );
@@ -148,12 +199,21 @@ void Marabou::prepareInputQuery()
 
 void Marabou::importDebuggingSolution()
 {
+<<<<<<< HEAD
     String fileName=  Options::get()->getString( Options::IMPORT_ASSIGNMENT_FILE_PATH );
+=======
+    String fileName = Options::get()->getString( Options::IMPORT_ASSIGNMENT_FILE_PATH );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     AutoFile input( fileName );
 
     if ( !IFile::exists( fileName ) )
     {
+<<<<<<< HEAD
         throw MarabouError( MarabouError::FILE_DOES_NOT_EXIST, Stringf( "File %s not found.\n", fileName.ascii() ).ascii() );
+=======
+        throw MarabouError( MarabouError::FILE_DOES_NOT_EXIST,
+                            Stringf( "File %s not found.\n", fileName.ascii() ).ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     input->open( IFile::MODE_READ );
@@ -166,7 +226,11 @@ void Marabou::importDebuggingSolution()
     String line;
 
     // Import each assignment
+<<<<<<< HEAD
     for ( unsigned i = 0;  i < numVars; ++i )
+=======
+    for ( unsigned i = 0; i < numVars; ++i )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         line = input->readLine();
         List<String> tokens = line.tokenize( "," );
@@ -177,7 +241,11 @@ void Marabou::importDebuggingSolution()
         value = atof( it->ascii() );
         it++;
         ASSERT( it == tokens.end() );
+<<<<<<< HEAD
         _inputQuery.storeDebuggingSolution( var, value);
+=======
+        _inputQuery.storeDebuggingSolution( var, value );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     input->close();
@@ -194,7 +262,11 @@ void Marabou::exportAssignment() const
     exportFile->write( Stringf( "%u\n", numberOfVariables ) );
 
     // Export each assignment
+<<<<<<< HEAD
     for ( unsigned var = 0;  var < numberOfVariables; ++var )
+=======
+    for ( unsigned var = 0; var < numberOfVariables; ++var )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         exportFile->write( Stringf( "%u, %f\n", var, _inputQuery.getSolutionValue( var ) ) );
 
     exportFile->close();
@@ -230,7 +302,13 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
 
         printf( "Input assignment:\n" );
         for ( unsigned i = 0; i < _inputQuery.getNumInputVariables(); ++i )
+<<<<<<< HEAD
             printf( "\tx%u = %lf\n", i, _inputQuery.getSolutionValue( _inputQuery.inputVariableByIndex( i ) ) );
+=======
+            printf( "\tx%u = %lf\n",
+                    i,
+                    _inputQuery.getSolutionValue( _inputQuery.inputVariableByIndex( i ) ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( _inputQuery._networkLevelReasoner )
         {
@@ -257,7 +335,13 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
             printf( "\n" );
             printf( "Output:\n" );
             for ( unsigned i = 0; i < _inputQuery.getNumOutputVariables(); ++i )
+<<<<<<< HEAD
                 printf( "\ty%u = %lf\n", i, _inputQuery.getSolutionValue( _inputQuery.outputVariableByIndex( i ) ) );
+=======
+                printf( "\ty%u = %lf\n",
+                        i,
+                        _inputQuery.getSolutionValue( _inputQuery.outputVariableByIndex( i ) ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             printf( "\n" );
         }
     }
@@ -292,6 +376,7 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
 
         // Field #3: number of visited tree states
         summaryFile.write( Stringf( "%u ",
+<<<<<<< HEAD
                                     _engine.getStatistics()->
                                     getUnsignedAttribute
                                     ( Statistics::NUM_VISITED_TREE_STATES ) ) );
@@ -299,6 +384,13 @@ void Marabou::displayResults( unsigned long long microSecondsElapsed ) const
         // Field #4: average pivot time in micro seconds
         summaryFile.write( Stringf( "%u",
                                     _engine.getStatistics()->getAveragePivotTimeInMicro() ) );
+=======
+                                    _engine.getStatistics()->getUnsignedAttribute(
+                                        Statistics::NUM_VISITED_TREE_STATES ) ) );
+
+        // Field #4: average pivot time in micro seconds
+        summaryFile.write( Stringf( "%u", _engine.getStatistics()->getAveragePivotTimeInMicro() ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         summaryFile.write( "\n" );
     }

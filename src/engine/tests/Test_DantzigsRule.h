@@ -10,15 +10,23 @@
  ** directory for licensing information.\endverbatim
  **
  ** [[ Add lengthier description here ]]
+<<<<<<< HEAD
+
+**/
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 **/
 
-#include <cxxtest/TestSuite.h>
-
 #include "DantzigsRule.h"
-#include "MockTableau.h"
 #include "MarabouError.h"
+#include "MockTableau.h"
+<<<<<<< HEAD
+#include "MarabouError.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
+#include <cxxtest/TestSuite.h>
 #include <string.h>
 
 class MockForDantzigsRule
@@ -36,7 +44,6 @@ public:
     {
         TS_ASSERT( mock = new MockForDantzigsRule );
         TS_ASSERT( tableau = new MockTableau );
-
     }
 
     void tearDown()

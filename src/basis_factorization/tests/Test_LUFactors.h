@@ -13,12 +13,20 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 #include "LUFactors.h"
 #include "MString.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class MockForLUFactors
 {
 public:
@@ -61,6 +69,7 @@ public:
                       |  0 0 3 1 |
         */
 
+<<<<<<< HEAD
         double F[16] =
             {
                 1, 0, 2, 0,
@@ -70,6 +79,16 @@ public:
             };
 
         memcpy( lu->_F, F, sizeof(F) );
+=======
+        double F[16] = {
+            1,  0, 2, 0, //
+            -2, 1, 4, 5, //
+            0,  0, 1, 0, //
+            0,  0, 3, 1, //
+        };
+
+        memcpy( lu->_F, F, sizeof( F ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 
         /*
@@ -97,6 +116,7 @@ public:
         */
 
 
+<<<<<<< HEAD
         double V[16] =
             {
                 0, 1, 5, 2,
@@ -106,6 +126,16 @@ public:
             };
 
         memcpy( lu->_V, V, sizeof(V) );
+=======
+        double V[16] = {
+            0, 1,  5,  2, //
+            0, 7,  0,  0, //
+            1, -3, -2, 3, //
+            0, 2,  -2, 0, //
+        };
+
+        memcpy( lu->_V, V, sizeof( V ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         /*
           Implies A = FV = | 2 -5   1 8 |
@@ -208,7 +238,11 @@ public:
 
         double y1[] = { 1, 2, 3, 4 };
         double x1[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected1[] = { -27.0/2, 2.0/7, -12.0/7, 65.0/14 };
+=======
+        double expected1[] = { -27.0 / 2, 2.0 / 7, -12.0 / 7, 65.0 / 14 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->vForwardTransformation( y1, x1 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -216,7 +250,11 @@ public:
 
         double y2[] = { 2, 0, -3, 1 };
         double x2[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected2[] = { -43.0/4, 0, -1.0/2, 9.0/4 };
+=======
+        double expected2[] = { -43.0 / 4, 0, -1.0 / 2, 9.0 / 4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->vForwardTransformation( y2, x2 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -242,7 +280,11 @@ public:
 
         double y1[] = { 1, 2, 3, 4 };
         double x1[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected1[] = { 1.0/2, 1, 1, -5.0/4 };
+=======
+        double expected1[] = { 1.0 / 2, 1, 1, -5.0 / 4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->vBackwardTransformation( y1, x1 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -250,7 +292,11 @@ public:
 
         double y2[] = { 2, 0, -3, 1 };
         double x2[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected2[] = { -5.0/2, 22.0/7, 2, -27.0/4 };
+=======
+        double expected2[] = { -5.0 / 2, 22.0 / 7, 2, -27.0 / 4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->vBackwardTransformation( y2, x2 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -276,7 +322,11 @@ public:
 
         double y1[] = { 1, 2, 3, 4 };
         double x1[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected1[] = { 177.0/4, 5.0/7, 45.0/14, -305.0/28 };
+=======
+        double expected1[] = { 177.0 / 4, 5.0 / 7, 45.0 / 14, -305.0 / 28 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->forwardTransformation( y1, x1 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -284,7 +334,11 @@ public:
 
         double y2[] = { 2, 0, -3, 1 };
         double x2[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected2[] = { -213.0/2, -22.0/7, -57.0/7, 363.0/14 };
+=======
+        double expected2[] = { -213.0 / 2, -22.0 / 7, -57.0 / 7, 363.0 / 14 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->forwardTransformation( y2, x2 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -310,7 +364,11 @@ public:
 
         double y1[] = { 1, 2, 3, 4 };
         double x1[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected1[] = { 5.0/2, 1, 43.0/4, -25.0/4 };
+=======
+        double expected1[] = { 5.0 / 2, 1, 43.0 / 4, -25.0 / 4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->backwardTransformation( y1, x1 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -318,7 +376,11 @@ public:
 
         double y2[] = { 2, 0, -3, 1 };
         double x2[] = { 0, 0, 0, 0 };
+<<<<<<< HEAD
         double expected2[] = { 53.0/14, 22.0/7, 197.0/4, -629.0/28 };
+=======
+        double expected2[] = { 53.0 / 14, 22.0 / 7, 197.0 / 4, -629.0 / 28 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         TS_ASSERT_THROWS_NOTHING( lu->backwardTransformation( y2, x2 ) );
         for ( unsigned i = 0; i < 4; ++i )
@@ -339,10 +401,17 @@ public:
                         | -5/14 -3/7 -31/4  95/28 |
         */
         double expectedInverse[] = {
+<<<<<<< HEAD
               5.0/2,      2, 129.0/4,  -59.0/4,
               2.0/7,  1.0/7,       1,   -5.0/7,
               2.0/7,  1.0/7,   5.0/2, -17.0/14,
             -5.0/14, -3.0/7, -31.0/4,  95.0/28,
+=======
+            5.0 / 2,   2,        129.0 / 4, -59.0 / 4,  //
+            2.0 / 7,   1.0 / 7,  1,         -5.0 / 7,   //
+            2.0 / 7,   1.0 / 7,  5.0 / 2,   -17.0 / 14, //
+            -5.0 / 14, -3.0 / 7, -31.0 / 4, 95.0 / 28,  //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         double result[16];

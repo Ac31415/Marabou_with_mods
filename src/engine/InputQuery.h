@@ -2,7 +2,11 @@
 /*! \file InputQuery.h
  ** \verbatim
  ** Top contributors (to current version):
+<<<<<<< HEAD
  **   Guy Katz, Shantanu Thakoor, Derek Huang
+=======
+ **   Guy Katz, Shantanu Thakoor, Derek Huang, Andrew Wu
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
  ** This file is part of the Marabou project.
  ** Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
  ** in the top-level source directory) and their institutional affiliations.
@@ -21,6 +25,10 @@
 #include "MString.h"
 #include "Map.h"
 #include "NetworkLevelReasoner.h"
+<<<<<<< HEAD
+=======
+#include "NonlinearConstraint.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "PiecewiseLinearConstraint.h"
 #include "TranscendentalConstraint.h"
 
@@ -40,6 +48,7 @@ public:
     void addEquation( const Equation &equation );
 
     unsigned getNumberOfVariables() const;
+    unsigned getNewVariable();
     double getLowerBound( unsigned variable ) const;
     double getUpperBound( unsigned variable ) const;
     const Map<unsigned, double> &getLowerBounds() const;
@@ -53,10 +62,20 @@ public:
     void addPiecewiseLinearConstraint( PiecewiseLinearConstraint *constraint );
     const List<PiecewiseLinearConstraint *> &getPiecewiseLinearConstraints() const;
     List<PiecewiseLinearConstraint *> &getPiecewiseLinearConstraints();
+<<<<<<< HEAD
   
     void addTranscendentalConstraint( TranscendentalConstraint *constraint );
     const List<TranscendentalConstraint *> &getTranscendentalConstraints() const;
     List<TranscendentalConstraint *> &getTranscendentalConstraints();
+=======
+
+    // Encode a clip constraint using two ReLU constraints
+    void addClipConstraint( unsigned b, unsigned f, double floor, double ceiling );
+
+    void addNonlinearConstraint( NonlinearConstraint *constraint );
+    const List<NonlinearConstraint *> &getNonlinearConstraints() const;
+    List<NonlinearConstraint *> &getNonlinearConstraints();
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Methods for handling input and output variables
@@ -129,10 +148,30 @@ public:
 
     /*
       Attempt to figure out the network topology and construct a
+<<<<<<< HEAD
       network level reasoner. Return true iff the construction was
       successful
     */
     bool constructNetworkLevelReasoner();
+=======
+      network level reasoner. Also collect the equations that are not handled
+      by the NLR, as well as variables that participate in
+      equations/plconstraints/nlconstraints that are not handled by the NLR.
+
+      Return true iff the construction was successful
+    */
+    bool constructNetworkLevelReasoner( List<Equation> &unhandledEquations,
+                                        Set<unsigned> &varsInUnhandledConstraints );
+
+    /*
+      Merge consecutive weighted sum layers, and update _equation accordingly.
+      Equalities corresponding to the merge layers are added, and equalities
+      corresponding to pre-merged layers are removed.
+    */
+    void mergeConsecutiveWeightedSumLayers( const List<Equation> &unhandledEquations,
+                                            const Set<unsigned> &varsInUnhandledConstraints,
+                                            Map<unsigned, LinearExpression> &eliminatedNeurons );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Include a network level reasoner in the query
@@ -149,9 +188,20 @@ private:
     Map<unsigned, double> _lowerBounds;
     Map<unsigned, double> _upperBounds;
     List<PiecewiseLinearConstraint *> _plConstraints;
+<<<<<<< HEAD
     List<TranscendentalConstraint *> _tsConstraints;
+=======
+    List<NonlinearConstraint *> _nlConstraints;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     Map<unsigned, double> _solution;
+
+    /*
+      Attempt to ensure that neurons in the same non-linear NLR layer
+      have the same source layer by spacing neurons with different
+      source neurons in separate NLR layers.
+    */
+    bool _ensureSameSourceLayerInNLR;
 
     /*
       Free any stored pl constraints.
@@ -163,6 +213,7 @@ private:
     */
     bool constructWeighedSumLayer( NLR::NetworkLevelReasoner *nlr,
                                    Map<unsigned, unsigned> &handledVariableToLayer,
+<<<<<<< HEAD
                                    unsigned newLayerIndex );
     bool constructReluLayer( NLR::NetworkLevelReasoner *nlr,
                              Map<unsigned, unsigned> &handledVariableToLayer,
@@ -179,6 +230,46 @@ private:
     bool constructMaxLayer( NLR::NetworkLevelReasoner *nlr,
                             Map<unsigned, unsigned> &handledVariableToLayer,
                             unsigned newLayerIndex );
+=======
+                                   unsigned newLayerIndex,
+                                   Set<unsigned> &handledEquations );
+    bool constructRoundLayer( NLR::NetworkLevelReasoner *nlr,
+                              Map<unsigned, unsigned> &handledVariableToLayer,
+                              unsigned newLayerIndex,
+                              Set<NonlinearConstraint *> &handledNLConstraints );
+    bool constructReluLayer( NLR::NetworkLevelReasoner *nlr,
+                             Map<unsigned, unsigned> &handledVariableToLayer,
+                             unsigned newLayerIndex,
+                             Set<PiecewiseLinearConstraint *> &handledPLConstraints );
+    bool constructLeakyReluLayer( NLR::NetworkLevelReasoner *nlr,
+                                  Map<unsigned, unsigned> &handledVariableToLayer,
+                                  unsigned newLayerIndex,
+                                  Set<PiecewiseLinearConstraint *> &handledPLConstraints );
+    bool constructSigmoidLayer( NLR::NetworkLevelReasoner *nlr,
+                                Map<unsigned, unsigned> &handledVariableToLayer,
+                                unsigned newLayerIndex,
+                                Set<NonlinearConstraint *> &handledNLConstraints );
+    bool constructAbsoluteValueLayer( NLR::NetworkLevelReasoner *nlr,
+                                      Map<unsigned, unsigned> &handledVariableToLayer,
+                                      unsigned newLayerIndex,
+                                      Set<PiecewiseLinearConstraint *> &handledPLConstraints );
+    bool constructSignLayer( NLR::NetworkLevelReasoner *nlr,
+                             Map<unsigned, unsigned> &handledVariableToLayer,
+                             unsigned newLayerIndex,
+                             Set<PiecewiseLinearConstraint *> &handledPLConstraints );
+    bool constructMaxLayer( NLR::NetworkLevelReasoner *nlr,
+                            Map<unsigned, unsigned> &handledVariableToLayer,
+                            unsigned newLayerIndex,
+                            Set<PiecewiseLinearConstraint *> &handledPLConstraints );
+    bool constructBilinearLayer( NLR::NetworkLevelReasoner *nlr,
+                                 Map<unsigned, unsigned> &handledVariableToLayer,
+                                 unsigned newLayerIndex,
+                                 Set<NonlinearConstraint *> &handledNLConstraints );
+    bool constructSoftmaxLayer( NLR::NetworkLevelReasoner *nlr,
+                                Map<unsigned, unsigned> &handledVariableToLayer,
+                                unsigned newLayerIndex,
+                                Set<NonlinearConstraint *> &handledNLConstraints );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 public:
     /*

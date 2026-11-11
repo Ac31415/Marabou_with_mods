@@ -16,8 +16,12 @@
 #ifndef __SoIInitializationStrategy_h__
 #define __SoIInitializationStrategy_h__
 
+<<<<<<< HEAD
 enum class SoIInitializationStrategy
 {
+=======
+enum class SoIInitializationStrategy {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     // When initialize the SoI function, add the cost term corresponding to the
     // activation pattern of the input assignment.
     INPUT_ASSIGNMENT,

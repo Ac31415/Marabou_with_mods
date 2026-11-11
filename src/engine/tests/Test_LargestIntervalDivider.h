@@ -13,18 +13,29 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "LargestIntervalDivider.h"
 #include "List.h"
 #include "MStringf.h"
 #include "SubQuery.h"
 #include "Vector.h"
 
+<<<<<<< HEAD
 class LargestIntervalDividerTestSuite : public CxxTest::TestSuite
 {
 public:
 
+=======
+#include <cxxtest/TestSuite.h>
+
+class LargestIntervalDividerTestSuite : public CxxTest::TestSuite
+{
+public:
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     std::unique_ptr<LargestIntervalDivider> queryDivider;
     List<unsigned> inputVariables;
     double timeoutFactor;
@@ -38,8 +49,13 @@ public:
         timeoutFactor = 1.5;
 
         // Initiate the divider
+<<<<<<< HEAD
         queryDivider = std::unique_ptr<LargestIntervalDivider>
             ( new LargestIntervalDivider( inputVariables ) );
+=======
+        queryDivider =
+            std::unique_ptr<LargestIntervalDivider>( new LargestIntervalDivider( inputVariables ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     void tearDown()
@@ -98,8 +114,13 @@ public:
         String queryId = "mock";
         unsigned timeoutInSeconds = 5;
 
+<<<<<<< HEAD
         auto previousSplit = std::unique_ptr<PiecewiseLinearCaseSplit>
             ( new PiecewiseLinearCaseSplit );
+=======
+        auto previousSplit =
+            std::unique_ptr<PiecewiseLinearCaseSplit>( new PiecewiseLinearCaseSplit );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         Tightening bound1( 1, -2.0, Tightening::LB );
         Tightening bound2( 1, 2.0, Tightening::UB );
         Tightening bound3( 2, 3.0, Tightening::LB );
@@ -116,9 +137,17 @@ public:
 
         // Divide the previousSplit
         SubQueries subQueries;
+<<<<<<< HEAD
         queryDivider->createSubQueries( numNewSubQueries, queryId, 0,
                                         *previousSplit, (unsigned)
                                         timeoutInSeconds * timeoutFactor,
+=======
+        queryDivider->createSubQueries( numNewSubQueries,
+                                        queryId,
+                                        0,
+                                        *previousSplit,
+                                        (unsigned)timeoutInSeconds * timeoutFactor,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                         subQueries );
 
         // The following four splits should be created by the queryDivider
@@ -189,6 +218,7 @@ public:
         newSplits.append( newSplit4 );
 
         TS_ASSERT( subQueries.size() == 4 );
+<<<<<<< HEAD
         unsigned correctTimeoutInSeconds = (unsigned) ( timeoutInSeconds *
                                                         timeoutFactor );
         unsigned index = 0;
@@ -198,6 +228,15 @@ public:
                        Stringf( "-%u", index + 1 ) );
             TS_ASSERT( subQuery->_depth == 1 );
             TS_ASSERT( *(subQuery->_split) == newSplits[index] );
+=======
+        unsigned correctTimeoutInSeconds = (unsigned)( timeoutInSeconds * timeoutFactor );
+        unsigned index = 0;
+        for ( const auto &subQuery : subQueries )
+        {
+            TS_ASSERT( subQuery->_queryId == queryId + Stringf( "-%u", index + 1 ) );
+            TS_ASSERT( subQuery->_depth == 1 );
+            TS_ASSERT( *( subQuery->_split ) == newSplits[index] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             TS_ASSERT( subQuery->_timeoutInSeconds == correctTimeoutInSeconds );
             ++index;
 

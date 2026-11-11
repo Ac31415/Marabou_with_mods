@@ -16,7 +16,10 @@
 #include "MString.h"
 #include "Vector.h"
 
-String::String( Super super ) : _super( super )
+#include "Vector.h"
+
+String::String( Super super )
+    : _super( super )
 {
 }
 
@@ -24,11 +27,13 @@ String::String()
 {
 }
 
-String::String( const char *string, unsigned length ) : _super( string, length )
+String::String( const char *string, unsigned length )
+    : _super( string, length )
 {
 }
 
-String::String( const char *string ) : _super( string )
+String::String( const char *string )
+    : _super( string )
 {
 }
 
@@ -110,7 +115,11 @@ List<String> String::tokenize( String delimiter ) const
 
     Vector<char> copyVector( length() + 1 );
     char *copy( copyVector.data() );
+<<<<<<< HEAD
     memcpy( copy, ascii(), sizeof(char) * ( length() + 1 ) );
+=======
+    memcpy( copy, ascii(), sizeof( char ) * ( length() + 1 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     char *token = strtok( copy, delimiter.ascii() );
 
@@ -155,13 +164,18 @@ String String::trim() const
 
     for ( unsigned i = 0; i < length(); ++i )
     {
+<<<<<<< HEAD
         if ( ( !firstNonSpaceFound ) && ( _super[i] != ' ' ) && ( _super[i] != '\n' ) )
+=======
+        if ( ( !firstNonSpaceFound ) && ( _super[i] != ' ' ) && ( _super[i] != '\n' ) &&
+             ( _super[i] != '\r' ) )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         {
             firstNonSpace = i;
             firstNonSpaceFound = true;
         }
 
-        if ( ( _super[i] != ' ' ) && ( _super[i] != '\n' ) )
+        if ( ( _super[i] != ' ' ) && ( _super[i] != '\n' ) && ( _super[i] != '\r' ) )
         {
             lastNonSpace = i;
         }
@@ -208,7 +222,11 @@ bool String::endsWith( const String &suffix )
 {
     unsigned int l1 = length();
     unsigned int l2 = suffix.length();
+<<<<<<< HEAD
     return l1 >= l2 && _super.compare(l1 - l2, l2, suffix._super) == 0;
+=======
+    return l1 >= l2 && _super.compare( l1 - l2, l2, suffix._super ) == 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 std::ostream &operator<<( std::ostream &stream, const String &string );

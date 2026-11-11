@@ -17,6 +17,7 @@
 #define __LPElement_h__
 
 #include "Debug.h"
+
 #include <utility>
 
 class EtaMatrix;
@@ -24,14 +25,19 @@ class EtaMatrix;
 class LPElement
 {
 public:
-	LPElement( EtaMatrix *_eta, std::pair<unsigned, unsigned> *_pair );
-	~LPElement();
+    LPElement( EtaMatrix *_eta, std::pair<unsigned, unsigned> *_pair );
+    ~LPElement();
     void dump() const;
 
     LPElement *duplicate() const;
 
+<<<<<<< HEAD
 	EtaMatrix *_eta;
 	std::pair<unsigned, unsigned> *_pair;
+=======
+    EtaMatrix *_eta;
+    std::pair<unsigned, unsigned> *_pair;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif //__LPElement_h__

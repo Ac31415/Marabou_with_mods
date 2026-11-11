@@ -2,7 +2,11 @@
 /*! \file Options.cpp
  ** \verbatim
  ** Top contributors (to current version):
+<<<<<<< HEAD
  **   Guy Katz
+=======
+ **   Guy Katz, Andrew Wu
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
  ** This file is part of the Marabou project.
  ** Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
  ** in the top-level source directory) and their institutional affiliations.
@@ -13,10 +17,18 @@
 
 **/
 
+<<<<<<< HEAD
 #include "ConfigurationError.h"
 #include "Debug.h"
 #include "GlobalConfiguration.h"
 #include "Options.h"
+=======
+#include "Options.h"
+
+#include "ConfigurationError.h"
+#include "Debug.h"
+#include "GlobalConfiguration.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 Options *Options::get()
 {
@@ -46,12 +58,20 @@ void Options::initializeDefaultValues()
     _boolOptions[PREPROCESSOR_PL_CONSTRAINTS_ADD_AUX_EQUATIONS] = false;
     _boolOptions[RESTORE_TREE_STATES] = false;
     _boolOptions[DUMP_BOUNDS] = false;
+<<<<<<< HEAD
+=======
+    _boolOptions[DUMP_TOPOLOGY] = false;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     _boolOptions[SOLVE_WITH_MILP] = false;
     _boolOptions[PERFORM_LP_TIGHTENING_AFTER_SPLIT] = false;
     _boolOptions[PARALLEL_DEEPSOI] = false;
     _boolOptions[EXPORT_ASSIGNMENT] = false;
     _boolOptions[DEBUG_ASSIGNMENT] = false;
     _boolOptions[PRODUCE_PROOFS] = false;
+<<<<<<< HEAD
+=======
+    _boolOptions[DO_NOT_MERGE_CONSECUTIVE_WEIGHTED_SUM_LAYERS] = false;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Int options
@@ -73,7 +93,11 @@ void Options::initializeDefaultValues()
     */
     _floatOptions[TIMEOUT_FACTOR] = 1.5;
     _floatOptions[MILP_SOLVER_TIMEOUT] = 1.0;
+<<<<<<< HEAD
     _floatOptions[PREPROCESSOR_BOUND_TOLERANCE] = \
+=======
+    _floatOptions[PREPROCESSOR_BOUND_TOLERANCE] =
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         GlobalConfiguration::DEFAULT_EPSILON_FOR_COMPARISONS;
     _floatOptions[PROBABILITY_DENSITY_PARAMETER] = 10;
 
@@ -94,6 +118,10 @@ void Options::initializeDefaultValues()
     _stringOptions[SOI_SEARCH_STRATEGY] = "mcmc";
     _stringOptions[SOI_INITIALIZATION_STRATEGY] = "input-assignment";
     _stringOptions[LP_SOLVER] = gurobiEnabled() ? "gurobi" : "native";
+<<<<<<< HEAD
+=======
+    _stringOptions[SOFTMAX_BOUND_TYPE] = "lse";
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void Options::parseOptions( int argc, char **argv )
@@ -148,8 +176,12 @@ void Options::setString( unsigned option, std::string value )
 
 DivideStrategy Options::getDivideStrategy() const
 {
+<<<<<<< HEAD
     String strategyString = String( _stringOptions.get
                                     ( Options::SPLITTING_STRATEGY ) );
+=======
+    String strategyString = String( _stringOptions.get( Options::SPLITTING_STRATEGY ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( strategyString == "polarity" )
         return DivideStrategy::Polarity;
     else if ( strategyString == "earliest-relu" )
@@ -177,8 +209,12 @@ SnCDivideStrategy Options::getSnCDivideStrategy() const
 
 SymbolicBoundTighteningType Options::getSymbolicBoundTighteningType() const
 {
+<<<<<<< HEAD
     String strategyString =
         String( _stringOptions.get( Options::SYMBOLIC_BOUND_TIGHTENING_TYPE ) );
+=======
+    String strategyString = String( _stringOptions.get( Options::SYMBOLIC_BOUND_TIGHTENING_TYPE ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( strategyString == "sbt" )
         return SymbolicBoundTighteningType::SYMBOLIC_BOUND_TIGHTENING;
     else if ( strategyString == "deeppoly" )
@@ -193,7 +229,12 @@ MILPSolverBoundTighteningType Options::getMILPSolverBoundTighteningType() const
 {
     if ( gurobiEnabled() )
     {
+<<<<<<< HEAD
         String strategyString = String( _stringOptions.get( Options::MILP_SOLVER_BOUND_TIGHTENING_TYPE ) );
+=======
+        String strategyString =
+            String( _stringOptions.get( Options::MILP_SOLVER_BOUND_TIGHTENING_TYPE ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if ( strategyString == "lp" )
             return MILPSolverBoundTighteningType::LP_RELAXATION;
         else if ( strategyString == "lp-inc" )
@@ -217,8 +258,12 @@ MILPSolverBoundTighteningType Options::getMILPSolverBoundTighteningType() const
 
 SoISearchStrategy Options::getSoISearchStrategy() const
 {
+<<<<<<< HEAD
     String strategyString = String( _stringOptions.get
                                     ( Options::SOI_SEARCH_STRATEGY ) );
+=======
+    String strategyString = String( _stringOptions.get( Options::SOI_SEARCH_STRATEGY ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( strategyString == "mcmc" )
         return SoISearchStrategy::MCMC;
     else if ( strategyString == "walksat" )
@@ -229,8 +274,12 @@ SoISearchStrategy Options::getSoISearchStrategy() const
 
 SoIInitializationStrategy Options::getSoIInitializationStrategy() const
 {
+<<<<<<< HEAD
     String strategyString = String( _stringOptions.get
                                     ( Options::SOI_INITIALIZATION_STRATEGY ) );
+=======
+    String strategyString = String( _stringOptions.get( Options::SOI_INITIALIZATION_STRATEGY ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( strategyString == "input-assignment" )
         return SoIInitializationStrategy::INPUT_ASSIGNMENT;
     if ( strategyString == "current-assignment" )
@@ -241,12 +290,39 @@ SoIInitializationStrategy Options::getSoIInitializationStrategy() const
 
 LPSolverType Options::getLPSolverType() const
 {
+<<<<<<< HEAD
     String solverString = String( _stringOptions.get
                                     ( Options::LP_SOLVER ) );
     if ( solverString == "native" )
         return LPSolverType::NATIVE;
+=======
+    String solverString = String( _stringOptions.get( Options::LP_SOLVER ) );
+    if ( solverString == "native" )
+        return LPSolverType::NATIVE;
+    else if ( _boolOptions.get( Options::PRODUCE_PROOFS ) )
+    {
+        printf( "Proof-producing mode on, using native LP engine..." );
+        return LPSolverType::NATIVE;
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     else if ( solverString == "gurobi" )
         return LPSolverType::GUROBI;
     else
         return gurobiEnabled() ? LPSolverType::GUROBI : LPSolverType::NATIVE;
 }
+<<<<<<< HEAD
+=======
+
+SoftmaxBoundType Options::getSoftmaxBoundType() const
+{
+    String boundType = String( _stringOptions.get( Options::SOFTMAX_BOUND_TYPE ) );
+    if ( boundType == "er" )
+        return SoftmaxBoundType::EXPONENTIAL_RECIPROCAL_DECOMPOSITION;
+    else if ( boundType == "lse" )
+        return SoftmaxBoundType::LOG_SUM_EXP_DECOMPOSITION;
+    else
+    {
+        return SoftmaxBoundType::LOG_SUM_EXP_DECOMPOSITION;
+    }
+}
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

@@ -14,6 +14,7 @@
  **/
 
 #include "DantzigsRule.h"
+
 #include "FloatUtils.h"
 #include "ITableau.h"
 #include "MStringf.h"
@@ -50,7 +51,7 @@ bool DantzigsRule::select( ITableau &tableau,
             continue;
 
         if ( FloatUtils::isPositive( costFunction[i] ) )
-             cost += "+";
+            cost += "+";
         cost += Stringf( "%.3lf*nb[%u] ", costFunction[i], i );
     }
     DANTZIG_LOG( Stringf( "Cost function: %s\n", cost.ascii() ).ascii() );
@@ -71,7 +72,13 @@ bool DantzigsRule::select( ITableau &tableau,
         ++candidate;
     }
 
+<<<<<<< HEAD
     DANTZIG_LOG( Stringf( "Largest coefficient: %.3lf. Corresponding variable: %u\n", maxValue, maxIndex ).ascii() );
+=======
+    DANTZIG_LOG(
+        Stringf( "Largest coefficient: %.3lf. Corresponding variable: %u\n", maxValue, maxIndex )
+            .ascii() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     tableau.setEnteringVariableIndex( maxIndex );
     return true;

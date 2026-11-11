@@ -13,6 +13,11 @@
 
  **/
 
+<<<<<<< HEAD
+=======
+#include "SparseLUFactorization.h"
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "BasisFactorizationError.h"
 #include "Debug.h"
 #include "EtaMatrix.h"
@@ -20,9 +25,15 @@
 #include "GlobalConfiguration.h"
 #include "LPElement.h"
 #include "MalformedBasisException.h"
+<<<<<<< HEAD
 #include "SparseLUFactorization.h"
 
 SparseLUFactorization::SparseLUFactorization( unsigned m, const BasisColumnOracle &basisColumnOracle )
+=======
+
+SparseLUFactorization::SparseLUFactorization( unsigned m,
+                                              const BasisColumnOracle &basisColumnOracle )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     : IBasisFactorization( basisColumnOracle )
     , _B( m )
     , _m( m )
@@ -32,7 +43,12 @@ SparseLUFactorization::SparseLUFactorization( unsigned m, const BasisColumnOracl
 {
     _z = new double[m];
     if ( !_z )
+<<<<<<< HEAD
         throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED, "SparseLUFactorization::z" );
+=======
+        throw BasisFactorizationError( BasisFactorizationError::ALLOCATION_FAILED,
+                                       "SparseLUFactorization::z" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 SparseLUFactorization::~SparseLUFactorization()
@@ -69,23 +85,39 @@ const SparseMatrix *SparseLUFactorization::getSparseBasis() const
 
 const List<EtaMatrix *> SparseLUFactorization::getEtas() const
 {
+<<<<<<< HEAD
 	return _etas;
+=======
+    return _etas;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void SparseLUFactorization::updateToAdjacentBasis( unsigned columnIndex,
                                                    const double *changeColumn,
+<<<<<<< HEAD
                                                    const double */* newColumn */ )
+=======
+                                                   const double * /* newColumn */ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( !FloatUtils::isZero( changeColumn[columnIndex] ) );
 
     EtaMatrix *matrix = new EtaMatrix( _m, columnIndex, changeColumn );
     _etas.append( matrix );
 
+<<<<<<< HEAD
 	if ( _etas.size() > GlobalConfiguration::REFACTORIZATION_THRESHOLD )
 	{
         BASIS_FACTORIZATION_LOG( "Number of etas exceeds threshold. Refactoring basis\n" );
         obtainFreshBasis();
 	}
+=======
+    if ( _etas.size() > GlobalConfiguration::REFACTORIZATION_THRESHOLD )
+    {
+        BASIS_FACTORIZATION_LOG( "Number of etas exceeds threshold. Refactoring basis\n" );
+        obtainFreshBasis();
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void SparseLUFactorization::forwardTransformation( const double *y, double *x ) const
@@ -129,6 +161,7 @@ void SparseLUFactorization::backwardTransformation( const double *y, double *x )
       We are solving xB = y, where B = B0 * E1 ... * En.
       The first step is to eliminate the eta matrices.
     */
+<<<<<<< HEAD
     memcpy( _z, y, sizeof(double) * _m );
     for ( auto eta = _etas.rbegin(); eta != _etas.rend(); ++eta )
     {
@@ -141,6 +174,20 @@ void SparseLUFactorization::backwardTransformation( const double *y, double *x )
         }
 
         _z[columnIndex] = _z[columnIndex] / (*eta)->_column[columnIndex];
+=======
+    memcpy( _z, y, sizeof( double ) * _m );
+    for ( auto eta = _etas.rbegin(); eta != _etas.rend(); ++eta )
+    {
+        // The only entry in y that changes is columnIndex
+        unsigned columnIndex = ( *eta )->_columnIndex;
+        for ( unsigned i = 0; i < _m; ++i )
+        {
+            if ( i != columnIndex )
+                _z[columnIndex] -= ( _z[i] * ( *eta )->_column[i] );
+        }
+
+        _z[columnIndex] = _z[columnIndex] / ( *eta )->_column[columnIndex];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( FloatUtils::isZero( _z[columnIndex] ) )
             _z[columnIndex] = 0.0;
@@ -154,7 +201,11 @@ void SparseLUFactorization::backwardTransformation( const double *y, double *x )
 
 void SparseLUFactorization::clearFactorization()
 {
+<<<<<<< HEAD
 	List<EtaMatrix *>::iterator it;
+=======
+    List<EtaMatrix *>::iterator it;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     for ( it = _etas.begin(); it != _etas.end(); ++it )
         delete *it;
     _etas.clear();
@@ -258,7 +309,11 @@ void SparseLUFactorization::dumpExplicitBasis() const
     // Start with F
     _sparseLUFactors._F->toDense( result );
     for ( unsigned i = 0; i < _m; ++i )
+<<<<<<< HEAD
         result[i*_m + i] = 1;
+=======
+        result[i * _m + i] = 1;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Multiply by V
     _sparseLUFactors._V->toDense( toMultiply );
@@ -267,6 +322,7 @@ void SparseLUFactorization::dumpExplicitBasis() const
     {
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             temp[i*_m + j] = 0;
             for ( unsigned k = 0; k < _m; ++k )
             {
@@ -275,6 +331,16 @@ void SparseLUFactorization::dumpExplicitBasis() const
         }
     }
     memcpy( result, temp, sizeof(double) * _m * _m );
+=======
+            temp[i * _m + j] = 0;
+            for ( unsigned k = 0; k < _m; ++k )
+            {
+                temp[i * _m + j] += ( result[i * _m + k] * toMultiply[k * _m + j] );
+            }
+        }
+    }
+    memcpy( result, temp, sizeof( double ) * _m * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     // Go eta by eta
     for ( const auto &eta : _etas )
@@ -285,15 +351,26 @@ void SparseLUFactorization::dumpExplicitBasis() const
         {
             for ( unsigned j = 0; j < _m; ++j )
             {
+<<<<<<< HEAD
                 temp[i*_m + j] = 0;
                 for ( unsigned k = 0; k < _m; ++k )
                 {
                     temp[i*_m + j] += ( result[i*_m + k] * toMultiply[k*_m + j] );
+=======
+                temp[i * _m + j] = 0;
+                for ( unsigned k = 0; k < _m; ++k )
+                {
+                    temp[i * _m + j] += ( result[i * _m + k] * toMultiply[k * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 }
             }
         }
 
+<<<<<<< HEAD
         memcpy( result, temp, sizeof(double) * _m * _m );
+=======
+        memcpy( result, temp, sizeof( double ) * _m * _m );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     // Print out the result
@@ -303,7 +380,11 @@ void SparseLUFactorization::dumpExplicitBasis() const
         printf( "\t" );
         for ( unsigned j = 0; j < _m; ++j )
         {
+<<<<<<< HEAD
             printf( "%5.2lf ", result[i*_m + j] );
+=======
+            printf( "%5.2lf ", result[i * _m + j] );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         printf( "\n" );

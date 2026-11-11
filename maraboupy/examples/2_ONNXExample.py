@@ -12,6 +12,13 @@ All rights reserved. See the file COPYING in the top-level source
 directory for licensing information.
 '''
 
+<<<<<<< HEAD
+=======
+import sys
+sys.path.append('/Users/wen-chungcheng/Marabou_with_mods')
+
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 from maraboupy import Marabou
 import numpy as np
 
@@ -26,7 +33,12 @@ options = Marabou.createOptions(verbosity = 0)
 # This network has inputs x0, x1, and was trained to create outputs that approximate
 # y0 = abs(x0) + abs(x1), y1 = x0^2 + x1^2
 print("Fully Connected Network Example")
+<<<<<<< HEAD
 filename = "../../resources/onnx/fc1.onnx"
+=======
+# filename = "../../resources/onnx/fc1.onnx"
+filename = "/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/fc1.onnx"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -64,7 +76,12 @@ exitCode, vals, stats = network.solve(options = options)
 #
 # Network maps 8x16 grayscale images two values
 print("\nConvolutional Network Example")
+<<<<<<< HEAD
 filename = '../../resources/onnx/KJ_TinyTaxiNet.onnx'
+=======
+# filename = '../../resources/onnx/KJ_TinyTaxiNet.onnx'
+filename = '/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/KJ_TinyTaxiNet.onnx'
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -107,7 +124,12 @@ assert len(vals) == 0
 # Convolutional network with max-pool example
 # -------------------------------------------
 print("\nConvolutional Network with Max Pool Example")
+<<<<<<< HEAD
 filename = '../../resources/onnx/conv_mp1.onnx'
+=======
+# filename = '../../resources/onnx/conv_mp1.onnx'
+filename = '/Users/wen-chungcheng/Marabou_with_mods/resources/onnx/conv_mp1.onnx'
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 network = Marabou.read_onnx(filename)
 
 # %%
@@ -129,4 +151,9 @@ print("\nONNX Evaluation:")
 print(onnxEval)
 print("\nDifference:")
 print(onnxEval - marabouEval)
+<<<<<<< HEAD
 assert max(abs(onnxEval - marabouEval)) < 1e-6
+=======
+# assert max(abs(onnxEval - marabouEval)) < 1e-6
+assert max(abs(onnxEval - marabouEval)[0]) < 1e-6
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

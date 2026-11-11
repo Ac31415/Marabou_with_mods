@@ -104,9 +104,13 @@ public:
 
         bool operator==( const Fix &other ) const
         {
+<<<<<<< HEAD
             return
                 _variable == other._variable &&
                 FloatUtils::areEqual( _value, other._value );
+=======
+            return _variable == other._variable && FloatUtils::areEqual( _value, other._value );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         }
 
         unsigned _variable;
@@ -151,8 +155,23 @@ public:
     /*
       The variable watcher notifcation callbacks, about a change in a variable's value or bounds.
     */
+<<<<<<< HEAD
     virtual void notifyLowerBound( unsigned /* variable */, double /* bound */ ) {}
     virtual void notifyUpperBound( unsigned /* variable */, double /* bound */ ) {}
+
+    /*
+      Turn the constraint on/off.
+    */
+    virtual void setActiveConstraint( bool active );
+    virtual bool isActive() const;
+=======
+    virtual void notifyLowerBound( unsigned /* variable */, double /* bound */ )
+    {
+    }
+    virtual void notifyUpperBound( unsigned /* variable */, double /* bound */ )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Turn the constraint on/off.
@@ -223,7 +242,9 @@ public:
     /*
       Dump the current state of the constraint.
     */
-    virtual void dump( String & ) const {}
+    virtual void dump( String & ) const
+    {
+    }
 
     /*
       Preprocessing related functions, to inform that a variable has been eliminated completely
@@ -244,7 +265,11 @@ public:
       Transform the piecewise linear constraint so that each disjunct contains
       only bound constraints.
     */
+<<<<<<< HEAD
     virtual void transformToUseAuxVariables( InputQuery & ) {};
+=======
+    virtual void transformToUseAuxVariables( InputQuery & ){};
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     void setStatistics( Statistics *statistics );
 
@@ -252,15 +277,33 @@ public:
       Before solving: get additional auxiliary euqations (typically bound-dependent)
       that this constraint would like to add to the equation pool.
     */
+<<<<<<< HEAD
     virtual void addAuxiliaryEquationsAfterPreprocessing( InputQuery
                                                           &/* inputQuery */ ) {}
+=======
+    virtual void addAuxiliaryEquationsAfterPreprocessing( InputQuery & /* inputQuery */ )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Whether the constraint can contribute the SoI cost function.
     */
+<<<<<<< HEAD
     virtual bool supportSoI() const { return false; };
 
     virtual bool supportVariableElimination() const { return true; };
+=======
+    virtual bool supportSoI() const
+    {
+        return false;
+    };
+
+    virtual bool supportVariableElimination() const
+    {
+        return true;
+    };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Ask the piecewise linear constraint to add its cost term corresponding to
@@ -269,8 +312,15 @@ public:
       Minimizing the added term should lead to the constraint being
       "closer to satisfied" in the given phase status.
     */
+<<<<<<< HEAD
     virtual void getCostFunctionComponent( LinearExpression &/* cost */,
                                            PhaseStatus /* phase */ ) const {}
+=======
+    virtual void getCostFunctionComponent( LinearExpression & /* cost */,
+                                           PhaseStatus /* phase */ ) const
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Return the phase status corresponding to the values of the input
@@ -278,8 +328,13 @@ public:
       variable's assignment is positive, then the method returns
       RELU_PHASE_ACTIVE. Otherwise, it returns RELU_PHASE_INACTIVE.
     */
+<<<<<<< HEAD
     virtual PhaseStatus getPhaseStatusInAssignment( const Map<unsigned, double>
                                                     &/* assignment */ ) const
+=======
+    virtual PhaseStatus
+    getPhaseStatusInAssignment( const Map<unsigned, double> & /* assignment */ ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
         throw MarabouError( MarabouError::FEATURE_NOT_YET_SUPPORTED );
     }
@@ -296,6 +351,7 @@ public:
     /*
       Return true if and only if this piecewise linear constraint supports
       the polarity metric
+<<<<<<< HEAD
     */
     virtual bool supportPolarity() const
     {
@@ -434,6 +490,146 @@ public:
     */
     const CVC4::context::CDO<bool> *getActiveStatusCDO() const
     {
+=======
+    */
+    virtual bool supportPolarity() const
+    {
+        return false;
+    }
+
+    /*
+      Update the preferred direction to take first when splitting on this PLConstraint
+    */
+    virtual void updateDirection()
+    {
+    }
+
+    double getScore() const
+    {
+        return _score;
+    }
+
+
+    virtual void updateScoreBasedOnPolarity()
+    {
+    }
+
+    /*
+      Update _score with score
+    */
+    void setScore( double score )
+    {
+        _score = score;
+    }
+
+    /*
+      Register the GurobiWrapper object. We will query it for assignment.
+    */
+    inline void registerGurobi( GurobiWrapper *gurobi )
+    {
+        _gurobi = gurobi;
+    }
+
+    inline void registerTableau( ITableau *tableau )
+    {
+        _tableau = tableau;
+    }
+    /*
+      Method to set PhaseStatus of the constraint. Encapsulates both context
+      dependent and context-less behavior. Initialized to PHASE_NOT_FIXED.
+     */
+    void setPhaseStatus( PhaseStatus phaseStatus );
+
+    /*
+      Method to get PhaseStatus of the constraint. Encapsulates both context
+      dependent and context-less behavior.
+    */
+    PhaseStatus getPhaseStatus() const;
+
+    /**********************************************************************/
+    /*          Context-dependent Members Initialization and Cleanup      */
+    /**********************************************************************/
+
+    /*
+      Register a bound manager. If a bound manager is registered,
+      the piecewise linear constraint will inform the manager whenever
+      it discovers a tighter (entailed) bound.
+    */
+    void registerBoundManager( IBoundManager *boundManager );
+
+    /*
+       Register context object. Necessary for lazy backtracking features - such
+       as _cdPhaseStatus and _activeStatus. Does not require initialization until
+       after pre-processing.
+     */
+    void initializeCDOs( CVC4::context::Context *context );
+
+    /*
+       Politely clean up allocated CDOs.
+     */
+    void cdoCleanup();
+
+    /**********************************************************************/
+    /*             Context-dependent Search State Interface               */
+    /**********************************************************************/
+
+    /*
+       Mark that an exploredCase is infeasible, reducing the remaining search space.
+     */
+    void markInfeasible( PhaseStatus exploredCase );
+
+    /*
+      Returns phaseStatus representing next feasible case.
+      Returns CONSTRAINT_INFEASIBLE if no feasible case exists.
+      Assumes the contraint phase is PHASE_NOT_FIXED.
+      Worst case complexity O(n^2)
+      This method is overloaded in MAX and DISJUNCTION constraints.
+     */
+    virtual PhaseStatus nextFeasibleCase();
+
+    /*
+       Returns number of cases not yet marked as infeasible.
+     */
+    unsigned numFeasibleCases() const
+    {
+        return _numCases - _cdInfeasibleCases->size();
+    }
+
+    /*
+        Returns true if there are feasible cases remaining.
+     */
+    bool isFeasible() const
+    {
+        return numFeasibleCases() > 0u;
+    }
+
+    /*
+       Returns true if there is only one feasible case remaining.
+     */
+    virtual bool isImplication() const
+    {
+        return numFeasibleCases() == 1u;
+    }
+
+    /**********************************************************************/
+    /*                       Debugging helper methods                     */
+    /**********************************************************************/
+    /* NOTE: Should properly live in a test extension of the class */
+
+    /*
+      Get the context object - debugging purposes only
+    */
+    const CVC4::context::Context *getContext() const
+    {
+        return _context;
+    }
+
+    /*
+      Get the active status object - debugging purposes only
+    */
+    const CVC4::context::CDO<bool> *getActiveStatusCDO() const
+    {
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return _cdConstraintActive;
     };
 
@@ -454,9 +650,16 @@ public:
     }
 
     /*
+<<<<<<< HEAD
       Add a variable to the list of aux vars designated in the Tableau, add connect it to the constraintAuxVariable
     */
     virtual void addTableauAuxVar( unsigned tableauAuxVar, unsigned  constraintAuxVar ) = 0;
+=======
+      Add a variable to the list of aux vars designated in the Tableau, add connect it to the
+      constraintAuxVariable
+    */
+    virtual void addTableauAuxVar( unsigned tableauAuxVar, unsigned constraintAuxVar ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     /*
       Get the native auxiliary vars
@@ -620,7 +823,10 @@ protected:
     }
 
     List<unsigned> _tableauAuxVars;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __PiecewiseLinearConstraint_h__

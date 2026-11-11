@@ -53,8 +53,17 @@ private:
     /*
       Prevent additional instantiations of the class
     */
+<<<<<<< HEAD
     SignalHandler() {}
     SignalHandler( const SignalHandler & ) {}
+=======
+    SignalHandler()
+    {
+    }
+    SignalHandler( const SignalHandler & )
+    {
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __SignalHandler_h__

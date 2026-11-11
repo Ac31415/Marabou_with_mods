@@ -18,9 +18,15 @@
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "InfeasibleQueryException.h"
+<<<<<<< HEAD
 #include "Tableau.h"
 #include "Tightening.h"
 #include "MarabouError.h"
+=======
+#include "MarabouError.h"
+#include "Tableau.h"
+#include "Tightening.h"
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 using namespace CVC4::context;
 
@@ -96,10 +102,17 @@ void BoundManager::allocateLocalBounds( unsigned size )
     _allocated = size;
 
     if ( _tableau )
+<<<<<<< HEAD
       _tableau->setBoundsPointers( _lowerBounds, _upperBounds );
 
     if ( _rowBoundTightener )
       _rowBoundTightener->setBoundsPointers( _lowerBounds, _upperBounds );
+=======
+        _tableau->setBoundsPointers( _lowerBounds, _upperBounds );
+
+    if ( _rowBoundTightener )
+        _rowBoundTightener->setBoundsPointers( _lowerBounds, _upperBounds );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 unsigned BoundManager::registerNewVariable()
@@ -113,6 +126,7 @@ unsigned BoundManager::registerNewVariable()
 
     if ( _allocated < _size )
     {
+<<<<<<< HEAD
       double * oldLowerBounds = _upperBounds;
       double * oldUpperBounds = _lowerBounds;
 
@@ -123,6 +137,18 @@ unsigned BoundManager::registerNewVariable()
 
       delete[] oldLowerBounds;
       delete[] oldUpperBounds;
+=======
+        double *oldLowerBounds = _upperBounds;
+        double *oldUpperBounds = _lowerBounds;
+
+        allocateLocalBounds( 2 * _allocated );
+        std::memcpy( _lowerBounds, oldLowerBounds, _allocated );
+        std::memcpy( _upperBounds, oldUpperBounds, _allocated );
+        _allocated *= 2;
+
+        delete[] oldLowerBounds;
+        delete[] oldUpperBounds;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     _storedLowerBounds.append( new ( true ) CDO<double>( &_context ) );
@@ -159,6 +185,7 @@ bool BoundManager::tightenUpperBound( unsigned variable, double value )
     return tightened;
 }
 
+<<<<<<< HEAD
 void BoundManager::recordInconsistentBound( unsigned variable, double value, Tightening::BoundType type )
 {
   if ( _consistentBounds )
@@ -166,6 +193,17 @@ void BoundManager::recordInconsistentBound( unsigned variable, double value, Tig
     _consistentBounds = false;
     _firstInconsistentTightening = Tightening( variable, value, type );
   }
+=======
+void BoundManager::recordInconsistentBound( unsigned variable,
+                                            double value,
+                                            Tightening::BoundType type )
+{
+    if ( _consistentBounds )
+    {
+        _consistentBounds = false;
+        _firstInconsistentTightening = Tightening( variable, value, type );
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 bool BoundManager::setLowerBound( unsigned variable, double value )
@@ -191,7 +229,11 @@ bool BoundManager::setUpperBound( unsigned variable, double value )
         _upperBounds[variable] = value;
         *_tightenedUpper[variable] = true;
         if ( !consistentBounds( variable ) )
+<<<<<<< HEAD
           recordInconsistentBound( variable, value, Tightening::UB );
+=======
+            recordInconsistentBound( variable, value, Tightening::UB );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         return true;
     }
     return false;
@@ -209,12 +251,20 @@ double BoundManager::getUpperBound( unsigned variable ) const
     return _upperBounds[variable];
 }
 
+<<<<<<< HEAD
 const double * BoundManager::getLowerBounds() const
+=======
+const double *BoundManager::getLowerBounds() const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     return _lowerBounds;
 }
 
+<<<<<<< HEAD
 const double * BoundManager::getUpperBounds() const
+=======
+const double *BoundManager::getUpperBounds() const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     return _upperBounds;
 }
@@ -223,8 +273,13 @@ void BoundManager::storeLocalBounds()
 {
     for ( unsigned i = 0; i < _size; ++i )
     {
+<<<<<<< HEAD
       *_storedLowerBounds[i]=_lowerBounds[i];
       *_storedUpperBounds[i]=_upperBounds[i];
+=======
+        *_storedLowerBounds[i] = _lowerBounds[i];
+        *_storedUpperBounds[i] = _upperBounds[i];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -232,8 +287,13 @@ void BoundManager::restoreLocalBounds()
 {
     for ( unsigned i = 0; i < _size; ++i )
     {
+<<<<<<< HEAD
       _lowerBounds[i]=*_storedLowerBounds[i];
       _upperBounds[i]=*_storedUpperBounds[i];
+=======
+        _lowerBounds[i] = *_storedLowerBounds[i];
+        _upperBounds[i] = *_storedUpperBounds[i];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -259,8 +319,13 @@ void BoundManager::clearTightenings()
 {
     for ( unsigned i = 0; i < _size; ++i )
     {
+<<<<<<< HEAD
       *_tightenedLower[i]=false;
       *_tightenedUpper[i]=false;
+=======
+        *_tightenedLower[i] = false;
+        *_tightenedUpper[i] = false;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -268,6 +333,7 @@ void BoundManager::propagateTightenings()
 {
     for ( unsigned i = 0; i < _size; ++i )
     {
+<<<<<<< HEAD
       if ( *_tightenedLower[i] )
       {
         _tableau->notifyLowerBound( i, getLowerBound( i ) );
@@ -279,6 +345,19 @@ void BoundManager::propagateTightenings()
         _tableau->notifyUpperBound( i, getUpperBound( i ) );
         *_tightenedUpper[i] = false;
       }
+=======
+        if ( *_tightenedLower[i] )
+        {
+            _tableau->notifyLowerBound( i, getLowerBound( i ) );
+            *_tightenedLower[i] = false;
+        }
+
+        if ( *_tightenedUpper[i] )
+        {
+            _tableau->notifyUpperBound( i, getUpperBound( i ) );
+            *_tightenedUpper[i] = false;
+        }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 }
 
@@ -341,7 +420,13 @@ bool BoundManager::tightenUpperBound( unsigned variable, double value, const Tab
     return tightened;
 }
 
+<<<<<<< HEAD
 bool BoundManager::tightenLowerBound( unsigned variable, double value, const SparseUnsortedList &row )
+=======
+bool BoundManager::tightenLowerBound( unsigned variable,
+                                      double value,
+                                      const SparseUnsortedList &row )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     bool tightened = setLowerBound( variable, value );
 
@@ -356,7 +441,13 @@ bool BoundManager::tightenLowerBound( unsigned variable, double value, const Spa
     return tightened;
 }
 
+<<<<<<< HEAD
 bool BoundManager::tightenUpperBound( unsigned variable, double value, const SparseUnsortedList &row )
+=======
+bool BoundManager::tightenUpperBound( unsigned variable,
+                                      double value,
+                                      const SparseUnsortedList &row )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     bool tightened = setUpperBound( variable, value );
 
@@ -377,7 +468,13 @@ void BoundManager::resetExplanation( const unsigned var, const bool isUpper ) co
     _boundExplainer->resetExplanation( var, isUpper );
 }
 
+<<<<<<< HEAD
 void BoundManager::setExplanation( const SparseUnsortedList &explanation, unsigned var, bool isUpper ) const
+=======
+void BoundManager::setExplanation( const SparseUnsortedList &explanation,
+                                   unsigned var,
+                                   bool isUpper ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     _boundExplainer->setExplanation( explanation, var, isUpper );
 }
@@ -397,14 +494,29 @@ void BoundManager::updateBoundExplanation( const TableauRow &row, bool isUpper, 
     _boundExplainer->updateBoundExplanation( row, isUpper, var );
 }
 
+<<<<<<< HEAD
 void BoundManager::updateBoundExplanationSparse( const SparseUnsortedList &row, bool isUpper, unsigned var )
+=======
+void BoundManager::updateBoundExplanationSparse( const SparseUnsortedList &row,
+                                                 bool isUpper,
+                                                 unsigned var )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     _boundExplainer->updateBoundExplanationSparse( row, isUpper, var );
 }
 
+<<<<<<< HEAD
 bool BoundManager::addLemmaExplanationAndTightenBound( unsigned var, double value, BoundType affectedVarBound,
                                                       const List<unsigned> &causingVars, BoundType causingVarBound,
                                                       PiecewiseLinearFunctionType constraintType )
+=======
+bool BoundManager::addLemmaExplanationAndTightenBound( unsigned var,
+                                                       double value,
+                                                       BoundType affectedVarBound,
+                                                       const List<unsigned> &causingVars,
+                                                       BoundType causingVarBound,
+                                                       PiecewiseLinearFunctionType constraintType )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     if ( !shouldProduceProofs() )
         return false;
@@ -414,7 +526,12 @@ bool BoundManager::addLemmaExplanationAndTightenBound( unsigned var, double valu
     // Register new ground bound, update certificate, and reset explanation
     Vector<SparseUnsortedList> allExplanations( 0 );
 
+<<<<<<< HEAD
     bool tightened = affectedVarBound == BoundType::UPPER ? tightenUpperBound( var, value ) : tightenLowerBound( var, value );
+=======
+    bool tightened = affectedVarBound == BoundType::UPPER ? tightenUpperBound( var, value )
+                                                          : tightenLowerBound( var, value );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     if ( tightened )
     {
@@ -431,11 +548,21 @@ bool BoundManager::addLemmaExplanationAndTightenBound( unsigned var, double valu
             {
                 // Used for two cases:
                 // 1. Lemma of the type _f = max(upperBound(b), -lowerBound(b)).
+<<<<<<< HEAD
                 //    Two explanations are stored so the checker could check that f has the maximal value of the two.
                 // 2. Lemmas of the type lowerBound(f) > -lowerBound(b) or upperBound(b).
                 //    Again, two explanations are involved in the proof.
                 // Add zero vectors to maintain consistency of explanations size
                 allExplanations.append( getExplanation( causingVars.front(), causingVarBound == BoundType::UPPER ) );
+=======
+                //    Two explanations are stored so the checker could check that f has the maximal
+                //    value of the two.
+                // 2. Lemmas of the type lowerBound(f) > -lowerBound(b) or upperBound(b).
+                //    Again, two explanations are involved in the proof.
+                // Add zero vectors to maintain consistency of explanations size
+                allExplanations.append(
+                    getExplanation( causingVars.front(), causingVarBound == BoundType::UPPER ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
                 allExplanations.append( getExplanation( causingVars.back(), BoundType::LOWER ) );
             }
@@ -446,15 +573,32 @@ bool BoundManager::addLemmaExplanationAndTightenBound( unsigned var, double valu
         else
             throw MarabouError( MarabouError::FEATURE_NOT_YET_SUPPORTED );
 
+<<<<<<< HEAD
         std::shared_ptr<PLCLemma> PLCExpl = std::make_shared<PLCLemma>( causingVars, var, value, causingVarBound, affectedVarBound, allExplanations, constraintType );
         _engine->getUNSATCertificateCurrentPointer()->addPLCLemma(PLCExpl );
         affectedVarBound == BoundType::UPPER ? _engine->updateGroundUpperBound( var, value ) : _engine->updateGroundLowerBound( var, value );
+=======
+        std::shared_ptr<PLCLemma> PLCExpl = std::make_shared<PLCLemma>( causingVars,
+                                                                        var,
+                                                                        value,
+                                                                        causingVarBound,
+                                                                        affectedVarBound,
+                                                                        allExplanations,
+                                                                        constraintType );
+        _engine->getUNSATCertificateCurrentPointer()->addPLCLemma( PLCExpl );
+        affectedVarBound == BoundType::UPPER ? _engine->updateGroundUpperBound( var, value )
+                                             : _engine->updateGroundLowerBound( var, value );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         resetExplanation( var, affectedVarBound );
     }
     return true;
 }
 
+<<<<<<< HEAD
 void BoundManager::registerEngine( IEngine *engine)
+=======
+void BoundManager::registerEngine( IEngine *engine )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     _engine = engine;
 }
@@ -484,7 +628,14 @@ double BoundManager::computeRowBound( const TableauRow &row, const bool isUpper 
         if ( FloatUtils::isZero( row[i] ) )
             continue;
 
+<<<<<<< HEAD
         multiplier = ( isUpper && FloatUtils::isPositive( row[i] ) ) || ( !isUpper && FloatUtils::isNegative( row[i] ) ) ? _upperBounds[var] : _lowerBounds[var];
+=======
+        multiplier = ( isUpper && FloatUtils::isPositive( row[i] ) ) ||
+                             ( !isUpper && FloatUtils::isNegative( row[i] ) )
+                       ? _upperBounds[var]
+                       : _lowerBounds[var];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         multiplier = FloatUtils::isZero( multiplier ) ? 0 : multiplier * row[i];
         bound += FloatUtils::isZero( multiplier ) ? 0 : multiplier;
     }
@@ -493,7 +644,13 @@ double BoundManager::computeRowBound( const TableauRow &row, const bool isUpper 
     return bound;
 }
 
+<<<<<<< HEAD
 double BoundManager::computeSparseRowBound( const SparseUnsortedList &row, const bool isUpper, const unsigned var ) const
+=======
+double BoundManager::computeSparseRowBound( const SparseUnsortedList &row,
+                                            const bool isUpper,
+                                            const unsigned var ) const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     ASSERT( !row.empty() && var < _size );
 
@@ -528,7 +685,13 @@ double BoundManager::computeSparseRowBound( const SparseUnsortedList &row, const
         if ( FloatUtils::isZero( realCoefficient ) )
             continue;
 
+<<<<<<< HEAD
         multiplier = ( isUpper && realCoefficient  > 0 ) || ( !isUpper &&  realCoefficient < 0 ) ? _upperBounds[curVar] : _lowerBounds[curVar];
+=======
+        multiplier = ( isUpper && realCoefficient > 0 ) || ( !isUpper && realCoefficient < 0 )
+                       ? _upperBounds[curVar]
+                       : _lowerBounds[curVar];
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         multiplier = FloatUtils::isZero( multiplier ) ? 0 : multiplier * realCoefficient;
         bound += FloatUtils::isZero( multiplier ) ? 0 : multiplier;
     }

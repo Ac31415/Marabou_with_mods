@@ -17,14 +17,25 @@
 #define __HashSet_h__
 
 #include "T/stdlib.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include <algorithm>
 #include <iostream>
 #include <unordered_set>
 
+<<<<<<< HEAD
 template<class Value>
 class HashSet
 {
     typedef std::unordered_set<Value> Super;
+=======
+template <class Value> class HashSet
+{
+    typedef std::unordered_set<Value> Super;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 public:
     typedef typename Super::iterator iterator;
     typedef typename Super::const_iterator const_iterator;
@@ -33,7 +44,12 @@ public:
     {
     }
 
+<<<<<<< HEAD
     HashSet<Value>( const std::initializer_list<Value> &initializerList ) : _container( initializerList )
+=======
+    HashSet<Value>( const std::initializer_list<Value> &initializerList )
+        : _container( initializerList )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 

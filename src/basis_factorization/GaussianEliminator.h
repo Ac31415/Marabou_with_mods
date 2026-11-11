@@ -18,7 +18,12 @@
 
 #include "LUFactors.h"
 
+<<<<<<< HEAD
 #define GAUSSIAN_LOG( x, ... ) LOG( GlobalConfiguration::GAUSSIAN_ELIMINATION_LOGGING, "GaussianEliminator: %s\n", x )
+=======
+#define GAUSSIAN_LOG( x, ... )                                                                     \
+    LOG( GlobalConfiguration::GAUSSIAN_ELIMINATION_LOGGING, "GaussianEliminator: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class GaussianEliminator
 {

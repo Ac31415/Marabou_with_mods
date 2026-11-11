@@ -13,10 +13,18 @@
  **/
 
 #include "BoundExplainer.h"
+<<<<<<< HEAD
 #include "context/cdlist.h"
 #include "context/context.h"
 #include <cxxtest/TestSuite.h>
 #include "UnsatCertificateNode.h"
+=======
+#include "UnsatCertificateNode.h"
+#include "context/cdlist.h"
+#include "context/context.h"
+
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class UnsatCertificateNodeTestSuite : public CxxTest::TestSuite
 {
@@ -65,10 +73,17 @@ public:
     {
         UnsatCertificateNode root = UnsatCertificateNode( NULL, PiecewiseLinearCaseSplit() );
 
+<<<<<<< HEAD
         auto upperBoundExplanation = Vector<double>(1, 1);
         auto lowerBoundExplanation = Vector<double>(1, 1);
 
         auto *contradiction = new Contradiction( Vector<double>(1, 0 ) );
+=======
+        auto upperBoundExplanation = Vector<double>( 1, 1 );
+        auto lowerBoundExplanation = Vector<double>( 1, 1 );
+
+        auto *contradiction = new Contradiction( Vector<double>( 1, 0 ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         root.setContradiction( contradiction );
         TS_ASSERT_EQUALS( root.getContradiction(), contradiction );
     }
@@ -81,11 +96,22 @@ public:
         UnsatCertificateNode root = UnsatCertificateNode( NULL, PiecewiseLinearCaseSplit() );
         Vector<SparseUnsortedList> emptyVec;
 
+<<<<<<< HEAD
         auto explanation1 = std::shared_ptr<PLCLemma>( new PLCLemma( { 1 }, 1, 0, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
         auto explanation2 = std::shared_ptr<PLCLemma>( new PLCLemma( { 1 }, 1, -1, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
         auto explanation3 = std::shared_ptr<PLCLemma>( new PLCLemma( { 1 }, 1, -4, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
 
         TS_ASSERT(root.getPLCLemmas().empty() );
+=======
+        auto explanation1 = std::shared_ptr<PLCLemma>(
+            new PLCLemma( { 1 }, 1, 0, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
+        auto explanation2 = std::shared_ptr<PLCLemma>(
+            new PLCLemma( { 1 }, 1, -1, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
+        auto explanation3 = std::shared_ptr<PLCLemma>(
+            new PLCLemma( { 1 }, 1, -4, BoundType::UPPER, BoundType::UPPER, emptyVec, RELU ) );
+
+        TS_ASSERT( root.getPLCLemmas().empty() );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         root.addPLCLemma( explanation1 );
         root.addPLCLemma( explanation2 );

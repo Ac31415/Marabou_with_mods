@@ -21,6 +21,7 @@
 class IConstraintMatrixAnalyzer;
 class ISelector;
 
+<<<<<<< HEAD
 namespace T
 {
 	IConstraintMatrixAnalyzer *createConstraintMatrixAnalyzer();
@@ -39,6 +40,25 @@ CXXTEST_SUPPLY_VOID( discardConstraintMatrixAnalyzer,
 					 ( IConstraintMatrixAnalyzer *constraintMatrixAnalyzer ),
 					 T::discardConstraintMatrixAnalyzer,
 					 ( constraintMatrixAnalyzer ) );
+=======
+namespace T {
+IConstraintMatrixAnalyzer *createConstraintMatrixAnalyzer();
+void discardConstraintMatrixAnalyzer( IConstraintMatrixAnalyzer *constraintMatrixAnalyzer );
+} // namespace T
+
+CXXTEST_SUPPLY( createConstraintMatrixAnalyzer,
+                IConstraintMatrixAnalyzer *,
+                createConstraintMatrixAnalyzer,
+                (),
+                T::createConstraintMatrixAnalyzer,
+                () );
+
+CXXTEST_SUPPLY_VOID( discardConstraintMatrixAnalyzer,
+                     discardConstraintMatrixAnalyzer,
+                     ( IConstraintMatrixAnalyzer * constraintMatrixAnalyzer ),
+                     T::discardConstraintMatrixAnalyzer,
+                     ( constraintMatrixAnalyzer ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 #endif // __T__ConstraintMatrixAnalyzerFactory_h__
 

@@ -25,9 +25,14 @@ public:
       Apply Bland's rule: choose the candidate associated with the
       variable that has the smallest lexicographical index.
     */
+<<<<<<< HEAD
     bool select( ITableau &tableau,
                  const List<unsigned> &candidates,
                  const Set<unsigned> &excluded );
+=======
+    bool
+    select( ITableau &tableau, const List<unsigned> &candidates, const Set<unsigned> &excluded );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };
 
 #endif // __BlandsRule_h__

@@ -14,6 +14,7 @@
  ** [[ Add lengthier description here ]]
  **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
 #include "context/context.h"
@@ -21,11 +22,23 @@
 #include "PiecewiseLinearConstraint.h"
 #include "PLConstraintScoreTracker.h"
 #include "ReluConstraint.h"
+=======
+#include "PLConstraintScoreTracker.h"
+#include "PiecewiseLinearConstraint.h"
+#include "PseudoImpactTracker.h"
+#include "ReluConstraint.h"
+#include "context/context.h"
+
+#include <cxxtest/TestSuite.h>
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class PseudoImpactTrackerTestSuite : public CxxTest::TestSuite
 {
 public:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     PLConstraintScoreTracker *_tracker;
     List<PiecewiseLinearConstraint *> _constraints;
 
@@ -48,7 +61,11 @@ public:
         PiecewiseLinearConstraint *r2 = new ReluConstraint( 2, 3 );
         PiecewiseLinearConstraint *r3 = new ReluConstraint( 4, 5 );
         PiecewiseLinearConstraint *r4 = new ReluConstraint( 6, 7 );
+<<<<<<< HEAD
         _constraints = {r1, r2, r3, r4};
+=======
+        _constraints = { r1, r2, r3, r4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for ( const auto &constraint : _constraints )
             constraint->initializeCDOs( &context );
 
@@ -61,8 +78,12 @@ public:
 
         double alpha = GlobalConfiguration::EXPONENTIAL_MOVING_AVERAGE_ALPHA;
         TS_ASSERT_EQUALS( _tracker->getScore( r1 ), alpha * 2 );
+<<<<<<< HEAD
         TS_ASSERT_EQUALS( _tracker->getScore( r3 ),
                           (1 - alpha) * (alpha * 5) + alpha * 6 );
+=======
+        TS_ASSERT_EQUALS( _tracker->getScore( r3 ), ( 1 - alpha ) * ( alpha * 5 ) + alpha * 6 );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         r3->setActiveConstraint( false );
         r1->setActiveConstraint( false );
@@ -82,7 +103,11 @@ public:
         PiecewiseLinearConstraint *r2 = new ReluConstraint( 2, 3 );
         PiecewiseLinearConstraint *r3 = new ReluConstraint( 4, 5 );
         PiecewiseLinearConstraint *r4 = new ReluConstraint( 6, 7 );
+<<<<<<< HEAD
         _constraints = {r1, r2, r3, r4};
+=======
+        _constraints = { r1, r2, r3, r4 };
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for ( const auto &constraint : _constraints )
             constraint->initializeCDOs( &context );
 
@@ -100,5 +125,8 @@ public:
         TS_ASSERT( _tracker->top() == r3 );
         TS_ASSERT( _tracker->topUnfixed() == r2 );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 };

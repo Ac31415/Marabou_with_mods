@@ -30,13 +30,18 @@ public:
         COST_FUNCTION_UPDATED = 2,
     };
 
-    virtual ~ICostFunctionManager() {};
+    virtual ~ICostFunctionManager(){};
 
     virtual void initialize() = 0;
     virtual ICostFunctionManager::CostFunctionStatus getCostFunctionStatus() const = 0;
     virtual void computeCostFunction( const Map<unsigned, double> &heuristicCost ) = 0;
     virtual void computeGivenCostFunction( const Map<unsigned, double> &heuristicCost ) = 0;
+<<<<<<< HEAD
     virtual double computeGivenCostFunctionDirectly( const Map<unsigned, double> &heuristicCost ) = 0;
+=======
+    virtual double
+    computeGivenCostFunctionDirectly( const Map<unsigned, double> &heuristicCost ) = 0;
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     virtual void computeCoreCostFunction() = 0;
     virtual const double *getCostFunction() const = 0;
     virtual void dumpCostFunction() const = 0;

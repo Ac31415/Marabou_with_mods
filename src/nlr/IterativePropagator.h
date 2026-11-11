@@ -26,7 +26,12 @@
 
 namespace NLR {
 
+<<<<<<< HEAD
 #define IterativePropagator_LOG(x, ...) LOG(GlobalConfiguration::PREPROCESSOR_LOGGING, "Iterativepropagator: %s\n", x)
+=======
+#define IterativePropagator_LOG( x, ... )                                                          \
+    LOG( GlobalConfiguration::PREPROCESSOR_LOGGING, "Iterativepropagator: %s\n", x )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
 class IterativePropagator : public ParallelSolver
 {
@@ -58,8 +63,15 @@ private:
       Optimize for the min/max value of variableName with respect to the constraints
       encoded in gurobi. If the query is infeasible, *infeasible is set to true.
     */
+<<<<<<< HEAD
     static double optimizeWithGurobi( GurobiWrapper &gurobi, MinOrMax minOrMax,
                                       String variableName, double cutoffValue,
+=======
+    static double optimizeWithGurobi( GurobiWrapper &gurobi,
+                                      MinOrMax minOrMax,
+                                      String variableName,
+                                      double cutoffValue,
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                                       std::atomic_bool *infeasible = NULL );
 
     /*

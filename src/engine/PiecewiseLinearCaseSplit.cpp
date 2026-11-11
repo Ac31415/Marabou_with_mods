@@ -15,6 +15,9 @@
 
 #include "MStringf.h"
 #include "PiecewiseLinearCaseSplit.h"
+
+#include "MStringf.h"
+
 #include <cstdio>
 
 void PiecewiseLinearCaseSplit::storeBoundTightening( const Tightening &tightening )
@@ -22,19 +25,30 @@ void PiecewiseLinearCaseSplit::storeBoundTightening( const Tightening &tightenin
     _bounds.append( tightening );
 }
 
+<<<<<<< HEAD
 const List<Tightening> & PiecewiseLinearCaseSplit::getBoundTightenings() const
+=======
+const List<Tightening> &PiecewiseLinearCaseSplit::getBoundTightenings() const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     return _bounds;
 }
 
 void PiecewiseLinearCaseSplit::addEquation( const Equation &equation )
 {
+<<<<<<< HEAD
 	_equations.append( equation );
 }
 
 const List<Equation> & PiecewiseLinearCaseSplit::getEquations() const
+=======
+    _equations.append( equation );
+}
+
+const List<Equation> &PiecewiseLinearCaseSplit::getEquations() const
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
-	return _equations;
+    return _equations;
 }
 
 void PiecewiseLinearCaseSplit::dump( String &output ) const
@@ -44,7 +58,13 @@ void PiecewiseLinearCaseSplit::dump( String &output ) const
     for ( const auto &bound : _bounds )
     {
         output += Stringf( "\t\tVariable: %u. New bound: %.2lf. Bound type: %s\n",
+<<<<<<< HEAD
                            bound._variable, bound._value, bound._type == Tightening::LB ? "lower" : "upper" );
+=======
+                           bound._variable,
+                           bound._value,
+                           bound._type == Tightening::LB ? "lower" : "upper" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     }
 
     output += String( "\n\tEquations are:\n" );

@@ -13,10 +13,15 @@
 
  **/
 
+#include "PrecisionRestorer.h"
+
 #include "Debug.h"
 #include "FloatUtils.h"
 #include "MalformedBasisException.h"
+<<<<<<< HEAD
 #include "PrecisionRestorer.h"
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "MarabouError.h"
 #include "SmtCore.h"
 #include "TableauStateStorageLevel.h"
@@ -24,8 +29,12 @@
 
 void PrecisionRestorer::storeInitialEngineState( const IEngine &engine )
 {
+<<<<<<< HEAD
     engine.storeState( _initialEngineState,
                        TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+=======
+    engine.storeState( _initialEngineState, TableauStateStorageLevel::STORE_ENTIRE_TABLEAU_STATE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 }
 
 void PrecisionRestorer::restoreInitialEngineState( IEngine &engine )
@@ -46,16 +55,27 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
     Set<unsigned> shouldBeBasic = tableau.getBasicVariables();
 
     EngineState targetEngineState;
+<<<<<<< HEAD
     engine.storeState( targetEngineState,
                        TableauStateStorageLevel::STORE_NONE );
+=======
+    engine.storeState( targetEngineState, TableauStateStorageLevel::STORE_NONE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     BoundExplainer boundExplainerBackup( targetN, targetM, engine.getContext() );
     Vector<double> groundUpperBoundsBackup;
     Vector<double> groundLowerBoundsBackup;
+<<<<<<< HEAD
 
     Vector<double> upperBoundsBackup;
     Vector<double> lowerBoundsBackup;
 
+=======
+
+    Vector<double> upperBoundsBackup;
+    Vector<double> lowerBoundsBackup;
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     if ( engine.shouldProduceProofs() )
     {
         groundUpperBoundsBackup = Vector<double>( targetN, 0 );
@@ -75,6 +95,7 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
             groundLowerBoundsBackup[i] = engine.getGroundBound( i, BoundType::LOWER );
         }
     }
+<<<<<<< HEAD
 
     // Store the case splits performed so far
     List<PiecewiseLinearCaseSplit> targetSplits;
@@ -106,6 +127,37 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
         for ( const auto &basic : shouldBeBasic )
             shouldBeBasicList.append( basic );
 
+=======
+
+    // Store the case splits performed so far
+    List<PiecewiseLinearCaseSplit> targetSplits;
+    smtCore.allSplitsSoFar( targetSplits );
+
+    // Restore engine and tableau to their original form
+    engine.restoreState( _initialEngineState );
+    engine.postContextPopHook();
+    DEBUG( tableau.verifyInvariants() );
+
+    // At this point, the tableau has the appropriate dimensions. Restore the
+    // variable bounds and basic variables. Note that if column merging is
+    // enabled, the dimensions may not be precisely those before the
+    // resotration, because merging sometimes fails - in which case an equation
+    // is added. If we fail to restore the dimensions, we cannot restore the
+    // basics.
+
+    bool dimensionsRestored = ( tableau.getN() == targetN ) && ( tableau.getM() == targetM );
+
+    ASSERT( dimensionsRestored || GlobalConfiguration::USE_COLUMN_MERGING_EQUATIONS );
+
+    Set<unsigned> currentBasics = tableau.getBasicVariables();
+
+    if ( dimensionsRestored && restoreBasics == RESTORE_BASICS )
+    {
+        List<unsigned> shouldBeBasicList;
+        for ( const auto &basic : shouldBeBasic )
+            shouldBeBasicList.append( basic );
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         bool failed = false;
         try
         {
@@ -130,10 +182,16 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
             }
             catch ( MalformedBasisException & )
             {
+<<<<<<< HEAD
                 throw MarabouError(
                     MarabouError::RESTORATION_FAILED_TO_REFACTORIZE_BASIS,
                     "Precision restoration failed - could not refactorize "
                     "basis after setting basics" );
+=======
+                throw MarabouError( MarabouError::RESTORATION_FAILED_TO_REFACTORIZE_BASIS,
+                                    "Precision restoration failed - could not refactorize "
+                                    "basis after setting basics" );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             }
         }
     }
@@ -166,10 +224,15 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
 
     DEBUG( {
         // Same dimensions
+<<<<<<< HEAD
         ASSERT( GlobalConfiguration::USE_COLUMN_MERGING_EQUATIONS ||
                 tableau.getN() == targetN );
         ASSERT( GlobalConfiguration::USE_COLUMN_MERGING_EQUATIONS ||
                 tableau.getM() == targetM );
+=======
+        ASSERT( GlobalConfiguration::USE_COLUMN_MERGING_EQUATIONS || tableau.getN() == targetN );
+        ASSERT( GlobalConfiguration::USE_COLUMN_MERGING_EQUATIONS || tableau.getM() == targetM );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         // Constraints should be in the same state before and after restoration
         for ( const auto &pair : targetEngineState._plConstraintToState )
@@ -178,6 +241,7 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
             // Only active constraints need to be synchronized
             ASSERT( !pair.second->isActive() ||
                     pair.second->phaseFixed() == pair.first->phaseFixed() );
+<<<<<<< HEAD
             ASSERT( pair.second->constraintObsolete() ==
                     pair.first->constraintObsolete() );
         }
@@ -185,6 +249,13 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
         EngineState currentEngineState;
         engine.storeState( currentEngineState,
                            TableauStateStorageLevel::STORE_NONE );
+=======
+            ASSERT( pair.second->constraintObsolete() == pair.first->constraintObsolete() );
+        }
+
+        EngineState currentEngineState;
+        engine.storeState( currentEngineState, TableauStateStorageLevel::STORE_NONE );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         ASSERT( currentEngineState._numPlConstraintsDisabledByValidSplits ==
                 targetEngineState._numPlConstraintsDisabledByValidSplits );
@@ -192,4 +263,7 @@ void PrecisionRestorer::restorePrecision( IEngine &engine,
         tableau.verifyInvariants();
     } );
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390

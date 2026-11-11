@@ -13,12 +13,20 @@
 
 **/
 
+<<<<<<< HEAD
 #include <cxxtest/TestSuite.h>
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 #include "Map.h"
 #include "SparseUnsortedList.h"
 
+<<<<<<< HEAD
+=======
+#include <cxxtest/TestSuite.h>
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 class MockForSparseUnsortedList
 {
 public:
@@ -52,7 +60,11 @@ public:
     void test_initialize_from_dense()
     {
         double dense[8] = {
+<<<<<<< HEAD
             1, 2, 3, 0, 0, 4, 5, 6
+=======
+            1, 2, 3, 0, 0, 4, 5, 6 //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         SparseUnsortedList v1( dense, 8 );
@@ -67,7 +79,11 @@ public:
     void test_cloning()
     {
         double dense[8] = {
+<<<<<<< HEAD
             1, 2, 3, 0, 0, 4, 5, 6
+=======
+            1, 2, 3, 0, 0, 4, 5, 6 //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         SparseUnsortedList v1( dense, 8 );
@@ -89,7 +105,11 @@ public:
     void test_iterate()
     {
         double dense[8] = {
+<<<<<<< HEAD
             1, 2, 3, 0, 0, 4, 5, 6
+=======
+            1, 2, 3, 0, 0, 4, 5, 6 //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         Map<unsigned, double> answers;
@@ -132,7 +152,11 @@ public:
         TS_ASSERT_THROWS_NOTHING( v1.toDense( dense ) );
 
         double expected[5] = {
+<<<<<<< HEAD
             4, 0, 3, 0, -7
+=======
+            4, 0, 3, 0, -7 //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         for ( unsigned i = 0; i < 5; ++i )
@@ -144,7 +168,11 @@ public:
         TS_ASSERT_THROWS_NOTHING( v1.toDense( dense ) );
 
         double expected2[5] = {
+<<<<<<< HEAD
             4, 5, 0, 0, -7
+=======
+            4, 5, 0, 0, -7 //
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         };
 
         for ( unsigned i = 0; i < 5; ++i )

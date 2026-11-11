@@ -14,6 +14,7 @@
  **/
 
 #include "ConstraintMatrixAnalyzer.h"
+
 #include "FloatUtils.h"
 #include "List.h"
 #include "MStringf.h"
@@ -103,9 +104,13 @@ void ConstraintMatrixAnalyzer::analyze( const double *matrix, unsigned m, unsign
     gaussianElimination();
 }
 
+<<<<<<< HEAD
 void ConstraintMatrixAnalyzer::analyze( const SparseUnsortedList **matrix,
                                         unsigned m,
                                         unsigned n )
+=======
+void ConstraintMatrixAnalyzer::analyze( const SparseUnsortedList **matrix, unsigned m, unsigned n )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     freeMemoryIfNeeded();
 

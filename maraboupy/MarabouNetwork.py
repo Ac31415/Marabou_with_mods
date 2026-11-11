@@ -5,6 +5,10 @@ Top contributors (to current version):
     - Andrew Wu
     - Kyle Julian
     - Teruhiro Tagomori
+<<<<<<< HEAD
+=======
+    - Min Wu
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     
 This file is part of the Marabou project.
 Copyright (c) 2017-2019 by the authors listed in the file AUTHORS
@@ -16,6 +20,7 @@ MarabouNetwork defines an abstract class that represents neural networks with pi
 '''
 
 from maraboupy import MarabouCore
+<<<<<<< HEAD
 from maraboupy import MarabouUtils
 
 import numpy as np
@@ -24,10 +29,23 @@ import numpy as np
 class MarabouNetwork:
     """Abstract class representing general Marabou network
     
+=======
+from maraboupy.parsers.InputQueryBuilder import InputQueryBuilder
+import numpy as np
+
+
+class MarabouNetwork(InputQueryBuilder):
+    """Abstract class representing general Marabou network
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     Attributes:
         numVars (int): Total number of variables to represent network
         equList (list of :class:`~maraboupy.MarabouUtils.Equation`): Network equations
         reluList (list of tuples): List of relu constraint tuples, where each tuple contains the backward and forward variables
+<<<<<<< HEAD
+=======
+        leakyReluList (list of tuples): List of leaky relu constraint tuples, where each tuple contains the backward and forward variables, and the slope
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         sigmoidList (list of tuples): List of sigmoid constraint tuples, where each tuple contains the backward and forward variables
         maxList (list of tuples): List of max constraint tuples, where each tuple conatins the set of input variables and output variable
         absList (list of tuples): List of abs constraint tuples, where each tuple conatins the input variable and the output variable
@@ -38,6 +56,7 @@ class MarabouNetwork:
         outputVars (list of numpy arrays): Output variables
     """
     def __init__(self):
+<<<<<<< HEAD
         """Constructs a MarabouNetwork object and calls function to initialize
         """
         self.clear()
@@ -58,6 +77,13 @@ class MarabouNetwork:
         self.upperBounds = dict()
         self.inputVars = []
         self.outputVars = []
+=======
+        """
+        Constructs a MarabouNetwork object and calls function to initialize
+        """
+        super().__init__()
+        self.clear()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     def clearProperty(self):
         """Clear the lower bounds and upper bounds map, and the self.additionEquList
@@ -66,6 +92,11 @@ class MarabouNetwork:
         self.upperBounds.clear()
         self.additionalEquList.clear()
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def getNewVariable(self):
         """Function to create a new variable
 
@@ -116,6 +147,28 @@ class MarabouNetwork:
         """
         self.reluList += [(v1, v2)]
 
+<<<<<<< HEAD
+=======
+    def addLeakyRelu(self, v1, v2, slope):
+        """Function to add a new Leaky Relu constraint
+
+        Args:
+            v1 (int): Variable representing input of Leaky Relu
+            v2 (int): Variable representing output of Leaky Relu
+            slope (float): Shope of the Leaky ReLU
+        """
+        self.leakyReluList += [(v1, v2, slope)]
+
+    def addBilinear(self, v1, v2, v3):
+        """Function to add a bilinear constraint to the network
+        Args:
+            v1 (int): Variable representing input1 of Bilinear
+            v2 (int): Variable representing input2 of Bilinear
+            v3 (int): Variable representing output of Bilinear
+        """
+        self.bilinearList += [(v1, v2, v3)]
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def addSigmoid(self, v1, v2):
         """Function to add a new Sigmoid constraint
 
@@ -134,6 +187,18 @@ class MarabouNetwork:
         """
         self.maxList += [(elements, v)]
 
+<<<<<<< HEAD
+=======
+    def addSoftmaxConstraint(self, inputs, outputs):
+        """Function to add a new softmax constraint
+
+        Args:
+            inputs (set of int): Variable representing input to max constraint
+            outputs (set of int): Variables representing outputs of max constraint
+        """
+        self.softmaxList += [(inputs, outputs)]
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def addAbsConstraint(self, b, f):
         """Function to add a new Abs constraint
 
@@ -238,6 +303,12 @@ class MarabouNetwork:
         for e in self.equList:
             eq = MarabouCore.Equation(e.EquationType)
             for (c, v) in e.addendList:
+<<<<<<< HEAD
+=======
+                # print(v)
+                # print(self.numVars)
+                # v=v-3
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
                 assert v < self.numVars
                 eq.addAddend(c, v)
             eq.setScalar(e.scalar)
@@ -255,6 +326,18 @@ class MarabouNetwork:
             assert r[1] < self.numVars and r[0] < self.numVars
             MarabouCore.addReluConstraint(ipq, r[0], r[1])
 
+<<<<<<< HEAD
+=======
+        for r in self.leakyReluList:
+            assert r[1] < self.numVars and r[0] < self.numVars
+            assert(r[2] > 0 and r[2] < 1)
+            MarabouCore.addLeakyReluConstraint(ipq, r[0], r[1], r[2])
+
+        for r in self.bilinearList:
+            assert r[2] < self.numVars and r[1] < self.numVars and r[0] < self.numVars
+            MarabouCore.addBilinearConstraint(ipq, r[0], r[1], r[2])
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for r in self.sigmoidList:
             assert r[1] < self.numVars and r[0] < self.numVars
             MarabouCore.addSigmoidConstraint(ipq, r[0], r[1])
@@ -265,6 +348,16 @@ class MarabouNetwork:
                 assert e < self.numVars
             MarabouCore.addMaxConstraint(ipq, m[0], m[1])
 
+<<<<<<< HEAD
+=======
+        for m in self.softmaxList:
+            for e in m[1]:
+                assert e < self.numVars
+            for e in m[0]:
+                assert e < self.numVars
+            MarabouCore.addSoftmaxConstraint(ipq, m[0], m[1])
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for b, f in self.absList:
             MarabouCore.addAbsConstraint(ipq, b, f)
 
@@ -272,7 +365,22 @@ class MarabouNetwork:
             MarabouCore.addSignConstraint(ipq, b, f)
 
         for disjunction in self.disjunctionList:
+<<<<<<< HEAD
             MarabouCore.addDisjunctionConstraint(ipq, disjunction)
+=======
+            converted_disjunction = []
+            for disjunct in disjunction:
+                converted_disjunct = []
+                for e in disjunct:
+                    eq = MarabouCore.Equation(e.EquationType)
+                    for (c, v) in e.addendList:
+                        assert v < self.numVars
+                        eq.addAddend(c, v)
+                    eq.setScalar(e.scalar)
+                    converted_disjunct.append(eq)
+                converted_disjunction.append(converted_disjunct)
+            MarabouCore.addDisjunctionConstraint(ipq, converted_disjunction)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         for l in self.lowerBounds:
             assert l < self.numVars
@@ -281,16 +389,28 @@ class MarabouNetwork:
         for u in self.upperBounds:
             assert u < self.numVars
             ipq.setUpperBound(u, self.upperBounds[u])
+<<<<<<< HEAD
             
         return ipq
 
     def solve(self, filename="", verbose=True, options=None):
+=======
+
+        return ipq
+
+>>>>>>> b595a53 (Marabou built successfully on mac. able to run the encoding scripts)
+    def solve(self, filename="", verbose=True, options=None, propertyFilename=""):
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         """Function to solve query represented by this network
 
         Args:
             filename (string): Path for redirecting output
             verbose (bool): If true, print out solution after solve finishes
             options (:class:`~maraboupy.MarabouCore.Options`): Object for specifying Marabou options, defaults to None
+<<<<<<< HEAD
+=======
+            propertyFilename(string): Path for property file
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         Returns:
             (tuple): tuple containing:
@@ -298,7 +418,13 @@ class MarabouNetwork:
                 - vals (Dict[int, float]): Empty dictionary if UNSAT, otherwise a dictionary of SATisfying values for variables
                 - stats (:class:`~maraboupy.MarabouCore.Statistics`): A Statistics object to how Marabou performed
         """
+<<<<<<< HEAD
         ipq = self.getMarabouQuery()
+=======
+        ipq = self.getInputQuery()
+        if propertyFilename:
+            MarabouCore.loadProperty(ipq, propertyFilename)
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if options == None:
             options = MarabouCore.Options()
         exitCode, vals, stats = MarabouCore.solve(ipq, options, str(filename))
@@ -330,7 +456,11 @@ class MarabouNetwork:
                 - bounds (Dict[int, tuple]): Empty dictionary if UNSAT, otherwise a dictionary of bounds for output variables
                 - stats (:class:`~maraboupy.MarabouCore.Statistics`): A Statistics object to how Marabou performed
         """
+<<<<<<< HEAD
         ipq = self.getMarabouQuery()
+=======
+        ipq = self.getInputQuery()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         if options == None:
             options = MarabouCore.Options()
         exitCode, bounds, stats = MarabouCore.calculateBounds(ipq, options, str(filename))
@@ -434,6 +564,7 @@ class MarabouNetwork:
 
         return [vals, stats, maxClass]
 
+<<<<<<< HEAD
     def saveQuery(self, filename=""):
         """Serializes the inputQuery in the given filename
 
@@ -443,6 +574,8 @@ class MarabouNetwork:
         ipq = self.getMarabouQuery()
         MarabouCore.saveQuery(ipq, str(filename))
 
+=======
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     def evaluateWithMarabou(self, inputValues, filename="evaluateWithMarabou.log", options=None):
         """Function to evaluate network at a given point using Marabou as solver
 
@@ -467,7 +600,11 @@ class MarabouNetwork:
         for x in assignList:
             inputDict[x[0]] = x[1]
 
+<<<<<<< HEAD
         ipq = self.getMarabouQuery()
+=======
+        ipq = self.getInputQuery()
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         for k in inputDict:
             ipq.setLowerBound(k, inputDict[k])
             ipq.setUpperBound(k, inputDict[k])

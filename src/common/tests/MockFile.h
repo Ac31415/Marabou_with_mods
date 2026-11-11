@@ -24,6 +24,7 @@
 class MockFile : public IFile
 {
 public:
+<<<<<<< HEAD
 	MockFile()
 	{
 		wasCreated = false;
@@ -41,6 +42,25 @@ public:
 
         lastPath = path;
 	}
+=======
+    MockFile()
+    {
+        wasCreated = false;
+        wasDiscarded = false;
+    }
+
+    bool wasCreated;
+    bool wasDiscarded;
+    String lastPath;
+
+    void mockConstructor( const String &path )
+    {
+        TS_ASSERT( !wasCreated );
+        wasCreated = true;
+
+        lastPath = path;
+    }
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
     void mockDestructor()
     {
@@ -75,7 +95,11 @@ public:
         return result;
     }
 
+<<<<<<< HEAD
     void read( HeapData &/* buffer */, unsigned /* maxReadSize */ )
+=======
+    void read( HeapData & /* buffer */, unsigned /* maxReadSize */ )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
     {
     }
 

@@ -14,6 +14,10 @@
 **/
 
 #include "DeepPolySignElement.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 #include "FloatUtils.h"
 
 namespace NLR {
@@ -30,8 +34,12 @@ DeepPolySignElement::~DeepPolySignElement()
     freeMemoryIfNeeded();
 }
 
+<<<<<<< HEAD
 void DeepPolySignElement::execute( const Map<unsigned, DeepPolyElement *>
                                &deepPolyElementsBefore )
+=======
+void DeepPolySignElement::execute( const Map<unsigned, DeepPolyElement *> &deepPolyElementsBefore )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     log( "Executing..." );
     ASSERT( hasPredecessor() );
@@ -42,12 +50,18 @@ void DeepPolySignElement::execute( const Map<unsigned, DeepPolyElement *>
     for ( unsigned i = 0; i < _size; ++i )
     {
         NeuronIndex sourceIndex = *( _layer->getActivationSources( i ).begin() );
+<<<<<<< HEAD
         DeepPolyElement *predecessor =
             deepPolyElementsBefore[sourceIndex._layer];
         double sourceLb = predecessor->getLowerBound
             ( sourceIndex._neuron );
         double sourceUb = predecessor->getUpperBound
             ( sourceIndex._neuron );
+=======
+        DeepPolyElement *predecessor = deepPolyElementsBefore[sourceIndex._layer];
+        double sourceLb = predecessor->getLowerBound( sourceIndex._neuron );
+        double sourceUb = predecessor->getUpperBound( sourceIndex._neuron );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         if ( !FloatUtils::isNegative( sourceLb ) )
         {
@@ -92,18 +106,37 @@ void DeepPolySignElement::execute( const Map<unsigned, DeepPolyElement *>
             _lb[i] = -1;
         }
         log( Stringf( "Neuron%u LB: %f b + %f, UB: %f b + %f",
+<<<<<<< HEAD
                       i, _symbolicLb[i], _symbolicLowerBias[i],
                       _symbolicUb[i], _symbolicUpperBias[i] ) );
+=======
+                      i,
+                      _symbolicLb[i],
+                      _symbolicLowerBias[i],
+                      _symbolicUb[i],
+                      _symbolicUpperBias[i] ) );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
         log( Stringf( "Neuron%u LB: %f, UB: %f", i, _lb[i], _ub[i] ) );
     }
     log( "Executing - done" );
 }
 
+<<<<<<< HEAD
 void DeepPolySignElement::symbolicBoundInTermsOfPredecessor
 ( const double *symbolicLb, const double*symbolicUb, double
   *symbolicLowerBias, double *symbolicUpperBias, double
   *symbolicLbInTermsOfPredecessor, double *symbolicUbInTermsOfPredecessor,
   unsigned targetLayerSize, DeepPolyElement *predecessor )
+=======
+void DeepPolySignElement::symbolicBoundInTermsOfPredecessor( const double *symbolicLb,
+                                                             const double *symbolicUb,
+                                                             double *symbolicLowerBias,
+                                                             double *symbolicUpperBias,
+                                                             double *symbolicLbInTermsOfPredecessor,
+                                                             double *symbolicUbInTermsOfPredecessor,
+                                                             unsigned targetLayerSize,
+                                                             DeepPolyElement *predecessor )
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 {
     log( Stringf( "Computing symbolic bounds with respect to layer %u...",
                   predecessor->getLayerIndex() ) );
@@ -115,12 +148,18 @@ void DeepPolySignElement::symbolicBoundInTermsOfPredecessor
     */
     for ( unsigned i = 0; i < _size; ++i )
     {
+<<<<<<< HEAD
         NeuronIndex sourceIndex = *( _layer->
                                      getActivationSources( i ).begin() );
         unsigned sourceNeuronIndex = sourceIndex._neuron;
         DEBUG({
                 ASSERT( predecessor->getLayerIndex() == sourceIndex._layer );
             });
+=======
+        NeuronIndex sourceIndex = *( _layer->getActivationSources( i ).begin() );
+        unsigned sourceNeuronIndex = sourceIndex._neuron;
+        DEBUG( { ASSERT( predecessor->getLayerIndex() == sourceIndex._layer ); } );
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
 
         /*
           Take symbolic upper bound as an example.
@@ -154,7 +193,12 @@ void DeepPolySignElement::symbolicBoundInTermsOfPredecessor
             {
                 symbolicLbInTermsOfPredecessor[newIndex] += weightLb * coeffLb;
                 symbolicLowerBias[j] += weightLb * lowerBias;
+<<<<<<< HEAD
             } else
+=======
+            }
+            else
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             {
                 symbolicLbInTermsOfPredecessor[newIndex] += weightLb * coeffUb;
                 symbolicLowerBias[j] += weightLb * upperBias;
@@ -166,7 +210,12 @@ void DeepPolySignElement::symbolicBoundInTermsOfPredecessor
             {
                 symbolicUbInTermsOfPredecessor[newIndex] += weightUb * coeffUb;
                 symbolicUpperBias[j] += weightUb * upperBias;
+<<<<<<< HEAD
             } else
+=======
+            }
+            else
+>>>>>>> 9f69e2a1dcb3e788a9ef7cf084b2ae162e7ca390
             {
                 symbolicUbInTermsOfPredecessor[newIndex] += weightUb * coeffLb;
                 symbolicUpperBias[j] += weightUb * lowerBias;
